@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="SplashActivityTheme" parent="android:Theme.Holo.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="MainActivityTheme" parent="android:Theme.Holo.Light">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:actionBarStyle">@style/TweetinActionBarStyle</item>
+    </style>
+
+    <style name="TweetinActionBarStyle" parent="android:Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/teal_default</item>
+        <item name="android:actionBarDivider">@null</item>
+    </style>
+
+</resources>

@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- App Info -->
     <string name="app_name">Tweetin</string>
+
+    <!-- Splash -->
+    <string name="splash_label">Tweetin</string>
+    <string name="splash_image_view_cd">Tweetin</string>
+    <string name="splash_description">
+        Yet another Twitter unofficial client.
+    </string>
+    <string name="splash_sign_in_button">Sign in</string>
+    <string name="splash_query">
+        Haven\'t got a Twitter account?
+    </string>
+    <string name="splash_sign_up_button">Sign up</string>
+    <string name="splash_sign_in_dialog_username">Username</string>
+    <string name="splash_sign_in_dialog_password">Password</string>
+    <string name="splash_sign_in_dialog_ok">OK</string>
+    <string name="splash_sign_in_dialog_cancel">Cancel</string>
+    <string name="splash_sign_up_url">
+        https://twitter.com/signup
+    </string>
+
+
 </resources>
