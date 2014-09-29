@@ -5,8 +5,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/teal_default">
 
-    <LinearLayout android:id="@+id/splash_first_part"
-                  android:orientation="vertical"
+    <LinearLayout android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_centerInParent="true"
@@ -31,8 +30,7 @@
 
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/splash_second_part"
-                  android:orientation="vertical"
+    <LinearLayout android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_centerInParent="true"

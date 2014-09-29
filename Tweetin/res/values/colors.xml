@@ -10,4 +10,9 @@
     <color name="white">#FFFFFF</color>
     <color name="transparent">@android:color/transparent</color>
 
+    <color name="dividers">#DADADA</color>
+    <color name="hint">#B8B8B8</color>
+    <color name="secondary_text">#727272</color>
+    <color name="text">#212121</color>
+
 </resources>

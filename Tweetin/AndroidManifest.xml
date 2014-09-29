@@ -21,7 +21,8 @@
         <activity android:name=".Splash.SplashActivity"
                   android:label="@string/splash_label"
                   android:theme="@style/SplashActivityTheme"
-                >
+                  android:windowSoftInputMode="adjustPan|stateHidden"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -29,8 +30,9 @@
         </activity>
 
         <activity android:name=".Main.MainActivity"
-                  android:label="@string/app_name"
-                  android:theme="@style/MainActivityTheme">
+                  android:label="@string/main_label"
+                  android:theme="@style/MainActivityTheme"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 
     </application>

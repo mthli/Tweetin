@@ -4,6 +4,14 @@
     <!-- App Info -->
     <string name="app_name">Tweetin</string>
 
+    <!-- User Info -->
+    <string name="sp_name">SP</string>
+    <string name="sp_consumer_key">CONSUMER_KEY</string>
+    <string name="sp_consumer_secret">CONSUMER_SECRET</string>
+    <string name="sp_use_id">USE_ID</string>
+    <string name="sp_access_token">ACCESS_TOKEN</string>
+    <string name="sp_access_token_secret">ACCESS_TOKEN_SECRET</string>
+
     <!-- Splash -->
     <string name="splash_label">Tweetin</string>
     <string name="splash_image_view_cd">Tweetin</string>
@@ -15,13 +23,42 @@
         Haven\'t got a Twitter account?
     </string>
     <string name="splash_sign_up_button">Sign up</string>
-    <string name="splash_sign_in_dialog_username">Username</string>
-    <string name="splash_sign_in_dialog_password">Password</string>
-    <string name="splash_sign_in_dialog_ok">OK</string>
-    <string name="splash_sign_in_dialog_cancel">Cancel</string>
     <string name="splash_sign_up_url">
         https://twitter.com/signup
     </string>
+    <string name="splash_sign_in_dialog_title">Sign in</string>
+    <string name="splash_sign_in_dialog_consumer_key">Consumer Key</string>
+    <string name="splash_sign_in_dialog_consumer_secret">Consumer Secret</string>
+    <string name="splash_sign_in_dialog_pin">Pin</string>
+    <string name="splash_sign_in_dialog_next">Next</string>
+    <string name="splash_sign_in_dialog_accept">Accept</string>
+    <string name="splash_sign_in_dialog_cancel">Cancel</string>
+    <string name="splash_sign_in_dialog_help">Help</string>
+    <string name="splash_sign_in_start_authorization">
+        Start authorization&#8230;
+    </string>
+    <string name="splash_sign_in_get_access_token">
+        Get AccessToken&#8230;
+    </string>
+    <string name="splash_sign_in_miss_oauth">
+        Please complete your OAuth info.
+    </string>
+    <string name="splash_sign_in_miss_pin">
+        Miss Pin value.
+    </string>
+    <string name="splash_sign_in_authorization_failed">
+        Authorization failed.
+    </string>
+    <string name="splash_sign_in_get_access_token_failed">
+        Get AccessToken failed.
+    </string>
+    <string name="splash_sign_in_wait">
+        Wait a moment.
+    </string>
 
+    <!-- Main -->
+    <string name="main_label">Tweetin</string>
+    <string name="main_menu_about">About</string>
+    <string name="main_menu_sign_out">Sign out</string>
 
 </resources>
