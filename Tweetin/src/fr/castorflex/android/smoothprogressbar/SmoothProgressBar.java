@@ -12,6 +12,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ProgressBar;
+import io.github.mthli.Tweetin.R;
 
 /**
  * Created by castorflex on 11/10/13.
