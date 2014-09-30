@@ -2,9 +2,11 @@
 
 <resources>
 
+    <color name="teal_heavy">#00695C</color>
     <color name="teal_default">#009688</color>
-    <color name="teal_heavy">#004D40</color>
-    <color name="teal_light">#B2DFDB</color>
+    <color name="teal_bit">#26A69A</color>
+    <color name="teal_light">#80CBC4</color>
+    <color name="teal_white">#E0F2F1</color>
 
     <color name="dark">#000000</color>
     <color name="white">#FFFFFF</color>

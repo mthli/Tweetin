@@ -10,12 +10,16 @@
         <item name="android:actionBarStyle">@style/TweetinActionBarStyle</item>
         <item name="android:actionOverflowButtonStyle">@style/OverflowIconStyle</item>
     </style>
+    <style name="OverflowIconStyle" parent="android:Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_action_overflow</item>
+    </style>
     <style name="TweetinActionBarStyle" parent="android:Widget.Holo.Light.ActionBar">
         <item name="android:background">@color/teal_default</item>
         <item name="android:actionBarDivider">@null</item>
+        <item name="android:titleTextStyle">@style/TweetinActionBarTitleTextStyle</item>
     </style>
-    <style name="OverflowIconStyle" parent="android:Widget.Holo.Light.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_action_overflow</item>
+    <style name="TweetinActionBarTitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <!-- SmoothProgressBar -->
