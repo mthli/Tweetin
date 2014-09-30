@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!-- PullToRefresh -->
+    <item type="id" name="ptr_content" />
+    <item type="id" name="ptr_text" />
+    <item type="id" name="ptr_progress" />
+
+</resources>

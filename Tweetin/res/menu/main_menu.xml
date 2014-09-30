@@ -2,6 +2,18 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:id="@+id/main_menu_notification"
+          android:title="@string/main_menu_notification"
+          android:icon="@drawable/ic_action_notification"
+          android:showAsAction="always">
+    </item>
+
+    <item android:id="@+id/main_menu_collection"
+          android:title="@string/main_menu_collection"
+          android:icon="@drawable/ic_action_collection"
+          android:showAsAction="always">
+    </item>
+
     <item android:id="@+id/main_menu_about"
           android:title="@string/main_menu_about"
           android:showAsAction="collapseActionView">

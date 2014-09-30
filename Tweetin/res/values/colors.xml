@@ -15,4 +15,12 @@
     <color name="secondary_text">#727272</color>
     <color name="text">#212121</color>
 
+    <!-- ActionItemBadge -->
+    <color name="action_bar_text">#FFFFFF</color>
+    <color name="blue_default">#5677FC</color>
+    <color name="blue_heavy">#2A36B1</color>
+
+    <!-- PullToRefresh -->
+    <color name="ptr_default_color">@color/teal_heavy</color>
+
 </resources>

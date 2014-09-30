@@ -58,7 +58,14 @@
 
     <!-- Main -->
     <string name="main_label">Tweetin</string>
+    <string name="main_menu_notification">Notification</string>
+    <string name="main_menu_collection">Collection</string>
     <string name="main_menu_about">About</string>
     <string name="main_menu_sign_out">Sign out</string>
+
+    <!-- PullToRefresh -->
+    <string name="pull_to_refresh_pull_label">Pull to refresh</string>
+    <string name="pull_to_refresh_release_label">Release to refresh</string>
+    <string name="pull_to_refresh_refreshing_label">Loading</string>
 
 </resources>

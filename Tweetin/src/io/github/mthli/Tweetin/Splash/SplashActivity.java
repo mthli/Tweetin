@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.*;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.wrapp.floatlabelededittext.FloatLabeledEditText;
+import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.R;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -44,6 +46,20 @@ public class SplashActivity extends Activity {
         }
 
         /* Do something */
+        SharedPreferences preferences = getSharedPreferences(
+                getString(R.string.sp_name),
+                MODE_PRIVATE
+        );
+        long useId = preferences.getLong(
+                getString(R.string.sp_use_id),
+                -1
+        );
+        if (useId != -1) {
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            /* Do something */
+            startActivity(intent);
+            finish();
+        }
 
         Button signIn = (Button) findViewById(R.id.splash_sign_in_button);
         signIn.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +94,10 @@ public class SplashActivity extends Activity {
                         break;
                     case SIGN_IN_SECOND_SUCCESSFUL:
                         progressDialog.dismiss();
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                         /* Do something */
+                        startActivity(intent);
+                        finish();
                         break;
                     case SIGN_IN_SECOND_FAILED:
                         progressDialog.dismiss();
@@ -94,6 +113,17 @@ public class SplashActivity extends Activity {
                 super.handleMessage(msg);
             }
         };
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE) {
+            /* Do nothing */
+        }
+        else{
+            /* Do nothing */
+        }
     }
 
     private void showSignUpDialog() {

@@ -89,7 +89,7 @@ public class FloatLabeledEditText extends LinearLayout {
             return;
         }
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.float_labeled_edit_text, this);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fl_edittext, this);
 
         hintTextView = (TextView) view.findViewById(R.id.FloatLabeledEditTextHint);
         editText = (EditText) view.findViewById(R.id.FloatLabeledEditTextEditText);
