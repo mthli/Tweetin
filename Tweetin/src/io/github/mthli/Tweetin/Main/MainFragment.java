@@ -25,7 +25,6 @@ public class MainFragment extends ProgressFragment {
         setContentEmpty(false);
         setContentShown(true);
 
-        /* Do something */
         timeLine = (JazzyListView) view.findViewById(R.id.main_fragment_timeline);
 
         fab = (FloatingActionButton) view.findViewById(

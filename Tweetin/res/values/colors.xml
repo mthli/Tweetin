@@ -20,4 +20,9 @@
     <!-- PullToRefresh -->
     <color name="ptr_default_color">@color/teal_heavy</color>
 
+    <integer-array name="spb_colors">
+        <item>@color/teal_heavy</item>
+        <item>@color/teal_light</item>
+    </integer-array>
+
 </resources>

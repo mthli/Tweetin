@@ -10,7 +10,7 @@
     <com.twotoasters.jazzylistview.JazzyListView
             android:id="@+id/main_fragment_timeline"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:divider="@null"
             app:effect="slide_in"
             app:only_animate_new_items="true"
