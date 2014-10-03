@@ -12,17 +12,13 @@
     <color name="white">#FFFFFF</color>
     <color name="transparent">@android:color/transparent</color>
 
-    <color name="dividers">#DADADA</color>
-    <color name="hint">#B8B8B8</color>
-    <color name="secondary_text">#727272</color>
     <color name="text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="hint">#B8B8B8</color>
+    <color name="dividers">#DADADA</color>
 
-    <!-- PullToRefresh -->
-    <color name="ptr_default_color">@color/teal_heavy</color>
-
-    <integer-array name="spb_colors">
-        <item>@color/teal_heavy</item>
-        <item>@color/teal_light</item>
-    </integer-array>
+    <color name="red_default">#E51C23</color>
+    <color name="orange_default">#ff9800</color>
+    <color name="blue_default">#5677fc</color>
 
 </resources>

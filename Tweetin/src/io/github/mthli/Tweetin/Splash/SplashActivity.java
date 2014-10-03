@@ -33,6 +33,9 @@ public class SplashActivity extends Activity {
     private static final int SIGN_IN_SECOND_FAILED = 0x201;
     private Handler handler;
 
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,18 +48,21 @@ public class SplashActivity extends Activity {
             manager.setTintColor(color);
         }
 
-        /* Do something */
-        SharedPreferences preferences = getSharedPreferences(
+        preferences = getSharedPreferences(
                 getString(R.string.sp_name),
                 MODE_PRIVATE
         );
+        editor = preferences.edit();
         long useId = preferences.getLong(
                 getString(R.string.sp_use_id),
                 -1
         );
         if (useId != -1) {
+            editor.putString(
+                    getString(R.string.sp_is_first_sign_in),
+                    "false"
+            ).commit();
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-            /* Do something */
             startActivity(intent);
             finish();
         }
@@ -94,8 +100,11 @@ public class SplashActivity extends Activity {
                         break;
                     case SIGN_IN_SECOND_SUCCESSFUL:
                         progressDialog.dismiss();
+                        editor.putString(
+                                getString(R.string.sp_is_first_sign_in),
+                                "true"
+                        ).commit();
                         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                        /* Do something */
                         startActivity(intent);
                         finish();
                         break;
@@ -348,24 +357,25 @@ public class SplashActivity extends Activity {
     };
 
     private void saveAccessToken(long useId, AccessToken accessToken) {
-        SharedPreferences preferences = getSharedPreferences(
-                getString(R.string.sp_name),
-                MODE_PRIVATE
-        );
-        SharedPreferences.Editor editor = preferences.edit();
-
         editor.putLong(
                 getString(R.string.sp_use_id),
                 useId
-        );
+        ).commit();
+        editor.putString(
+                getString(R.string.sp_consumer_key),
+                conKey
+        ).commit();
+        editor.putString(
+                getString(R.string.sp_consumer_secret),
+                conSecret
+        ).commit();
         editor.putString(
                 getString(R.string.sp_access_token),
                 accessToken.getToken()
-        );
+        ).commit();
         editor.putString(
                 getString(R.string.sp_access_token_secret),
                 accessToken.getTokenSecret()
-        );
-        editor.commit();
+        ).commit();
     }
 }

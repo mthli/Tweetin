@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
-        android:id="@+id/ptr_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
-    <com.twotoasters.jazzylistview.JazzyListView
-            android:id="@+id/main_fragment_timeline"
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@null"
-            app:effect="slide_in"
-            app:only_animate_new_items="true"
-            app:only_animate_fling="false"
-            app:max_velocity="0">
-    </com.twotoasters.jazzylistview.JazzyListView>
+            android:layout_height="match_parent">
+
+        <com.twotoasters.jazzylistview.JazzyListView
+                android:id="@+id/main_fragment_timeline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                app:effect="slide_in"
+                app:only_animate_new_items="true"
+                app:only_animate_fling="false"
+                app:max_velocity="0">
+        </com.twotoasters.jazzylistview.JazzyListView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <com.melnykov.fab.FloatingActionButton
             android:id="@+id/button_floating_action"
@@ -31,4 +36,4 @@
             app:fab_type="mini">
     </com.melnykov.fab.FloatingActionButton>
 
-</uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
+</FrameLayout>

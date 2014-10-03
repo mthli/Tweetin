@@ -5,7 +5,8 @@
     <string name="app_name">Tweetin</string>
 
     <!-- User Info -->
-    <string name="sp_name">SP</string>
+    <string name="sp_name">SP_FILE</string>
+    <string name="sp_is_first_sign_in">IS_FIRST_SIGN_IN</string>
     <string name="sp_consumer_key">CONSUMER_KEY</string>
     <string name="sp_consumer_secret">CONSUMER_SECRET</string>
     <string name="sp_use_id">USE_ID</string>
@@ -59,13 +60,7 @@
     <!-- Main -->
     <string name="main_label">Tweetin</string>
     <string name="main_menu_notification">Notification</string>
-    <string name="main_menu_collection">Collection</string>
     <string name="main_menu_about">About</string>
     <string name="main_menu_sign_out">Sign out</string>
-
-    <!-- PullToRefresh -->
-    <string name="pull_to_refresh_pull_label">Pull to refresh</string>
-    <string name="pull_to_refresh_release_label">Release to refresh</string>
-    <string name="pull_to_refresh_refreshing_label">Loading</string>
 
 </resources>

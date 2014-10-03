@@ -4,13 +4,7 @@
 
     <item android:id="@+id/main_menu_notification"
           android:title="@string/main_menu_notification"
-          android:icon="@drawable/ic_action_notification_default"
-          android:showAsAction="always">
-    </item>
-
-    <item android:id="@+id/main_menu_collection"
-          android:title="@string/main_menu_collection"
-          android:icon="@drawable/ic_action_collection"
+          android:icon="@drawable/ic_action_notification"
           android:showAsAction="always">
     </item>
 

@@ -2,6 +2,11 @@ package io.github.mthli.Tweetin.Main;
 
 import android.app.ActionBar;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -10,9 +15,37 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import io.github.mthli.Tweetin.R;
 
 public class MainActivity extends FragmentActivity {
-    private ActionBar actionBar;
 
     private MainFragment fragment;
+
+    private MenuItem notification;
+    private Drawable notificationDefault;
+    private Drawable notificationActive;
+
+    private void getNotificationActive() {
+        notificationDefault = getResources().getDrawable(R.drawable.ic_action_notification);
+        Bitmap bitmap = ((BitmapDrawable) notificationDefault).getBitmap();
+        bitmap = bitmap.copy(bitmap.getConfig(), true);
+        Paint paint = new Paint();
+        paint.setColor(getResources().getColor(R.color.red_default));
+        paint.setAntiAlias(true);
+        Canvas canvas = new Canvas(bitmap);
+        canvas.drawCircle(
+                bitmap.getWidth() - 11,
+                bitmap.getHeight() / 5,
+                7,
+                paint
+        );
+        notificationActive = new BitmapDrawable(getResources(), bitmap);
+    }
+
+    public void setNotificationStatus(boolean hasNotification) {
+        if (hasNotification) {
+            notification.setIcon(notificationDefault);
+        } else {
+            notification.setIcon(notificationActive);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,9 +59,10 @@ public class MainActivity extends FragmentActivity {
             manager.setTintColor(color);
         }
 
-        actionBar = getActionBar();
+        ActionBar actionBar = getActionBar();
         actionBar.setTitle(null);
         actionBar.setSubtitle(null);
+        getNotificationActive();
 
         /* Do something */
         fragment = (MainFragment) getSupportFragmentManager().findFragmentById(
@@ -37,30 +71,10 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE) {
-            /* Do nothing */
-        }
-        else{
-            /* Do nothing */
-        }
-    }
-
-    private MenuItem notification;
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        notification = menu.findItem(R.id.main_menu_notification);
+        notification = menu.getItem(0);
         return true;
-    }
-
-    public void setNotificationStatus(boolean hasNotification) {
-        if (hasNotification) {
-            notification.setIcon(R.drawable.ic_action_notification_active);
-        } else {
-            notification.setIcon(R.drawable.ic_action_notification_default);
-        }
     }
 
     int count = 0;
@@ -74,10 +88,6 @@ public class MainActivity extends FragmentActivity {
                     setNotificationStatus(false);
                 }
                 count++;
-                /* Do something */
-                break;
-            case R.id.main_menu_collection:
-                /* Do something */
                 break;
             case R.id.main_menu_about:
                 /* Do something */
@@ -88,5 +98,16 @@ public class MainActivity extends FragmentActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE) {
+            /* Do nothing */
+        }
+        else{
+            /* Do nothing */
+        }
     }
 }
