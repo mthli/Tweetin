@@ -3,13 +3,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="?android:attr/activatedBackgroundIndicator"
+                android:descendantFocusability="blocksDescendants">
 
+    <!-- Do something -->
     <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/tweet_avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             app:border_width="0dp">
     </de.hdodenhof.circleimageview.CircleImageView>
 
@@ -17,12 +24,16 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_alignParentRight="true"
+                  android:paddingTop="10dp"
+                  android:paddingBottom="10dp"
+                  android:layout_marginBottom="10dp"
+                  android:layout_marginRight="15dp"
                   android:layout_toRightOf="@+id/tweet_avatar">
 
         <RelativeLayout android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-            <TextView android:id="@+id/tweet_time"
+            <TextView android:id="@+id/tweet_created_at"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_alignParentRight="true"
@@ -36,20 +47,21 @@
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_alignParentLeft="true"
-                          android:layout_toLeftOf="@id/tweet_time">
+                          android:layout_toLeftOf="@id/tweet_created_at">
 
                 <TextView android:id="@+id/tweet_name"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:textSize="14sp"
-                          android:textColor="@color/secondary_text"
+                          android:textSize="16sp"
+                          android:textColor="@color/teal_800"
                           android:singleLine="true"
                           android:ellipsize="end">
                 </TextView>
 
-                <TextView android:id="@+id/tweet_id"
+                <TextView android:id="@+id/tweet_screen_name"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
+                          android:paddingLeft="5dp"
                           android:textSize="12sp"
                           android:textColor="@color/hint"
                           android:singleLine="true"
@@ -60,14 +72,15 @@
 
         </RelativeLayout>
 
-        <TextView android:id="@+id/tweet_content"
+        <TextView android:id="@+id/tweet_text"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:paddingTop="3dp"
                   android:textColor="@color/text"
                   android:textSize="14sp">
         </TextView>
 
-        <TextView android:id="@+id/tweet_rt_by"
+        <TextView android:id="@+id/tweet_retweeted_by"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:textColor="@color/hint"

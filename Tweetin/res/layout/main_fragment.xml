@@ -3,23 +3,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
              android:layout_width="match_parent"
-             android:layout_height="match_parent">
+             android:layout_height="match_parent"
+             android:background="@color/white">
 
     <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.twotoasters.jazzylistview.JazzyListView
-                android:id="@+id/main_fragment_timeline"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@null"
-                app:effect="slide_in"
-                app:only_animate_new_items="true"
-                app:only_animate_fling="false"
-                app:max_velocity="0">
-        </com.twotoasters.jazzylistview.JazzyListView>
+        <ListView android:id="@+id/main_fragment_timeline"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:divider="@null"
+                  android:background="@color/white">
+        </ListView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -29,9 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_action_write"
-            app:fab_colorNormal="@color/transparent"
-            app:fab_colorPressed="@color/teal_white"
+            android:src="@drawable/ic_action_add"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/teal_50"
             app:fab_shadow="true"
             app:fab_type="mini">
     </com.melnykov.fab.FloatingActionButton>

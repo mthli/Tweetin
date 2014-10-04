@@ -63,4 +63,7 @@
     <string name="main_menu_about">About</string>
     <string name="main_menu_sign_out">Sign out</string>
 
+    <!-- Tweet -->
+    <string name="tweet_date_format">HH:mm MM.dd</string>
+
 </resources>

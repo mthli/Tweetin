@@ -14,7 +14,7 @@
         <item name="android:src">@drawable/ic_action_overflow</item>
     </style>
     <style name="TweetinActionBarStyle" parent="android:Widget.Holo.Light.ActionBar">
-        <item name="android:background">@color/teal_default</item>
+        <item name="android:background">@color/teal_500</item>
         <item name="android:actionBarDivider">@null</item>
         <item name="android:titleTextStyle">@style/TweetinActionBarTitleTextStyle</item>
     </style>

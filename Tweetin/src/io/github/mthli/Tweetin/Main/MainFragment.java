@@ -1,20 +1,17 @@
 package io.github.mthli.Tweetin.Main;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
-import com.twotoasters.jazzylistview.JazzyListView;
 import io.github.mthli.Tweetin.R;
-import twitter4j.Paging;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
-import twitter4j.auth.AccessToken;
+import io.github.mthli.Tweetin.Tweet.Tweet;
+import io.github.mthli.Tweetin.Tweet.TweetAdapter;
+import io.github.mthli.Tweetin.Tweet.TweetTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragment extends ProgressFragment {
@@ -22,9 +19,23 @@ public class MainFragment extends ProgressFragment {
 
     private FloatingActionButton fab;
     private SwipeRefreshLayout srl;
-    private JazzyListView timeLine;
+    public SwipeRefreshLayout getSrl() {
+        return srl;
+    }
 
-    private Twitter twitter;
+    private ListView listView;
+    private TweetAdapter tweetAdapter;
+    private List<Tweet> tweetList = new ArrayList<Tweet>();
+    private TweetTask tweetTask;
+    public TweetAdapter getTweetAdapter() {
+        return tweetAdapter;
+    }
+    public List<Tweet> getTweetList() {
+        return tweetList;
+    }
+    public TweetTask getTweetTask() {
+        return tweetTask;
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -34,20 +45,20 @@ public class MainFragment extends ProgressFragment {
         setContentEmpty(false);
         setContentShown(true);
 
-        timeLine = (JazzyListView) view.findViewById(R.id.main_fragment_timeline);
+        listView = (ListView) view.findViewById(R.id.main_fragment_timeline);
 
         fab = (FloatingActionButton) view.findViewById(
                 R.id.button_floating_action
         );
-        fab.attachToListView(timeLine);
+        fab.attachToListView(listView);
         fab.show();
 
         srl = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         srl.setColorSchemeResources(
-                R.color.red_default,
-                R.color.orange_default,
-                R.color.blue_default,
-                R.color.teal_default
+                R.color.red_500,
+                R.color.orange_500,
+                R.color.blue_500,
+                R.color.teal_500
         );
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -56,41 +67,16 @@ public class MainFragment extends ProgressFragment {
             }
         });
 
-        SharedPreferences preferences = getActivity().getSharedPreferences(
-                getString(R.string.sp_name),
-                Context.MODE_PRIVATE
+        tweetAdapter = new TweetAdapter(
+                view.getContext(),
+                R.layout.tweet,
+                tweetList
         );
-        String conKey = preferences.getString(getString(R.string.sp_consumer_key), null);
-        String conSecret = preferences.getString(getString(R.string.sp_consumer_secret), null);
-        String accToken = preferences.getString(getString(R.string.sp_access_token), null);
-        String accTokenSecret = preferences.getString(getString(R.string.sp_access_token_secret), null);
-        TwitterFactory factory = new TwitterFactory();
-        twitter = factory.getInstance();
-        twitter.setOAuthConsumer(conKey, conSecret);
-        AccessToken token = new AccessToken(accToken, accTokenSecret);
-        twitter.setOAuthAccessToken(token);
+        listView.setAdapter(tweetAdapter);
+        tweetAdapter.notifyDataSetChanged();
 
         /* Do something */
-        // new Thread(test).start();
+        tweetTask = new TweetTask(MainFragment.this);
+        tweetTask.execute();
     }
-
-    Runnable test = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                long sinceId = 517839042969206786L;
-                Paging paging = new Paging(1, 1024, sinceId);
-                List<Status> statusList = twitter.getHomeTimeline(paging);
-                System.out.println("---------------------------------");
-                for (Status status : statusList) {
-                    String text = status.getText();
-                    System.out.println(text);
-                    System.out.println(status.getId());
-                    System.out.println("---------------------------------");
-                }
-            } catch (Exception e){
-                    e.printStackTrace();
-            }
-        }
-    };
 }

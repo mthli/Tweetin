@@ -2,11 +2,11 @@
 
 <resources>
 
-    <color name="teal_heavy">#00695C</color>
-    <color name="teal_default">#009688</color>
-    <color name="teal_bit">#26A69A</color>
-    <color name="teal_light">#80CBC4</color>
-    <color name="teal_white">#E0F2F1</color>
+    <color name="teal_800">#00695C</color>
+    <color name="teal_500">#009688</color>
+    <color name="teal_400">#26A69A</color>
+    <color name="teal_200">#80CBC4</color>
+    <color name="teal_50">#E0F2F1</color>
 
     <color name="dark">#000000</color>
     <color name="white">#FFFFFF</color>
@@ -17,8 +17,8 @@
     <color name="hint">#B8B8B8</color>
     <color name="dividers">#DADADA</color>
 
-    <color name="red_default">#E51C23</color>
-    <color name="orange_default">#ff9800</color>
-    <color name="blue_default">#5677fc</color>
+    <color name="red_500">#E51C23</color>
+    <color name="orange_500">#ff9800</color>
+    <color name="blue_500">#5677fc</color>
 
 </resources>
