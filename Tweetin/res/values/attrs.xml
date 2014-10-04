@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- BaseTheme -->
+    <declare-styleable name="BaseTheme">
+        <attr name="actionBarOverlayTopOffset" format="dimension" />
+        <attr name="actionBarInsetStart" format="dimension" />
+        <attr name="spinnerBarInsetStart" format="dimension" />
+        <attr name="selectableItemBackgroundBorderless" format="dimension" />
+        <attr name="popupItemBackground" format="dimension" />
+    </declare-styleable>
+
     <!-- CircleImageView -->
     <declare-styleable name="CircleImageView">
         <attr name="border_width" format="dimension" />

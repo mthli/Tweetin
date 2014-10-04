@@ -55,10 +55,10 @@ public class MainFragment extends ProgressFragment {
 
         srl = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         srl.setColorSchemeResources(
-                R.color.red_500,
-                R.color.orange_500,
-                R.color.blue_500,
-                R.color.teal_500
+                R.color.pink_500,
+                R.color.light_blue_a400,
+                R.color.indigo_700,
+                R.color.indigo_300
         );
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

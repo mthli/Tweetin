@@ -44,7 +44,7 @@ public class SplashActivity extends Activity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             SystemBarTintManager manager = new SystemBarTintManager(this);
             manager.setStatusBarTintEnabled(true);
-            int color = getResources().getColor(R.color.teal_500);
+            int color = getResources().getColor(R.color.indigo_500);
             manager.setTintColor(color);
         }
 

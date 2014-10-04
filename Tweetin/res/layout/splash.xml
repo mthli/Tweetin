@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/teal_500">
+                android:background="@color/indigo_500">
 
     <LinearLayout android:orientation="vertical"
                   android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                 android:layout_marginRight="80dp"
                 android:background="@drawable/splash_sign_in_button_selector"
                 android:text="@string/splash_sign_in_button"
-                android:textColor="@color/teal_500">
+                android:textColor="@color/indigo_500">
         </Button>
 
         <TextView android:id="@+id/splash_query"

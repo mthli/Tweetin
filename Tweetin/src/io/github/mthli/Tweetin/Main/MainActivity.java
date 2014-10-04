@@ -36,7 +36,7 @@ public class MainActivity extends FragmentActivity {
         Bitmap bitmap = ((BitmapDrawable) notificationDefault).getBitmap();
         bitmap = bitmap.copy(bitmap.getConfig(), true);
         Paint paint = new Paint();
-        paint.setColor(getResources().getColor(R.color.red_500));
+        paint.setColor(getResources().getColor(R.color.pink_500));
         paint.setAntiAlias(true);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawCircle(
@@ -64,7 +64,7 @@ public class MainActivity extends FragmentActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             SystemBarTintManager manager = new SystemBarTintManager(this);
             manager.setStatusBarTintEnabled(true);
-            int color = getResources().getColor(R.color.teal_500);
+            int color = getResources().getColor(R.color.indigo_500);
             manager.setTintColor(color);
         }
 

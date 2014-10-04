@@ -9,6 +9,7 @@ import io.github.mthli.Tweetin.Main.MainFragment;
 import io.github.mthli.Tweetin.R;
 import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.User;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -74,19 +75,31 @@ public class TweetTask extends AsyncTask<Void, Integer, Boolean> {
             );
             for (twitter4j.Status status : statusList) {
                 Tweet tweet = new Tweet();
-                tweet.setTweetId(status.getId());
-                tweet.setUserId(status.getUser().getId());
-                tweet.setAvatarUrl(status.getUser().getBiggerProfileImageURL());
-                tweet.setCreatedAt(format.format(status.getCreatedAt()));
-                tweet.setName(status.getUser().getName());
-                tweet.setScreenName("@" + status.getUser().getScreenName());
-                tweet.setText(status.getText());
-                tweet.setRetweeted(status.isRetweeted());
-                if (status.isRetweeted()) {
-                    tweet.setRetweetedBy("OOOO");
+
+                /* Do something */
+                if (status.isRetweet()) {
+                    User user = status.getRetweetedStatus().getUser();
+                    tweet.setTweetId(status.getId());
+                    tweet.setUserId(user.getId());
+                    tweet.setAvatarUrl(user.getBiggerProfileImageURL());
+                    tweet.setCreatedAt(format.format(status.getCreatedAt()));
+                    tweet.setName(user.getName());
+                    tweet.setScreenName("@" + user.getScreenName());
+                    tweet.setText(status.getRetweetedStatus().getText());
+                    tweet.setRetweeted(status.isRetweet());
+                    tweet.setRetweetedBy(status.getUser().getScreenName());
                 } else {
+                    tweet.setTweetId(status.getId());
+                    tweet.setUserId(status.getUser().getId());
+                    tweet.setAvatarUrl(status.getUser().getBiggerProfileImageURL());
+                    tweet.setCreatedAt(format.format(status.getCreatedAt()));
+                    tweet.setName(status.getUser().getName());
+                    tweet.setScreenName("@" + status.getUser().getScreenName());
+                    tweet.setText(status.getText());
+                    tweet.setRetweeted(status.isRetweet());
                     tweet.setRetweetedBy(null);
                 }
+
                 tweetList.add(tweet);
             }
             tweetAdapter.notifyDataSetChanged();

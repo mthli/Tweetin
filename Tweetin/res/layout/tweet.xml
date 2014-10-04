@@ -13,10 +13,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_margin="15dp"
             app:border_width="0dp">
     </de.hdodenhof.circleimageview.CircleImageView>
 
@@ -53,7 +50,7 @@
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:textSize="16sp"
-                          android:textColor="@color/teal_800"
+                          android:textColor="@color/indigo_700"
                           android:singleLine="true"
                           android:ellipsize="end">
                 </TextView>
@@ -80,11 +77,15 @@
                   android:textSize="14sp">
         </TextView>
 
+        <!-- Do something -->
         <TextView android:id="@+id/tweet_retweeted_by"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:layout_marginTop="3dp"
                   android:textColor="@color/hint"
                   android:textSize="12sp"
+                  android:singleLine="true"
+                  android:ellipsize="end"
                   android:visibility="gone">
         </TextView>
 
