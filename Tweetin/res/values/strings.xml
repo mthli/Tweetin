@@ -65,5 +65,11 @@
 
     <!-- Tweet -->
     <string name="tweet_date_format">HH:mm MM.dd</string>
+    <string name="tweet_retweeted_by_me">Me</string>
+    <string name="tweet_refresh_successful">Refresh successful.</string>
+    <string name="tweet_refresh_failed">Refresh failed.</string>
+    <string name="tweet_get_timeline_failed">
+        Got timeline failed, pull to refresh.
+    </string>
 
 </resources>

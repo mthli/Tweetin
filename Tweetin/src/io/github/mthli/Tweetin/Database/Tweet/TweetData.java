@@ -1,6 +1,31 @@
-package io.github.mthli.Tweetin.Tweet;
+package io.github.mthli.Tweetin.Database.Tweet;
 
-public class Tweet {
+public class TweetData {
+    public static final String TABLE = "TWEET";
+    public static final String TWEET_ID = "TWEET_ID";
+    public static final String USER_ID = "USER_ID";
+    public static final String AVATAR_URL = "AVATAR_URL";
+    public static final String CREATED_AT = "CREATED_AT";
+    public static final String NAME = "NAME";
+    public static final String SCREEN_NAME = "SCREEN_NAME";
+    public static final String TEXT = "TEXT";
+    public static final String RETWEET = "RETWEET";
+    public static final String RETWEETED_BY = "RETWEETED_BY";
+
+    public static final String CREATE_SQL = "CREATE TABLE "
+            + TABLE
+            + " ("
+            + " TWEET_ID integer,"
+            + " USER_ID integer,"
+            + " AVATAR_URL text,"
+            + " CREATED_AT text,"
+            + " NAME text,"
+            + " SCREEN_NAME text,"
+            + " TEXT text,"
+            + " RETWEET text,"
+            + " RETWEETED_BY text"
+            + ")";
+
     private long tweetId;
     private long userId;
     private String avatarUrl;
@@ -8,10 +33,10 @@ public class Tweet {
     private String name;
     private String screenName;
     private String text;
-    private boolean retweet;
+    private String retweet;
     private String retweetedBy;
 
-    public Tweet() {
+    public TweetData() {
         this.tweetId = 0;
         this.userId = 0;
         this.avatarUrl = null;
@@ -19,7 +44,7 @@ public class Tweet {
         this.name = null;
         this.screenName = null;
         this.text = null;
-        this.retweet = false;
+        this.retweet = null;
         this.retweetedBy = null;
     }
 
@@ -72,11 +97,20 @@ public class Tweet {
         this.text = text;
     }
 
+    /* Do something */
     public boolean isRetweet() {
-        return retweet;
+        if (retweet.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
     }
     public void setRetweet(boolean retweet) {
-        this.retweet = retweet;
+        if (retweet) {
+            this.retweet = "true";
+        } else {
+            this.retweet = "false";
+        }
     }
 
     public String getRetweetedBy() {

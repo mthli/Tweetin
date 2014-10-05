@@ -133,4 +133,6 @@ public class MainActivity extends FragmentActivity {
             /* Do nothing */
         }
     }
+
+    /* Do something */
 }

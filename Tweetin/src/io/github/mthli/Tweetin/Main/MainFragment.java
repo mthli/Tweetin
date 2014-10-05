@@ -1,5 +1,6 @@
 package io.github.mthli.Tweetin.Main;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -9,7 +10,8 @@ import com.melnykov.fab.FloatingActionButton;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.Tweet;
 import io.github.mthli.Tweetin.Tweet.TweetAdapter;
-import io.github.mthli.Tweetin.Tweet.TweetTask;
+import io.github.mthli.Tweetin.Tweet.TweetLoadTask;
+import io.github.mthli.Tweetin.Tweet.TweetUpToRefreshTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +28,40 @@ public class MainFragment extends ProgressFragment {
     private ListView listView;
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList = new ArrayList<Tweet>();
-    private TweetTask tweetTask;
     public TweetAdapter getTweetAdapter() {
         return tweetAdapter;
     }
     public List<Tweet> getTweetList() {
         return tweetList;
     }
-    public TweetTask getTweetTask() {
-        return tweetTask;
+
+    private TweetLoadTask tweetLoadTask;
+    private TweetUpToRefreshTask tweetUpToRefreshTask;
+    private int taskFlag = Flag.TWEET_TASK_DIED;
+    public int getTaskFlag() {
+        return taskFlag;
+    }
+    public void setTaskFlag(int taskFlag) {
+        this.taskFlag = taskFlag;
+    }
+
+    public boolean isSomeTaskAlive() {
+        if (
+                (tweetLoadTask != null && tweetLoadTask.getStatus() == AsyncTask.Status.RUNNING) ||
+                        (tweetUpToRefreshTask != null && tweetUpToRefreshTask.getStatus() == AsyncTask.Status.RUNNING)
+                ) {
+            return true;
+        }
+        return false;
+    }
+
+    public void allTaskDown() {
+        if (tweetLoadTask != null && tweetLoadTask.getStatus() == AsyncTask.Status.RUNNING) {
+            tweetLoadTask.cancel(true);
+        }
+        if (tweetUpToRefreshTask != null && tweetUpToRefreshTask.getStatus() == AsyncTask.Status.RUNNING) {
+            tweetUpToRefreshTask.cancel(true);
+        }
     }
 
     @Override
@@ -63,7 +90,8 @@ public class MainFragment extends ProgressFragment {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                /* Do something */
+                tweetLoadTask = new TweetLoadTask(MainFragment.this, true);
+                tweetLoadTask.execute();
             }
         });
 
@@ -76,7 +104,7 @@ public class MainFragment extends ProgressFragment {
         tweetAdapter.notifyDataSetChanged();
 
         /* Do something */
-        tweetTask = new TweetTask(MainFragment.this);
-        tweetTask.execute();
+        tweetLoadTask = new TweetLoadTask(MainFragment.this, false);
+        tweetLoadTask.execute();
     }
 }

@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import io.github.mthli.Tweetin.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class TweetAdapter extends ArrayAdapter<Tweet> {
@@ -37,6 +39,21 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         TextView screenName;
         TextView text;
         TextView retweetedBy;
+    }
+
+    private String getShortCreatedAt(String createdAt) {
+        SimpleDateFormat format = new SimpleDateFormat(
+                context.getString(R.string.tweet_date_format)
+        );
+        Date date = new Date();
+        String str = format.format(date);
+        String[] arrD = str.split(" ");
+        String[] arrC = createdAt.split(" ");
+        if (arrD[1].equals(arrC[1])) {
+            return arrC[0];
+        } else {
+            return createdAt;
+        }
     }
 
     @Override
@@ -72,17 +89,21 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                 .crossFade()
                 .into(holder.avatar);
 
+        /* Do something */
         holder.avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /* Do something */
             }
         });
-        holder.createdAt.setText(tweet.getCreatedAt());
+
+        holder.createdAt.setText(
+                getShortCreatedAt(tweet.getCreatedAt())
+        );
         holder.name.setText(tweet.getName());
         holder.screenName.setText(tweet.getScreenName());
         holder.text.setText(tweet.getText());
-        if (tweet.isRetweeted()) {
+        if (tweet.isRetweet()) {
             holder.retweetedBy.setText(tweet.getRetweetedBy());
             holder.retweetedBy.setVisibility(View.VISIBLE);
         } else {

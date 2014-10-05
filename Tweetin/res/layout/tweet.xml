@@ -7,7 +7,6 @@
                 android:background="?android:attr/activatedBackgroundIndicator"
                 android:descendantFocusability="blocksDescendants">
 
-    <!-- Do something -->
     <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/tweet_avatar"
             android:layout_width="40dp"
@@ -72,21 +71,22 @@
         <TextView android:id="@+id/tweet_text"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:paddingTop="3dp"
+                  android:paddingTop="2dp"
                   android:textColor="@color/text"
                   android:textSize="14sp">
         </TextView>
 
-        <!-- Do something -->
         <TextView android:id="@+id/tweet_retweeted_by"
-                  android:layout_width="match_parent"
+                  android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_marginTop="3dp"
+                  android:visibility="gone"
+                  android:paddingTop="2dp"
+                  android:drawableLeft="@drawable/ic_retweeted_by"
+                  android:drawablePadding="1dp"
                   android:textColor="@color/hint"
                   android:textSize="12sp"
                   android:singleLine="true"
-                  android:ellipsize="end"
-                  android:visibility="gone">
+                  android:ellipsize="end">
         </TextView>
 
     </LinearLayout>
