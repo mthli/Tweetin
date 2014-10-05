@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import io.github.mthli.Tweetin.Database.Tweet.TweetAction;
 import io.github.mthli.Tweetin.Database.Tweet.TweetData;
-import io.github.mthli.Tweetin.Main.Flag;
+import io.github.mthli.Tweetin.Unit.TaskFlag;
 import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.Main.MainFragment;
 import io.github.mthli.Tweetin.R;
@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TweetLoadTask extends AsyncTask<Void, Integer, Boolean> {
+public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
     private MainFragment mainFragment;
     private Context context;
 
@@ -32,7 +32,7 @@ public class TweetLoadTask extends AsyncTask<Void, Integer, Boolean> {
     private List<Tweet> tweetList;
     private List<TweetData> tweetDataList = new ArrayList<TweetData>();
 
-    public TweetLoadTask(
+    public TweetInitTask(
             MainFragment mainFragment,
             boolean isPullToRefresh
     ) {
@@ -49,10 +49,10 @@ public class TweetLoadTask extends AsyncTask<Void, Integer, Boolean> {
         tweetList = mainFragment.getTweetList();
 
         /* Do something */
-        if (mainFragment.getTaskFlag() == Flag.TWEET_TASK_ALIVE) {
+        if (mainFragment.getTaskFlag() == TaskFlag.TWEET_TASK_ALIVE) {
             onCancelled();
         } else {
-            mainFragment.setTaskFlag(Flag.TWEET_TASK_ALIVE);
+            mainFragment.setTaskFlag(TaskFlag.TWEET_TASK_ALIVE);
         }
 
         if (!isPullToRefresh) {
@@ -208,6 +208,6 @@ public class TweetLoadTask extends AsyncTask<Void, Integer, Boolean> {
                 srl.setRefreshing(false);
             }
         }
-        mainFragment.setTaskFlag(Flag.TWEET_TASK_DIED);
+        mainFragment.setTaskFlag(TaskFlag.TWEET_TASK_DIED);
     }
 }

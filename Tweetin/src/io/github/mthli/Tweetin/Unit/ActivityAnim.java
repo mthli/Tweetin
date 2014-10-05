@@ -1,9 +1,9 @@
-package io.github.mthli.Tweetin.AnimUnit;
+package io.github.mthli.Tweetin.Unit;
 
 import android.app.Activity;
 import io.github.mthli.Tweetin.R;
 
-public class AnimUnit {
+public class ActivityAnim {
 	public void flipHorizontal(Activity a) {
 		a.overridePendingTransition(R.anim.flip_horizontal_in, R.anim.flip_horizontal_out);
 	}

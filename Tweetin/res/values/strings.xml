@@ -69,7 +69,10 @@
     <string name="tweet_refresh_successful">Refresh successful.</string>
     <string name="tweet_refresh_failed">Refresh failed.</string>
     <string name="tweet_get_timeline_failed">
-        Got timeline failed, pull to refresh.
+        Get timeline failed, pull to refresh.
+    </string>
+    <string name="tweet_get_more_data_failed">
+        Get more data failed.
     </string>
 
 </resources>

@@ -36,7 +36,7 @@ public class MainActivity extends FragmentActivity {
         Bitmap bitmap = ((BitmapDrawable) notificationDefault).getBitmap();
         bitmap = bitmap.copy(bitmap.getConfig(), true);
         Paint paint = new Paint();
-        paint.setColor(getResources().getColor(R.color.pink_500));
+        paint.setColor(getResources().getColor(R.color.red_500));
         paint.setAntiAlias(true);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawCircle(

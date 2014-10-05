@@ -4,7 +4,6 @@
                 xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?android:attr/activatedBackgroundIndicator"
                 android:descendantFocusability="blocksDescendants">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -49,7 +48,7 @@
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:textSize="16sp"
-                          android:textColor="@color/indigo_700"
+                          android:textColor="@color/text"
                           android:singleLine="true"
                           android:ellipsize="end">
                 </TextView>

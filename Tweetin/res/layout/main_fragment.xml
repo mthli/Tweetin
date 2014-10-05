@@ -16,7 +16,6 @@
                   android:layout_height="match_parent"
                   android:divider="@null"
                   android:scrollbars="none"
-                  android:fadingEdge="none"
                   android:background="@color/white">
         </ListView>
 
@@ -30,7 +29,7 @@
             android:layout_margin="16dp"
             android:src="@drawable/ic_action_add"
             app:fab_colorNormal="@color/white"
-            app:fab_colorPressed="@color/indigo_50"
+            app:fab_colorPressed="@color/grey_50"
             app:fab_shadow="true"
             app:fab_type="mini">
     </com.melnykov.fab.FloatingActionButton>

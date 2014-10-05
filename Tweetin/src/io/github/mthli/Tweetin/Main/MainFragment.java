@@ -4,14 +4,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.Tweet;
 import io.github.mthli.Tweetin.Tweet.TweetAdapter;
-import io.github.mthli.Tweetin.Tweet.TweetLoadTask;
-import io.github.mthli.Tweetin.Tweet.TweetUpToRefreshTask;
+import io.github.mthli.Tweetin.Tweet.TweetInitTask;
+import io.github.mthli.Tweetin.Tweet.TweetMoreTask;
+import io.github.mthli.Tweetin.Unit.TaskFlag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +37,9 @@ public class MainFragment extends ProgressFragment {
         return tweetList;
     }
 
-    private TweetLoadTask tweetLoadTask;
-    private TweetUpToRefreshTask tweetUpToRefreshTask;
-    private int taskFlag = Flag.TWEET_TASK_DIED;
+    private TweetInitTask tweetInitTask;
+    private TweetMoreTask tweetMoreTask;
+    private int taskFlag = TaskFlag.TWEET_TASK_DIED;
     public int getTaskFlag() {
         return taskFlag;
     }
@@ -46,23 +48,23 @@ public class MainFragment extends ProgressFragment {
     }
 
     public boolean isSomeTaskAlive() {
-        if (
-                (tweetLoadTask != null && tweetLoadTask.getStatus() == AsyncTask.Status.RUNNING) ||
-                        (tweetUpToRefreshTask != null && tweetUpToRefreshTask.getStatus() == AsyncTask.Status.RUNNING)
-                ) {
+        if ((tweetInitTask != null && tweetInitTask.getStatus() == AsyncTask.Status.RUNNING)
+                || (tweetMoreTask != null && tweetMoreTask.getStatus() == AsyncTask.Status.RUNNING)) {
             return true;
         }
         return false;
     }
 
     public void allTaskDown() {
-        if (tweetLoadTask != null && tweetLoadTask.getStatus() == AsyncTask.Status.RUNNING) {
-            tweetLoadTask.cancel(true);
+        if (tweetInitTask != null && tweetInitTask.getStatus() == AsyncTask.Status.RUNNING) {
+            tweetInitTask.cancel(true);
         }
-        if (tweetUpToRefreshTask != null && tweetUpToRefreshTask.getStatus() == AsyncTask.Status.RUNNING) {
-            tweetUpToRefreshTask.cancel(true);
+        if (tweetMoreTask != null && tweetMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
+            tweetMoreTask.cancel(true);
         }
     }
+
+    private boolean isMoveToButton = false;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -73,6 +75,13 @@ public class MainFragment extends ProgressFragment {
         setContentShown(true);
 
         listView = (ListView) view.findViewById(R.id.main_fragment_timeline);
+        tweetAdapter = new TweetAdapter(
+                view.getContext(),
+                R.layout.tweet,
+                tweetList
+        );
+        listView.setAdapter(tweetAdapter);
+        tweetAdapter.notifyDataSetChanged();
 
         fab = (FloatingActionButton) view.findViewById(
                 R.id.button_floating_action
@@ -82,29 +91,51 @@ public class MainFragment extends ProgressFragment {
 
         srl = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         srl.setColorSchemeResources(
-                R.color.pink_500,
-                R.color.light_blue_a400,
-                R.color.indigo_700,
-                R.color.indigo_300
+                R.color.tumblr_ptr_red,
+                R.color.tumblr_ptr_yellow,
+                R.color.tumblr_ptr_blue,
+                R.color.tumblr_ptr_green
         );
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                tweetLoadTask = new TweetLoadTask(MainFragment.this, true);
-                tweetLoadTask.execute();
+                tweetInitTask = new TweetInitTask(MainFragment.this, true);
+                tweetInitTask.execute();
             }
         });
 
-        tweetAdapter = new TweetAdapter(
-                view.getContext(),
-                R.layout.tweet,
-                tweetList
-        );
-        listView.setAdapter(tweetAdapter);
-        tweetAdapter.notifyDataSetChanged();
+        tweetInitTask = new TweetInitTask(MainFragment.this, false);
+        tweetInitTask.execute();
 
-        /* Do something */
-        tweetLoadTask = new TweetLoadTask(MainFragment.this, false);
-        tweetLoadTask.execute();
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private int previous = 0;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    /* Do nothing */
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (previous < firstVisibleItem) {
+                    isMoveToButton = true;
+                    fab.hide();
+                }
+                if (previous > firstVisibleItem) {
+                    isMoveToButton = false;
+                    fab.show();
+                }
+                previous = firstVisibleItem;
+
+                if (totalItemCount == firstVisibleItem + visibleItemCount) {
+                    if (!isSomeTaskAlive() && isMoveToButton) {
+                        tweetMoreTask = new TweetMoreTask(MainFragment.this);
+                        tweetMoreTask.execute();
+                    }
+                }
+            }
+        });
     }
 }
