@@ -13,7 +13,7 @@ public class NotificationTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
         /* Do something */
-        return false;
+        return true;
     }
 
     @Override

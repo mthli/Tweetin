@@ -32,13 +32,17 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         this.tweetList = tweetList;
     }
 
-    private class Holder {
+    public class Holder {
         ImageView avatar;
         TextView createdAt;
         TextView name;
         TextView screenName;
         TextView text;
         TextView retweetedBy;
+    }
+    private Holder holder;
+    public Holder getHolder() {
+        return holder;
     }
 
     private String getShortCreatedAt(String createdAt) {
@@ -62,7 +66,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             final View convertView,
             ViewGroup viewGroup
     ) {
-        Holder holder;
         View view = convertView;
 
         if (view == null) {
@@ -83,7 +86,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 
         Tweet tweet = tweetList.get(position);
 
-        /* Do something */
         Glide.with(context)
                 .load(tweet.getAvatarUrl())
                 .crossFade()

@@ -21,6 +21,8 @@
         <item name="android:actionOverflowButtonStyle">@style/OverflowIconStyle</item>
         <item name="android:actionBarStyle">@style/ActionBarStyle</item>
         <item name="android:actionDropDownStyle">@style/ActionDropDownStyle</item>
+        
+        <item name="android:listViewStyle">@style/ListViewStyle</item>
 
         <item name="android:editTextBackground">@drawable/edittext</item>
         <item name="android:editTextStyle">@style/EditTextStyle</item>
@@ -71,6 +73,15 @@
         <item name="android:listSelector">?popupItemBackground</item>
         <item name="android:divider">@null</item>
         <item name="android:dividerHeight">0dp</item>
+    </style>
+
+    <!-- ListViewStyle -->
+    <style name="ListViewStyle" parent="android:Widget.Holo.Light.ListView">
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:background">@color/white</item>
     </style>
 
     <!-- TextAppearanceLargePopupMenu -->

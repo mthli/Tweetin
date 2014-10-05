@@ -74,5 +74,11 @@
     <string name="tweet_get_more_data_failed">
         Get more data failed.
     </string>
+    <string name="tweet_menu_item_reply">Reply</string>
+    <string name="tweet_menu_item_retweet">Retweet</string>
+    <string name="tweet_menu_item_retweet_with_comment">Retweet with comment</string>
+    <string name="tweet_menu_item_copy">Copy</string>
+    <string name="tweet_copy_label">Tweet</string>
+    <string name="tweet_copy_successful">Copy successful.</string>
 
 </resources>

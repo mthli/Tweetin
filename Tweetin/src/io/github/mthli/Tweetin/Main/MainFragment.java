@@ -1,11 +1,14 @@
 package io.github.mthli.Tweetin.Main;
 
+import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.ListView;
+import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
 import io.github.mthli.Tweetin.R;
@@ -13,6 +16,7 @@ import io.github.mthli.Tweetin.Tweet.Tweet;
 import io.github.mthli.Tweetin.Tweet.TweetAdapter;
 import io.github.mthli.Tweetin.Tweet.TweetInitTask;
 import io.github.mthli.Tweetin.Tweet.TweetMoreTask;
+import io.github.mthli.Tweetin.Unit.ContextMenuAdapter;
 import io.github.mthli.Tweetin.Unit.TaskFlag;
 
 import java.util.ArrayList;
@@ -21,6 +25,7 @@ import java.util.List;
 public class MainFragment extends ProgressFragment {
     private View view;
 
+    private boolean isMoveToButton = false;
     private FloatingActionButton fab;
     private SwipeRefreshLayout srl;
     public SwipeRefreshLayout getSrl() {
@@ -54,7 +59,6 @@ public class MainFragment extends ProgressFragment {
         }
         return false;
     }
-
     public void allTaskDown() {
         if (tweetInitTask != null && tweetInitTask.getStatus() == AsyncTask.Status.RUNNING) {
             tweetInitTask.cancel(true);
@@ -64,7 +68,80 @@ public class MainFragment extends ProgressFragment {
         }
     }
 
-    private boolean isMoveToButton = false;
+    private void clip(int location) {
+        ClipboardManager manager = (ClipboardManager) view.getContext()
+                .getSystemService(Context.CLIPBOARD_SERVICE);
+        String text = tweetList.get(location).getText();
+        ClipData data = ClipData.newPlainText(
+                getString(R.string.tweet_copy_label),
+                text
+        );
+        manager.setPrimaryClip(data);
+        Toast.makeText(
+                view.getContext(),
+                R.string.tweet_copy_successful,
+                Toast.LENGTH_SHORT
+        ).show();
+    }
+    /* Do something */
+    private void showItemLongClickDialog(final int location) {
+        LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(
+                R.layout.context_menu,
+                null
+        );
+        ListView menu = (ListView) layout.findViewById(R.id.context_menu);
+        List<String> menuItem = new ArrayList<String>();
+        menuItem.add(view.getContext().getString(R.string.tweet_menu_item_reply));
+        menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet));
+        menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet_with_comment));
+        menuItem.add(view.getContext().getString(R.string.tweet_menu_item_copy));
+        ContextMenuAdapter adapter = new ContextMenuAdapter(
+                view.getContext(),
+                R.layout.context_menu_item,
+                menuItem
+        );
+        menu.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setView(layout);
+        builder.setCancelable(true);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        /* Do something */
+                        dialog.hide();
+                        dialog.dismiss();
+                        break;
+                    case 1:
+                        /* Do something */
+                        dialog.hide();
+                        dialog.dismiss();
+                        break;
+                    case 2:
+                        /* Do something */
+                        dialog.hide();
+                        dialog.dismiss();
+                        break;
+                    case 3:
+                        /* Do something */
+                        clip(location);
+                        dialog.hide();
+                        dialog.dismiss();
+                        break;
+                    default:
+                        dialog.hide();
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        });
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -107,6 +184,22 @@ public class MainFragment extends ProgressFragment {
         tweetInitTask = new TweetInitTask(MainFragment.this, false);
         tweetInitTask.execute();
 
+        /* Do something */
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /* Do something */
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                showItemLongClickDialog(position);
+                return true;
+            }
+        });
+
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             private int previous = 0;
 
@@ -137,5 +230,7 @@ public class MainFragment extends ProgressFragment {
                 }
             }
         });
+
+
     }
 }
