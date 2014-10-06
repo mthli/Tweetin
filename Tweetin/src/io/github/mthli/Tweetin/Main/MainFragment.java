@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,18 +13,17 @@ import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Tweet.Tweet;
-import io.github.mthli.Tweetin.Tweet.TweetAdapter;
-import io.github.mthli.Tweetin.Tweet.TweetInitTask;
-import io.github.mthli.Tweetin.Tweet.TweetMoreTask;
+import io.github.mthli.Tweetin.Tweet.*;
 import io.github.mthli.Tweetin.Unit.ContextMenuAdapter;
-import io.github.mthli.Tweetin.Unit.TaskFlag;
+import io.github.mthli.Tweetin.Unit.Flag;
+import twitter4j.Status;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragment extends ProgressFragment {
     private View view;
+    private long useId = 0;
 
     private boolean isMoveToButton = false;
     private FloatingActionButton fab;
@@ -32,7 +32,6 @@ public class MainFragment extends ProgressFragment {
         return srl;
     }
 
-    private ListView listView;
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList = new ArrayList<Tweet>();
     public TweetAdapter getTweetAdapter() {
@@ -44,12 +43,15 @@ public class MainFragment extends ProgressFragment {
 
     private TweetInitTask tweetInitTask;
     private TweetMoreTask tweetMoreTask;
-    private int taskFlag = TaskFlag.TWEET_TASK_DIED;
-    public int getTaskFlag() {
-        return taskFlag;
+    private TweetRetweetTask tweetRetweetTask;
+    private TweetCancelTask tweetCancelTask;
+    private TweetDeleteTask tweetDeleteTask;
+    private int refreshFlag = Flag.TWEET_TASK_DIED;
+    public int getRefreshFlag() {
+        return refreshFlag;
     }
-    public void setTaskFlag(int taskFlag) {
-        this.taskFlag = taskFlag;
+    public void setRefreshFlag(int refreshFlag) {
+        this.refreshFlag = refreshFlag;
     }
 
     public boolean isSomeTaskAlive() {
@@ -65,6 +67,15 @@ public class MainFragment extends ProgressFragment {
         }
         if (tweetMoreTask != null && tweetMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
             tweetMoreTask.cancel(true);
+        }
+        if (tweetRetweetTask != null && tweetRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
+            tweetRetweetTask.cancel(true);
+        }
+        if (tweetCancelTask != null && tweetCancelTask.getStatus() == AsyncTask.Status.RUNNING) {
+            tweetCancelTask.cancel(true);
+        }
+        if (tweetDeleteTask != null && tweetDeleteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            tweetDeleteTask.cancel(true);
         }
     }
 
@@ -83,7 +94,14 @@ public class MainFragment extends ProgressFragment {
                 Toast.LENGTH_SHORT
         ).show();
     }
-    /* Do something */
+
+    private List<Status> statusList;
+    public List<Status> getStatusList() {
+        return statusList;
+    }
+    public void setStatusList(List<Status> statusList) {
+        this.statusList = statusList;
+    }
     private void showItemLongClickDialog(final int location) {
         LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(
                 R.layout.context_menu,
@@ -91,10 +109,28 @@ public class MainFragment extends ProgressFragment {
         );
         ListView menu = (ListView) layout.findViewById(R.id.context_menu);
         List<String> menuItem = new ArrayList<String>();
-        menuItem.add(view.getContext().getString(R.string.tweet_menu_item_reply));
-        menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet));
-        menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet_with_comment));
-        menuItem.add(view.getContext().getString(R.string.tweet_menu_item_copy));
+
+        Status status = statusList.get(location);
+        final int flag;
+        if (status.isRetweetedByMe() || status.isRetweeted()) {
+            flag = Flag.TWEET_STATUS_RETWEET_BY_ME;
+            menuItem.add(view.getContext().getString(R.string.tweet_menu_item_reply));
+            menuItem.add(view.getContext().getString(R.string.tweet_menu_item_cancel_retweet));
+            menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet_with_comment));
+            menuItem.add(view.getContext().getString(R.string.tweet_menu_item_copy));
+        } else {
+            menuItem.add(view.getContext().getString(R.string.tweet_menu_item_reply));
+            if (status.getUser().getId() == useId) {
+                flag = Flag.TWEET_STATUS_POST_BY_ME;
+                menuItem.add(view.getContext().getString(R.string.tweet_menu_item_delete));
+            } else {
+                flag = Flag.TWEET_STATUS_NONE;
+                menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet));
+            }
+            menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet_with_comment));
+            menuItem.add(view.getContext().getString(R.string.tweet_menu_item_copy));
+        }
+
         ContextMenuAdapter adapter = new ContextMenuAdapter(
                 view.getContext(),
                 R.layout.context_menu_item,
@@ -103,7 +139,7 @@ public class MainFragment extends ProgressFragment {
         menu.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setView(layout);
         builder.setCancelable(true);
         final AlertDialog dialog = builder.create();
@@ -119,7 +155,31 @@ public class MainFragment extends ProgressFragment {
                         dialog.dismiss();
                         break;
                     case 1:
-                        /* Do something */
+                        switch (flag) {
+                            case Flag.TWEET_STATUS_RETWEET_BY_ME:
+                                tweetCancelTask = new TweetCancelTask(
+                                        MainFragment.this,
+                                        location
+                                );
+                                tweetCancelTask.execute();
+                                break;
+                            case Flag.TWEET_STATUS_POST_BY_ME:
+                                tweetDeleteTask = new TweetDeleteTask(
+                                        MainFragment.this,
+                                        location
+                                );
+                                tweetDeleteTask.execute();
+                                break;
+                            case Flag.TWEET_STATUS_NONE:
+                                tweetRetweetTask = new TweetRetweetTask(
+                                        MainFragment.this,
+                                        location
+                                );
+                                tweetRetweetTask.execute();
+                                break;
+                            default:
+                                break;
+                        }
                         dialog.hide();
                         dialog.dismiss();
                         break;
@@ -129,14 +189,11 @@ public class MainFragment extends ProgressFragment {
                         dialog.dismiss();
                         break;
                     case 3:
-                        /* Do something */
                         clip(location);
                         dialog.hide();
                         dialog.dismiss();
                         break;
                     default:
-                        dialog.hide();
-                        dialog.dismiss();
                         break;
                 }
             }
@@ -151,7 +208,13 @@ public class MainFragment extends ProgressFragment {
         setContentEmpty(false);
         setContentShown(true);
 
-        listView = (ListView) view.findViewById(R.id.main_fragment_timeline);
+        SharedPreferences preferences = getActivity().getSharedPreferences(
+                getString(R.string.sp_name),
+                Context.MODE_PRIVATE
+        );
+        useId = preferences.getLong(getString(R.string.sp_use_id), 0);
+
+        ListView listView = (ListView) view.findViewById(R.id.main_fragment_timeline);
         tweetAdapter = new TweetAdapter(
                 view.getContext(),
                 R.layout.tweet,

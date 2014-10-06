@@ -32,17 +32,13 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         this.tweetList = tweetList;
     }
 
-    public class Holder {
+    private class Holder {
         ImageView avatar;
         TextView createdAt;
         TextView name;
         TextView screenName;
         TextView text;
         TextView retweetedBy;
-    }
-    private Holder holder;
-    public Holder getHolder() {
-        return holder;
     }
 
     private String getShortCreatedAt(String createdAt) {
@@ -66,6 +62,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             final View convertView,
             ViewGroup viewGroup
     ) {
+        Holder holder;
         View view = convertView;
 
         if (view == null) {

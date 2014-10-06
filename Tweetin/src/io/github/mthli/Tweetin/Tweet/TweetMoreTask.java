@@ -4,14 +4,13 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Unit.TaskFlag;
+import io.github.mthli.Tweetin.Unit.Flag;
 import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.Main.MainFragment;
 import twitter4j.Paging;
 import twitter4j.Twitter;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
@@ -23,7 +22,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
-    private List<twitter4j.Status> statusList = new ArrayList<twitter4j.Status>();
+    private List<twitter4j.Status> statusList;
 
     public TweetMoreTask(MainFragment mainFragment) {
         this.mainFragment = mainFragment;
@@ -37,22 +36,24 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
         tweetAdapter = mainFragment.getTweetAdapter();
         tweetList = mainFragment.getTweetList();
+        statusList = mainFragment.getStatusList();
 
-        if (mainFragment.getTaskFlag() == TaskFlag.TWEET_TASK_ALIVE) {
+        if (mainFragment.getRefreshFlag() == Flag.TWEET_TASK_ALIVE) {
             onCancelled();
         } else {
-            mainFragment.setTaskFlag(TaskFlag.TWEET_TASK_ALIVE);
+            mainFragment.setRefreshFlag(Flag.TWEET_TASK_ALIVE);
         }
 
         srl.setRefreshing(true);
     }
 
+    private List<twitter4j.Status> statuses;
     private static int count = 2;
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
             Paging paging = new Paging(count, 50);
-            statusList = twitter.getHomeTimeline(paging);
+            statuses = twitter.getHomeTimeline(paging);
             count++;
         } catch (Exception e) {
             return false;
@@ -80,7 +81,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
             SimpleDateFormat format = new SimpleDateFormat(
                     context.getString(R.string.tweet_date_format)
             );
-            for (twitter4j.Status status : statusList) {
+            for (twitter4j.Status status : statuses) {
                 Tweet tweet = new Tweet();
                 if (status.isRetweet()) {
                     tweet.setTweetId(status.getId());
@@ -109,15 +110,16 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setRetweet(status.isRetweet());
                     tweet.setRetweetedBy(null);
                 }
-                if (status.isRetweetedByMe()) {
-                    tweet.setRetweet(status.isRetweetedByMe());
+                if (status.isRetweetedByMe() || status.isRetweeted()) {
+                    tweet.setRetweet(true);
                     tweet.setRetweetedBy(context.getString(R.string.tweet_retweeted_by_me));
                 }
                 tweetList.add(tweet);
+                statusList.add(status);
             }
             tweetAdapter.notifyDataSetChanged();
         }
         srl.setRefreshing(false);
-        mainFragment.setTaskFlag(TaskFlag.TWEET_TASK_DIED);
+        mainFragment.setRefreshFlag(Flag.TWEET_TASK_DIED);
     }
 }

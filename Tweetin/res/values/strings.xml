@@ -27,9 +27,15 @@
     <string name="splash_sign_up_url">
         https://twitter.com/signup
     </string>
-    <string name="splash_sign_in_dialog_title">Sign in</string>
-    <string name="splash_sign_in_dialog_consumer_key">Consumer Key</string>
-    <string name="splash_sign_in_dialog_consumer_secret">Consumer Secret</string>
+    <string name="splash_sign_in_dialog_title">
+        Sign in
+    </string>
+    <string name="splash_sign_in_dialog_consumer_key">
+        Consumer Key
+    </string>
+    <string name="splash_sign_in_dialog_consumer_secret">
+        Consumer Secret
+    </string>
     <string name="splash_sign_in_dialog_pin">Pin</string>
     <string name="splash_sign_in_dialog_next">Next</string>
     <string name="splash_sign_in_dialog_accept">Accept</string>
@@ -61,13 +67,21 @@
     <string name="main_label">Tweetin</string>
     <string name="main_menu_notification">Notification</string>
     <string name="main_menu_about">About</string>
-    <string name="main_menu_sign_out">Sign out</string>
+    <string name="main_menu_sign_out">
+        Sign out
+    </string>
 
     <!-- Tweet -->
-    <string name="tweet_date_format">HH:mm MM.dd</string>
+    <string name="tweet_date_format">
+        HH:mm MM.dd
+    </string>
     <string name="tweet_retweeted_by_me">Me</string>
-    <string name="tweet_refresh_successful">Refresh successful.</string>
-    <string name="tweet_refresh_failed">Refresh failed.</string>
+    <string name="tweet_refresh_successful">
+        Refresh successful.
+    </string>
+    <string name="tweet_refresh_failed">
+        Refresh failed.
+    </string>
     <string name="tweet_get_timeline_failed">
         Get timeline failed, pull to refresh.
     </string>
@@ -76,9 +90,38 @@
     </string>
     <string name="tweet_menu_item_reply">Reply</string>
     <string name="tweet_menu_item_retweet">Retweet</string>
-    <string name="tweet_menu_item_retweet_with_comment">Retweet with comment</string>
+    <string name="tweet_menu_item_delete">Delete</string>
+    <string name="tweet_menu_item_cancel_retweet">
+        Cancel retweet
+    </string>
+    <string name="tweet_menu_item_retweet_with_comment">
+        Retweet with comment
+    </string>
     <string name="tweet_menu_item_copy">Copy</string>
     <string name="tweet_copy_label">Tweet</string>
-    <string name="tweet_copy_successful">Copy successful.</string>
+    <string name="tweet_copy_successful">
+        Copy successful.
+    </string>
+    <string name="tweet_retweet_successful">
+        Retweet successful.
+    </string>
+    <string name="tweet_retweet_failed">
+        Retweet failed.
+    </string>
+    <string name="tweet_retweet_already">
+        You have already retweeted this.
+    </string>
+    <string name="tweet_cancel_retweet_successful">
+        Cancel retweet successful.
+    </string>
+    <string name="tweet_cancel_retweet_failed">
+        Cancel retweet failed.
+    </string>
+    <string name="tweet_delete_successful">
+        Delete successful.
+    </string>
+    <string name="tweet_delete_failed">
+        Delete failed.
+    </string>
 
 </resources>

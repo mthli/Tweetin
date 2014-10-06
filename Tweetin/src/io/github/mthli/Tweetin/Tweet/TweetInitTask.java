@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import io.github.mthli.Tweetin.Database.Tweet.TweetAction;
 import io.github.mthli.Tweetin.Database.Tweet.TweetData;
-import io.github.mthli.Tweetin.Unit.TaskFlag;
+import io.github.mthli.Tweetin.Unit.Flag;
 import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.Main.MainFragment;
 import io.github.mthli.Tweetin.R;
@@ -49,16 +49,17 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
         tweetList = mainFragment.getTweetList();
 
         /* Do something */
-        if (mainFragment.getTaskFlag() == TaskFlag.TWEET_TASK_ALIVE) {
+        if (mainFragment.getRefreshFlag() == Flag.TWEET_TASK_ALIVE) {
             onCancelled();
         } else {
-            mainFragment.setTaskFlag(TaskFlag.TWEET_TASK_ALIVE);
+            mainFragment.setRefreshFlag(Flag.TWEET_TASK_ALIVE);
         }
 
         if (!isPullToRefresh) {
             TweetAction action = new TweetAction(context);
             action.opewDatabase(false);
             tweetDataList = action.getTweetDataList();
+            action.closeDatabase();
             tweetList.clear();
             for (TweetData data : tweetDataList) {
                 Tweet tweet = new Tweet();
@@ -91,12 +92,12 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
+    private List<twitter4j.Status> statusList;
     @Override
     protected Boolean doInBackground(Void... params) {
         TweetAction action = new TweetAction(context);
         action.opewDatabase(true);
 
-        List<twitter4j.Status> statusList;
         try {
             Paging paging = new Paging(1, 50);
             statusList = twitter.getHomeTimeline(paging);
@@ -142,11 +143,10 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 data.setRetweet(status.isRetweet());
                 data.setRetweetedBy(null);
             }
-            if (status.isRetweetedByMe()) {
-                data.setRetweet(status.isRetweetedByMe());
-                data.setRetweetedBy(
-                        context.getString(R.string.tweet_retweeted_by_me)
-                );
+
+            if (status.isRetweetedByMe() || status.isRetweeted()) {
+                data.setRetweet(true);
+                data.setRetweetedBy(context.getString(R.string.tweet_retweeted_by_me));
             }
             action.addTweet(data);
             tweetDataList.add(data);
@@ -186,6 +186,7 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setRetweetedBy(data.getRetweetedBy());
                 tweetList.add(tweet);
             }
+            mainFragment.setStatusList(statusList);
 
             if (isFirstSignIn) {
                 mainFragment.setContentEmpty(false);
@@ -208,6 +209,6 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 srl.setRefreshing(false);
             }
         }
-        mainFragment.setTaskFlag(TaskFlag.TWEET_TASK_DIED);
+        mainFragment.setRefreshFlag(Flag.TWEET_TASK_DIED);
     }
 }
