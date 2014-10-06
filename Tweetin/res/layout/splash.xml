@@ -3,13 +3,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/indigo_500">
+                android:background="@color/tumblr_dark_blue">
 
     <LinearLayout android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_centerInParent="true"
-                  android:paddingBottom="256dp">
+                  android:paddingBottom="100dp">
 
         <ImageView android:id="@+id/splash_tweetin"
                    android:contentDescription="@string/splash_image_view_cd"
@@ -28,45 +28,49 @@
                   android:textSize="12sp">
         </TextView>
 
-    </LinearLayout>
-
-    <LinearLayout android:orientation="vertical"
+        <EditText android:id="@+id/splash_sign_in_consumer_key"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_centerInParent="true"
-                  android:paddingTop="256dp">
+                  android:layout_marginTop="20dp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginRight="15dp"
+                  android:background="@drawable/edittext"
+                  android:textColor="@color/white"
+                  android:hint="@string/splash_sign_in_consumer_key"
+                  android:textColorHint="@color/white">
+        </EditText>
+
+        <EditText android:id="@+id/splash_sign_in_consumer_secret"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="5dp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginRight="15dp"
+                  android:background="@drawable/edittext"
+                  android:textColor="@color/white"
+                  android:hint="@string/splash_sign_in_consumer_secret"
+                  android:textColorHint="@color/white">
+        </EditText>
 
         <Button android:id="@+id/splash_sign_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginLeft="80dp"
-                android:layout_marginRight="80dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/splash_sign_in_button_selector"
                 android:text="@string/splash_sign_in_button"
-                android:textColor="@color/indigo_500">
+                android:textColor="@color/tumblr_dark_blue">
         </Button>
 
-        <TextView android:id="@+id/splash_query"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:gravity="center_horizontal"
-                  android:layout_marginTop="10dp"
-                  android:text="@string/splash_query"
-                  android:textColor="@color/white"
-                  android:textSize="12sp">
-        </TextView>
-
-        <Button android:id="@+id/splash_sign_up_button"
+        <Button android:id="@+id/splash_help_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginLeft="80dp"
-                android:layout_marginRight="80dp"
-                android:background="@drawable/splash_sign_up_button_selector"
-                android:text="@string/splash_sign_up_button"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/transparent"
+                android:text="@string/splash_help_button"
+                android:textSize="14sp"
                 android:textColor="@color/white">
         </Button>
 

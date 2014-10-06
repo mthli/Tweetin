@@ -75,7 +75,7 @@
                   android:textSize="14sp">
         </TextView>
 
-        <TextView android:id="@+id/tweet_retweeted_by"
+        <TextView android:id="@+id/tweet_retweeted_by_name"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:visibility="gone"

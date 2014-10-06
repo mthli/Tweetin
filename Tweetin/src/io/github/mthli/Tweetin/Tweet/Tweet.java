@@ -9,7 +9,8 @@ public class Tweet {
     private String screenName;
     private String text;
     private boolean retweet;
-    private String retweetedBy;
+    private String retweetedByName;
+    private long retweetedById;
 
     public Tweet() {
         this.tweetId = 0;
@@ -20,7 +21,8 @@ public class Tweet {
         this.screenName = null;
         this.text = null;
         this.retweet = false;
-        this.retweetedBy = null;
+        this.retweetedByName = null;
+        this.retweetedById = 0;
     }
 
     public long getTweetId() {
@@ -79,10 +81,17 @@ public class Tweet {
         this.retweet = retweet;
     }
 
-    public String getRetweetedBy() {
-        return retweetedBy;
+    public String getRetweetedByName() {
+        return retweetedByName;
     }
-    public void setRetweetedBy(String retweetedBy) {
-        this.retweetedBy = retweetedBy;
+    public void setRetweetedByName(String retweetedByName) {
+        this.retweetedByName = retweetedByName;
+    }
+
+    public long getRetweetedById() {
+        return retweetedById;
+    }
+    public void setRetweetedById(long retweetedById) {
+        this.retweetedById = retweetedById;
     }
 }

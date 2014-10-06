@@ -14,12 +14,12 @@ import java.util.List;
 public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     private MainFragment mainFragment;
     private Context context;
+    private long useId;
 
     private Twitter twitter;
     private twitter4j.Status status;
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
-    private List<twitter4j.Status> statusList;
     private int position = 0;
 
     public TweetRetweetTask(
@@ -33,10 +33,11 @@ public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPreExecute() {
         context = mainFragment.getContentView().getContext();
+        useId = mainFragment.getUseId();
+
         twitter = ((MainActivity) mainFragment.getActivity()).getTwitter();
         tweetAdapter = mainFragment.getTweetAdapter();
         tweetList = mainFragment.getTweetList();
-        statusList = mainFragment.getStatusList();
     }
 
     @Override
@@ -77,13 +78,10 @@ public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             newTweet.setScreenName(oldTweet.getScreenName());
             newTweet.setText(oldTweet.getText());
             newTweet.setRetweet(true);
-            newTweet.setRetweetedBy(
-                    context.getString(R.string.tweet_retweeted_by_me)
-            );
+            newTweet.setRetweetedByName(context.getString(R.string.tweet_retweeted_by_me));
+            newTweet.setRetweetedById(useId);
             tweetList.remove(position);
             tweetList.add(position, newTweet);
-            statusList.remove(position);
-            statusList.add(position, status);
             tweetAdapter.notifyDataSetChanged();
 
             TweetAction action = new TweetAction(context);

@@ -19,30 +19,20 @@
     <string name="splash_description">
         Yet another Twitter unofficial client.
     </string>
+    <string name="splash_sign_in_consumer_key">
+        Key
+    </string>
+    <string name="splash_sign_in_consumer_secret">
+        Secret
+    </string>
     <string name="splash_sign_in_button">Sign in</string>
-    <string name="splash_query">
-        Haven\'t got a Twitter account?
-    </string>
-    <string name="splash_sign_up_button">Sign up</string>
-    <string name="splash_sign_up_url">
-        https://twitter.com/signup
-    </string>
-    <string name="splash_sign_in_dialog_title">
-        Sign in
-    </string>
-    <string name="splash_sign_in_dialog_consumer_key">
-        Consumer Key
-    </string>
-    <string name="splash_sign_in_dialog_consumer_secret">
-        Consumer Secret
-    </string>
+    <string name="splash_help_button">How to get Key and Secret?</string>
     <string name="splash_sign_in_dialog_pin">Pin</string>
     <string name="splash_sign_in_dialog_next">Next</string>
     <string name="splash_sign_in_dialog_accept">Accept</string>
-    <string name="splash_sign_in_dialog_cancel">Cancel</string>
     <string name="splash_sign_in_dialog_help">Help</string>
     <string name="splash_sign_in_start_authorization">
-        Start authorization&#8230;
+        Start Authorization&#8230;
     </string>
     <string name="splash_sign_in_get_access_token">
         Get AccessToken&#8230;

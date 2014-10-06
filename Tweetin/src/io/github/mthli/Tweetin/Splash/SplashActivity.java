@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.*;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,10 +14,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.wrapp.floatlabelededittext.FloatLabeledEditText;
 import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.R;
 import twitter4j.Twitter;
@@ -36,6 +35,11 @@ public class SplashActivity extends Activity {
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
+    private AlertDialog signInDialog;
+    private ProgressDialog progressDialog;
+    private String conKey;
+    private String conSecret;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +48,7 @@ public class SplashActivity extends Activity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             SystemBarTintManager manager = new SystemBarTintManager(this);
             manager.setStatusBarTintEnabled(true);
-            int color = getResources().getColor(R.color.indigo_500);
+            int color = getResources().getColor(R.color.tumblr_dark_blue);
             manager.setTintColor(color);
         }
 
@@ -53,33 +57,44 @@ public class SplashActivity extends Activity {
                 MODE_PRIVATE
         );
         editor = preferences.edit();
-        long useId = preferences.getLong(
-                getString(R.string.sp_use_id),
-                -1
-        );
-        if (useId != -1) {
-            editor.putString(
-                    getString(R.string.sp_is_first_sign_in),
-                    "false"
-            ).commit();
+        long useId = preferences.getLong(getString(R.string.sp_use_id), 0);
+        if (useId != 0) {
+            editor.putString(getString(R.string.sp_is_first_sign_in), "false").commit();
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
 
+        final EditText conKeyText = (EditText) findViewById(R.id.splash_sign_in_consumer_key);
+        final EditText conSecretText = (EditText) findViewById(R.id.splash_sign_in_consumer_secret);
+
         Button signIn = (Button) findViewById(R.id.splash_sign_in_button);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSignInDialogFirst();
+                conKey = conKeyText.getText().toString();
+                conSecret = conSecretText.getText().toString();
+                if (conKey.length() == 0 || conSecret.length() == 0) {
+                    Toast.makeText(
+                            SplashActivity.this,
+                            R.string.splash_sign_in_miss_oauth,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                } else {
+                    progressDialog = new ProgressDialog(SplashActivity.this);
+                    progressDialog.setMessage(getString(R.string.splash_sign_in_start_authorization));
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    new Thread(getAccessTokenThreadFirst).start();
+                }
             }
         });
 
-        Button signUp = (Button) findViewById(R.id.splash_sign_up_button);
-        signUp.setOnClickListener(new View.OnClickListener() {
+        Button help = (Button) findViewById(R.id.splash_help_button);
+        help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSignUpDialog();
+                /* Do something */
             }
         });
 
@@ -87,10 +102,12 @@ public class SplashActivity extends Activity {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case SIGN_IN_FIRST_SUCCESSFUL:
+                        progressDialog.hide();
                         progressDialog.dismiss();
                         showSignInDialogNext();
                         break;
                     case SIGN_IN_FIRST_FAILED:
+                        progressDialog.hide();
                         progressDialog.dismiss();
                         Toast.makeText(
                                 SplashActivity.this,
@@ -99,16 +116,15 @@ public class SplashActivity extends Activity {
                         ).show();
                         break;
                     case SIGN_IN_SECOND_SUCCESSFUL:
+                        progressDialog.hide();
                         progressDialog.dismiss();
-                        editor.putString(
-                                getString(R.string.sp_is_first_sign_in),
-                                "true"
-                        ).commit();
+                        editor.putString(getString(R.string.sp_is_first_sign_in), "true").commit();
                         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                         break;
                     case SIGN_IN_SECOND_FAILED:
+                        progressDialog.hide();
                         progressDialog.dismiss();
                         Toast.makeText(
                                 SplashActivity.this,
@@ -132,78 +148,6 @@ public class SplashActivity extends Activity {
         }
         else{
             /* Do nothing */
-        }
-    }
-
-    private void showSignUpDialog() {
-        Uri uri = Uri.parse(getString(R.string.splash_sign_up_url));
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
-    }
-
-    private AlertDialog signInDialog;
-    private void showSignInDialogFirst() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(
-                SplashActivity.this
-        );
-        builder.setCancelable(false);
-
-        final LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(
-                R.layout.splash_dialog_first,
-                null
-        );
-        builder.setView(layout);
-
-        builder.setPositiveButton(
-                getString(R.string.splash_sign_in_dialog_next),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        signInDialog.dismiss();
-                        getAccessTokenFirst(layout);
-                    }
-                }
-        );
-
-        builder.setNegativeButton(
-                getString(R.string.splash_sign_in_dialog_help),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        /* Do something */
-                    }
-                }
-        );
-
-        signInDialog = builder.create();
-        signInDialog.show();
-    }
-
-    private ProgressDialog progressDialog;
-    private String conKey;
-    private String conSecret;
-    private void getAccessTokenFirst(LinearLayout layout) {
-        FloatLabeledEditText conKeyText = (FloatLabeledEditText) layout.findViewById(
-                R.id.splash_sign_in_dialog_consumer_key
-        );
-        FloatLabeledEditText conSecretText = (FloatLabeledEditText) layout.findViewById(
-                R.id.splash_sign_in_dialog_consumer_secret
-        );
-        conKey = conKeyText.getTextString();
-        conSecret = conSecretText.getTextString();
-
-        if (conKey.length() == 0 || conSecret.length() == 0) {
-            Toast.makeText(
-                    SplashActivity.this,
-                    R.string.splash_sign_in_miss_oauth,
-                    Toast.LENGTH_SHORT
-            ).show();
-        } else {
-            progressDialog = new ProgressDialog(SplashActivity.this);
-            progressDialog.setMessage(getString(R.string.splash_sign_in_start_authorization));
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-            new Thread(getAccessTokenThreadFirst).start();
         }
     }
 
@@ -257,18 +201,9 @@ public class SplashActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        signInDialog.hide();
                         signInDialog.dismiss();
                         showSignInDialogSecond();
-                    }
-                }
-        );
-
-        builder.setNegativeButton(
-                getString(R.string.splash_sign_in_dialog_cancel),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        /* Do nothing */
                     }
                 }
         );
@@ -295,18 +230,9 @@ public class SplashActivity extends Activity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        signInDialog.hide();
                         signInDialog.dismiss();
                         getAccessTokenSecond(layout);
-                    }
-                }
-        );
-
-        builder.setNegativeButton(
-                getString(R.string.splash_sign_in_dialog_cancel),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        /* Do nothing */
                     }
                 }
         );
@@ -317,10 +243,8 @@ public class SplashActivity extends Activity {
 
     private String pin;
     private void getAccessTokenSecond(LinearLayout layout) {
-        FloatLabeledEditText pinText = (FloatLabeledEditText) layout.findViewById(
-                R.id.splash_sign_in_dialog_pin
-        );
-        pin = pinText.getTextString();
+        EditText pinText = (EditText) layout.findViewById(R.id.splash_sign_in_dialog_pin);
+        pin = pinText.getText().toString();
         if (pin.length() == 0) {
             Toast.makeText(
                     SplashActivity.this,
@@ -341,10 +265,7 @@ public class SplashActivity extends Activity {
         public void run() {
             try {
                 AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, pin);
-                saveAccessToken(
-                        twitter.verifyCredentials().getId(),
-                        accessToken
-                );
+                saveAccessToken(twitter.verifyCredentials().getId(), accessToken);
                 Message message = new Message();
                 message.what = SIGN_IN_SECOND_SUCCESSFUL;
                 handler.sendMessage(message);

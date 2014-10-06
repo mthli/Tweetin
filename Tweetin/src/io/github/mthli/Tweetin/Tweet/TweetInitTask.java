@@ -20,6 +20,7 @@ import java.util.List;
 public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
     private MainFragment mainFragment;
     private Context context;
+    private long useId = 0;
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -43,12 +44,13 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPreExecute() {
         context = mainFragment.getContentView().getContext();
+        useId = mainFragment.getUseId();
+
         srl = mainFragment.getSrl();
         twitter = ((MainActivity) mainFragment.getActivity()).getTwitter();
         tweetAdapter = mainFragment.getTweetAdapter();
         tweetList = mainFragment.getTweetList();
 
-        /* Do something */
         if (mainFragment.getRefreshFlag() == Flag.TWEET_TASK_ALIVE) {
             onCancelled();
         } else {
@@ -71,14 +73,19 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setScreenName(data.getScreenName());
                 tweet.setText(data.getText());
                 tweet.setRetweet(data.isRetweet());
-                tweet.setRetweetedBy(data.getRetweetedBy());
+                tweet.setRetweetedByName(data.getRetweetedByName());
+                tweet.setRetweetedById(data.getRetweetedById());
                 tweetList.add(tweet);
             }
             tweetAdapter.notifyDataSetChanged();
         }
 
-        preferences = mainFragment.getActivity().getPreferences(Context.MODE_PRIVATE);
+        preferences = mainFragment.getActivity().getSharedPreferences(
+                context.getString(R.string.sp_name),
+                Context.MODE_PRIVATE
+        );
         editor = preferences.edit();
+
         if (
                 preferences.getString(context.getString(R.string.sp_is_first_sign_in), "false").equals("true")
         ) {
@@ -92,12 +99,12 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
-    private List<twitter4j.Status> statusList;
     @Override
     protected Boolean doInBackground(Void... params) {
         TweetAction action = new TweetAction(context);
         action.opewDatabase(true);
 
+        List<twitter4j.Status> statusList;
         try {
             Paging paging = new Paging(1, 50);
             statusList = twitter.getHomeTimeline(paging);
@@ -131,7 +138,8 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 );
                 data.setText(status.getRetweetedStatus().getText());
                 data.setRetweet(status.isRetweet());
-                data.setRetweetedBy(status.getUser().getName());
+                data.setRetweetedByName(status.getUser().getName());
+                data.setRetweetedById(status.getUser().getId());
             } else {
                 data.setTweetId(status.getId());
                 data.setUserId(status.getUser().getId());
@@ -141,12 +149,14 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 data.setScreenName("@" + status.getUser().getScreenName());
                 data.setText(status.getText());
                 data.setRetweet(status.isRetweet());
-                data.setRetweetedBy(null);
+                data.setRetweetedByName(null);
+                data.setRetweetedById(0);
             }
 
             if (status.isRetweetedByMe() || status.isRetweeted()) {
                 data.setRetweet(true);
-                data.setRetweetedBy(context.getString(R.string.tweet_retweeted_by_me));
+                data.setRetweetedByName(context.getString(R.string.tweet_retweeted_by_me));
+                data.setRetweetedById(useId);
             }
             action.addTweet(data);
             tweetDataList.add(data);
@@ -183,10 +193,10 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setScreenName(data.getScreenName());
                 tweet.setText(data.getText());
                 tweet.setRetweet(data.isRetweet());
-                tweet.setRetweetedBy(data.getRetweetedBy());
+                tweet.setRetweetedByName(data.getRetweetedByName());
+                tweet.setRetweetedById(data.getRetweetedById());
                 tweetList.add(tweet);
             }
-            mainFragment.setStatusList(statusList);
 
             if (isFirstSignIn) {
                 mainFragment.setContentEmpty(false);
@@ -198,10 +208,7 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
             }
         } else {
             if (isFirstSignIn) {
-                editor.putString(
-                        context.getString(R.string.sp_is_first_sign_in),
-                        "false"
-                ).commit();
+                editor.putString(context.getString(R.string.sp_is_first_sign_in), "true").commit();
                 mainFragment.setContentEmpty(true);
                 mainFragment.setEmptyText(R.string.tweet_get_timeline_failed);
                 mainFragment.setContentShown(true);

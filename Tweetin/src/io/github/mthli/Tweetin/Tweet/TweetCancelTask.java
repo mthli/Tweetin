@@ -19,7 +19,6 @@ public class TweetCancelTask extends AsyncTask<Void, Integer, Boolean> {
     private twitter4j.Status status;
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
-    private List<twitter4j.Status> statusList;
     private int position = 0;
 
     public TweetCancelTask(
@@ -33,10 +32,10 @@ public class TweetCancelTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPreExecute() {
         context = mainFragment.getContentView().getContext();
+
         twitter = ((MainActivity) mainFragment.getActivity()).getTwitter();
         tweetAdapter = mainFragment.getTweetAdapter();
         tweetList = mainFragment.getTweetList();
-        statusList = mainFragment.getStatusList();
     }
 
     @Override
@@ -78,15 +77,15 @@ public class TweetCancelTask extends AsyncTask<Void, Integer, Boolean> {
             newTweet.setText(oldTweet.getText());
             if (status.isRetweeted()) {
                 newTweet.setRetweet(true);
-                newTweet.setRetweetedBy(status.getRetweetedStatus().getUser().getName());
+                newTweet.setRetweetedByName(status.getRetweetedStatus().getUser().getName());
+                newTweet.setRetweetedById(status.getRetweetedStatus().getUser().getId());
             } else {
                 newTweet.setRetweet(false);
-                newTweet.setRetweetedBy(null);
+                newTweet.setRetweetedByName(null);
+                newTweet.setRetweetedById(0);
             }
             tweetList.remove(position);
             tweetList.add(position, newTweet);
-            statusList.remove(position);
-            statusList.add(position, status);
             tweetAdapter.notifyDataSetChanged();
 
             TweetAction action = new TweetAction(context);

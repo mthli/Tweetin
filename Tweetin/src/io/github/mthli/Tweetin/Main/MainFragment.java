@@ -16,14 +16,17 @@ import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.*;
 import io.github.mthli.Tweetin.Unit.ContextMenuAdapter;
 import io.github.mthli.Tweetin.Unit.Flag;
-import twitter4j.Status;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragment extends ProgressFragment {
     private View view;
+
     private long useId = 0;
+    public long getUseId() {
+        return useId;
+    }
 
     private boolean isMoveToButton = false;
     private FloatingActionButton fab;
@@ -94,14 +97,6 @@ public class MainFragment extends ProgressFragment {
                 Toast.LENGTH_SHORT
         ).show();
     }
-
-    private List<Status> statusList;
-    public List<Status> getStatusList() {
-        return statusList;
-    }
-    public void setStatusList(List<Status> statusList) {
-        this.statusList = statusList;
-    }
     private void showItemLongClickDialog(final int location) {
         LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(
                 R.layout.context_menu,
@@ -110,9 +105,9 @@ public class MainFragment extends ProgressFragment {
         ListView menu = (ListView) layout.findViewById(R.id.context_menu);
         List<String> menuItem = new ArrayList<String>();
 
-        Status status = statusList.get(location);
         final int flag;
-        if (status.isRetweetedByMe() || status.isRetweeted()) {
+        Tweet tweet = tweetList.get(location);
+        if (tweet.getRetweetedById() != 0 && tweet.getRetweetedById() == useId) {
             flag = Flag.TWEET_STATUS_RETWEET_BY_ME;
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_reply));
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_cancel_retweet));
@@ -120,7 +115,7 @@ public class MainFragment extends ProgressFragment {
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_copy));
         } else {
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_reply));
-            if (status.getUser().getId() == useId) {
+            if (tweet.getUserId() == useId) {
                 flag = Flag.TWEET_STATUS_POST_BY_ME;
                 menuItem.add(view.getContext().getString(R.string.tweet_menu_item_delete));
             } else {
@@ -244,6 +239,7 @@ public class MainFragment extends ProgressFragment {
             }
         });
 
+        /* Do something */
         tweetInitTask = new TweetInitTask(MainFragment.this, false);
         tweetInitTask.execute();
 
@@ -293,7 +289,5 @@ public class MainFragment extends ProgressFragment {
                 }
             }
         });
-
-
     }
 }

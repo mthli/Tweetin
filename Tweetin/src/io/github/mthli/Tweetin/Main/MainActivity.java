@@ -77,6 +77,7 @@ public class MainActivity extends FragmentActivity {
                 getString(R.string.sp_name),
                 Context.MODE_PRIVATE
         );
+
         String conKey = preferences.getString(getString(R.string.sp_consumer_key), null);
         String conSecret = preferences.getString(getString(R.string.sp_consumer_secret), null);
         String accToken = preferences.getString(getString(R.string.sp_access_token), null);
@@ -100,11 +101,13 @@ public class MainActivity extends FragmentActivity {
         return true;
     }
 
+    /* Do something */
     int count = 1;
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.main_menu_notification:
+                /* Do something */
                 if (count % 2 == 0) {
                     setNotificationStatus(true);
                 } else {

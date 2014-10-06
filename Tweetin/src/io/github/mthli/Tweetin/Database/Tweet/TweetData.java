@@ -10,7 +10,8 @@ public class TweetData {
     public static final String SCREEN_NAME = "SCREEN_NAME";
     public static final String TEXT = "TEXT";
     public static final String RETWEET = "RETWEET";
-    public static final String RETWEETED_BY = "RETWEETED_BY";
+    public static final String RETWEETED_BY_NAME = "RETWEETED_BY_NAME";
+    public static final String RETWEETED_BY_ID = "RETWEETED_BY_ID";
 
     public static final String CREATE_SQL = "CREATE TABLE "
             + TABLE
@@ -23,7 +24,8 @@ public class TweetData {
             + " SCREEN_NAME text,"
             + " TEXT text,"
             + " RETWEET text,"
-            + " RETWEETED_BY text"
+            + " RETWEETED_BY_NAME text,"
+            + " RETWEETED_BY_ID integer"
             + ")";
 
     private long tweetId;
@@ -34,7 +36,8 @@ public class TweetData {
     private String screenName;
     private String text;
     private String retweet;
-    private String retweetedBy;
+    private String retweetedByName;
+    private long retweetedById;
 
     public TweetData() {
         this.tweetId = 0;
@@ -45,7 +48,8 @@ public class TweetData {
         this.screenName = null;
         this.text = null;
         this.retweet = null;
-        this.retweetedBy = null;
+        this.retweetedByName = null;
+        this.retweetedById = 0;
     }
 
     public long getTweetId() {
@@ -97,7 +101,6 @@ public class TweetData {
         this.text = text;
     }
 
-    /* Do something */
     public boolean isRetweet() {
         if (retweet.equals("true")) {
             return true;
@@ -113,10 +116,17 @@ public class TweetData {
         }
     }
 
-    public String getRetweetedBy() {
-        return retweetedBy;
+    public String getRetweetedByName() {
+        return retweetedByName;
     }
-    public void setRetweetedBy(String retweetedBy) {
-        this.retweetedBy = retweetedBy;
+    public void setRetweetedByName(String retweetedByName) {
+        this.retweetedByName = retweetedByName;
+    }
+
+    public long getRetweetedById() {
+        return retweetedById;
+    }
+    public void setRetweetedById(long retweetedById) {
+        this.retweetedById = retweetedById;
     }
 }

@@ -18,7 +18,6 @@ public class TweetDeleteTask extends AsyncTask<Void, Integer, Boolean> {
     private Twitter twitter;
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
-    private List<twitter4j.Status> statusList;
     private int position = 0;
 
     public TweetDeleteTask(
@@ -32,18 +31,22 @@ public class TweetDeleteTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPreExecute() {
         context = mainFragment.getContentView().getContext();
+
         twitter = ((MainActivity) mainFragment.getActivity()).getTwitter();
         tweetAdapter = mainFragment.getTweetAdapter();
         tweetList = mainFragment.getTweetList();
-        statusList = mainFragment.getStatusList();
     }
 
-    private Tweet tweet;
     @Override
     protected Boolean doInBackground(Void... params) {
-        tweet = tweetList.get(position);
+        Tweet tweet = tweetList.get(position);
         try {
             twitter.destroyStatus(tweet.getTweetId());
+
+            TweetAction action = new TweetAction(context);
+            action.opewDatabase(true);
+            action.deleteTweet(tweet.getTweetId());
+            action.closeDatabase();
         } catch (Exception e) {
             return false;
         }
@@ -68,13 +71,7 @@ public class TweetDeleteTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onPostExecute(Boolean result) {
         if (result) {
             tweetList.remove(position);
-            statusList.remove(position);
             tweetAdapter.notifyDataSetChanged();
-
-            TweetAction action = new TweetAction(context);
-            action.opewDatabase(true);
-            action.deleteTweet(tweet.getTweetId());
-            action.closeDatabase();
 
             Toast.makeText(
                     context,

@@ -38,7 +38,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         TextView name;
         TextView screenName;
         TextView text;
-        TextView retweetedBy;
+        TextView retweetedByName;
     }
 
     private String getShortCreatedAt(String createdAt) {
@@ -75,7 +75,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.name = (TextView) view.findViewById(R.id.tweet_name);
             holder.screenName = (TextView) view.findViewById(R.id.tweet_screen_name);
             holder.text = (TextView) view.findViewById(R.id.tweet_text);
-            holder.retweetedBy = (TextView) view.findViewById(R.id.tweet_retweeted_by);
+            holder.retweetedByName = (TextView) view.findViewById(R.id.tweet_retweeted_by_name);
             view.setTag(holder);
         } else {
             holder = (Holder) view.getTag();
@@ -103,10 +103,10 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         holder.screenName.setText(tweet.getScreenName());
         holder.text.setText(tweet.getText());
         if (tweet.isRetweet()) {
-            holder.retweetedBy.setText(tweet.getRetweetedBy());
-            holder.retweetedBy.setVisibility(View.VISIBLE);
+            holder.retweetedByName.setText(tweet.getRetweetedByName());
+            holder.retweetedByName.setVisibility(View.VISIBLE);
         } else {
-            holder.retweetedBy.setVisibility(View.GONE);
+            holder.retweetedByName.setVisibility(View.GONE);
         }
 
         return view;
