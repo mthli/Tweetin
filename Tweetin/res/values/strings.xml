@@ -80,10 +80,6 @@
     </string>
     <string name="tweet_menu_item_reply">Reply</string>
     <string name="tweet_menu_item_retweet">Retweet</string>
-    <string name="tweet_menu_item_delete">Delete</string>
-    <string name="tweet_menu_item_cancel_retweet">
-        Cancel retweet
-    </string>
     <string name="tweet_menu_item_retweet_with_comment">
         Retweet with comment
     </string>
@@ -96,22 +92,7 @@
         Retweet successful.
     </string>
     <string name="tweet_retweet_failed">
-        Retweet failed.
-    </string>
-    <string name="tweet_retweet_already">
-        You have already retweeted this.
-    </string>
-    <string name="tweet_cancel_retweet_successful">
-        Cancel retweet successful.
-    </string>
-    <string name="tweet_cancel_retweet_failed">
-        Cancel retweet failed.
-    </string>
-    <string name="tweet_delete_successful">
-        Delete successful.
-    </string>
-    <string name="tweet_delete_failed">
-        Delete failed.
+        Twitter API 403 Error.
     </string>
 
 </resources>

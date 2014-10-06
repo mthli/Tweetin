@@ -75,6 +75,7 @@ public class TweetAction {
         database.insert(TweetData.TABLE, null, values);
     }
 
+    /* Do something */
     public void updateByMe(long oldTweetId, Tweet newTweet) {
         SharedPreferences preferences = context.getSharedPreferences(
                 context.getString(R.string.sp_name),

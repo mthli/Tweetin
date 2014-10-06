@@ -47,8 +47,6 @@ public class MainFragment extends ProgressFragment {
     private TweetInitTask tweetInitTask;
     private TweetMoreTask tweetMoreTask;
     private TweetRetweetTask tweetRetweetTask;
-    private TweetCancelTask tweetCancelTask;
-    private TweetDeleteTask tweetDeleteTask;
     private int refreshFlag = Flag.TWEET_TASK_DIED;
     public int getRefreshFlag() {
         return refreshFlag;
@@ -73,12 +71,6 @@ public class MainFragment extends ProgressFragment {
         }
         if (tweetRetweetTask != null && tweetRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
             tweetRetweetTask.cancel(true);
-        }
-        if (tweetCancelTask != null && tweetCancelTask.getStatus() == AsyncTask.Status.RUNNING) {
-            tweetCancelTask.cancel(true);
-        }
-        if (tweetDeleteTask != null && tweetDeleteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            tweetDeleteTask.cancel(true);
         }
     }
 
@@ -108,19 +100,17 @@ public class MainFragment extends ProgressFragment {
         final int flag;
         Tweet tweet = tweetList.get(location);
         if (tweet.getRetweetedById() != 0 && tweet.getRetweetedById() == useId) {
-            flag = Flag.TWEET_STATUS_RETWEET_BY_ME;
+            flag = Flag.TWEET_STATUS_BY_ME;
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_reply));
-            menuItem.add(view.getContext().getString(R.string.tweet_menu_item_cancel_retweet));
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet_with_comment));
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_copy));
         } else {
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_reply));
-            if (tweet.getUserId() == useId) {
-                flag = Flag.TWEET_STATUS_POST_BY_ME;
-                menuItem.add(view.getContext().getString(R.string.tweet_menu_item_delete));
-            } else {
+            if (tweet.getUserId() != useId) {
                 flag = Flag.TWEET_STATUS_NONE;
                 menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet));
+            } else {
+                flag = Flag.TWEET_STATUS_BY_ME;
             }
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet_with_comment));
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_copy));
@@ -143,34 +133,17 @@ public class MainFragment extends ProgressFragment {
         menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        /* Do something */
-                        dialog.hide();
-                        dialog.dismiss();
-                        break;
-                    case 1:
-                        switch (flag) {
-                            case Flag.TWEET_STATUS_RETWEET_BY_ME:
-                                tweetCancelTask = new TweetCancelTask(
-                                        MainFragment.this,
-                                        location
-                                );
-                                tweetCancelTask.execute();
+                switch (flag) {
+                    case Flag.TWEET_STATUS_BY_ME:
+                        switch (position) {
+                            case 0:
+                                /* Do something */
                                 break;
-                            case Flag.TWEET_STATUS_POST_BY_ME:
-                                tweetDeleteTask = new TweetDeleteTask(
-                                        MainFragment.this,
-                                        location
-                                );
-                                tweetDeleteTask.execute();
+                            case 1:
+                                /* Do something */
                                 break;
-                            case Flag.TWEET_STATUS_NONE:
-                                tweetRetweetTask = new TweetRetweetTask(
-                                        MainFragment.this,
-                                        location
-                                );
-                                tweetRetweetTask.execute();
+                            case 2:
+                                clip(location);
                                 break;
                             default:
                                 break;
@@ -178,17 +151,33 @@ public class MainFragment extends ProgressFragment {
                         dialog.hide();
                         dialog.dismiss();
                         break;
-                    case 2:
-                        /* Do something */
-                        dialog.hide();
-                        dialog.dismiss();
-                        break;
-                    case 3:
-                        clip(location);
+                    case Flag.TWEET_STATUS_NONE:
+                        switch (position) {
+                            case 0:
+                                /* Do something */
+                                break;
+                            case 1:
+                                tweetRetweetTask = new TweetRetweetTask(
+                                        MainFragment.this,
+                                        location
+                                );
+                                tweetRetweetTask.execute();
+                                break;
+                            case 2:
+                                /* Do something */
+                                break;
+                            case 3:
+                                clip(location);
+                                break;
+                            default:
+                                break;
+                        }
                         dialog.hide();
                         dialog.dismiss();
                         break;
                     default:
+                        dialog.hide();
+                        dialog.dismiss();
                         break;
                 }
             }

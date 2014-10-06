@@ -97,7 +97,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                             "@" + status.getRetweetedStatus().getUser().getScreenName()
                     );
                     tweet.setText(status.getRetweetedStatus().getText());
-                    tweet.setRetweet(status.isRetweet());
+                    tweet.setRetweet(true);
                     tweet.setRetweetedByName(status.getUser().getName());
                     tweet.setRetweetedById(status.getUser().getId());
                 } else {
@@ -108,7 +108,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setName(status.getUser().getName());
                     tweet.setScreenName(status.getUser().getScreenName());
                     tweet.setText(status.getText());
-                    tweet.setRetweet(status.isRetweet());
+                    tweet.setRetweet(false);
                     tweet.setRetweetedByName(null);
                     tweet.setRetweetedById(0);
                 }
