@@ -29,7 +29,7 @@
                       android:layout_height="24dp"
                       android:layout_marginLeft="15dp"
                       android:layout_toRightOf="@id/check_in"
-                      android:background="@drawable/post_choose_image_button_selector"
+                      android:background="@drawable/post_post_picture_button_selector"
                       android:text=""
                       android:textOff=""
                       android:textOn="">
@@ -50,38 +50,50 @@
 
     </RelativeLayout>
 
-    <!-- Do something -->
+    <!--
     <LinearLayout android:id="@+id/post_content"
                   android:orientation="vertical"
                   android:layout_above="@id/post_option"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
+    -->
 
-        <!-- Do something -->
-        <ImageView android:id="@+id/post_image"
-                   android:contentDescription="@string/post_image"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="15dp"
-                   android:layout_marginLeft="15dp"
-                   android:layout_marginRight="15dp"
-                   android:visibility="gone"
-                   android:scaleType="centerCrop">
-        </ImageView>
-
-        <!-- Do something -->
-        <AutoCompleteTextView
-                android:id="@+id/post_text"
+    <ScrollView android:id="@+id/post_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:gravity="top"
-                android:background="@color/white"
-                android:textColor="@color/text">
-        </AutoCompleteTextView>
+                android:layout_above="@id/post_option">
 
-    </LinearLayout>
+        <LinearLayout android:orientation="vertical"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+
+            <ImageView android:id="@+id/post_picture"
+                       android:contentDescription="@string/post_picture"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="15dp"
+                       android:layout_marginLeft="15dp"
+                       android:layout_marginRight="15dp"
+                       android:visibility="gone"
+                       android:scaleType="centerCrop">
+            </ImageView>
+
+            <AutoCompleteTextView
+                    android:id="@+id/post_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:gravity="top"
+                    android:background="@color/white"
+                    android:hint="@string/post_hint"
+                    android:textColorHint="@color/hint"
+                    android:textColor="@color/text">
+            </AutoCompleteTextView>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

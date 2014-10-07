@@ -2,7 +2,7 @@ package io.github.mthli.Tweetin.Notification;
 
 import android.os.AsyncTask;
 
-public class NotificationTask extends AsyncTask<Void, Integer, Boolean> {
+public class NotificTask extends AsyncTask<Void, Integer, Boolean> {
     /* Do something */
 
     @Override

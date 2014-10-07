@@ -12,7 +12,9 @@
     <color name="white">#FFFFFF</color>
     <color name="transparent">@android:color/transparent</color>
 
-    <color name="red_500">#E51C23</color>
+    <color name="red_alert">#FF413C</color>
+    <color name="blue_info">#00DCFF</color>
+    <color name="green_confirm">#98CE00</color>
     <color name="grey_100">#F5F5F5</color>
 
     <color name="text">#212121</color>

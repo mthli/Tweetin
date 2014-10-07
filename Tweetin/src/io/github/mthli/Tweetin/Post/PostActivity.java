@@ -3,18 +3,26 @@ package io.github.mthli.Tweetin.Post;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.provider.MediaStore;
+import android.util.DisplayMetrics;
+import android.view.*;
+import android.view.animation.Animation;
 import android.widget.*;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Unit.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.Flag;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -27,11 +35,25 @@ public class PostActivity extends Activity {
     }
 
     private int postFlag = 0;
+    private PostTask postTask;
 
-    private ImageView postImage;
+    private ImageView postPic;
     private AutoCompleteTextView postText;
     private ToggleButton checkIn;
-    private ToggleButton chooseImage;
+    private ToggleButton selectPic;
+    private String picPath = null;
+    public AutoCompleteTextView getPostText() {
+        return postText;
+    }
+    public ToggleButton getCheckIn() {
+        return checkIn;
+    }
+    public ToggleButton getSelectPic() {
+        return selectPic;
+    }
+    public String getPicPath() {
+        return picPath;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,25 +101,66 @@ public class PostActivity extends Activity {
         actionBar.setTitle(null);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        /* Do something */
-        postImage = (ImageView) findViewById(R.id.post_image);
+        postPic = (ImageView) findViewById(R.id.post_picture);
         postText = (AutoCompleteTextView) findViewById(R.id.post_text);
         checkIn = (ToggleButton) findViewById(R.id.check_in);
-        chooseImage = (ToggleButton) findViewById(R.id.choose_image);
+        selectPic = (ToggleButton) findViewById(R.id.choose_image);
 
-        /* Do something */
-        chooseImage.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        selectPic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    /* Do something */
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_PICK);
+                    startActivityForResult(
+                            intent,
+                            Flag.POST_SELECT_PICTURE
+                    );
                 } else {
-                    postImage.setVisibility(View.GONE);
+                    postPic.setVisibility(View.GONE);
                 }
             }
         });
 
         /* Do something */
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK) {
+            postPic.setVisibility(View.GONE);
+            selectPic.setChecked(false);
+            return;
+        }
+        if (requestCode == Flag.POST_SELECT_PICTURE) {
+            Uri uri = data.getData();
+            String[] proj = { MediaStore.Images.Media.DATA };
+            CursorLoader loader = new CursorLoader(this, uri, proj, null, null, null);
+            Cursor cursor = loader.loadInBackground();
+            int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            picPath = cursor.getString(index);
+            cursor.close();
+
+            Bitmap bitmap = BitmapFactory.decodeFile(picPath);
+            WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+            DisplayMetrics metrics = new DisplayMetrics();
+            manager.getDefaultDisplay().getMetrics(metrics);
+            int screenWidth = metrics.widthPixels;
+            int screenHeight = metrics.heightPixels;
+            int bitmapWidth = bitmap.getWidth();
+            int bitmapHeight = bitmap.getHeight();
+            if (bitmapWidth > screenWidth || bitmapHeight > screenHeight) {
+                float percent = ((float) screenWidth) / ((float) bitmapWidth);
+                Matrix matrix = new Matrix();
+                matrix.postScale(percent, percent);
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+            }
+            postPic.setImageBitmap(bitmap);
+            postPic.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -108,17 +171,39 @@ public class PostActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
+        ActivityAnim anim = new ActivityAnim();
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                /* DO something */
+                finish();
+                anim.fade(this);
                 break;
             case R.id.post_send:
-                /* Do something */
+                postTask = new PostTask(this);
+                postTask.execute();
+                finish();
+                anim.fade(this);
                 break;
             default:
                 break;
         }
         return true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            ActivityAnim anim = new ActivityAnim();
+            finish();
+            anim.fade(this);
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Crouton.cancelAllCroutons();
     }
 
     @Override

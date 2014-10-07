@@ -3,6 +3,8 @@ package io.github.mthli.Tweetin.Tweet;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import io.github.mthli.Tweetin.Database.Tweet.TweetAction;
 import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.Main.MainFragment;
@@ -89,16 +91,16 @@ public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             action.updateByMe(oldTweet.getTweetId(), newTweet);
             action.closeDatabase();
 
-            Toast.makeText(
-                    context,
+            Crouton.makeText(
+                    mainFragment.getActivity(),
                     R.string.tweet_retweet_successful,
-                    Toast.LENGTH_SHORT
+                    Style.INFO
             ).show();
         } else {
-            Toast.makeText(
-                    context,
+            Crouton.makeText(
+                    mainFragment.getActivity(),
                     R.string.tweet_retweet_failed,
-                    Toast.LENGTH_SHORT
+                    Style.ALERT
             ).show();
         }
     }

@@ -92,16 +92,28 @@
         Retweet successful.
     </string>
     <string name="tweet_retweet_failed">
-        Twitter API 403 Error.
+        Retweet failed.
     </string>
 
     <!-- Post -->
     <string name="post_label">Post</string>
     <string name="post_flag">POST_FLAG</string>
-    <string name="post_image">
-        Post image
+    <string name="post_picture">
+        Post picture.
     </string>
     <string name="post_send">Send</string>
+    <string name="post_hint">
+        What\'s on your mind?
+    </string>
+    <string name="post_notification_ing">
+        Posting&#8230;
+    </string>
+    <string name="post_notification_successful">
+        Post successful.
+    </string>
+    <string name="post_notification_failed">
+        Post failed.
+    </string>
 
     <!-- User -->
     <string name="user_info_avatar">

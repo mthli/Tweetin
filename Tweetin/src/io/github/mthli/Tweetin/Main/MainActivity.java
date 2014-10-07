@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.*;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 import io.github.mthli.Tweetin.R;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -36,7 +37,7 @@ public class MainActivity extends FragmentActivity {
         Bitmap bitmap = ((BitmapDrawable) notificationDefault).getBitmap();
         bitmap = bitmap.copy(bitmap.getConfig(), true);
         Paint paint = new Paint();
-        paint.setColor(getResources().getColor(R.color.red_500));
+        paint.setColor(getResources().getColor(R.color.red_alert));
         paint.setAntiAlias(true);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawCircle(
@@ -123,6 +124,12 @@ public class MainActivity extends FragmentActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Crouton.cancelAllCroutons();
     }
 
     @Override

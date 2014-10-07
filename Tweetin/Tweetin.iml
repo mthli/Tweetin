@@ -117,7 +117,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/jsoup-1.7.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/twitter-text-1.9.9-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -126,7 +126,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/twitter-text-1.9.9-SNAPSHOT.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/crouton-1.8.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
