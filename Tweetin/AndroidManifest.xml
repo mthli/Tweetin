@@ -17,7 +17,7 @@
                  android:allowBackup="true"
                  android:largeHeap="true">
 
-        <!-- Activity -->
+        <!-- SplashActivity -->
         <activity android:name=".Splash.SplashActivity"
                   android:label="@string/splash_label"
                   android:theme="@style/SplashActivityTheme"
@@ -29,9 +29,18 @@
             </intent-filter>
         </activity>
 
+        <!-- MainActivity -->
         <activity android:name=".Main.MainActivity"
                   android:label="@string/main_label"
                   android:theme="@style/MainActivityTheme"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
+
+        <!-- PostActivity -->
+        <activity android:name=".Post.PostActivity"
+                  android:label="@string/post_label"
+                  android:theme="@style/PostActivityTheme"
+                  android:windowSoftInputMode="adjustResize|stateVisible"
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 

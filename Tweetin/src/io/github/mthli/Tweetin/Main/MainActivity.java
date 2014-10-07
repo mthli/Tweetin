@@ -64,7 +64,7 @@ public class MainActivity extends FragmentActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             SystemBarTintManager manager = new SystemBarTintManager(this);
             manager.setStatusBarTintEnabled(true);
-            int color = getResources().getColor(R.color.indigo_500);
+            int color = getResources().getColor(R.color.tumblr_dark_blue);
             manager.setTintColor(color);
         }
 
@@ -77,7 +77,6 @@ public class MainActivity extends FragmentActivity {
                 getString(R.string.sp_name),
                 Context.MODE_PRIVATE
         );
-
         String conKey = preferences.getString(getString(R.string.sp_consumer_key), null);
         String conSecret = preferences.getString(getString(R.string.sp_consumer_secret), null);
         String accToken = preferences.getString(getString(R.string.sp_access_token), null);

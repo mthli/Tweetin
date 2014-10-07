@@ -95,4 +95,20 @@
         Twitter API 403 Error.
     </string>
 
+    <!-- Post -->
+    <string name="post_label">Post</string>
+    <string name="post_flag">POST_FLAG</string>
+    <string name="post_image">
+        Post image
+    </string>
+    <string name="post_send">Send</string>
+
+    <!-- User -->
+    <string name="user_info_avatar">
+        User info avatar.
+    </string>
+    <string name="user_info_background">
+        User info background image.
+    </string>
+
 </resources>

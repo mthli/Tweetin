@@ -92,4 +92,7 @@
     <!-- MainActivityTheme -->
     <style name="MainActivityTheme" parent="BaseTheme" />
 
+    <!-- PostActivityTheme -->
+    <style name="PostActivityTheme" parent="BaseTheme" />
+
 </resources>

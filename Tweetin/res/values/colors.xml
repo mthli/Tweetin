@@ -2,14 +2,6 @@
 
 <resources>
 
-    <!-- Do something -->
-    <color name="indigo_700">#303F9F</color>
-    <color name="indigo_500">#3F51B5</color>
-    <color name="indigo_400">#5C6BC0</color>
-    <color name="indigo_300">#7986CB</color>
-    <color name="indigo_50">#E8EAF6</color>
-
-    <!-- Do something -->
     <color name="tumblr_dark_blue">#33465D</color>
     <color name="tumblr_ptr_red">#D95E40</color>
     <color name="tumblr_ptr_yellow">#F2992E</color>

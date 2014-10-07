@@ -1,10 +1,7 @@
 package io.github.mthli.Tweetin.Main;
 
 import android.app.AlertDialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,9 +9,11 @@ import android.view.View;
 import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
+import io.github.mthli.Tweetin.Post.PostActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.*;
-import io.github.mthli.Tweetin.Unit.ContextMenuAdapter;
+import io.github.mthli.Tweetin.ContextMenu.ContextMenuAdapter;
+import io.github.mthli.Tweetin.Unit.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.Flag;
 
 import java.util.ArrayList;
@@ -97,6 +96,7 @@ public class MainFragment extends ProgressFragment {
         ListView menu = (ListView) layout.findViewById(R.id.context_menu);
         List<String> menuItem = new ArrayList<String>();
 
+        /* Do something with Block */
         final int flag;
         Tweet tweet = tweetList.get(location);
         if (tweet.getRetweetedById() != 0 && tweet.getRetweetedById() == useId) {
@@ -212,6 +212,20 @@ public class MainFragment extends ProgressFragment {
         );
         fab.attachToListView(listView);
         fab.show();
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /* Do something */
+                Intent intent = new Intent(view.getContext(), PostActivity.class);
+                intent.putExtra(
+                        view.getContext().getString(R.string.post_flag),
+                        Flag.POST_ORIGINAL
+                );
+                ActivityAnim anim = new ActivityAnim();
+                startActivity(intent);
+                anim.fade(getActivity());
+            }
+        });
 
         srl = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         srl.setColorSchemeResources(
