@@ -5,7 +5,6 @@
                 android:layout_height="match_parent"
                 android:background="@color/white">
 
-
     <RelativeLayout android:id="@+id/post_option"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -13,8 +12,7 @@
                     android:padding="15dp"
                     android:background="@color/white">
 
-        <!-- Do something -->
-        <ToggleButton android:id="@+id/check_in"
+        <ToggleButton android:id="@+id/post_check_in"
                       android:layout_width="24dp"
                       android:layout_height="24dp"
                       android:background="@drawable/post_check_in_button_selector"
@@ -23,40 +21,28 @@
                       android:textOn="">
         </ToggleButton>
 
-        <!-- Do something -->
-        <ToggleButton android:id="@+id/choose_image"
+        <ToggleButton android:id="@+id/post_choose_image"
                       android:layout_width="24dp"
                       android:layout_height="24dp"
                       android:layout_marginLeft="15dp"
-                      android:layout_toRightOf="@id/check_in"
+                      android:layout_toRightOf="@id/post_check_in"
                       android:background="@drawable/post_post_picture_button_selector"
                       android:text=""
                       android:textOff=""
                       android:textOn="">
         </ToggleButton>
 
-        <!-- Do something -->
-        <TextView android:id="@+id/count_words"
+        <TextView android:id="@+id/post_count_words"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_alignParentRight="true"
                   android:background="@color/white"
                   android:textSize="20sp"
-                  android:textColor="@color/hint"
-                  android:text="1221"
                   android:singleLine="true"
                   android:ellipsize="end">
         </TextView>
 
     </RelativeLayout>
-
-    <!--
-    <LinearLayout android:id="@+id/post_content"
-                  android:orientation="vertical"
-                  android:layout_above="@id/post_option"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
-    -->
 
     <ScrollView android:id="@+id/post_content"
                 android:layout_width="match_parent"
@@ -78,19 +64,18 @@
                        android:scaleType="centerCrop">
             </ImageView>
 
-            <AutoCompleteTextView
-                    android:id="@+id/post_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:gravity="top"
-                    android:background="@color/white"
-                    android:hint="@string/post_hint"
-                    android:textColorHint="@color/hint"
-                    android:textColor="@color/text">
-            </AutoCompleteTextView>
+            <EditText android:id="@+id/post_text"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_marginTop="15dp"
+                      android:layout_marginLeft="15dp"
+                      android:layout_marginRight="15dp"
+                      android:gravity="top"
+                      android:background="@color/white"
+                      android:hint="@string/post_hint"
+                      android:textColorHint="@color/hint"
+                      android:textColor="@color/text">
+            </EditText>
 
         </LinearLayout>
 

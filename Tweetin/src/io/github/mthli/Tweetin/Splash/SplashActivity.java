@@ -65,15 +65,15 @@ public class SplashActivity extends Activity {
             finish();
         }
 
-        final EditText conKeyText = (EditText) findViewById(R.id.splash_sign_in_consumer_key);
-        final EditText conSecretText = (EditText) findViewById(R.id.splash_sign_in_consumer_secret);
+        final EditText conKeyEidt = (EditText) findViewById(R.id.splash_sign_in_consumer_key);
+        final EditText conSecretEidt = (EditText) findViewById(R.id.splash_sign_in_consumer_secret);
 
         Button signIn = (Button) findViewById(R.id.splash_sign_in_button);
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                conKey = conKeyText.getText().toString();
-                conSecret = conSecretText.getText().toString();
+                conKey = conKeyEidt.getText().toString();
+                conSecret = conSecretEidt.getText().toString();
                 if (conKey.length() == 0 || conSecret.length() == 0) {
                     Toast.makeText(
                             SplashActivity.this,

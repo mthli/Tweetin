@@ -8,6 +8,7 @@ public class TweetData {
     public static final String CREATED_AT = "CREATED_AT";
     public static final String NAME = "NAME";
     public static final String SCREEN_NAME = "SCREEN_NAME";
+    public static final String PROTECT = "PROTECT";
     public static final String TEXT = "TEXT";
     public static final String RETWEET = "RETWEET";
     public static final String RETWEETED_BY_NAME = "RETWEETED_BY_NAME";
@@ -22,6 +23,7 @@ public class TweetData {
             + " CREATED_AT text,"
             + " NAME text,"
             + " SCREEN_NAME text,"
+            + " PROTECT text,"
             + " TEXT text,"
             + " RETWEET text,"
             + " RETWEETED_BY_NAME text,"
@@ -34,6 +36,7 @@ public class TweetData {
     private String createdAt;
     private String name;
     private String screenName;
+    private String protect;
     private String text;
     private String retweet;
     private String retweetedByName;
@@ -46,6 +49,7 @@ public class TweetData {
         this.createdAt = null;
         this.name = null;
         this.screenName = null;
+        this.protect = null;
         this.text = null;
         this.retweet = null;
         this.retweetedByName = null;
@@ -92,6 +96,21 @@ public class TweetData {
     }
     public void setScreenName(String screenName) {
         this.screenName = screenName;
+    }
+
+    public boolean isProtected() {
+        if (protect.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public void setProtect(boolean protect) {
+        if (protect) {
+            this.protect = "true";
+        } else {
+            this.protect = "false";
+        }
     }
 
     public String getText() {

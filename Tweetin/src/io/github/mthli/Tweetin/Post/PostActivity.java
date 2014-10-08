@@ -15,9 +15,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.*;
-import android.view.animation.Animation;
 import android.widget.*;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -34,16 +35,14 @@ public class PostActivity extends Activity {
         return twitter;
     }
 
-    private int postFlag = 0;
-    private PostTask postTask;
-
     private ImageView postPic;
-    private AutoCompleteTextView postText;
+    private EditText postEdit;
     private ToggleButton checkIn;
     private ToggleButton selectPic;
+    private TextView countWords;
     private String picPath = null;
-    public AutoCompleteTextView getPostText() {
-        return postText;
+    public EditText getPostEdit() {
+        return postEdit;
     }
     public ToggleButton getCheckIn() {
         return checkIn;
@@ -60,27 +59,11 @@ public class PostActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.post);
 
-        /* Do something */
-        Intent intent = getIntent();
-        postFlag = intent.getIntExtra(getString(R.string.post_flag), 0);
-        switch (postFlag) {
-            case Flag.POST_ORIGINAL:
-                break;
-            case Flag.POST_REPLY:
-                /* Do something */
-                break;
-            case Flag.POST_RETWEET_WITH_COMMENT:
-                /* Do something */
-                break;
-            default:
-                break;
-        }
-
         SharedPreferences preferences = getSharedPreferences(
                 getString(R.string.sp_name),
                 Context.MODE_PRIVATE
         );
-        String conKey = preferences.getString(getString(R.string.sp_consumer_key), null);
+        final String conKey = preferences.getString(getString(R.string.sp_consumer_key), null);
         String conSecret = preferences.getString(getString(R.string.sp_consumer_secret), null);
         String accToken = preferences.getString(getString(R.string.sp_access_token), null);
         String accTokenSecret = preferences.getString(getString(R.string.sp_access_token_secret), null);
@@ -102,9 +85,46 @@ public class PostActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         postPic = (ImageView) findViewById(R.id.post_picture);
-        postText = (AutoCompleteTextView) findViewById(R.id.post_text);
-        checkIn = (ToggleButton) findViewById(R.id.check_in);
-        selectPic = (ToggleButton) findViewById(R.id.choose_image);
+        postEdit = (EditText) findViewById(R.id.post_text);
+        checkIn = (ToggleButton) findViewById(R.id.post_check_in);
+        selectPic = (ToggleButton) findViewById(R.id.post_choose_image);
+        countWords = (TextView) findViewById(R.id.post_count_words);
+
+        Intent intent = getIntent();
+        int postFlag = intent.getIntExtra(getString(R.string.post_flag), 0);
+        switch (postFlag) {
+            case Flag.POST_ORIGINAL:
+                break;
+            case Flag.POST_REPLY:
+                /* Do something */
+                break;
+            case Flag.POST_RETWEET_QUOTE:
+                String quote = "RT ";
+                if (intent.getStringExtra(getString(R.string.post_quote_screen_name)).startsWith("@")) {
+                    quote = quote
+                            + intent.getStringExtra(getString(R.string.post_quote_screen_name))
+                            + ": "
+                            + intent.getStringExtra(getString(R.string.post_quote_text));
+                } else {
+                    quote = quote
+                            + " @"
+                            + intent.getStringExtra(getString(R.string.post_quote_screen_name))
+                            + ": "
+                            + intent.getStringExtra(getString(R.string.post_quote_text));
+                }
+                postEdit.setText(quote);
+
+                if (quote.length() > 140) {
+                    countWords.setTextColor(getResources().getColor(R.color.red_alert));
+                    countWords.setText(String.valueOf(quote.length()));
+                } else {
+                    countWords.setTextColor(getResources().getColor(R.color.hint));
+                    countWords.setText(String.valueOf(quote.length()));
+                }
+                break;
+            default:
+                break;
+        }
 
         selectPic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -123,7 +143,29 @@ public class PostActivity extends Activity {
             }
         });
 
-        /* Do something */
+        postEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                /* Do nothing */
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                /* Do nothing */
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (text.length() <= 140) {
+                    countWords.setTextColor(getResources().getColor(R.color.hint));
+                    countWords.setText(String.valueOf(text.length()));
+                } else {
+                    countWords.setTextColor(getResources().getColor(R.color.red_alert));
+                    countWords.setText(String.valueOf(text.length()));
+                }
+            }
+        });
     }
 
     @Override
@@ -178,7 +220,7 @@ public class PostActivity extends Activity {
                 anim.fade(this);
                 break;
             case R.id.post_send:
-                postTask = new PostTask(this);
+                PostTask postTask = new PostTask(this);
                 postTask.execute();
                 finish();
                 anim.fade(this);

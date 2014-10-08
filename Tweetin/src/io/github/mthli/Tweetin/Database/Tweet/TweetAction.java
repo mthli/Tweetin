@@ -33,29 +33,6 @@ public class TweetAction {
         helper.close();
     }
 
-    /* Do something */
-    public boolean checkRepeat(long tweetId) {
-        Cursor cursor = database.query(
-                TweetData.TABLE,
-                new String[] {TweetData.TWEET_ID},
-                TweetData.TWEET_ID + "=?",
-                new String[] {String.valueOf(tweetId)},
-                null,
-                null,
-                null
-        );
-
-        if (cursor != null) {
-            boolean result = false;
-            if (cursor.moveToFirst()) {
-                result = true;
-            }
-            cursor.close();
-            return result;
-        }
-        return true;
-    }
-
     public void addTweet(TweetData data) {
         ContentValues values = new ContentValues();
         values.put(TweetData.TWEET_ID, data.getTweetId());
@@ -64,6 +41,11 @@ public class TweetAction {
         values.put(TweetData.CREATED_AT, data.getCreatedAt());
         values.put(TweetData.NAME, data.getName());
         values.put(TweetData.SCREEN_NAME, data.getScreenName());
+        if (data.isProtected()) {
+            values.put(TweetData.PROTECT, "true");
+        } else {
+            values.put(TweetData.PROTECT, "false");
+        }
         values.put(TweetData.TEXT, data.getText());
         if (data.isRetweet()) {
             values.put(TweetData.RETWEET, "true");
@@ -92,35 +74,7 @@ public class TweetAction {
                 TweetData.TABLE,
                 values,
                 TweetData.TWEET_ID + "=?",
-                new String[] {String.valueOf(oldTweetId)}
-        );
-    }
-
-    public void updeteByCancel(long oldTweetId, Tweet newTweet) {
-        ContentValues values = new ContentValues();
-        values.put(TweetData.TWEET_ID, newTweet.getTweetId());
-        if (newTweet.isRetweet()) {
-            values.put(TweetData.RETWEET, "true");
-        } else {
-            values.put(TweetData.RETWEET, "false");
-        }
-        values.put(TweetData.RETWEETED_BY_NAME, newTweet.getRetweetedByName());
-        values.put(TweetData.RETWEETED_BY_ID, newTweet.getRetweetedById());
-        database.update(
-                TweetData.TABLE,
-                values,
-                TweetData.TWEET_ID + "=?",
-                new String[] {String.valueOf(oldTweetId)}
-        );
-    }
-
-    public void deleteTweet(long tweetId) {
-        database.execSQL("DELETE FROM "
-                        + TweetData.TABLE
-                        + " WHERE "
-                        + TweetData.TWEET_ID
-                        + " = "
-                        + tweetId
+                new String[]{String.valueOf(oldTweetId)}
         );
     }
 
@@ -136,14 +90,19 @@ public class TweetAction {
         data.setCreatedAt(cursor.getString(3));
         data.setName(cursor.getString(4));
         data.setScreenName(cursor.getString(5));
-        data.setText(cursor.getString(6));
-        if (cursor.getString(7).equals("true")) {
+        if (cursor.getString(6).equals("true")) {
+            data.setProtect(true);
+        } else {
+            data.setProtect(false);
+        }
+        data.setText(cursor.getString(7));
+        if (cursor.getString(8).equals("true")) {
             data.setRetweet(true);
         } else {
             data.setRetweet(false);
         }
-        data.setRetweetedByName(cursor.getString(8));
-        data.setRetweetedById(cursor.getLong(9));
+        data.setRetweetedByName(cursor.getString(9));
+        data.setRetweetedById(cursor.getLong(10));
 
         return data;
     }
@@ -159,6 +118,7 @@ public class TweetAction {
                         TweetData.CREATED_AT,
                         TweetData.NAME,
                         TweetData.SCREEN_NAME,
+                        TweetData.PROTECT,
                         TweetData.TEXT,
                         TweetData.RETWEET,
                         TweetData.RETWEETED_BY_NAME,

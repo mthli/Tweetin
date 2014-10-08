@@ -62,6 +62,7 @@
     </string>
 
     <!-- Tweet -->
+    <string name="tweet_block">Block</string>
     <string name="tweet_date_format">
         HH:mm MM.dd
     </string>
@@ -80,9 +81,7 @@
     </string>
     <string name="tweet_menu_item_reply">Reply</string>
     <string name="tweet_menu_item_retweet">Retweet</string>
-    <string name="tweet_menu_item_retweet_with_comment">
-        Retweet with comment
-    </string>
+    <string name="tweet_menu_item_quote">Quote</string>
     <string name="tweet_menu_item_copy">Copy</string>
     <string name="tweet_copy_label">Tweet</string>
     <string name="tweet_copy_successful">
@@ -98,6 +97,10 @@
     <!-- Post -->
     <string name="post_label">Post</string>
     <string name="post_flag">POST_FLAG</string>
+    <string name="post_quote_screen_name">
+        POST_QUOTE_SCREEN_NAME
+    </string>
+    <string name="post_quote_text">POST_QUOTE</string>
     <string name="post_picture">
         Post picture.
     </string>

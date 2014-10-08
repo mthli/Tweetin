@@ -2,7 +2,6 @@ package io.github.mthli.Tweetin.Tweet;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import io.github.mthli.Tweetin.Database.Tweet.TweetAction;
@@ -78,6 +77,7 @@ public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             newTweet.setCreatedAt(oldTweet.getCreatedAt());
             newTweet.setName(oldTweet.getName());
             newTweet.setScreenName(oldTweet.getScreenName());
+            newTweet.setProtect(oldTweet.isProtected()); //
             newTweet.setText(oldTweet.getText());
             newTweet.setRetweet(true);
             newTweet.setRetweetedByName(context.getString(R.string.tweet_retweeted_by_me));

@@ -66,8 +66,17 @@
                           android:ellipsize="end">
                 </TextView>
 
-                <!-- Do something -->
-
+                <TextView android:id="@+id/tweet_protect"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:paddingLeft="5dp"
+                          android:drawableLeft="@drawable/ic_tweet_protect"
+                          android:textSize="12sp"
+                          android:textColor="@color/hint"
+                          android:singleLine="true"
+                          android:ellipsize="end"
+                          android:visibility="gone">
+                </TextView>
 
             </LinearLayout>
 

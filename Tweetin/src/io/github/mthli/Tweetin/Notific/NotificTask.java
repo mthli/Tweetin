@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Notification;
+package io.github.mthli.Tweetin.Notific;
 
 import android.os.AsyncTask;
 

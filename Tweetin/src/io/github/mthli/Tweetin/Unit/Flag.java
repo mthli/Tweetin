@@ -10,7 +10,7 @@ public class Flag {
     public static final int POST_ID = 0x300;
     public static final int POST_ORIGINAL = 0x301;
     public static final int POST_REPLY = 0x302;
-    public static final int POST_RETWEET_WITH_COMMENT = 0x303;
+    public static final int POST_RETWEET_QUOTE = 0x303;
     public static final int POST_SELECT_PICTURE = 0x304;
 
     /* Do something */

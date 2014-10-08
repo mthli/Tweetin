@@ -88,6 +88,7 @@ public class MainFragment extends ProgressFragment {
                 Toast.LENGTH_SHORT
         ).show();
     }
+
     private void showItemLongClickDialog(final int location) {
         LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(
                 R.layout.context_menu,
@@ -96,23 +97,24 @@ public class MainFragment extends ProgressFragment {
         ListView menu = (ListView) layout.findViewById(R.id.context_menu);
         List<String> menuItem = new ArrayList<String>();
 
-        /* Do something with Block */
         final int flag;
-        Tweet tweet = tweetList.get(location);
+        final Tweet tweet = tweetList.get(location);
         if (tweet.getRetweetedById() != 0 && tweet.getRetweetedById() == useId) {
             flag = Flag.TWEET_STATUS_BY_ME;
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_reply));
-            menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet_with_comment));
+            menuItem.add(view.getContext().getString(R.string.tweet_menu_item_quote));
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_copy));
         } else {
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_reply));
             if (tweet.getUserId() != useId) {
                 flag = Flag.TWEET_STATUS_NONE;
-                menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet));
+                if (!tweet.isProtected()) {
+                    menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet));
+                }
             } else {
                 flag = Flag.TWEET_STATUS_BY_ME;
             }
-            menuItem.add(view.getContext().getString(R.string.tweet_menu_item_retweet_with_comment));
+            menuItem.add(view.getContext().getString(R.string.tweet_menu_item_quote));
             menuItem.add(view.getContext().getString(R.string.tweet_menu_item_copy));
         }
 
@@ -130,9 +132,12 @@ public class MainFragment extends ProgressFragment {
         final AlertDialog dialog = builder.create();
         dialog.show();
 
+        /* Do something with menu */
         menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), PostActivity.class);
+                ActivityAnim anim = new ActivityAnim();
                 switch (flag) {
                     case Flag.TWEET_STATUS_BY_ME:
                         switch (position) {
@@ -140,7 +145,20 @@ public class MainFragment extends ProgressFragment {
                                 /* Do something */
                                 break;
                             case 1:
-                                /* Do something */
+                                intent.putExtra(
+                                        view.getContext().getString(R.string.post_flag),
+                                        Flag.POST_RETWEET_QUOTE
+                                );
+                                intent.putExtra(
+                                        view.getContext().getString(R.string.post_quote_text),
+                                        tweetList.get(location).getText()
+                                );
+                                intent.putExtra(
+                                        view.getContext().getString(R.string.post_quote_screen_name),
+                                        tweetList.get(location).getScreenName()
+                                );
+                                startActivity(intent);
+                                anim.fade(getActivity());
                                 break;
                             case 2:
                                 clip(location);
@@ -152,25 +170,67 @@ public class MainFragment extends ProgressFragment {
                         dialog.dismiss();
                         break;
                     case Flag.TWEET_STATUS_NONE:
-                        switch (position) {
-                            case 0:
-                                /* Do something */
-                                break;
-                            case 1:
-                                tweetRetweetTask = new TweetRetweetTask(
-                                        MainFragment.this,
-                                        location
-                                );
-                                tweetRetweetTask.execute();
-                                break;
-                            case 2:
-                                /* Do something */
-                                break;
-                            case 3:
-                                clip(location);
-                                break;
-                            default:
-                                break;
+                        if (tweet.isProtected()) {
+                            switch (position) {
+                                case 0:
+                                    /* Do something */
+                                    break;
+                                case 1:
+                                    intent.putExtra(
+                                            view.getContext().getString(R.string.post_flag),
+                                            Flag.POST_RETWEET_QUOTE
+                                    );
+                                    intent.putExtra(
+                                            view.getContext().getString(R.string.post_quote_text),
+                                            tweetList.get(location).getText()
+                                    );
+                                    intent.putExtra(
+                                            view.getContext().getString(R.string.post_quote_screen_name),
+                                            tweetList.get(location).getScreenName()
+                                    );
+                                    startActivity(intent);
+                                    anim.fade(getActivity());
+                                    break;
+                                case 2:
+                                    clip(location);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        } else {
+                            switch (position) {
+                                case 0:
+                                    /* Do something */
+                                    break;
+                                case 1:
+                                    tweetRetweetTask = new TweetRetweetTask(
+                                            MainFragment.this,
+                                            location
+                                    );
+                                    tweetRetweetTask.execute();
+                                    break;
+                                case 2:
+                                    intent.putExtra(
+                                            view.getContext().getString(R.string.post_flag),
+                                            Flag.POST_RETWEET_QUOTE
+                                    );
+                                    intent.putExtra(
+                                            view.getContext().getString(R.string.post_quote_text),
+                                            tweetList.get(location).getText()
+                                    );
+                                    intent.putExtra(
+                                            view.getContext().getString(R.string.post_quote_screen_name),
+                                            tweetList.get(location).getScreenName()
+                                    );
+                                    startActivity(intent);
+                                    anim.fade(getActivity());
+                                    break;
+                                case 3:
+                                    clip(location);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                         dialog.hide();
                         dialog.dismiss();
@@ -215,7 +275,6 @@ public class MainFragment extends ProgressFragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* Do something */
                 Intent intent = new Intent(view.getContext(), PostActivity.class);
                 intent.putExtra(
                         view.getContext().getString(R.string.post_flag),

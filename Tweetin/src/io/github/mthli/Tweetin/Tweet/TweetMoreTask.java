@@ -96,6 +96,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setScreenName(
                             "@" + status.getRetweetedStatus().getUser().getScreenName()
                     );
+                    tweet.setProtect(status.getRetweetedStatus().getUser().isProtected()); //
                     tweet.setText(status.getRetweetedStatus().getText());
                     tweet.setRetweet(true);
                     tweet.setRetweetedByName(status.getUser().getName());
@@ -107,6 +108,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setCreatedAt(format.format(status.getCreatedAt()));
                     tweet.setName(status.getUser().getName());
                     tweet.setScreenName(status.getUser().getScreenName());
+                    tweet.setProtect(status.getUser().isProtected()); //
                     tweet.setText(status.getText());
                     tweet.setRetweet(false);
                     tweet.setRetweetedByName(null);

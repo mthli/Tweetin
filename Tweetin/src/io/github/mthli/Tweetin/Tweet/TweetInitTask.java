@@ -89,6 +89,7 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setCreatedAt(data.getCreatedAt());
                 tweet.setName(data.getName());
                 tweet.setScreenName(data.getScreenName());
+                tweet.setProtect(data.isProtected()); //
                 tweet.setText(data.getText());
                 tweet.setRetweet(data.isRetweet());
                 tweet.setRetweetedByName(data.getRetweetedByName());
@@ -136,6 +137,7 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 data.setScreenName(
                         "@" + status.getRetweetedStatus().getUser().getScreenName()
                 );
+                data.setProtect(status.getRetweetedStatus().getUser().isProtected());
                 data.setText(status.getRetweetedStatus().getText());
                 data.setRetweet(true);
                 data.setRetweetedByName(status.getUser().getName());
@@ -147,6 +149,7 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 data.setCreatedAt(format.format(status.getCreatedAt()));
                 data.setName(status.getUser().getName());
                 data.setScreenName("@" + status.getUser().getScreenName());
+                data.setProtect(status.getUser().isProtected());
                 data.setText(status.getText());
                 data.setRetweet(false);
                 data.setRetweetedByName(null);
@@ -191,6 +194,7 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setCreatedAt(data.getCreatedAt());
                 tweet.setName(data.getName());
                 tweet.setScreenName(data.getScreenName());
+                tweet.setProtect(data.isProtected()); //
                 tweet.setText(data.getText());
                 tweet.setRetweet(data.isRetweet());
                 tweet.setRetweetedByName(data.getRetweetedByName());

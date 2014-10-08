@@ -7,6 +7,7 @@ public class Tweet {
     private String createdAt;
     private String name;
     private String screenName;
+    private boolean protect;
     private String text;
     private boolean retweet;
     private String retweetedByName;
@@ -19,6 +20,7 @@ public class Tweet {
         this.createdAt = null;
         this.name = null;
         this.screenName = null;
+        this.protect = false;
         this.text = null;
         this.retweet = false;
         this.retweetedByName = null;
@@ -65,6 +67,13 @@ public class Tweet {
     }
     public void setScreenName(String screenName) {
         this.screenName = screenName;
+    }
+
+    public boolean isProtected() {
+        return protect;
+    }
+    public void setProtect(Boolean protect) {
+        this.protect = protect;
     }
 
     public String getText() {

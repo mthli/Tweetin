@@ -8,10 +8,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ToggleButton;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Flag;
 import twitter4j.GeoLocation;
@@ -23,9 +21,6 @@ import java.io.File;
 public class PostTask extends AsyncTask<Void, Integer, Boolean> {
 
     private PostActivity postActivity;
-    private AutoCompleteTextView postText;
-    private ToggleButton checkIn;
-    private ToggleButton selectPic;
     private boolean isCheckIn;
     private boolean isSelectPic;
     private String text;
@@ -47,16 +42,16 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        postText = postActivity.getPostText();
-        checkIn = postActivity.getCheckIn();
-        selectPic = postActivity.getSelectPic();
+        EditText postEdit = postActivity.getPostEdit();
+        ToggleButton checkIn = postActivity.getCheckIn();
+        ToggleButton selectPic = postActivity.getSelectPic();
         if (checkIn.isChecked()) {
             isCheckIn = true;
         }
         if (selectPic.isChecked()) {
             isSelectPic = true;
         }
-        text = postText.getText().toString();
+        text = postEdit.getText().toString();
         picPath = postActivity.getPicPath();
 
         twitter = postActivity.getTwitter();
@@ -75,7 +70,7 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
         );
         builder.setContentText(text);
         Notification notification = builder.build();
-        notification.flags = Notification.FLAG_NO_CLEAR;
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(POST_ID, notification);
 
         update = new StatusUpdate(text);
@@ -126,7 +121,6 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
         try {
             twitter.updateStatus(update);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
 
