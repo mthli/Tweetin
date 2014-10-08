@@ -97,6 +97,12 @@
     <!-- Post -->
     <string name="post_label">Post</string>
     <string name="post_flag">POST_FLAG</string>
+    <string name="post_reply_status_id">
+        REPLY_STATUS_ID
+    </string>
+    <string name="post_reply_screen_name">
+        REPLY_SCREEN_NAME
+    </string>
     <string name="post_quote_screen_name">
         POST_QUOTE_SCREEN_NAME
     </string>

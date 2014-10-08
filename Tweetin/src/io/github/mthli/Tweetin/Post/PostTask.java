@@ -29,6 +29,10 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
     private Twitter twitter;
     private StatusUpdate update;
 
+    private int postFlag;
+    private long replyStatusId;
+    private String replyScreenName;
+
     private NotificationManager notificationManager;
     private Notification.Builder builder;
     private static final int POST_ID = Flag.POST_ID;
@@ -38,6 +42,9 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
         this.isCheckIn = false;
         this.isSelectPic = false;
         this.picPath = null;
+        this.postFlag = 0;
+        this.replyStatusId = 0;
+        this.replyScreenName = null;
     }
 
     @Override
@@ -55,6 +62,10 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
         picPath = postActivity.getPicPath();
 
         twitter = postActivity.getTwitter();
+
+        postFlag = postActivity.getPostFlag();
+        replyStatusId = postActivity.getReplyStatusId();
+        replyScreenName = postActivity.getReplyScreenName();
 
         notificationManager = (NotificationManager) postActivity
                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -113,6 +124,9 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
         if (isSelectPic) {
             File file = new File(picPath);
             update.setMedia(file);
+        }
+        if (postFlag == Flag.POST_REPLY && text.contains(replyScreenName)) {
+            update.setInReplyToStatusId(replyStatusId);
         }
     }
 

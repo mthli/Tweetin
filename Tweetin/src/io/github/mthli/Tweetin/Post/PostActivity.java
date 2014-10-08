@@ -35,6 +35,20 @@ public class PostActivity extends Activity {
         return twitter;
     }
 
+    private int postFlag = 0;
+    public int getPostFlag() {
+        return postFlag;
+    }
+
+    private long replyStatusId = 0;
+    private String replyScreenName = null;
+    public long getReplyStatusId() {
+        return replyStatusId;
+    }
+    public String getReplyScreenName() {
+        return replyScreenName;
+    }
+
     private ImageView postPic;
     private EditText postEdit;
     private ToggleButton checkIn;
@@ -91,12 +105,32 @@ public class PostActivity extends Activity {
         countWords = (TextView) findViewById(R.id.post_count_words);
 
         Intent intent = getIntent();
-        int postFlag = intent.getIntExtra(getString(R.string.post_flag), 0);
+        postFlag = intent.getIntExtra(getString(R.string.post_flag), 0);
         switch (postFlag) {
             case Flag.POST_ORIGINAL:
+                /* Do nothing */
                 break;
             case Flag.POST_REPLY:
-                /* Do something */
+                replyStatusId = intent.getLongExtra(
+                        getString(R.string.post_reply_status_id),
+                        0
+                );
+                String reply = intent.getStringExtra(getString(R.string.post_reply_screen_name));
+                if (!reply.startsWith("@")) {
+                    reply = "@" + reply;
+                }
+                replyScreenName = reply;
+                reply = reply + " ";
+                postEdit.setText(reply);
+                postEdit.setSelection(reply.length());
+
+                if (reply.length() > 140) {
+                    countWords.setTextColor(getResources().getColor(R.color.red_alert));
+                    countWords.setText(String.valueOf(reply.length()));
+                } else {
+                    countWords.setTextColor(getResources().getColor(R.color.hint));
+                    countWords.setText(String.valueOf(reply.length()));
+                }
                 break;
             case Flag.POST_RETWEET_QUOTE:
                 String quote = "RT ";

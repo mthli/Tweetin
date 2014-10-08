@@ -73,6 +73,42 @@ public class MainFragment extends ProgressFragment {
         }
     }
 
+    private void reply(int location) {
+        Intent intent = new Intent(view.getContext(), PostActivity.class);
+        ActivityAnim anim = new ActivityAnim();
+        intent.putExtra(
+                view.getContext().getString(R.string.post_flag),
+                Flag.POST_REPLY
+        );
+        intent.putExtra(
+                view.getContext().getString(R.string.post_reply_status_id),
+                tweetList.get(location).getTweetId()
+        );
+        intent.putExtra(
+                view.getContext().getString(R.string.post_reply_screen_name),
+                tweetList.get(location).getScreenName()
+        );
+        startActivity(intent);
+        anim.fade(getActivity());
+    }
+    private void quote(int location) {
+        Intent intent = new Intent(view.getContext(), PostActivity.class);
+        ActivityAnim anim = new ActivityAnim();
+        intent.putExtra(
+                view.getContext().getString(R.string.post_flag),
+                Flag.POST_RETWEET_QUOTE
+        );
+        intent.putExtra(
+                view.getContext().getString(R.string.post_quote_screen_name),
+                tweetList.get(location).getScreenName()
+        );
+        intent.putExtra(
+                view.getContext().getString(R.string.post_quote_text),
+                tweetList.get(location).getText()
+        );
+        startActivity(intent);
+        anim.fade(getActivity());
+    }
     private void clip(int location) {
         ClipboardManager manager = (ClipboardManager) view.getContext()
                 .getSystemService(Context.CLIPBOARD_SERVICE);
@@ -88,7 +124,6 @@ public class MainFragment extends ProgressFragment {
                 Toast.LENGTH_SHORT
         ).show();
     }
-
     private void showItemLongClickDialog(final int location) {
         LinearLayout layout = (LinearLayout) getActivity().getLayoutInflater().inflate(
                 R.layout.context_menu,
@@ -132,7 +167,6 @@ public class MainFragment extends ProgressFragment {
         final AlertDialog dialog = builder.create();
         dialog.show();
 
-        /* Do something with menu */
         menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -142,23 +176,10 @@ public class MainFragment extends ProgressFragment {
                     case Flag.TWEET_STATUS_BY_ME:
                         switch (position) {
                             case 0:
-                                /* Do something */
+                                reply(location);
                                 break;
                             case 1:
-                                intent.putExtra(
-                                        view.getContext().getString(R.string.post_flag),
-                                        Flag.POST_RETWEET_QUOTE
-                                );
-                                intent.putExtra(
-                                        view.getContext().getString(R.string.post_quote_text),
-                                        tweetList.get(location).getText()
-                                );
-                                intent.putExtra(
-                                        view.getContext().getString(R.string.post_quote_screen_name),
-                                        tweetList.get(location).getScreenName()
-                                );
-                                startActivity(intent);
-                                anim.fade(getActivity());
+                                quote(location);
                                 break;
                             case 2:
                                 clip(location);
@@ -173,23 +194,10 @@ public class MainFragment extends ProgressFragment {
                         if (tweet.isProtected()) {
                             switch (position) {
                                 case 0:
-                                    /* Do something */
+                                    reply(location);
                                     break;
                                 case 1:
-                                    intent.putExtra(
-                                            view.getContext().getString(R.string.post_flag),
-                                            Flag.POST_RETWEET_QUOTE
-                                    );
-                                    intent.putExtra(
-                                            view.getContext().getString(R.string.post_quote_text),
-                                            tweetList.get(location).getText()
-                                    );
-                                    intent.putExtra(
-                                            view.getContext().getString(R.string.post_quote_screen_name),
-                                            tweetList.get(location).getScreenName()
-                                    );
-                                    startActivity(intent);
-                                    anim.fade(getActivity());
+                                    quote(location);
                                     break;
                                 case 2:
                                     clip(location);
@@ -200,7 +208,7 @@ public class MainFragment extends ProgressFragment {
                         } else {
                             switch (position) {
                                 case 0:
-                                    /* Do something */
+                                    reply(location);
                                     break;
                                 case 1:
                                     tweetRetweetTask = new TweetRetweetTask(
@@ -210,20 +218,7 @@ public class MainFragment extends ProgressFragment {
                                     tweetRetweetTask.execute();
                                     break;
                                 case 2:
-                                    intent.putExtra(
-                                            view.getContext().getString(R.string.post_flag),
-                                            Flag.POST_RETWEET_QUOTE
-                                    );
-                                    intent.putExtra(
-                                            view.getContext().getString(R.string.post_quote_text),
-                                            tweetList.get(location).getText()
-                                    );
-                                    intent.putExtra(
-                                            view.getContext().getString(R.string.post_quote_screen_name),
-                                            tweetList.get(location).getScreenName()
-                                    );
-                                    startActivity(intent);
-                                    anim.fade(getActivity());
+                                    quote(location);
                                     break;
                                 case 3:
                                     clip(location);
