@@ -13,6 +13,7 @@ public class TweetData {
     public static final String RETWEET = "RETWEET";
     public static final String RETWEETED_BY_NAME = "RETWEETED_BY_NAME";
     public static final String RETWEETED_BY_ID = "RETWEETED_BY_ID";
+    public static final String REPLY_TO = "REPLY_TO";
 
     public static final String CREATE_SQL = "CREATE TABLE "
             + TABLE
@@ -27,7 +28,8 @@ public class TweetData {
             + " TEXT text,"
             + " RETWEET text,"
             + " RETWEETED_BY_NAME text,"
-            + " RETWEETED_BY_ID integer"
+            + " RETWEETED_BY_ID integer,"
+            + " REPLY_TO integer"
             + ")";
 
     private long tweetId;
@@ -41,6 +43,7 @@ public class TweetData {
     private String retweet;
     private String retweetedByName;
     private long retweetedById;
+    private long replyTo;
 
     public TweetData() {
         this.tweetId = 0;
@@ -54,6 +57,7 @@ public class TweetData {
         this.retweet = null;
         this.retweetedByName = null;
         this.retweetedById = 0;
+        this.replyTo = -1;
     }
 
     public long getTweetId() {
@@ -147,5 +151,12 @@ public class TweetData {
     }
     public void setRetweetedById(long retweetedById) {
         this.retweetedById = retweetedById;
+    }
+
+    public long getReplyTo() {
+        return replyTo;
+    }
+    public void setReplyTo(long replyTo) {
+        this.replyTo = replyTo;
     }
 }

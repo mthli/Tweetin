@@ -96,11 +96,12 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setScreenName(
                             "@" + status.getRetweetedStatus().getUser().getScreenName()
                     );
-                    tweet.setProtect(status.getRetweetedStatus().getUser().isProtected()); //
+                    tweet.setProtect(status.getRetweetedStatus().getUser().isProtected());
                     tweet.setText(status.getRetweetedStatus().getText());
                     tweet.setRetweet(true);
                     tweet.setRetweetedByName(status.getUser().getName());
                     tweet.setRetweetedById(status.getUser().getId());
+                    tweet.setReplyTo(status.getRetweetedStatus().getInReplyToStatusId()); //
                 } else {
                     tweet.setTweetId(status.getId());
                     tweet.setUserId(status.getUser().getId());
@@ -108,13 +109,15 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setCreatedAt(format.format(status.getCreatedAt()));
                     tweet.setName(status.getUser().getName());
                     tweet.setScreenName(status.getUser().getScreenName());
-                    tweet.setProtect(status.getUser().isProtected()); //
+                    tweet.setProtect(status.getUser().isProtected());
                     tweet.setText(status.getText());
                     tweet.setRetweet(false);
                     tweet.setRetweetedByName(null);
                     tweet.setRetweetedById(0);
+                    tweet.setReplyTo(status.getInReplyToStatusId()); //
                 }
-                if (status.isRetweetedByMe() || status.isRetweeted()) {
+                // if (status.isRetweetedByMe() || status.isRetweeted()) {
+                if (status.isRetweetedByMe()) {
                     tweet.setRetweet(true);
                     tweet.setRetweetedByName(context.getString(R.string.tweet_retweeted_by_me));
                     tweet.setRetweetedById(useId);

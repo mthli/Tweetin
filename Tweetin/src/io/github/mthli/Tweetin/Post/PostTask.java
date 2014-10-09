@@ -134,10 +134,38 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
     protected Boolean doInBackground(Void... params) {
         try {
             twitter.updateStatus(update);
+
+            builder.setSmallIcon(R.drawable.ic_post_notification);
+            builder.setTicker(
+                    postActivity.getString(R.string.post_notification_successful)
+            );
+            builder.setContentTitle(
+                    postActivity.getString(R.string.post_notification_successful)
+            );
+            builder.setContentText(text);
+            Notification notification = builder.build();
+            notification.flags = Notification.FLAG_AUTO_CANCEL;
+            notificationManager.notify(POST_ID, notification);
+            notificationManager.cancel(POST_ID);
         } catch (Exception e) {
+            builder.setSmallIcon(R.drawable.ic_post_notification);
+            builder.setTicker(
+                    postActivity.getString(R.string.post_notification_failed)
+            );
+            builder.setContentTitle(
+                    postActivity.getString(R.string.post_notification_failed)
+            );
+            builder.setContentText(text);
+            Notification notification = builder.build();
+            notification.flags = Notification.FLAG_AUTO_CANCEL;
+            notificationManager.notify(POST_ID, notification);
+
             return false;
         }
 
+        if (isCancelled()) {
+            return false;
+        }
         return true;
     }
 
@@ -153,31 +181,6 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean result) {
-        if (result) {
-            builder.setSmallIcon(R.drawable.ic_post_notification);
-            builder.setTicker(
-                    postActivity.getString(R.string.post_notification_successful)
-            );
-            builder.setContentTitle(
-                    postActivity.getString(R.string.post_notification_successful)
-            );
-            builder.setContentText(text);
-            Notification notification = builder.build();
-            notification.flags = Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(POST_ID, notification);
-            notificationManager.cancel(POST_ID);
-        } else {
-            builder.setSmallIcon(R.drawable.ic_post_notification);
-            builder.setTicker(
-                    postActivity.getString(R.string.post_notification_failed)
-            );
-            builder.setContentTitle(
-                    postActivity.getString(R.string.post_notification_failed)
-            );
-            builder.setContentText(text);
-            Notification notification = builder.build();
-            notification.flags = Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(POST_ID, notification);
-        }
+        /* Do nothing */
     }
 }

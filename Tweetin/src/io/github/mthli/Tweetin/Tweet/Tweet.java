@@ -12,6 +12,7 @@ public class Tweet {
     private boolean retweet;
     private String retweetedByName;
     private long retweetedById;
+    private long replyTo;
 
     public Tweet() {
         this.tweetId = 0;
@@ -25,6 +26,7 @@ public class Tweet {
         this.retweet = false;
         this.retweetedByName = null;
         this.retweetedById = 0;
+        this.replyTo = -1;
     }
 
     public long getTweetId() {
@@ -102,5 +104,12 @@ public class Tweet {
     }
     public void setRetweetedById(long retweetedById) {
         this.retweetedById = retweetedById;
+    }
+
+    public long getReplyTo() {
+        return replyTo;
+    }
+    public void setReplyTo(long replyTo) {
+        this.replyTo = replyTo;
     }
 }

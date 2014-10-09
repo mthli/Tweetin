@@ -95,4 +95,7 @@
     <!-- PostActivityTheme -->
     <style name="PostActivityTheme" parent="BaseTheme" />
 
+    <!-- DetailActivityTheme -->
+    <style name="DetailActivityTheme" parent="BaseTheme" />
+
 </resources>

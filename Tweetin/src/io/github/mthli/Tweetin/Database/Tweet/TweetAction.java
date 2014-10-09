@@ -54,6 +54,7 @@ public class TweetAction {
         }
         values.put(TweetData.RETWEETED_BY_NAME, data.getRetweetedByName());
         values.put(TweetData.RETWEETED_BY_ID, data.getRetweetedById());
+        values.put(TweetData.REPLY_TO, data.getReplyTo()); //
         database.insert(TweetData.TABLE, null, values);
     }
 
@@ -70,6 +71,7 @@ public class TweetAction {
         values.put(TweetData.RETWEET, "true");
         values.put(TweetData.RETWEETED_BY_NAME, context.getString(R.string.tweet_retweeted_by_me));
         values.put(TweetData.RETWEETED_BY_ID, useId);
+        values.put(TweetData.REPLY_TO, newTweet.getReplyTo()); //
         database.update(
                 TweetData.TABLE,
                 values,
@@ -103,6 +105,7 @@ public class TweetAction {
         }
         data.setRetweetedByName(cursor.getString(9));
         data.setRetweetedById(cursor.getLong(10));
+        data.setReplyTo(cursor.getLong(11)); //
 
         return data;
     }
@@ -122,7 +125,8 @@ public class TweetAction {
                         TweetData.TEXT,
                         TweetData.RETWEET,
                         TweetData.RETWEETED_BY_NAME,
-                        TweetData.RETWEETED_BY_ID
+                        TweetData.RETWEETED_BY_ID,
+                        TweetData.REPLY_TO //
                 },
                 null,
                 null,

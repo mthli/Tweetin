@@ -93,7 +93,6 @@ public class PostActivity extends Activity {
             int color = getResources().getColor(R.color.tumblr_dark_blue);
             manager.setTintColor(color);
         }
-
         ActionBar actionBar = getActionBar();
         actionBar.setTitle(null);
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -108,7 +107,8 @@ public class PostActivity extends Activity {
         postFlag = intent.getIntExtra(getString(R.string.post_flag), 0);
         switch (postFlag) {
             case Flag.POST_ORIGINAL:
-                /* Do nothing */
+                countWords.setTextColor(getResources().getColor(R.color.hint));
+                countWords.setText("0");
                 break;
             case Flag.POST_REPLY:
                 replyStatusId = intent.getLongExtra(

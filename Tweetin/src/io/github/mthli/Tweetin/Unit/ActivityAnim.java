@@ -4,6 +4,16 @@ import android.app.Activity;
 import io.github.mthli.Tweetin.R;
 
 public class ActivityAnim {
+    public ActivityAnim() {}
+
+    public void rightIn(Activity a) {
+        a.overridePendingTransition(R.anim.right_in, R.anim.left_out);
+    }
+
+    public void rightOut(Activity a) {
+        a.overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
+
 	public void flipHorizontal(Activity a) {
 		a.overridePendingTransition(R.anim.flip_horizontal_in, R.anim.flip_horizontal_out);
 	}

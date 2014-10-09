@@ -48,5 +48,13 @@
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 
+        <!-- DetailActivity -->
+        <activity android:name=".Detail.DetailActivity"
+                  android:label="@string/detail_label"
+                  android:theme="@style/DetailActivityTheme"
+                  android:windowSoftInputMode="adjustResize"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
+
     </application>
 </manifest>

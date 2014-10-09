@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:descendantFocusability="blocksDescendants">
+
+    <RelativeLayout android:id="@+id/detail_option"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:layout_alignParentBottom="true"
+                    android:padding="15dp">
+
+        <Button android:id="@+id/detail_quote"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/detail_quote_button_selector">
+        </Button>
+
+        <Button android:id="@+id/detail_retweet"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/detail_retweet_button_selector"
+                android:layout_toRightOf="@id/detail_quote"
+                android:layout_marginLeft="15dp">
+        </Button>
+
+        <Button android:id="@+id/detail_reply"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/detail_reply_button_selector"
+                android:layout_alignParentRight="true">
+        </Button>
+
+    </RelativeLayout>
+
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:layout_above="@id/detail_option">
+
+        <LinearLayout android:orientation="horizontal"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+
+            <!-- Do something -->
+
+            <!--
+            <RelativeLayout android:id="@+id/detail_reply_to_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/detail_reply_to_status_avatar"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="11dp"
+                        android:layout_marginBottom="11dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        app:border_width="0dp">
+                </de.hdodenhof.circleimageview.CircleImageView>
+
+                <LinearLayout android:orientation="vertical"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:background="@color/white"
+                              android:layout_alignParentRight="true"
+                              android:paddingTop="10dp"
+                              android:paddingBottom="10dp"
+                              android:layout_marginBottom="10dp"
+                              android:layout_marginRight="15dp"
+                              android:layout_toRightOf="@id/detail_reply_to_status_avatar">
+
+                    <RelativeLayout android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/white">
+
+                        <TextView android:id="@+id/detail_reply_to_status_created_at"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_alignParentRight="true"
+                                  android:textSize="12sp"
+                                  android:textColor="@color/hint"
+                                  android:singleLine="true"
+                                  android:ellipsize="end">
+                        </TextView>
+
+                        <LinearLayout android:orientation="horizontal"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:background="@color/white"
+                                      android:layout_alignParentLeft="true"
+                                      android:layout_toLeftOf="@id/detail_reply_to_status_created_at">
+
+                            <TextView android:id="@+id/detail_reply_to_status_name"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:textSize="16sp"
+                                      android:textColor="@color/text"
+                                      android:singleLine="true"
+                                      android:ellipsize="end">
+                            </TextView>
+
+                            <TextView android:id="@+id/detail_reply_to_status_screen_name"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingLeft="5dp"
+                                      android:textSize="12sp"
+                                      android:textColor="@color/hint"
+                                      android:singleLine="true"
+                                      android:ellipsize="end">
+                            </TextView>
+
+                            <TextView android:id="@+id/detail_reply_to_status_protect"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingLeft="5dp"
+                                      android:drawableLeft="@drawable/ic_tweet_protect"
+                                      android:textSize="12sp"
+                                      android:textColor="@color/hint"
+                                      android:singleLine="true"
+                                      android:ellipsize="end">
+                            </TextView>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <TextView android:id="@+id/detail_reply_to_status_text"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:paddingTop="2dp"
+                              android:textColor="@color/text"
+                              android:textSize="14sp">
+                    </TextView>
+
+                    <ImageView
+                            android:id="@+id/detail_reply_to_status_picture"
+                            android:contentDescription="@string/detail_picture_cd"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                    </ImageView>
+
+                    <LinearLayout android:orientation="horizontal"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:background="@color/white"
+                                  android:paddingTop="2dp">
+
+                        <TextView android:id="@+id/detail_reply_to_status_check_in"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:visibility="gone"
+                                  android:drawableLeft="@drawable/ic_check_in"
+                                  android:drawablePadding="1dp"
+                                  android:textColor="@color/hint"
+                                  android:textSize="12sp"
+                                  android:singleLine="true"
+                                  android:ellipsize="end">
+                        </TextView>
+
+                        <TextView android:id="@+id/detail_reply_to_status_retweeted_by_name"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:visibility="gone"
+                                  android:drawableLeft="@drawable/ic_retweeted_by"
+                                  android:drawablePadding="1dp"
+                                  android:textColor="@color/hint"
+                                  android:textSize="12sp"
+                                  android:singleLine="true"
+                                  android:ellipsize="end">
+                        </TextView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+            -->
+
+            <!-- *************************************************** -->
+
+            <!-- Do something -->
+            <RelativeLayout android:id="@+id/detail_this_status"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/detail_this_status_avatar"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="11dp"
+                        android:layout_marginBottom="11dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        app:border_width="0dp">
+                </de.hdodenhof.circleimageview.CircleImageView>
+
+                <LinearLayout android:orientation="vertical"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:background="@color/white"
+                              android:layout_alignParentRight="true"
+                              android:paddingTop="10dp"
+                              android:paddingBottom="10dp"
+                              android:layout_marginBottom="10dp"
+                              android:layout_marginRight="15dp"
+                              android:layout_toRightOf="@id/detail_this_status_avatar">
+
+                    <RelativeLayout android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/white">
+
+                        <TextView android:id="@+id/detail_this_status_created_at"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_alignParentRight="true"
+                                  android:textSize="12sp"
+                                  android:textColor="@color/hint"
+                                  android:singleLine="true"
+                                  android:ellipsize="end">
+                        </TextView>
+
+                        <LinearLayout android:orientation="horizontal"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:background="@color/white"
+                                      android:layout_alignParentLeft="true"
+                                      android:layout_toLeftOf="@id/detail_this_status_created_at">
+
+                            <TextView android:id="@+id/detail_this_status_name"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:textSize="16sp"
+                                      android:textColor="@color/text"
+                                      android:singleLine="true"
+                                      android:ellipsize="end">
+                            </TextView>
+
+                            <TextView android:id="@+id/detail_this_status_screen_name"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingLeft="5dp"
+                                      android:textSize="12sp"
+                                      android:textColor="@color/hint"
+                                      android:singleLine="true"
+                                      android:ellipsize="end">
+                            </TextView>
+
+                            <TextView android:id="@+id/detail_this_status_protect"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:paddingLeft="5dp"
+                                      android:drawableLeft="@drawable/ic_tweet_protect"
+                                      android:textSize="12sp"
+                                      android:textColor="@color/hint"
+                                      android:singleLine="true"
+                                      android:ellipsize="end">
+                            </TextView>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <TextView android:id="@+id/detail_this_status_text"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:paddingTop="2dp"
+                              android:textColor="@color/text"
+                              android:textSize="14sp">
+                    </TextView>
+
+                    <!-- Do something -->
+                    <ImageView
+                            android:id="@+id/detail_this_status_picture"
+                            android:contentDescription="@string/detail_picture_cd"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                    </ImageView>
+
+                    <LinearLayout android:orientation="horizontal"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:background="@color/white"
+                                  android:paddingTop="2dp">
+
+                        <TextView android:id="@+id/detail_this_status_check_in"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:drawableLeft="@drawable/ic_check_in"
+                                  android:drawablePadding="2dp"
+                                  android:textColor="@color/hint"
+                                  android:textSize="12sp"
+                                  android:singleLine="true"
+                                  android:ellipsize="end">
+                        </TextView>
+
+                        <TextView android:id="@+id/detail_this_status_retweeted_by_name"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:paddingLeft="3dp"
+                                  android:drawableLeft="@drawable/ic_retweeted_by"
+                                  android:drawablePadding="2dp"
+                                  android:textColor="@color/hint"
+                                  android:textSize="12sp"
+                                  android:singleLine="true"
+                                  android:ellipsize="end">
+                        </TextView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

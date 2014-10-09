@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.R;
 
 import java.text.SimpleDateFormat;
@@ -33,7 +33,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
     }
 
     private class Holder {
-        ImageView avatar;
+        CircleImageView avatar;
         TextView createdAt;
         TextView name;
         TextView screenName;
@@ -71,7 +71,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             view = inflater.inflate(layoutResId, viewGroup, false);
 
             holder = new Holder();
-            holder.avatar = (ImageView) view.findViewById(R.id.tweet_avatar);
+            holder.avatar = (CircleImageView) view.findViewById(R.id.tweet_avatar);
             holder.createdAt = (TextView) view.findViewById(R.id.tweet_created_at);
             holder.name = (TextView) view.findViewById(R.id.tweet_name);
             holder.screenName = (TextView) view.findViewById(R.id.tweet_screen_name);

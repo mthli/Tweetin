@@ -87,6 +87,9 @@
     <string name="tweet_copy_successful">
         Copy successful.
     </string>
+    <string name="tweet_retweet_ing">
+        Retweeting&#8230;
+    </string>
     <string name="tweet_retweet_successful">
         Retweet successful.
     </string>
@@ -122,6 +125,17 @@
     </string>
     <string name="post_notification_failed">
         Post failed.
+    </string>
+
+    <!-- Detail -->
+    <string name="detail_label">Detail</string>
+    <string name="detail_menu_copy">Copy</string>
+    <string name="detail_picture_cd">Picture</string>
+    <string name="detail_intent_user_id">USER_ID</string>
+    <string name="detail_intent_tweet_id">TWEET_ID</string>
+    <string name="detail_intent_reply_to">REPLY_TO</string>
+    <string name="detail_get_tweets_failed">
+        Get tweets failed.
     </string>
 
     <!-- User -->

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
+import io.github.mthli.Tweetin.Detail.DetailActivity;
 import io.github.mthli.Tweetin.Post.PostActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.*;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragment extends ProgressFragment {
+
     private View view;
 
     private long useId = 0;
@@ -296,7 +298,6 @@ public class MainFragment extends ProgressFragment {
             }
         });
 
-        /* Do something */
         tweetInitTask = new TweetInitTask(MainFragment.this, false);
         tweetInitTask.execute();
 
@@ -304,7 +305,22 @@ public class MainFragment extends ProgressFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /* Do something */
+                ActivityAnim anim = new ActivityAnim();
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra(
+                        getString(R.string.detail_intent_user_id),
+                        tweetList.get(position).getUserId()
+                );
+                intent.putExtra(
+                        view.getContext().getString(R.string.detail_intent_tweet_id),
+                        tweetList.get(position).getTweetId()
+                );
+                intent.putExtra(
+                        view.getContext().getString(R.string.detail_intent_reply_to),
+                        tweetList.get(position).getReplyTo()
+                );
+                startActivity(intent);
+                anim.rightIn(getActivity());
             }
         });
 
