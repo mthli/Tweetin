@@ -47,6 +47,7 @@ public class TweetAction {
             values.put(TweetData.PROTECT, "false");
         }
         values.put(TweetData.TEXT, data.getText());
+        values.put(TweetData.CHECK_IN, data.getCheckIn());
         if (data.isRetweet()) {
             values.put(TweetData.RETWEET, "true");
         } else {
@@ -98,14 +99,15 @@ public class TweetAction {
             data.setProtect(false);
         }
         data.setText(cursor.getString(7));
-        if (cursor.getString(8).equals("true")) {
+        data.setCheckIn(cursor.getString(8));
+        if (cursor.getString(9).equals("true")) {
             data.setRetweet(true);
         } else {
             data.setRetweet(false);
         }
-        data.setRetweetedByName(cursor.getString(9));
-        data.setRetweetedById(cursor.getLong(10));
-        data.setReplyTo(cursor.getLong(11)); //
+        data.setRetweetedByName(cursor.getString(10));
+        data.setRetweetedById(cursor.getLong(11));
+        data.setReplyTo(cursor.getLong(12)); //
 
         return data;
     }
@@ -123,10 +125,11 @@ public class TweetAction {
                         TweetData.SCREEN_NAME,
                         TweetData.PROTECT,
                         TweetData.TEXT,
+                        TweetData.CHECK_IN,
                         TweetData.RETWEET,
                         TweetData.RETWEETED_BY_NAME,
                         TweetData.RETWEETED_BY_ID,
-                        TweetData.REPLY_TO //
+                        TweetData.REPLY_TO
                 },
                 null,
                 null,

@@ -131,12 +131,20 @@
     <string name="detail_label">Detail</string>
     <string name="detail_menu_copy">Copy</string>
     <string name="detail_picture_cd">Picture</string>
-    <string name="detail_intent_user_id">USER_ID</string>
     <string name="detail_intent_tweet_id">TWEET_ID</string>
+    <string name="detail_intent_user_id">USER_ID</string>
+    <string name="detail_intent_avatar_url">AVATAR_URL</string>
+    <string name="detail_intent_created_at">CREATED_AT</string>
+    <string name="detail_intent_name">NAME</string>
+    <string name="detail_intent_screen_name">SCREEN_NAME</string>
+    <string name="detail_intent_protect">PROTECT</string>
+    <string name="detail_intent_text">TEXT</string>
+    <string name="detail_intent_check_in">CHECK_IN</string>
+    <string name="detail_intent_retweet">RETWEET</string>
+    <string name="detail_intent_retweeted_by_name">RETWEETED_BY_NAME</string>
+    <string name="detail_intent_retweeted_by_id">RETWEETED_BY_ID</string>
     <string name="detail_intent_reply_to">REPLY_TO</string>
-    <string name="detail_get_tweets_failed">
-        Get tweets failed.
-    </string>
+    <string name="detail_expand_url_picture_key">photo</string>
 
     <!-- User -->
     <string name="user_info_avatar">

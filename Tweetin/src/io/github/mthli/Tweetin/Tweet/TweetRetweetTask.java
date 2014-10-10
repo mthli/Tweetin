@@ -78,10 +78,11 @@ public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             newTweet.setScreenName(tweet.getScreenName());
             newTweet.setProtect(tweet.isProtected());
             newTweet.setText(tweet.getText());
+            newTweet.setCheckIn(tweet.getCheckIn()); //
             newTweet.setRetweet(true);
             newTweet.setRetweetedByName(context.getString(R.string.tweet_retweeted_by_me));
             newTweet.setRetweetedById(useId);
-            newTweet.setReplyTo(tweet.getReplyTo()); //
+            newTweet.setReplyTo(tweet.getReplyTo());
 
             TweetAction action = new TweetAction(context);
             action.opewDatabase(true);

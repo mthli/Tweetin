@@ -39,6 +39,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         TextView screenName;
         TextView protect;
         TextView text;
+        TextView checkIn;
         TextView retweetedByName;
     }
 
@@ -77,6 +78,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.screenName = (TextView) view.findViewById(R.id.tweet_screen_name);
             holder.protect = (TextView) view.findViewById(R.id.tweet_protect);
             holder.text = (TextView) view.findViewById(R.id.tweet_text);
+            holder.checkIn = (TextView) view.findViewById(R.id.tweet_check_in);
             holder.retweetedByName = (TextView) view.findViewById(R.id.tweet_retweeted_by_name);
             view.setTag(holder);
         } else {
@@ -109,6 +111,15 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.protect.setVisibility(View.GONE);
         }
         holder.text.setText(tweet.getText());
+
+        /* Do something with Location */
+        if (tweet.getCheckIn() != null) {
+            holder.checkIn.setVisibility(View.VISIBLE);
+            holder.checkIn.setText(tweet.getCheckIn());
+        } else {
+            holder.checkIn.setVisibility(View.GONE);
+        }
+
         if (tweet.isRetweet()) {
             holder.retweetedByName.setText(tweet.getRetweetedByName());
             holder.retweetedByName.setVisibility(View.VISIBLE);

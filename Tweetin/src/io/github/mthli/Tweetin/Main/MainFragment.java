@@ -307,17 +307,59 @@ public class MainFragment extends ProgressFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ActivityAnim anim = new ActivityAnim();
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
+                /* Do something with intent */
+                Tweet tweet = tweetList.get(position);
+                intent.putExtra(
+                        getString(R.string.detail_intent_tweet_id),
+                        tweet.getTweetId()
+                );
                 intent.putExtra(
                         getString(R.string.detail_intent_user_id),
-                        tweetList.get(position).getUserId()
+                        tweet.getUserId()
                 );
                 intent.putExtra(
-                        view.getContext().getString(R.string.detail_intent_tweet_id),
-                        tweetList.get(position).getTweetId()
+                        getString(R.string.detail_intent_avatar_url),
+                        tweet.getAvatarUrl()
                 );
                 intent.putExtra(
-                        view.getContext().getString(R.string.detail_intent_reply_to),
-                        tweetList.get(position).getReplyTo()
+                        getString(R.string.detail_intent_created_at),
+                        tweet.getCreatedAt()
+                );
+                intent.putExtra(
+                        getString(R.string.detail_intent_name),
+                        tweet.getName()
+                );
+                intent.putExtra(
+                        getString(R.string.detail_intent_screen_name),
+                        tweet.getScreenName()
+                );
+                intent.putExtra(
+                        getString(R.string.detail_intent_protect),
+                        tweet.isProtected()
+                );
+                intent.putExtra(
+                        getString(R.string.detail_intent_text),
+                        tweet.getText()
+                );
+                intent.putExtra(
+                        getString(R.string.detail_intent_check_in),
+                        tweet.getCheckIn()
+                );
+                intent.putExtra(
+                        getString(R.string.detail_intent_retweet),
+                        tweet.isRetweet()
+                );
+                intent.putExtra(
+                        getString(R.string.detail_intent_retweeted_by_name),
+                        tweet.getRetweetedByName()
+                );
+                intent.putExtra(
+                        getString(R.string.detail_intent_retweeted_by_id),
+                        tweet.getRetweetedById()
+                );
+                intent.putExtra(
+                        getString(R.string.detail_intent_reply_to),
+                        tweet.getReplyTo()
                 );
                 startActivity(intent);
                 anim.rightIn(getActivity());

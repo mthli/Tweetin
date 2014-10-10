@@ -10,6 +10,7 @@ public class TweetData {
     public static final String SCREEN_NAME = "SCREEN_NAME";
     public static final String PROTECT = "PROTECT";
     public static final String TEXT = "TEXT";
+    public static final String CHECK_IN = "CHECK_IN";
     public static final String RETWEET = "RETWEET";
     public static final String RETWEETED_BY_NAME = "RETWEETED_BY_NAME";
     public static final String RETWEETED_BY_ID = "RETWEETED_BY_ID";
@@ -26,6 +27,7 @@ public class TweetData {
             + " SCREEN_NAME text,"
             + " PROTECT text,"
             + " TEXT text,"
+            + " CHECK_IN text,"
             + " RETWEET text,"
             + " RETWEETED_BY_NAME text,"
             + " RETWEETED_BY_ID integer,"
@@ -40,6 +42,7 @@ public class TweetData {
     private String screenName;
     private String protect;
     private String text;
+    private String checkIn;
     private String retweet;
     private String retweetedByName;
     private long retweetedById;
@@ -54,6 +57,7 @@ public class TweetData {
         this.screenName = null;
         this.protect = null;
         this.text = null;
+        this.checkIn = null;
         this.retweet = null;
         this.retweetedByName = null;
         this.retweetedById = 0;
@@ -122,6 +126,13 @@ public class TweetData {
     }
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getCheckIn() {
+        return checkIn;
+    }
+    public void setCheckIn(String checkIn) {
+        this.checkIn = checkIn;
     }
 
     public boolean isRetweet() {

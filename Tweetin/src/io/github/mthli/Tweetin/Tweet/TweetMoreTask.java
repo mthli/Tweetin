@@ -8,6 +8,7 @@ import io.github.mthli.Tweetin.Unit.Flag;
 import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.Main.MainFragment;
 import twitter4j.Paging;
+import twitter4j.Place;
 import twitter4j.Twitter;
 
 import java.text.SimpleDateFormat;
@@ -98,10 +99,18 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     );
                     tweet.setProtect(status.getRetweetedStatus().getUser().isProtected());
                     tweet.setText(status.getRetweetedStatus().getText());
+                    Place place = status.getRetweetedStatus().getPlace(); //
+                    if (place != null) {
+                        tweet.setCheckIn(place.getFullName());
+                    } else {
+                        tweet.setCheckIn(null);
+                    }
                     tweet.setRetweet(true);
                     tweet.setRetweetedByName(status.getUser().getName());
                     tweet.setRetweetedById(status.getUser().getId());
-                    tweet.setReplyTo(status.getRetweetedStatus().getInReplyToStatusId()); //
+                    tweet.setReplyTo(
+                            status.getRetweetedStatus().getInReplyToStatusId()
+                    );
                 } else {
                     tweet.setTweetId(status.getId());
                     tweet.setUserId(status.getUser().getId());
@@ -111,10 +120,16 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setScreenName(status.getUser().getScreenName());
                     tweet.setProtect(status.getUser().isProtected());
                     tweet.setText(status.getText());
+                    Place place = status.getPlace(); //
+                    if (place != null) {
+                        tweet.setCheckIn(place.getFullName());
+                    } else {
+                        tweet.setCheckIn(null);
+                    }
                     tweet.setRetweet(false);
                     tweet.setRetweetedByName(null);
                     tweet.setRetweetedById(0);
-                    tweet.setReplyTo(status.getInReplyToStatusId()); //
+                    tweet.setReplyTo(status.getInReplyToStatusId());
                 }
                 // if (status.isRetweetedByMe() || status.isRetweeted()) {
                 if (status.isRetweetedByMe()) {

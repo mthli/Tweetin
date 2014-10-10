@@ -11,6 +11,7 @@ import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.Main.MainFragment;
 import io.github.mthli.Tweetin.R;
 import twitter4j.Paging;
+import twitter4j.Place;
 import twitter4j.Twitter;
 
 import java.text.SimpleDateFormat;
@@ -91,10 +92,11 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setScreenName(data.getScreenName());
                 tweet.setProtect(data.isProtected());
                 tweet.setText(data.getText());
+                tweet.setCheckIn(data.getCheckIn()); //
                 tweet.setRetweet(data.isRetweet());
                 tweet.setRetweetedByName(data.getRetweetedByName());
                 tweet.setRetweetedById(data.getRetweetedById());
-                tweet.setReplyTo(data.getReplyTo()); //
+                tweet.setReplyTo(data.getReplyTo());
                 tweetList.add(tweet);
             }
             tweetAdapter.notifyDataSetChanged();
@@ -140,10 +142,16 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 );
                 data.setProtect(status.getRetweetedStatus().getUser().isProtected());
                 data.setText(status.getRetweetedStatus().getText());
+                Place place = status.getRetweetedStatus().getPlace(); //
+                if (place != null) {
+                    data.setCheckIn(place.getFullName());
+                } else {
+                    data.setCheckIn(null);
+                }
                 data.setRetweet(true);
                 data.setRetweetedByName(status.getUser().getName());
                 data.setRetweetedById(status.getUser().getId());
-                data.setReplyTo(status.getRetweetedStatus().getInReplyToStatusId()); //
+                data.setReplyTo(status.getRetweetedStatus().getInReplyToStatusId());
             } else {
                 data.setTweetId(status.getId());
                 data.setUserId(status.getUser().getId());
@@ -153,12 +161,17 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 data.setScreenName("@" + status.getUser().getScreenName());
                 data.setProtect(status.getUser().isProtected());
                 data.setText(status.getText());
+                Place place = status.getPlace(); //
+                if (place != null) {
+                    data.setCheckIn(place.getFullName());
+                } else {
+                    data.setCheckIn(null);
+                }
                 data.setRetweet(false);
                 data.setRetweetedByName(null);
                 data.setRetweetedById(0);
-                data.setReplyTo(status.getInReplyToStatusId()); //
+                data.setReplyTo(status.getInReplyToStatusId());
             }
-            // if (status.isRetweetedByMe() || status.isRetweeted()) {
             if (status.isRetweetedByMe()) {
                 data.setRetweet(true);
                 data.setRetweetedByName(context.getString(R.string.tweet_retweeted_by_me));
@@ -197,8 +210,9 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setCreatedAt(data.getCreatedAt());
                 tweet.setName(data.getName());
                 tweet.setScreenName(data.getScreenName());
-                tweet.setProtect(data.isProtected()); //
+                tweet.setProtect(data.isProtected());
                 tweet.setText(data.getText());
+                tweet.setCheckIn(data.getCheckIn()); //
                 tweet.setRetweet(data.isRetweet());
                 tweet.setRetweetedByName(data.getRetweetedByName());
                 tweet.setRetweetedById(data.getRetweetedById());
