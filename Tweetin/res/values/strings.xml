@@ -101,15 +101,20 @@
     <string name="post_label">Post</string>
     <string name="post_flag">POST_FLAG</string>
     <string name="post_reply_status_id">
-        REPLY_STATUS_ID
+        POST_REPLY_STATUS_ID
     </string>
     <string name="post_reply_screen_name">
-        REPLY_SCREEN_NAME
+        POST_REPLY_SCREEN_NAME
+    </string>
+    <string name="post_quote_status_id">
+        POST_QUOTE_STATUS_ID
     </string>
     <string name="post_quote_screen_name">
         POST_QUOTE_SCREEN_NAME
     </string>
-    <string name="post_quote_text">POST_QUOTE</string>
+    <string name="post_quote_text">
+        POST_QUOTE_TEXT
+    </string>
     <string name="post_picture">
         Post picture.
     </string>
@@ -145,6 +150,10 @@
     <string name="detail_intent_retweeted_by_id">RETWEETED_BY_ID</string>
     <string name="detail_intent_reply_to">REPLY_TO</string>
     <string name="detail_expand_url_picture_key">photo</string>
+    <string name="detail_date_format">
+        HH:mm MM.dd
+    </string>
+    <string name="detail_retweeted_by_me">Me</string>
 
     <!-- User -->
     <string name="user_info_avatar">

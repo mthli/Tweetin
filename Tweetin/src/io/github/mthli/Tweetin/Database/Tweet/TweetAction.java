@@ -72,7 +72,7 @@ public class TweetAction {
         values.put(TweetData.RETWEET, "true");
         values.put(TweetData.RETWEETED_BY_NAME, context.getString(R.string.tweet_retweeted_by_me));
         values.put(TweetData.RETWEETED_BY_ID, useId);
-        values.put(TweetData.REPLY_TO, newTweet.getReplyTo()); //
+        values.put(TweetData.REPLY_TO, newTweet.getReplyTo());
         database.update(
                 TweetData.TABLE,
                 values,

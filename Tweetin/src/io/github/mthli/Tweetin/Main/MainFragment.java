@@ -101,6 +101,10 @@ public class MainFragment extends ProgressFragment {
                 Flag.POST_RETWEET_QUOTE
         );
         intent.putExtra(
+                view.getContext().getString(R.string.post_quote_status_id),
+                tweetList.get(location).getTweetId()
+        );
+        intent.putExtra(
                 view.getContext().getString(R.string.post_quote_screen_name),
                 tweetList.get(location).getScreenName()
         );

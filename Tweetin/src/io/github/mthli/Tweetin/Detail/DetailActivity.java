@@ -13,15 +13,19 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.mthli.Tweetin.Post.PostActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.ActivityAnim;
+import io.github.mthli.Tweetin.Unit.Flag;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
@@ -36,6 +40,18 @@ public class DetailActivity extends FragmentActivity {
         return useId;
     }
 
+    private DetailLoadTask detailLoadTask;
+    private DetailRetweetTask detailRetweetTask;
+    private void allTaskDown() {
+        if (detailLoadTask != null && detailLoadTask.getStatus() == AsyncTask.Status.RUNNING) {
+            detailLoadTask.cancel(true);
+        }
+        if (detailRetweetTask != null && detailRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
+            detailRetweetTask.cancel(true);
+        }
+    }
+
+    /* detail_this_status */
     private Tweet thisTweet;
     private CircleImageView thisStatusAvatar;
     private TextView thisStatusCreatedAt;
@@ -46,6 +62,7 @@ public class DetailActivity extends FragmentActivity {
     private ImageView thisStatusPicture;
     private TextView thisStatusCheckIn;
     private TextView thisStatusRetweetedByName;
+    /* detail_option */
     private Button detailQuote;
     private Button detailRetweet;
     private Button detailReply;
@@ -57,20 +74,6 @@ public class DetailActivity extends FragmentActivity {
     }
     public ImageView getThisStatusPicture() {
         return thisStatusPicture;
-    }
-    public Button getDetailRetweet() {
-        return detailRetweet;
-    }
-
-    private DetailLoadTask detailLoadTask;
-    private DetailRetweetTask detailRetweetTask;
-    private void allTaskDown() {
-        if (detailLoadTask != null && detailLoadTask.getStatus() == AsyncTask.Status.RUNNING) {
-            detailLoadTask.cancel(true);
-        }
-        if (detailRetweetTask != null && detailRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
-            detailRetweetTask.cancel(true);
-        }
     }
 
     private void findView() {
@@ -192,7 +195,11 @@ public class DetailActivity extends FragmentActivity {
                 .crossFade().into(thisStatusAvatar);
         thisStatusCreatedAt.setText(thisTweet.getCreatedAt());
         thisStatusName.setText(thisTweet.getName());
-        thisStatusScreenName.setText(thisTweet.getScreenName());
+        if (thisTweet.getScreenName().startsWith("@")) {
+            thisStatusScreenName.setText(thisTweet.getScreenName());
+        } else {
+            thisStatusScreenName.setText("@" + thisTweet.getScreenName());
+        }
         if (thisTweet.isProtected()) {
             thisStatusProtect.setVisibility(View.VISIBLE);
             detailRetweet.setVisibility(View.GONE);
@@ -252,7 +259,61 @@ public class DetailActivity extends FragmentActivity {
         findView();
         setThisTweet();
         thisStatusAdapter();
-        /* Do something with Button.OnItemClickListener() */
+
+        detailQuote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, PostActivity.class);
+                ActivityAnim anim = new ActivityAnim();
+                intent.putExtra(
+                        getString(R.string.post_flag),
+                        Flag.POST_RETWEET_QUOTE
+                );
+                intent.putExtra(
+                        getString(R.string.post_quote_status_id),
+                        thisTweet.getTweetId()
+                );
+                intent.putExtra(
+                        getString(R.string.post_quote_screen_name),
+                        thisTweet.getScreenName()
+                );
+                intent.putExtra(
+                        getString(R.string.post_quote_text),
+                        thisTweet.getText()
+                );
+                startActivity(intent);
+                anim.fade(DetailActivity.this);
+            }
+        });
+
+        detailRetweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /* Do something */
+            }
+        });
+
+        detailReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, PostActivity.class);
+                ActivityAnim anim = new ActivityAnim();
+                intent.putExtra(
+                        getString(R.string.post_flag),
+                        Flag.POST_REPLY
+                );
+                intent.putExtra(
+                        getString(R.string.post_reply_status_id),
+                        thisTweet.getTweetId()
+                );
+                intent.putExtra(
+                        getString(R.string.post_reply_screen_name),
+                        thisTweet.getScreenName()
+                );
+                startActivity(intent);
+                anim.fade(DetailActivity.this);
+            }
+        });
 
         /* Do something */
         detailLoadTask = new DetailLoadTask(this);
@@ -269,6 +330,7 @@ public class DetailActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
+                allTaskDown();
                 ActivityAnim anim = new ActivityAnim();
                 finish();
                 anim.rightOut(this);
@@ -285,6 +347,7 @@ public class DetailActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            allTaskDown();
             ActivityAnim anim = new ActivityAnim();
             finish();
             anim.rightOut(this);
@@ -295,6 +358,7 @@ public class DetailActivity extends FragmentActivity {
 
     @Override
     public void onDestroy() {
+        allTaskDown();
         super.onDestroy();
     }
 

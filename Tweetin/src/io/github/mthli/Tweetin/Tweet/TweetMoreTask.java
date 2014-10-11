@@ -99,7 +99,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     );
                     tweet.setProtect(status.getRetweetedStatus().getUser().isProtected());
                     tweet.setText(status.getRetweetedStatus().getText());
-                    Place place = status.getRetweetedStatus().getPlace(); //
+                    Place place = status.getRetweetedStatus().getPlace();
                     if (place != null) {
                         tweet.setCheckIn(place.getFullName());
                     } else {
@@ -120,7 +120,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setScreenName(status.getUser().getScreenName());
                     tweet.setProtect(status.getUser().isProtected());
                     tweet.setText(status.getText());
-                    Place place = status.getPlace(); //
+                    Place place = status.getPlace();
                     if (place != null) {
                         tweet.setCheckIn(place.getFullName());
                     } else {
@@ -131,8 +131,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setRetweetedById(0);
                     tweet.setReplyTo(status.getInReplyToStatusId());
                 }
-                // if (status.isRetweetedByMe() || status.isRetweeted()) {
-                if (status.isRetweetedByMe()) {
+                if (status.isRetweetedByMe() || status.isRetweeted()) { //
                     tweet.setRetweet(true);
                     tweet.setRetweetedByName(context.getString(R.string.tweet_retweeted_by_me));
                     tweet.setRetweetedById(useId);

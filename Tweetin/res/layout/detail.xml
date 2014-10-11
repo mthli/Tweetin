@@ -42,15 +42,14 @@
                 android:background="@color/white"
                 android:layout_above="@id/detail_option">
 
-        <LinearLayout android:orientation="horizontal"
+        <LinearLayout android:orientation="vertical"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content">
 
-            <!-- Do something -->
-            <!--
             <RelativeLayout android:id="@+id/detail_reply_to_status"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:background="@color/white">
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -119,6 +118,7 @@
                             <TextView android:id="@+id/detail_reply_to_status_protect"
                                       android:layout_width="wrap_content"
                                       android:layout_height="wrap_content"
+                                      android:visibility="gone"
                                       android:paddingLeft="5dp"
                                       android:drawableLeft="@drawable/ic_tweet_protect"
                                       android:textSize="12sp"
@@ -136,14 +136,18 @@
                               android:layout_height="wrap_content"
                               android:paddingTop="2dp"
                               android:textColor="@color/text"
-                              android:textSize="14sp">
+                              android:textSize="14sp"
+                              android:autoLink="web|email">
                     </TextView>
 
-                    <ImageView
-                            android:id="@+id/detail_reply_to_status_picture"
-                            android:contentDescription="@string/detail_picture_cd"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                    <ImageView android:id="@+id/detail_reply_to_status_picture"
+                               android:contentDescription="@string/detail_picture_cd"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:visibility="gone"
+                               android:adjustViewBounds="true"
+                               android:background="@drawable/picture_background"
+                               android:layout_marginTop="2dp">
                     </ImageView>
 
                     <LinearLayout android:orientation="horizontal"
@@ -156,8 +160,9 @@
                                   android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
                                   android:visibility="gone"
+                                  android:paddingRight="3dp"
                                   android:drawableLeft="@drawable/ic_check_in"
-                                  android:drawablePadding="1dp"
+                                  android:drawablePadding="2dp"
                                   android:textColor="@color/hint"
                                   android:textSize="12sp"
                                   android:singleLine="true"
@@ -169,7 +174,7 @@
                                   android:layout_height="wrap_content"
                                   android:visibility="gone"
                                   android:drawableLeft="@drawable/ic_retweeted_by"
-                                  android:drawablePadding="1dp"
+                                  android:drawablePadding="2dp"
                                   android:textColor="@color/hint"
                                   android:textSize="12sp"
                                   android:singleLine="true"
@@ -181,7 +186,6 @@
                 </LinearLayout>
 
             </RelativeLayout>
-            -->
 
             <!-- Do something -->
             <RelativeLayout android:id="@+id/detail_this_status"
@@ -278,16 +282,14 @@
                     </TextView>
 
                     <!-- Do something -->
-                    <ImageView
-                            android:id="@+id/detail_this_status_picture"
-                            android:contentDescription="@string/detail_picture_cd"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:background="@drawable/picture_background"
-                            android:layout_marginTop="2dp"
-                            android:scaleType="centerInside"
-                            android:visibility="gone">
+                    <ImageView android:id="@+id/detail_this_status_picture"
+                               android:contentDescription="@string/detail_picture_cd"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:adjustViewBounds="true"
+                               android:layout_marginTop="2dp"
+                               android:visibility="gone"
+                               android:background="@drawable/picture_background">
                     </ImageView>
 
                     <LinearLayout android:orientation="horizontal"

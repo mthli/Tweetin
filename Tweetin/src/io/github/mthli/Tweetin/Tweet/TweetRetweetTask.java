@@ -78,7 +78,7 @@ public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             newTweet.setScreenName(tweet.getScreenName());
             newTweet.setProtect(tweet.isProtected());
             newTweet.setText(tweet.getText());
-            newTweet.setCheckIn(tweet.getCheckIn()); //
+            newTweet.setCheckIn(tweet.getCheckIn());
             newTweet.setRetweet(true);
             newTweet.setRetweetedByName(context.getString(R.string.tweet_retweeted_by_me));
             newTweet.setRetweetedById(useId);
@@ -136,6 +136,7 @@ public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         if (result) {
+            /* Do something */
             tweetList.remove(position);
             tweetList.add(position, newTweet);
             tweetAdapter.notifyDataSetChanged();

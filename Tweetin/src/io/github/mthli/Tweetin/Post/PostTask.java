@@ -30,6 +30,8 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
     private StatusUpdate update;
 
     private int postFlag;
+    private long quoteStatusId;
+    private String quoteScreenName;
     private long replyStatusId;
     private String replyScreenName;
 
@@ -43,6 +45,8 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
         this.isSelectPic = false;
         this.picPath = null;
         this.postFlag = 0;
+        this.quoteStatusId = 0;
+        this.quoteScreenName = null;
         this.replyStatusId = 0;
         this.replyScreenName = null;
     }
@@ -64,6 +68,8 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
         twitter = postActivity.getTwitter();
 
         postFlag = postActivity.getPostFlag();
+        quoteStatusId = postActivity.getQuoteStatusId();
+        quoteScreenName = postActivity.getQuoteScreenName();
         replyStatusId = postActivity.getReplyStatusId();
         replyScreenName = postActivity.getReplyScreenName();
 
@@ -125,8 +131,13 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
             File file = new File(picPath);
             update.setMedia(file);
         }
+
         if (postFlag == Flag.POST_REPLY && text.contains(replyScreenName)) {
             update.setInReplyToStatusId(replyStatusId);
+        }
+
+        if (postFlag == Flag.POST_RETWEET_QUOTE && text.contains(quoteScreenName)) {
+            update.setInReplyToStatusId(quoteStatusId);
         }
     }
 

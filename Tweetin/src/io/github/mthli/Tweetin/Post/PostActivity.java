@@ -40,8 +40,16 @@ public class PostActivity extends Activity {
         return postFlag;
     }
 
+    private long quoteStatusId = 0;
+    private String quoteScreenName = null;
     private long replyStatusId = 0;
     private String replyScreenName = null;
+    public long getQuoteStatusId() {
+        return quoteStatusId;
+    }
+    public String getQuoteScreenName() {
+        return quoteScreenName;
+    }
     public long getReplyStatusId() {
         return replyStatusId;
     }
@@ -115,7 +123,9 @@ public class PostActivity extends Activity {
                         getString(R.string.post_reply_status_id),
                         0
                 );
-                String reply = intent.getStringExtra(getString(R.string.post_reply_screen_name));
+                String reply = intent.getStringExtra(
+                        getString(R.string.post_reply_screen_name)
+                );
                 if (!reply.startsWith("@")) {
                     reply = "@" + reply;
                 }
@@ -133,6 +143,13 @@ public class PostActivity extends Activity {
                 }
                 break;
             case Flag.POST_RETWEET_QUOTE:
+                quoteStatusId = intent.getLongExtra(
+                        getString(R.string.post_quote_status_id),
+                        0
+                );
+                quoteScreenName = intent.getStringExtra(
+                        getString(R.string.post_quote_screen_name)
+                );
                 String quote = "RT ";
                 if (intent.getStringExtra(getString(R.string.post_quote_screen_name)).startsWith("@")) {
                     quote = quote
