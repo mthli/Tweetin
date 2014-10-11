@@ -271,7 +271,6 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
                         .crossFade().into(thisStatusPicture);
                 thisStatusPicture.setVisibility(View.VISIBLE);
             }
-            /* Do something */
             if (thisTweet.getReplyTo() != -1) {
                 findView();
                 replyToStatusAdapter();

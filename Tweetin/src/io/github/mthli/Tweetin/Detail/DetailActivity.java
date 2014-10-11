@@ -1,6 +1,7 @@
 package io.github.mthli.Tweetin.Detail;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,10 +14,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -51,6 +50,8 @@ public class DetailActivity extends FragmentActivity {
         }
     }
 
+    private int position = 0;
+    private boolean isRetweetFromDetail = false;
     /* detail_this_status */
     private Tweet thisTweet;
     private CircleImageView thisStatusAvatar;
@@ -74,6 +75,12 @@ public class DetailActivity extends FragmentActivity {
     }
     public ImageView getThisStatusPicture() {
         return thisStatusPicture;
+    }
+    public TextView getThisStatusRetweetedByName() {
+        return thisStatusRetweetedByName;
+    }
+    public Button getDetailRetweet() {
+        return detailRetweet;
     }
 
     private void findView() {
@@ -116,8 +123,12 @@ public class DetailActivity extends FragmentActivity {
         );
     }
     private void setThisTweet() {
-        thisTweet = new Tweet();
         Intent intent = getIntent();
+        position = intent.getIntExtra(
+                getString(R.string.detail_from_position),
+                0
+        );
+        thisTweet = new Tweet();
         thisTweet.setTweetId(
                 intent.getLongExtra(
                         getString(R.string.detail_intent_tweet_id),
@@ -250,7 +261,7 @@ public class DetailActivity extends FragmentActivity {
         String conSecret = preferences.getString(getString(R.string.sp_consumer_secret), null);
         String accToken = preferences.getString(getString(R.string.sp_access_token), null);
         String accTokenSecret = preferences.getString(getString(R.string.sp_access_token_secret), null);
-        TwitterFactory factory = new TwitterFactory();
+        final TwitterFactory factory = new TwitterFactory();
         twitter = factory.getInstance();
         twitter.setOAuthConsumer(conKey, conSecret);
         AccessToken token = new AccessToken(accToken, accTokenSecret);
@@ -289,7 +300,14 @@ public class DetailActivity extends FragmentActivity {
         detailRetweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* Do something */
+                isRetweetFromDetail = true;
+                thisStatusRetweetedByName.setText(
+                        getString(R.string.detail_retweeted_by_me)
+                );
+                thisStatusRetweetedByName.setVisibility(View.VISIBLE);
+                detailRetweet.setVisibility(View.GONE);
+                detailRetweetTask = new DetailRetweetTask(DetailActivity.this);
+                detailRetweetTask.execute();
             }
         });
 
@@ -315,7 +333,6 @@ public class DetailActivity extends FragmentActivity {
             }
         });
 
-        /* Do something */
         detailLoadTask = new DetailLoadTask(this);
         detailLoadTask.execute();
     }
@@ -332,7 +349,7 @@ public class DetailActivity extends FragmentActivity {
             case android.R.id.home:
                 allTaskDown();
                 ActivityAnim anim = new ActivityAnim();
-                finish();
+                detailFinish();
                 anim.rightOut(this);
                 break;
             case R.id.detail_menu_copy:
@@ -349,7 +366,7 @@ public class DetailActivity extends FragmentActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             allTaskDown();
             ActivityAnim anim = new ActivityAnim();
-            finish();
+            detailFinish();
             anim.rightOut(this);
         }
 
@@ -371,5 +388,22 @@ public class DetailActivity extends FragmentActivity {
         else{
             /* Do nothing */
         }
+    }
+
+    private void detailFinish() {
+        Intent intent = new Intent();
+        intent.putExtra(
+                getString(R.string.detail_from_position),
+                position
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_is_retweet_from_detail),
+                isRetweetFromDetail
+        );
+        allTaskDown();
+        setResult(Activity.RESULT_OK, intent);
+        ActivityAnim anim = new ActivityAnim();
+        finish();
+        anim.rightOut(DetailActivity.this);
     }
 }

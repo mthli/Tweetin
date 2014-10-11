@@ -136,24 +136,64 @@
     <string name="detail_label">Detail</string>
     <string name="detail_menu_copy">Copy</string>
     <string name="detail_picture_cd">Picture</string>
-    <string name="detail_intent_tweet_id">TWEET_ID</string>
-    <string name="detail_intent_user_id">USER_ID</string>
-    <string name="detail_intent_avatar_url">AVATAR_URL</string>
-    <string name="detail_intent_created_at">CREATED_AT</string>
-    <string name="detail_intent_name">NAME</string>
-    <string name="detail_intent_screen_name">SCREEN_NAME</string>
-    <string name="detail_intent_protect">PROTECT</string>
-    <string name="detail_intent_text">TEXT</string>
-    <string name="detail_intent_check_in">CHECK_IN</string>
-    <string name="detail_intent_retweet">RETWEET</string>
-    <string name="detail_intent_retweeted_by_name">RETWEETED_BY_NAME</string>
-    <string name="detail_intent_retweeted_by_id">RETWEETED_BY_ID</string>
-    <string name="detail_intent_reply_to">REPLY_TO</string>
+    <string name="detail_intent_tweet_id">
+        DETAIL_INTENT_TWEET_ID
+    </string>
+    <string name="detail_intent_user_id">
+        DETAIL_INTENT_USER_ID
+    </string>
+    <string name="detail_intent_avatar_url">
+        DETAIL_INTENT_AVATAR_URL
+    </string>
+    <string name="detail_intent_created_at">
+        DETAIL_INTENT_CREATED_AT
+    </string>
+    <string name="detail_intent_name">
+        DETAIL_INTENT_NAME
+    </string>
+    <string name="detail_intent_screen_name">
+        DETAIL_INTENT_SCREEN_NAME
+    </string>
+    <string name="detail_intent_protect">
+        DETAIL_INTENT_PROTECT
+    </string>
+    <string name="detail_intent_text">
+        DETAIL_INTENT_TEXT
+    </string>
+    <string name="detail_intent_check_in">
+        DETAIL_INTENT_CHECK_IN
+    </string>
+    <string name="detail_intent_retweet">
+        DETAIL_INTENT_RETWEET
+    </string>
+    <string name="detail_intent_retweeted_by_name">
+        DETAIL_INTENT_RETWEETED_BY_NAME
+    </string>
+    <string name="detail_intent_retweeted_by_id">
+        DETAIL_INTENT_RETWEETED_BY_ID</string>
+    <string name="detail_intent_reply_to">
+        DETAIL_INTENT_REPLY_TO
+    </string>
+    <string name="detail_from_position">
+        DETAIL_INTENT_FROM_POSITION
+    </string>
+    <string name="detail_intent_is_retweet_from_detail">
+        DETAIL_INTENT_IS_RETWEET_FROM_DETAIL
+    </string>
     <string name="detail_expand_url_picture_key">photo</string>
     <string name="detail_date_format">
         HH:mm MM.dd
     </string>
     <string name="detail_retweeted_by_me">Me</string>
+    <string name="detail_retweet_ing">
+        Retweeting&#8230;
+    </string>
+    <string name="detail_retweet_successful">
+        Retweet successful.
+    </string>
+    <string name="detail_retweet_failed">
+        Retweet failed.
+    </string>
 
     <!-- User -->
     <string name="user_info_avatar">

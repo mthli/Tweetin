@@ -21,7 +21,6 @@ import android.util.DisplayMetrics;
 import android.view.*;
 import android.widget.*;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.Flag;
@@ -296,7 +295,6 @@ public class PostActivity extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Crouton.cancelAllCroutons();
     }
 
     @Override

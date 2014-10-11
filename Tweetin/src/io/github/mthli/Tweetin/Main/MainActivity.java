@@ -1,7 +1,9 @@
 package io.github.mthli.Tweetin.Main;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -15,13 +17,18 @@ import android.support.v4.app.FragmentActivity;
 import android.view.*;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Tweet.Tweet;
+import io.github.mthli.Tweetin.Tweet.TweetAdapter;
 import io.github.mthli.Tweetin.Unit.ActivityAnim;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
+import java.util.List;
+
 public class MainActivity extends FragmentActivity {
     private Twitter twitter;
+    private long useId;
     public Twitter getTwitter() {
         return twitter;
     }
@@ -78,6 +85,10 @@ public class MainActivity extends FragmentActivity {
                 getString(R.string.sp_name),
                 Context.MODE_PRIVATE
         );
+        useId = preferences.getLong(
+                getString(R.string.sp_use_id),
+                0
+        );
         String conKey = preferences.getString(getString(R.string.sp_consumer_key), null);
         String conSecret = preferences.getString(getString(R.string.sp_consumer_secret), null);
         String accToken = preferences.getString(getString(R.string.sp_access_token), null);
@@ -123,6 +134,45 @@ public class MainActivity extends FragmentActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            int position = data.getIntExtra(
+                    getString(R.string.detail_from_position),
+                    0
+            );
+            boolean isRetweetFromDetail = data.getBooleanExtra(
+                    getString(R.string.detail_intent_is_retweet_from_detail),
+                    false
+            );
+            if (isRetweetFromDetail) {
+                TweetAdapter tweetAdapter = mainFragment.getTweetAdapter();
+                List<Tweet> tweetList = mainFragment.getTweetList();
+
+                Tweet tweet = tweetList.get(position);
+                Tweet newTweet = new Tweet();
+                newTweet.setTweetId(tweet.getTweetId());
+                newTweet.setUserId(tweet.getUserId());
+                newTweet.setAvatarUrl(tweet.getAvatarUrl());
+                newTweet.setCreatedAt(tweet.getCreatedAt());
+                newTweet.setName(tweet.getName());
+                newTweet.setScreenName(tweet.getScreenName());
+                newTweet.setProtect(tweet.isProtected());
+                newTweet.setText(tweet.getText());
+                newTweet.setCheckIn(tweet.getCheckIn());
+                newTweet.setRetweet(true);
+                newTweet.setRetweetedByName(getString(R.string.tweet_retweeted_by_me));
+                newTweet.setRetweetedById(useId);
+                newTweet.setReplyTo(tweet.getReplyTo());
+
+                tweetList.remove(position);
+                tweetList.add(position, newTweet);
+                tweetAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     @Override

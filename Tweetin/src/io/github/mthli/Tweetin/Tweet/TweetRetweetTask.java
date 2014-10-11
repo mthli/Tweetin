@@ -67,10 +67,10 @@ public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            twitter4j.Status status = twitter.retweetStatus(tweet.getTweetId());
+            twitter.retweetStatus(tweet.getTweetId());
 
             newTweet = new Tweet();
-            newTweet.setTweetId(status.getId());
+            newTweet.setTweetId(tweet.getTweetId());
             newTweet.setUserId(tweet.getUserId());
             newTweet.setAvatarUrl(tweet.getAvatarUrl());
             newTweet.setCreatedAt(tweet.getCreatedAt());
@@ -136,7 +136,6 @@ public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         if (result) {
-            /* Do something */
             tweetList.remove(position);
             tweetList.add(position, newTweet);
             tweetAdapter.notifyDataSetChanged();

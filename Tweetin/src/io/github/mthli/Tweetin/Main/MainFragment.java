@@ -305,13 +305,16 @@ public class MainFragment extends ProgressFragment {
         tweetInitTask = new TweetInitTask(MainFragment.this, false);
         tweetInitTask.execute();
 
-        /* Do something */
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ActivityAnim anim = new ActivityAnim();
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 /* Do something with intent */
+                intent.putExtra(
+                        getString(R.string.detail_from_position),
+                        position
+                );
                 Tweet tweet = tweetList.get(position);
                 intent.putExtra(
                         getString(R.string.detail_intent_tweet_id),
@@ -365,7 +368,7 @@ public class MainFragment extends ProgressFragment {
                         getString(R.string.detail_intent_reply_to),
                         tweet.getReplyTo()
                 );
-                startActivity(intent);
+                startActivityForResult(intent, 0);
                 anim.rightIn(getActivity());
             }
         });
