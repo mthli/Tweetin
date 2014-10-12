@@ -1,12 +1,25 @@
 package io.github.mthli.Tweetin.Detail;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.AsyncTask;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.Tweet;
@@ -34,6 +47,7 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
     private ImageView thisStatusPicture;
 
     public DetailLoadTask(DetailActivity detailActivity) {
+
         this.detailActivity = detailActivity;
 
         this.replyToText = null;
@@ -197,11 +211,29 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
             return createdAt;
         }
     }
+    private Bitmap fixBitmap(Bitmap bitmap) {
+        WindowManager manager = (WindowManager) detailActivity
+                .getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(metrics);
+        int screenWidth = metrics.widthPixels;
+        int bitmapWidth = bitmap.getWidth();
+        int bitmapHeight = bitmap.getHeight();
+        if (bitmapWidth < screenWidth) {
+            float percent = ((float) screenWidth) / ((float) bitmapWidth);
+            Matrix matrix = new Matrix();
+            matrix.postScale(percent, percent);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+        }
+
+        return bitmap;
+    }
     private void replyToStatusAdapter() {
         replyToStatusLayout.setVisibility(View.VISIBLE);
         SimpleDateFormat format = new SimpleDateFormat(
                 detailActivity.getString(R.string.detail_date_format)
         );
+        RequestQueue queue = Volley.newRequestQueue(detailActivity);
         if (replyToStatus.isRetweet()) {
             Glide.with(detailActivity)
                     .load(replyToStatus.getRetweetedStatus().getUser().getBiggerProfileImageURL())
@@ -223,11 +255,27 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
             }
             replyToStatusText.setText(replyToText);
             if (replyToHasPicture) {
-                Glide.with(detailActivity)
-                        .load(replyToPictureURL)
-                        .crossFade()
-                        .into(replyToStatusPicture);
-                replyToStatusPicture.setVisibility(View.VISIBLE);
+                ImageRequest request = new ImageRequest(
+                        replyToPictureURL,
+                        new Response.Listener<Bitmap>() {
+                            @Override
+                            public void onResponse(Bitmap bitmap) {
+                                bitmap = fixBitmap(bitmap);
+                                replyToStatusPicture.setImageBitmap(bitmap);
+                                replyToStatusPicture.setVisibility(View.VISIBLE);
+                            }
+                        },
+                        0,
+                        0,
+                        Bitmap.Config.ARGB_8888,
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                /* Do nothing */
+                            }
+                        }
+                );
+                queue.add(request);
             }
             Place place = replyToStatus.getRetweetedStatus().getPlace();
             if (place != null) {
@@ -261,12 +309,27 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
             }
             replyToStatusText.setText(replyToText);
             if (replyToHasPicture) {
-                /* Do something with Volley */
-                Glide.with(detailActivity)
-                        .load(replyToPictureURL)
-                        .crossFade()
-                        .into(replyToStatusPicture);
-                replyToStatusPicture.setVisibility(View.VISIBLE);
+                ImageRequest request = new ImageRequest(
+                        replyToPictureURL,
+                        new Response.Listener<Bitmap>() {
+                            @Override
+                            public void onResponse(Bitmap bitmap) {
+                                bitmap = fixBitmap(bitmap);
+                                replyToStatusPicture.setImageBitmap(bitmap);
+                                replyToStatusPicture.setVisibility(View.VISIBLE);
+                            }
+                        },
+                        0,
+                        0,
+                        Bitmap.Config.ARGB_8888,
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                /* Do nothing */
+                            }
+                        }
+                );
+                queue.add(request);
             }
             Place place = replyToStatus.getPlace();
             if (place != null) {
@@ -288,10 +351,28 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
         if (result) {
             thisStatusText.setText(thisText);
             if (thisHasPicture) {
-                /* Do something with Volley */
-                Glide.with(detailActivity).load(thisPictureURL)
-                        .crossFade().into(thisStatusPicture);
-                thisStatusPicture.setVisibility(View.VISIBLE);
+                RequestQueue queue = Volley.newRequestQueue(detailActivity);
+                ImageRequest request = new ImageRequest(
+                        thisPictureURL,
+                        new Response.Listener<Bitmap>() {
+                            @Override
+                            public void onResponse(Bitmap bitmap) {
+                                bitmap = fixBitmap(bitmap);
+                                thisStatusPicture.setImageBitmap(bitmap);
+                                thisStatusPicture.setVisibility(View.VISIBLE);
+                            }
+                        },
+                        0,
+                        0,
+                        Bitmap.Config.ARGB_8888,
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                /* Do nothing */
+                            }
+                        }
+                );
+                queue.add(request);
             }
             if (thisTweet.getReplyTo() != -1) {
                 findView();

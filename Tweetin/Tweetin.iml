@@ -81,15 +81,6 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/glide-okhttp-integration-1.0.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/glide-3.3.1.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -99,16 +90,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/glide-volley-integration-1.0.1.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/crouton-1.8.5.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/library-1.0.6.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
