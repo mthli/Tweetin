@@ -146,7 +146,7 @@
                                android:layout_height="wrap_content"
                                android:visibility="gone"
                                android:adjustViewBounds="true"
-                               android:background="@drawable/picture_background"
+                               android:background="@drawable/background"
                                android:layout_marginTop="2dp">
                     </ImageView>
 
@@ -289,7 +289,7 @@
                                android:adjustViewBounds="true"
                                android:layout_marginTop="2dp"
                                android:visibility="gone"
-                               android:background="@drawable/picture_background">
+                               android:background="@drawable/background">
                     </ImageView>
 
                     <LinearLayout android:orientation="horizontal"

@@ -117,7 +117,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setAvatarUrl(status.getUser().getBiggerProfileImageURL());
                     tweet.setCreatedAt(format.format(status.getCreatedAt()));
                     tweet.setName(status.getUser().getName());
-                    tweet.setScreenName(status.getUser().getScreenName());
+                    tweet.setScreenName("@" + status.getUser().getScreenName()); //
                     tweet.setProtect(status.getUser().isProtected());
                     tweet.setText(status.getText());
                     Place place = status.getPlace();
@@ -131,7 +131,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setRetweetedById(0);
                     tweet.setReplyTo(status.getInReplyToStatusId());
                 }
-                if (status.isRetweetedByMe() || status.isRetweeted()) { //
+                if (status.isRetweetedByMe() || status.isRetweeted()) {
                     tweet.setRetweet(true);
                     tweet.setRetweetedByName(context.getString(R.string.tweet_retweeted_by_me));
                     tweet.setRetweetedById(useId);

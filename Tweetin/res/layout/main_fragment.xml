@@ -4,16 +4,24 @@
              xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/white">
+             android:background="@color/tumblr_dark_blue">
 
     <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingBottom="7dp"
+            android:background="@color/tumblr_dark_blue">
 
         <ListView android:id="@+id/main_fragment_timeline"
                   android:layout_width="match_parent"
-                  android:layout_height="match_parent">
+                  android:layout_height="match_parent"
+                  android:paddingLeft="7dp"
+                  android:paddingRight="7dp"
+                  android:divider="@color/transparent"
+                  android:dividerHeight="7dp"
+                  android:drawSelectorOnTop="true"
+                  android:background="@color/tumblr_dark_blue">
         </ListView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
