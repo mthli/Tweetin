@@ -3,6 +3,7 @@ package io.github.mthli.Tweetin.Detail;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
@@ -12,6 +13,7 @@ import io.github.mthli.Tweetin.Tweet.Tweet;
 import twitter4j.*;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
 
@@ -138,7 +140,7 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
     }
 
     /* detail_reply_to_status */
-    private RelativeLayout replyToStatusLayout;
+    private LinearLayout replyToStatusLayout;
     private CircleImageView replyToStatusAvatar;
     private TextView replyToStatusCreatedAt;
     private TextView replyToStatusName;
@@ -150,7 +152,7 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
     private TextView replyToStatusRetweetedByName;
     private void findView() {
         /* detail_reply_to_status */
-        replyToStatusLayout = (RelativeLayout) detailActivity.findViewById(
+        replyToStatusLayout = (LinearLayout) detailActivity.findViewById(
                 R.id.detail_reply_to_status
         );
         replyToStatusAvatar = (CircleImageView) detailActivity.findViewById(
@@ -181,6 +183,20 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
                 R.id.detail_reply_to_status_retweeted_by_name
         );
     }
+    private String getShortCreatedAt(String createdAt) {
+        SimpleDateFormat format = new SimpleDateFormat(
+                detailActivity.getString(R.string.tweet_date_format)
+        );
+        Date date = new Date();
+        String str = format.format(date);
+        String[] arrD = str.split(" ");
+        String[] arrC = createdAt.split(" ");
+        if (arrD[1].equals(arrC[1])) {
+            return arrC[0];
+        } else {
+            return createdAt;
+        }
+    }
     private void replyToStatusAdapter() {
         replyToStatusLayout.setVisibility(View.VISIBLE);
         SimpleDateFormat format = new SimpleDateFormat(
@@ -192,7 +208,9 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
                     .crossFade()
                     .into(replyToStatusAvatar);
             replyToStatusCreatedAt.setText(
-                    format.format(replyToStatus.getRetweetedStatus().getCreatedAt())
+                    getShortCreatedAt(
+                            format.format(replyToStatus.getRetweetedStatus().getCreatedAt())
+                    )
             );
             replyToStatusName.setText(
                     replyToStatus.getRetweetedStatus().getUser().getName()
@@ -228,7 +246,9 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
                     .crossFade()
                     .into(replyToStatusAvatar);
             replyToStatusCreatedAt.setText(
-                    format.format(replyToStatus.getCreatedAt())
+                    getShortCreatedAt(
+                            format.format(replyToStatus.getCreatedAt())
+                    )
             );
             replyToStatusName.setText(
                     replyToStatus.getUser().getName()
@@ -241,6 +261,7 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
             }
             replyToStatusText.setText(replyToText);
             if (replyToHasPicture) {
+                /* Do something with Volley */
                 Glide.with(detailActivity)
                         .load(replyToPictureURL)
                         .crossFade()
@@ -255,7 +276,7 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
                 replyToStatusCheckIn.setVisibility(View.VISIBLE);
             }
         }
-        if (replyToStatus.isRetweetedByMe() || replyToStatus.isRetweeted()) { //
+        if (replyToStatus.isRetweetedByMe() || replyToStatus.isRetweeted()) {
             replyToStatusRetweetedByName.setText(
                     detailActivity.getString(R.string.detail_retweeted_by_me)
             );
@@ -267,6 +288,7 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
         if (result) {
             thisStatusText.setText(thisText);
             if (thisHasPicture) {
+                /* Do something with Volley */
                 Glide.with(detailActivity).load(thisPictureURL)
                         .crossFade().into(thisStatusPicture);
                 thisStatusPicture.setVisibility(View.VISIBLE);

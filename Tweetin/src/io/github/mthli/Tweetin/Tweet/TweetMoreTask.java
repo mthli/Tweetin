@@ -117,7 +117,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setAvatarUrl(status.getUser().getBiggerProfileImageURL());
                     tweet.setCreatedAt(format.format(status.getCreatedAt()));
                     tweet.setName(status.getUser().getName());
-                    tweet.setScreenName("@" + status.getUser().getScreenName()); //
+                    tweet.setScreenName("@" + status.getUser().getScreenName());
                     tweet.setProtect(status.getUser().isProtected());
                     tweet.setText(status.getText());
                     Place place = status.getPlace();

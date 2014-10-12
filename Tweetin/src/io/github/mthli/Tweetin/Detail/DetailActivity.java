@@ -29,6 +29,9 @@ import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class DetailActivity extends FragmentActivity {
     private Twitter twitter;
     private long useId;
@@ -201,10 +204,26 @@ public class DetailActivity extends FragmentActivity {
                 )
         );
     }
+    private String getShortCreatedAt(String createdAt) {
+        SimpleDateFormat format = new SimpleDateFormat(
+                getString(R.string.tweet_date_format)
+        );
+        Date date = new Date();
+        String str = format.format(date);
+        String[] arrD = str.split(" ");
+        String[] arrC = createdAt.split(" ");
+        if (arrD[1].equals(arrC[1])) {
+            return arrC[0];
+        } else {
+            return createdAt;
+        }
+    }
     private void thisStatusAdapter() {
         Glide.with(this).load(thisTweet.getAvatarUrl())
                 .crossFade().into(thisStatusAvatar);
-        thisStatusCreatedAt.setText(thisTweet.getCreatedAt());
+        thisStatusCreatedAt.setText(
+                getShortCreatedAt(thisTweet.getCreatedAt())
+        );
         thisStatusName.setText(thisTweet.getName());
         if (thisTweet.getScreenName().startsWith("@")) {
             thisStatusScreenName.setText(thisTweet.getScreenName());

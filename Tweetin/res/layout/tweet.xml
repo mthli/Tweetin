@@ -5,8 +5,8 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/driibo_shot_default"
-              android:padding="14dp">
+              android:padding="14dp"
+              android:background="@drawable/driibo_shot_default">
 
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -100,7 +100,7 @@
     <TextView android:id="@+id/tweet_text"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="7dp"
+              android:layout_marginTop="8dp"
               android:textSize="14sp"
               android:textColor="@color/text">
     </TextView>
