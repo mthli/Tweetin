@@ -244,11 +244,25 @@ public class PostActivity extends Activity {
             int screenHeight = metrics.heightPixels;
             int bitmapWidth = bitmap.getWidth();
             int bitmapHeight = bitmap.getHeight();
-            if (bitmapWidth > screenWidth || bitmapHeight > screenHeight) {
+
+            /* Maybe do something with Bitmap OOM 2048 * 2048 */
+            if (bitmapWidth > screenWidth) {
                 float percent = ((float) screenWidth) / ((float) bitmapWidth);
                 Matrix matrix = new Matrix();
                 matrix.postScale(percent, percent);
                 bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+                postPic.setImageBitmap(bitmap);
+                postPic.setVisibility(View.VISIBLE);
+                return;
+            }
+            if (bitmapHeight > screenHeight) {
+                float percent = ((float) screenHeight) / ((float) bitmapHeight);
+                Matrix matrix = new Matrix();
+                matrix.postScale(percent, percent);
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+                postPic.setImageBitmap(bitmap);
+                postPic.setVisibility(View.VISIBLE);
+                return;
             }
             postPic.setImageBitmap(bitmap);
             postPic.setVisibility(View.VISIBLE);

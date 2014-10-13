@@ -2,7 +2,6 @@ package io.github.mthli.Tweetin.Detail;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.util.DisplayMetrics;
@@ -17,9 +16,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.Tweet;
@@ -217,13 +213,18 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
         DisplayMetrics metrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(metrics);
         int screenWidth = metrics.widthPixels;
+        int screenHeight = metrics.heightPixels;
         int bitmapWidth = bitmap.getWidth();
         int bitmapHeight = bitmap.getHeight();
+
+        /* Maybe do something with Bitmap OOM 2048 * 2048 */
         if (bitmapWidth < screenWidth) {
             float percent = ((float) screenWidth) / ((float) bitmapWidth);
-            Matrix matrix = new Matrix();
-            matrix.postScale(percent, percent);
-            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+            if (bitmapHeight * percent <= 2048) {
+                Matrix matrix = new Matrix();
+                matrix.postScale(percent, percent);
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+            }
         }
 
         return bitmap;
