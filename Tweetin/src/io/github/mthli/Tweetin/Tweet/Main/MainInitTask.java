@@ -1,11 +1,13 @@
-package io.github.mthli.Tweetin.Tweet;
+package io.github.mthli.Tweetin.Tweet.Main;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
-import io.github.mthli.Tweetin.Database.Tweet.TweetAction;
-import io.github.mthli.Tweetin.Database.Tweet.TweetData;
+import io.github.mthli.Tweetin.Database.Main.MainAction;
+import io.github.mthli.Tweetin.Database.Main.MainData;
+import io.github.mthli.Tweetin.Tweet.Base.Tweet;
+import io.github.mthli.Tweetin.Tweet.Base.TweetAdapter;
 import io.github.mthli.Tweetin.Unit.Flag;
 import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.Main.MainFragment;
@@ -18,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
+public class MainInitTask extends AsyncTask<Void, Integer, Boolean> {
     private MainFragment mainFragment;
     private Context context;
     private long useId = 0;
@@ -31,9 +33,9 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
     private Twitter twitter;
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
-    private List<TweetData> tweetDataList = new ArrayList<TweetData>();
+    private List<MainData> mainDataList = new ArrayList<MainData>();
 
-    public TweetInitTask(
+    public MainInitTask(
             MainFragment mainFragment,
             boolean isPullToRefresh
     ) {
@@ -77,12 +79,12 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
         }
 
         if (!isPullToRefresh) {
-            TweetAction action = new TweetAction(context);
+            MainAction action = new MainAction(context);
             action.opewDatabase(false);
-            tweetDataList = action.getTweetDataList();
+            mainDataList = action.getTweetDataList();
             action.closeDatabase();
             tweetList.clear();
-            for (TweetData data : tweetDataList) {
+            for (MainData data : mainDataList) {
                 Tweet tweet = new Tweet();
                 tweet.setTweetId(data.getTweetId());
                 tweet.setUserId(data.getUserId());
@@ -105,7 +107,7 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        TweetAction action = new TweetAction(context);
+        MainAction action = new MainAction(context);
         action.opewDatabase(true);
 
         List<twitter4j.Status> statusList;
@@ -121,12 +123,12 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
         }
 
         action.deleteAll();
-        tweetDataList.clear();
+        mainDataList.clear();
         SimpleDateFormat format = new SimpleDateFormat(
                 context.getString(R.string.tweet_date_format)
         );
         for (twitter4j.Status status : statusList) {
-            TweetData data = new TweetData();
+            MainData data = new MainData();
             if (status.isRetweet()) {
                 data.setTweetId(status.getId());
                 data.setUserId(status.getRetweetedStatus().getUser().getId());
@@ -179,7 +181,7 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
             }
 
             action.addTweet(data);
-            tweetDataList.add(data);
+            mainDataList.add(data);
         }
         action.closeDatabase();
 
@@ -203,7 +205,7 @@ public class TweetInitTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onPostExecute(Boolean result) {
         if (result) {
             tweetList.clear();
-            for (TweetData data : tweetDataList) {
+            for (MainData data : mainDataList) {
                 Tweet tweet = new Tweet();
                 tweet.setTweetId(data.getTweetId());
                 tweet.setUserId(data.getUserId());

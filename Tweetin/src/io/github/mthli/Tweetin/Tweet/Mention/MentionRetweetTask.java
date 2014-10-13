@@ -1,8 +1,8 @@
-package io.github.mthli.Tweetin.Notific;
+package io.github.mthli.Tweetin.Tweet.Mention;
 
 import android.os.AsyncTask;
 
-public class NotificTask extends AsyncTask<Void, Integer, Boolean> {
+public class MentionRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     /* Do something */
 
     @Override

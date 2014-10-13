@@ -1,19 +1,21 @@
-package io.github.mthli.Tweetin.Tweet;
+package io.github.mthli.Tweetin.Tweet.Main;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
-import io.github.mthli.Tweetin.Database.Tweet.TweetAction;
+import io.github.mthli.Tweetin.Database.Main.MainAction;
 import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.Main.MainFragment;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Tweet.Base.Tweet;
+import io.github.mthli.Tweetin.Tweet.Base.TweetAdapter;
 import io.github.mthli.Tweetin.Unit.Flag;
 import twitter4j.Twitter;
 
 import java.util.List;
 
-public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
+public class MainRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     private MainFragment mainFragment;
     private Context context;
     private long useId;
@@ -29,7 +31,7 @@ public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     private Notification.Builder builder;
     private static final int POST_ID = Flag.POST_ID;
 
-    public TweetRetweetTask(
+    public MainRetweetTask(
             MainFragment mainFragment,
             int position
     ) {
@@ -84,7 +86,7 @@ public class TweetRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             newTweet.setRetweetedById(useId);
             newTweet.setReplyTo(tweet.getReplyTo());
 
-            TweetAction action = new TweetAction(context);
+            MainAction action = new MainAction(context);
             action.opewDatabase(true);
             action.updateByMe(tweet.getTweetId(), newTweet);
             action.closeDatabase();

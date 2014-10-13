@@ -5,9 +5,9 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
-import io.github.mthli.Tweetin.Database.Tweet.TweetAction;
+import io.github.mthli.Tweetin.Database.Main.MainAction;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Tweet.Tweet;
+import io.github.mthli.Tweetin.Tweet.Base.Tweet;
 import io.github.mthli.Tweetin.Unit.Flag;
 import twitter4j.Twitter;
 
@@ -71,7 +71,7 @@ public class DetailRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             newTweet.setRetweetedById(useId);
             newTweet.setReplyTo(tweet.getReplyTo());
 
-            TweetAction action = new TweetAction(detailActivity);
+            MainAction action = new MainAction(detailActivity);
             action.opewDatabase(true);
             action.updateByMe(tweet.getTweetId(), newTweet);
             action.closeDatabase();

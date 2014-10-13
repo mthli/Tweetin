@@ -18,7 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Tweet.Tweet;
+import io.github.mthli.Tweetin.Tweet.Base.Tweet;
 import twitter4j.*;
 
 import java.text.SimpleDateFormat;

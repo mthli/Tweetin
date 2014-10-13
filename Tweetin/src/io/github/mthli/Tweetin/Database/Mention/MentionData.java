@@ -1,7 +1,7 @@
-package io.github.mthli.Tweetin.Database.Tweet;
+package io.github.mthli.Tweetin.Database.Mention;
 
-public class TweetData {
-    public static final String TABLE = "TWEET";
+public class MentionData {
+    public static final String TABLE = "MENTION";
     public static final String TWEET_ID = "TWEET_ID";
     public static final String USER_ID = "USER_ID";
     public static final String AVATAR_URL = "AVATAR_URL";
@@ -48,7 +48,7 @@ public class TweetData {
     private long retweetedById;
     private long replyTo;
 
-    public TweetData() {
+    public MentionData() {
         this.tweetId = 0;
         this.userId = 0;
         this.avatarUrl = null;

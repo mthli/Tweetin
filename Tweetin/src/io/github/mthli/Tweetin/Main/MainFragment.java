@@ -12,8 +12,12 @@ import com.melnykov.fab.FloatingActionButton;
 import io.github.mthli.Tweetin.Detail.DetailActivity;
 import io.github.mthli.Tweetin.Post.PostActivity;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Tweet.*;
 import io.github.mthli.Tweetin.ContextMenu.ContextMenuAdapter;
+import io.github.mthli.Tweetin.Tweet.Base.Tweet;
+import io.github.mthli.Tweetin.Tweet.Base.TweetAdapter;
+import io.github.mthli.Tweetin.Tweet.Main.MainInitTask;
+import io.github.mthli.Tweetin.Tweet.Main.MainMoreTask;
+import io.github.mthli.Tweetin.Tweet.Main.MainRetweetTask;
 import io.github.mthli.Tweetin.Unit.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.Flag;
 
@@ -29,7 +33,7 @@ public class MainFragment extends ProgressFragment {
         return useId;
     }
 
-    private boolean isMoveToButton = false;
+    private boolean isMoveToBottom = false;
     private FloatingActionButton fab;
     private SwipeRefreshLayout srl;
     public SwipeRefreshLayout getSrl() {
@@ -45,9 +49,9 @@ public class MainFragment extends ProgressFragment {
         return tweetList;
     }
 
-    private TweetInitTask tweetInitTask;
-    private TweetMoreTask tweetMoreTask;
-    private TweetRetweetTask tweetRetweetTask;
+    private MainInitTask mainInitTask;
+    private MainMoreTask mainMoreTask;
+    private MainRetweetTask mainRetweetTask;
     private int refreshFlag = Flag.TWEET_TASK_DIED;
     public int getRefreshFlag() {
         return refreshFlag;
@@ -57,21 +61,21 @@ public class MainFragment extends ProgressFragment {
     }
 
     public boolean isSomeTaskAlive() {
-        if ((tweetInitTask != null && tweetInitTask.getStatus() == AsyncTask.Status.RUNNING)
-                || (tweetMoreTask != null && tweetMoreTask.getStatus() == AsyncTask.Status.RUNNING)) {
+        if ((mainInitTask != null && mainInitTask.getStatus() == AsyncTask.Status.RUNNING)
+                || (mainMoreTask != null && mainMoreTask.getStatus() == AsyncTask.Status.RUNNING)) {
             return true;
         }
         return false;
     }
     public void allTaskDown() {
-        if (tweetInitTask != null && tweetInitTask.getStatus() == AsyncTask.Status.RUNNING) {
-            tweetInitTask.cancel(true);
+        if (mainInitTask != null && mainInitTask.getStatus() == AsyncTask.Status.RUNNING) {
+            mainInitTask.cancel(true);
         }
-        if (tweetMoreTask != null && tweetMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
-            tweetMoreTask.cancel(true);
+        if (mainMoreTask != null && mainMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
+            mainMoreTask.cancel(true);
         }
-        if (tweetRetweetTask != null && tweetRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
-            tweetRetweetTask.cancel(true);
+        if (mainRetweetTask != null && mainRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
+            mainRetweetTask.cancel(true);
         }
     }
 
@@ -217,11 +221,11 @@ public class MainFragment extends ProgressFragment {
                                     reply(location);
                                     break;
                                 case 1:
-                                    tweetRetweetTask = new TweetRetweetTask(
+                                    mainRetweetTask = new MainRetweetTask(
                                             MainFragment.this,
                                             location
                                     );
-                                    tweetRetweetTask.execute();
+                                    mainRetweetTask.execute();
                                     break;
                                 case 2:
                                     quote(location);
@@ -253,11 +257,7 @@ public class MainFragment extends ProgressFragment {
         setContentEmpty(false);
         setContentShown(true);
 
-        SharedPreferences preferences = getActivity().getSharedPreferences(
-                getString(R.string.sp_name),
-                Context.MODE_PRIVATE
-        );
-        useId = preferences.getLong(getString(R.string.sp_use_id), 0);
+        useId = ((MainActivity) getActivity()).getUseId();
 
         ListView listView = (ListView) view.findViewById(R.id.main_fragment_timeline);
         tweetAdapter = new TweetAdapter(
@@ -287,7 +287,7 @@ public class MainFragment extends ProgressFragment {
             }
         });
 
-        srl = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+        srl = (SwipeRefreshLayout) view.findViewById(R.id.main_swipe_container);
         srl.setColorSchemeResources(
                 R.color.tumblr_ptr_red,
                 R.color.tumblr_ptr_yellow,
@@ -297,13 +297,13 @@ public class MainFragment extends ProgressFragment {
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                tweetInitTask = new TweetInitTask(MainFragment.this, true);
-                tweetInitTask.execute();
+                mainInitTask = new MainInitTask(MainFragment.this, true);
+                mainInitTask.execute();
             }
         });
 
-        tweetInitTask = new TweetInitTask(MainFragment.this, false);
-        tweetInitTask.execute();
+        mainInitTask = new MainInitTask(MainFragment.this, false);
+        mainInitTask.execute();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -394,19 +394,19 @@ public class MainFragment extends ProgressFragment {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if (previous < firstVisibleItem) {
-                    isMoveToButton = true;
+                    isMoveToBottom = true;
                     fab.hide();
                 }
                 if (previous > firstVisibleItem) {
-                    isMoveToButton = false;
+                    isMoveToBottom = false;
                     fab.show();
                 }
                 previous = firstVisibleItem;
 
                 if (totalItemCount == firstVisibleItem + visibleItemCount) {
-                    if (!isSomeTaskAlive() && isMoveToButton) {
-                        tweetMoreTask = new TweetMoreTask(MainFragment.this);
-                        tweetMoreTask.execute();
+                    if (!isSomeTaskAlive() && isMoveToBottom) {
+                        mainMoreTask = new MainMoreTask(MainFragment.this);
+                        mainMoreTask.execute();
                     }
                 }
             }

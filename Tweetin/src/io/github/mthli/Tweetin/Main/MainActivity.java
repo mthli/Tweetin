@@ -16,9 +16,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.*;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import io.github.mthli.Tweetin.Mention.MentionActivity;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Tweet.Tweet;
-import io.github.mthli.Tweetin.Tweet.TweetAdapter;
+import io.github.mthli.Tweetin.Tweet.Base.Tweet;
+import io.github.mthli.Tweetin.Tweet.Base.TweetAdapter;
 import io.github.mthli.Tweetin.Unit.ActivityAnim;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -32,6 +33,9 @@ public class MainActivity extends FragmentActivity {
     public Twitter getTwitter() {
         return twitter;
     }
+    public long getUseId() {
+        return useId;
+    }
 
     private MainFragment mainFragment;
 
@@ -40,7 +44,7 @@ public class MainActivity extends FragmentActivity {
     private Drawable notificationActive;
 
     private void getNotificationActive() {
-        notificationDefault = getResources().getDrawable(R.drawable.ic_action_notification);
+        notificationDefault = getResources().getDrawable(R.drawable.ic_action_mention);
         Bitmap bitmap = ((BitmapDrawable) notificationDefault).getBitmap();
         bitmap = bitmap.copy(bitmap.getConfig(), true);
         Paint paint = new Paint();
@@ -55,15 +59,6 @@ public class MainActivity extends FragmentActivity {
         );
         notificationActive = new BitmapDrawable(getResources(), bitmap);
     }
-
-    public void setNotificationStatus(boolean hasNotification) {
-        if (hasNotification) {
-            notification.setIcon(notificationDefault);
-        } else {
-            notification.setIcon(notificationActive);
-        }
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +94,6 @@ public class MainActivity extends FragmentActivity {
         AccessToken token = new AccessToken(accToken, accTokenSecret);
         twitter.setOAuthAccessToken(token);
 
-        /* Do something with allTaskDown() */
         mainFragment = (MainFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.main_fragment);
     }
@@ -111,19 +105,22 @@ public class MainActivity extends FragmentActivity {
         return true;
     }
 
-    /* Do something */
-    int count = 1;
+    public void setNotificationStatus(boolean hasNotification) {
+        if (hasNotification) {
+            notification.setIcon(notificationDefault);
+        } else {
+            notification.setIcon(notificationActive);
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.main_menu_notification:
-                /* Do something */
-                if (count % 2 == 0) {
-                    setNotificationStatus(true);
-                } else {
-                    setNotificationStatus(false);
-                }
-                count++;
+            case R.id.main_menu_mention:
+                /* Do something with onActivityResult() */
+                ActivityAnim anim = new ActivityAnim();
+                Intent intent_mention = new Intent(this, MentionActivity.class);
+                startActivity(intent_mention);
+                anim.rightIn(this);
                 break;
             case R.id.main_menu_about:
                 /* Do something */
@@ -133,12 +130,14 @@ public class MainActivity extends FragmentActivity {
             default:
                 break;
         }
+
         return true;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        /* Do something with menu */
         if (resultCode == Activity.RESULT_OK) {
             int position = data.getIntExtra(
                     getString(R.string.detail_from_position),

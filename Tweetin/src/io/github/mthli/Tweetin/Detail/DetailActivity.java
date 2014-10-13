@@ -22,7 +22,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.Post.PostActivity;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Tweet.Tweet;
+import io.github.mthli.Tweetin.Tweet.Base.Tweet;
 import io.github.mthli.Tweetin.Unit.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.Flag;
 import twitter4j.Twitter;
@@ -394,7 +394,7 @@ public class DetailActivity extends FragmentActivity {
 
     @Override
     public void onDestroy() {
-        allTaskDown();
+        detailFinish();
         super.onDestroy();
     }
 

@@ -98,4 +98,7 @@
     <!-- DetailActivityTheme -->
     <style name="DetailActivityTheme" parent="BaseTheme" />
 
+    <!-- MentionActivityTheme -->
+    <style name="MentionActivityTheme" parent="BaseTheme" />
+
 </resources>

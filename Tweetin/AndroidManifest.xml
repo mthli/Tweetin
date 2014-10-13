@@ -56,5 +56,12 @@
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 
+        <!-- MentionActivity -->
+        <activity android:name=".Mention.MentionActivity"
+                  android:label="@string/mention_label"
+                  android:theme="@style/MentionActivityTheme"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
+
     </application>
 </manifest>

@@ -1,9 +1,11 @@
-package io.github.mthli.Tweetin.Tweet;
+package io.github.mthli.Tweetin.Tweet.Main;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Tweet.Base.Tweet;
+import io.github.mthli.Tweetin.Tweet.Base.TweetAdapter;
 import io.github.mthli.Tweetin.Unit.Flag;
 import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.Main.MainFragment;
@@ -14,7 +16,7 @@ import twitter4j.Twitter;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
+public class MainMoreTask extends AsyncTask<Void, Integer, Boolean> {
     private MainFragment mainFragment;
     private Context context;
     private long useId;
@@ -25,7 +27,7 @@ public class TweetMoreTask extends AsyncTask<Void, Integer, Boolean> {
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
 
-    public TweetMoreTask(MainFragment mainFragment) {
+    public MainMoreTask(MainFragment mainFragment) {
         this.mainFragment = mainFragment;
     }
 
