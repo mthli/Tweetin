@@ -115,7 +115,7 @@ public class MainInitTask extends AsyncTask<Void, Integer, Boolean> {
 
         List<twitter4j.Status> statusList;
         try {
-            Paging paging = new Paging(1, 50);
+            Paging paging = new Paging(1, 32);
             statusList = twitter.getHomeTimeline(paging);
             paging = new Paging(1, 1);
             List<twitter4j.Status> list = twitter.getMentionsTimeline(paging);

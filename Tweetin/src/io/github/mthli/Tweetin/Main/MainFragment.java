@@ -307,9 +307,8 @@ public class MainFragment extends ProgressFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ActivityAnim anim = new ActivityAnim();
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                /* Do something with intent */
                 intent.putExtra(
-                        getString(R.string.detail_from_position),
+                        getString(R.string.detail_intent_from_position),
                         position
                 );
                 Tweet tweet = tweetList.get(position);

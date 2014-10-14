@@ -123,10 +123,7 @@ public class MainActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.main_menu_mention:
-                /* Do something */
                 pressMention = true;
-
-                /* Maybe do something with onActivityResult() */
                 ActivityAnim anim = new ActivityAnim();
                 Intent intent_mention = new Intent(this, MentionActivity.class);
                 startActivity(intent_mention);
@@ -147,10 +144,19 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /* Do something with menu */
         if (resultCode == Activity.RESULT_OK) {
+
+            boolean mentionFinish = data.getBooleanExtra(
+                    getString(R.string.mention_finish),
+                    false
+            );
+            if (mentionFinish) {
+                /* Maybe do something */
+                setMentionStatus(false);
+            }
+
             int position = data.getIntExtra(
-                    getString(R.string.detail_from_position),
+                    getString(R.string.detail_intent_from_position),
                     0
             );
             boolean isRetweetFromDetail = data.getBooleanExtra(

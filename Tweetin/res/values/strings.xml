@@ -128,6 +128,9 @@
     <string name="detail_label">Tweet</string>
     <string name="detail_menu_copy">Copy</string>
     <string name="detail_picture_cd">Picture</string>
+    <string name="detail_intent_from_position">
+        DETAIL_INTENT_FROM_POSITION
+    </string>
     <string name="detail_intent_tweet_id">
         DETAIL_INTENT_TWEET_ID
     </string>
@@ -166,9 +169,6 @@
     <string name="detail_intent_reply_to">
         DETAIL_INTENT_REPLY_TO
     </string>
-    <string name="detail_from_position">
-        DETAIL_INTENT_FROM_POSITION
-    </string>
     <string name="detail_intent_is_retweet_from_detail">
         DETAIL_INTENT_IS_RETWEET_FROM_DETAIL
     </string>
@@ -192,5 +192,6 @@
     <string name="mention_get_mention_failed">
         Get mentions failed, pull to refresh.
     </string>
+    <string name="mention_finish">MENTION_FINISH</string>
 
 </resources>

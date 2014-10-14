@@ -1,7 +1,6 @@
 package io.github.mthli.Tweetin.Detail;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -128,7 +127,7 @@ public class DetailActivity extends FragmentActivity {
     private void setThisTweet() {
         Intent intent = getIntent();
         position = intent.getIntExtra(
-                getString(R.string.detail_from_position),
+                getString(R.string.detail_intent_from_position),
                 0
         );
         thisTweet = new Tweet();
@@ -364,10 +363,7 @@ public class DetailActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                allTaskDown();
-                ActivityAnim anim = new ActivityAnim();
                 detailFinish();
-                anim.rightOut(this);
                 break;
             case R.id.detail_menu_copy:
                 /* Do something */
@@ -381,10 +377,7 @@ public class DetailActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            allTaskDown();
-            ActivityAnim anim = new ActivityAnim();
             detailFinish();
-            anim.rightOut(this);
         }
 
         return true;
@@ -410,7 +403,7 @@ public class DetailActivity extends FragmentActivity {
     private void detailFinish() {
         Intent intent = new Intent();
         intent.putExtra(
-                getString(R.string.detail_from_position),
+                getString(R.string.detail_intent_from_position),
                 position
         );
         intent.putExtra(
@@ -418,9 +411,9 @@ public class DetailActivity extends FragmentActivity {
                 isRetweetFromDetail
         );
         allTaskDown();
-        setResult(Activity.RESULT_OK, intent);
+        setResult(RESULT_OK, intent);
         ActivityAnim anim = new ActivityAnim();
         finish();
-        anim.rightOut(DetailActivity.this);
+        anim.rightOut(this);
     }
 }

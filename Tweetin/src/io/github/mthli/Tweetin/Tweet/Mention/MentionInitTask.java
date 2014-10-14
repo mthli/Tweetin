@@ -236,6 +236,7 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
                 srl.setRefreshing(false);
                 tweetAdapter.notifyDataSetChanged();
             }
+            mentionFragment.setMentionFinish(true);
         } else {
             if (isFirstMention) {
                 mentionFragment.setContentEmpty(true);
@@ -244,6 +245,7 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
             } else {
                 srl.setRefreshing(false);
             }
+            /* Maybe do something with mentionFragment.setMentionFinish(false); */
         }
         mentionFragment.setRefreshFlag(Flag.MENTION_TASK_DIED);
     }

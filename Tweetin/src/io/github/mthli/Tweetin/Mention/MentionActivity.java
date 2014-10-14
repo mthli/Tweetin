@@ -14,10 +14,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Tweet.Base.Tweet;
+import io.github.mthli.Tweetin.Tweet.Base.TweetAdapter;
 import io.github.mthli.Tweetin.Unit.ActivityAnim;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
+
+import java.util.List;
 
 public class MentionActivity extends FragmentActivity {
     private Twitter twitter;
@@ -77,11 +81,7 @@ public class MentionActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                ActivityAnim anim = new ActivityAnim();
-                mentionFragment.allTaskDown();
-                /* Maybe do soemthing with setResult */
-                finish();
-                anim.rightOut(this);
+                mentionFinish();
                 break;
             default:
                 break;
@@ -94,18 +94,45 @@ public class MentionActivity extends FragmentActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            /* Do something */
+            int position = data.getIntExtra(
+                    getString(R.string.detail_intent_from_position),
+                    0
+            );
+            boolean isRetweetFromDetail = data.getBooleanExtra(
+                    getString(R.string.detail_intent_is_retweet_from_detail),
+                    false
+            );
+            if (isRetweetFromDetail) {
+                TweetAdapter tweetAdapter = mentionFragment.getTweetAdapter();
+                List<Tweet> tweetList = mentionFragment.getTweetList();
+
+                Tweet tweet = tweetList.get(position);
+                Tweet newTweet = new Tweet();
+                newTweet.setTweetId(tweet.getTweetId());
+                newTweet.setUserId(tweet.getUserId());
+                newTweet.setAvatarUrl(tweet.getAvatarUrl());
+                newTweet.setCreatedAt(tweet.getCreatedAt());
+                newTweet.setName(tweet.getName());
+                newTweet.setScreenName(tweet.getScreenName());
+                newTweet.setProtect(tweet.isProtected());
+                newTweet.setText(tweet.getText());
+                newTweet.setCheckIn(tweet.getCheckIn());
+                newTweet.setRetweet(true);
+                newTweet.setRetweetedByName(getString(R.string.tweet_retweeted_by_me));
+                newTweet.setRetweetedById(useId);
+                newTweet.setReplyTo(tweet.getReplyTo());
+
+                tweetList.remove(position);
+                tweetList.add(position, newTweet);
+                tweetAdapter.notifyDataSetChanged();
+            }
         }
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            ActivityAnim anim = new ActivityAnim();
-            mentionFragment.allTaskDown();
-            /* Maybe do soemthing with setResult */
-            finish();
-            anim.rightOut(this);
+            mentionFinish();
         }
 
         return true;
@@ -113,8 +140,7 @@ public class MentionActivity extends FragmentActivity {
 
     @Override
     public void onDestroy() {
-        mentionFragment.allTaskDown();
-        /* Maybe do soemthing with setResult */
+        mentionFinish();
         super.onDestroy();
     }
 
@@ -127,5 +153,18 @@ public class MentionActivity extends FragmentActivity {
         else{
             /* Do nothing */
         }
+    }
+
+    private void mentionFinish() {
+        Intent intent = new Intent();
+        intent.putExtra(
+                getString(R.string.mention_finish),
+                mentionFragment.isMentionFinish()
+        );
+        mentionFragment.allTaskDown();
+        setResult(RESULT_OK, intent);
+        ActivityAnim anim = new ActivityAnim();
+        finish();
+        anim.rightOut(this);
     }
 }
