@@ -37,7 +37,7 @@
                   android:background="@drawable/edittext"
                   android:textColor="@color/white"
                   android:hint="@string/splash_sign_in_consumer_key"
-                  android:textColorHint="@color/white">
+                  android:textColorHint="@color/splash_text_hint">
         </EditText>
 
         <EditText android:id="@+id/splash_sign_in_consumer_secret"
@@ -49,7 +49,7 @@
                   android:background="@drawable/edittext"
                   android:textColor="@color/white"
                   android:hint="@string/splash_sign_in_consumer_secret"
-                  android:textColorHint="@color/white">
+                  android:textColorHint="@color/splash_text_hint">
         </EditText>
 
         <Button android:id="@+id/splash_sign_in_button"

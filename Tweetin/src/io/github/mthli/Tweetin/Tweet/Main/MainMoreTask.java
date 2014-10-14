@@ -55,7 +55,7 @@ public class MainMoreTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            Paging paging = new Paging(count, 32);
+            Paging paging = new Paging(count, 40);
             statusList = twitter.getHomeTimeline(paging);
             count++;
         } catch (Exception e) {

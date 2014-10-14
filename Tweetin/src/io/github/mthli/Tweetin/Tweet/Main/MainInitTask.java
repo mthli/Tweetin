@@ -115,7 +115,7 @@ public class MainInitTask extends AsyncTask<Void, Integer, Boolean> {
 
         List<twitter4j.Status> statusList;
         try {
-            Paging paging = new Paging(1, 32);
+            Paging paging = new Paging(1, 40);
             statusList = twitter.getHomeTimeline(paging);
             paging = new Paging(1, 1);
             List<twitter4j.Status> list = twitter.getMentionsTimeline(paging);
@@ -238,7 +238,6 @@ public class MainInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweetAdapter.notifyDataSetChanged();
             }
 
-            /* Do something with Mention, remember to write data when MentionInitTask. */
             long latestMentionId = preferences.getLong(
                     context.getString(R.string.sp_latest_mention_id),
                     0
@@ -247,6 +246,7 @@ public class MainInitTask extends AsyncTask<Void, Integer, Boolean> {
                 boolean pressMention = ((MainActivity) mainFragment.getActivity()).isPressMention();
                 if (pressMention) {
                     ((MainActivity) mainFragment.getActivity()).setPressMention(false);
+                    ((MainActivity) mainFragment.getActivity()).setTempLatestMentionId(mention.getId());
                 } else {
                     ((MainActivity) mainFragment.getActivity()).setMentionStatus(true);
                 }

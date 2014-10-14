@@ -16,6 +16,7 @@
     <color name="blue_info">#00DCFF</color>
     <color name="green_confirm">#98CE00</color>
     <color name="grey_100">#F5F5F5</color>
+    <color name="splash_text_hint">#19242F</color>
 
     <color name="text">#212121</color>
     <color name="secondary_text">#727272</color>

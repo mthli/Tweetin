@@ -39,6 +39,14 @@ public class MainActivity extends FragmentActivity {
 
     private MainFragment mainFragment;
 
+    private SharedPreferences preferences;
+
+    private long latestMentionId = 0;
+    private long tempLatestMentionId = 0;
+    public void setTempLatestMentionId(long tempLatestMentionId) {
+        this.tempLatestMentionId = tempLatestMentionId;
+    }
+
     private MenuItem mention;
     private Drawable mentionDefault;
     private Drawable mentionActive;
@@ -83,7 +91,7 @@ public class MainActivity extends FragmentActivity {
 
         getNotificationActive();
 
-        SharedPreferences preferences = getSharedPreferences(
+        preferences = getSharedPreferences(
                 getString(R.string.sp_name),
                 Context.MODE_PRIVATE
         );
@@ -126,7 +134,7 @@ public class MainActivity extends FragmentActivity {
                 pressMention = true;
                 ActivityAnim anim = new ActivityAnim();
                 Intent intent_mention = new Intent(this, MentionActivity.class);
-                startActivity(intent_mention);
+                startActivityForResult(intent_mention, 0);
                 anim.rightIn(this);
                 break;
             case R.id.main_menu_about:
@@ -151,8 +159,15 @@ public class MainActivity extends FragmentActivity {
                     false
             );
             if (mentionFinish) {
-                /* Maybe do something */
                 setMentionStatus(false);
+            } else {
+                latestMentionId = preferences.getLong(
+                        getString(R.string.sp_latest_mention_id),
+                        0
+                );
+                if (tempLatestMentionId > latestMentionId) {
+                    setMentionStatus(true);
+                }
             }
 
             int position = data.getIntExtra(
