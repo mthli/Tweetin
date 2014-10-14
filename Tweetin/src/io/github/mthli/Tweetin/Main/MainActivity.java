@@ -169,6 +169,7 @@ public class MainActivity extends FragmentActivity {
                     setMentionStatus(true);
                 }
             }
+            pressMention = false;
 
             int position = data.getIntExtra(
                     getString(R.string.detail_intent_from_position),
