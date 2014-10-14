@@ -101,7 +101,6 @@ public class PostActivity extends Activity {
             manager.setTintColor(color);
         }
         ActionBar actionBar = getActionBar();
-        actionBar.setTitle(null);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         postPic = (ImageView) findViewById(R.id.post_picture);

@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragment extends ProgressFragment {
-
     private View view;
 
     private long useId = 0;
@@ -52,14 +51,13 @@ public class MainFragment extends ProgressFragment {
     private MainInitTask mainInitTask;
     private MainMoreTask mainMoreTask;
     private MainRetweetTask mainRetweetTask;
-    private int refreshFlag = Flag.TWEET_TASK_DIED;
+    private int refreshFlag = Flag.MAIN_TASK_DIED;
     public int getRefreshFlag() {
         return refreshFlag;
     }
     public void setRefreshFlag(int refreshFlag) {
         this.refreshFlag = refreshFlag;
     }
-
     public boolean isSomeTaskAlive() {
         if ((mainInitTask != null && mainInitTask.getStatus() == AsyncTask.Status.RUNNING)
                 || (mainMoreTask != null && mainMoreTask.getStatus() == AsyncTask.Status.RUNNING)) {
@@ -248,7 +246,6 @@ public class MainFragment extends ProgressFragment {
             }
         });
     }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

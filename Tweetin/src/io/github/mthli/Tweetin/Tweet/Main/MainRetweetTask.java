@@ -44,14 +44,13 @@ public class MainRetweetTask extends AsyncTask<Void, Integer, Boolean> {
         context = mainFragment.getContentView().getContext();
         useId = mainFragment.getUseId();
 
-        /* Do something with a new Twitter Object? */
         twitter = ((MainActivity) mainFragment.getActivity()).getTwitter();
         tweetAdapter = mainFragment.getTweetAdapter();
         tweetList = mainFragment.getTweetList();
         tweet = tweetList.get(position);
 
-        notificationManager = (NotificationManager) mainFragment
-                .getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager = (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
         builder = new Notification.Builder(context);
         builder.setSmallIcon(R.drawable.ic_post_notification);
         builder.setTicker(

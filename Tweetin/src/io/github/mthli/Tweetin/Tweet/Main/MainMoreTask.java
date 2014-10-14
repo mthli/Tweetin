@@ -42,10 +42,10 @@ public class MainMoreTask extends AsyncTask<Void, Integer, Boolean> {
         tweetAdapter = mainFragment.getTweetAdapter();
         tweetList = mainFragment.getTweetList();
 
-        if (mainFragment.getRefreshFlag() == Flag.TWEET_TASK_ALIVE) {
+        if (mainFragment.getRefreshFlag() == Flag.MAIN_TASK_ALIVE) {
             onCancelled();
         } else {
-            mainFragment.setRefreshFlag(Flag.TWEET_TASK_ALIVE);
+            mainFragment.setRefreshFlag(Flag.MAIN_TASK_ALIVE);
         }
         srl.setRefreshing(true);
     }
@@ -143,6 +143,6 @@ public class MainMoreTask extends AsyncTask<Void, Integer, Boolean> {
             tweetAdapter.notifyDataSetChanged();
         }
         srl.setRefreshing(false);
-        mainFragment.setRefreshFlag(Flag.TWEET_TASK_DIED);
+        mainFragment.setRefreshFlag(Flag.MAIN_TASK_DIED);
     }
 }

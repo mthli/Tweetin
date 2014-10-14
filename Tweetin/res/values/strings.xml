@@ -12,6 +12,7 @@
     <string name="sp_use_id">USE_ID</string>
     <string name="sp_access_token">ACCESS_TOKEN</string>
     <string name="sp_access_token_secret">ACCESS_TOKEN_SECRET</string>
+    <string name="sp_latest_mention_id">LATEST_MENTION_ID</string>
 
     <!-- Splash -->
     <string name="splash_label">Tweetin</string>
@@ -60,6 +61,9 @@
     <string name="main_menu_sign_out">
         Sign out
     </string>
+    <string name="main_get_timeline_failed">
+        Get timeline failed, pull to refresh.
+    </string>
 
     <!-- Tweet -->
     <string name="tweet_block">Block</string>
@@ -67,18 +71,6 @@
         HH:mm MM.dd
     </string>
     <string name="tweet_retweeted_by_me">Me</string>
-    <string name="tweet_refresh_successful">
-        Refresh successful.
-    </string>
-    <string name="tweet_refresh_failed">
-        Refresh failed.
-    </string>
-    <string name="tweet_get_timeline_failed">
-        Get timeline failed, pull to refresh.
-    </string>
-    <string name="tweet_get_more_data_failed">
-        Get more data failed.
-    </string>
     <string name="tweet_menu_item_reply">Reply</string>
     <string name="tweet_menu_item_retweet">Retweet</string>
     <string name="tweet_menu_item_quote">Quote</string>
@@ -133,7 +125,7 @@
     </string>
 
     <!-- Detail -->
-    <string name="detail_label">Detail</string>
+    <string name="detail_label">Tweet</string>
     <string name="detail_menu_copy">Copy</string>
     <string name="detail_picture_cd">Picture</string>
     <string name="detail_intent_tweet_id">
@@ -197,5 +189,8 @@
 
     <!-- Mention -->
     <string name="mention_label">Mention</string>
+    <string name="mention_get_mention_failed">
+        Get mentions failed, pull to refresh.
+    </string>
 
 </resources>

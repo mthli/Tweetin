@@ -264,8 +264,6 @@ public class DetailActivity extends FragmentActivity {
             manager.setTintColor(color);
         }
         ActionBar actionBar = getActionBar();
-        actionBar.setTitle(null);
-        actionBar.setSubtitle(null);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         SharedPreferences preferences = getSharedPreferences(

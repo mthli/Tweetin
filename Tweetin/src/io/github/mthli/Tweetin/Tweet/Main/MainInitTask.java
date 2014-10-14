@@ -25,9 +25,10 @@ public class MainInitTask extends AsyncTask<Void, Integer, Boolean> {
     private Context context;
     private long useId = 0;
 
+    private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private SwipeRefreshLayout srl;
-    private boolean isFirstSignIn = false;
+    private boolean isFirstSignIn;
     private boolean isPullToRefresh = false;
 
     private Twitter twitter;
@@ -40,6 +41,8 @@ public class MainInitTask extends AsyncTask<Void, Integer, Boolean> {
             boolean isPullToRefresh
     ) {
         this.mainFragment = mainFragment;
+        this.useId = 0;
+        this.isFirstSignIn = false;
         this.isPullToRefresh = isPullToRefresh;
     }
 
@@ -53,14 +56,13 @@ public class MainInitTask extends AsyncTask<Void, Integer, Boolean> {
         tweetAdapter = mainFragment.getTweetAdapter();
         tweetList = mainFragment.getTweetList();
 
-        if (mainFragment.getRefreshFlag() == Flag.TWEET_TASK_ALIVE) {
+        if (mainFragment.getRefreshFlag() == Flag.MAIN_TASK_ALIVE) {
             onCancelled();
         } else {
-            mainFragment.setRefreshFlag(Flag.TWEET_TASK_ALIVE);
+            mainFragment.setRefreshFlag(Flag.MAIN_TASK_ALIVE);
         }
 
-        SharedPreferences preferences = mainFragment.getActivity()
-                .getSharedPreferences(
+        preferences = context.getSharedPreferences(
                         context.getString(R.string.sp_name),
                         Context.MODE_PRIVATE
                 );
@@ -105,6 +107,7 @@ public class MainInitTask extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
+    private twitter4j.Status mention;
     @Override
     protected Boolean doInBackground(Void... params) {
         MainAction action = new MainAction(context);
@@ -114,6 +117,9 @@ public class MainInitTask extends AsyncTask<Void, Integer, Boolean> {
         try {
             Paging paging = new Paging(1, 50);
             statusList = twitter.getHomeTimeline(paging);
+            paging = new Paging(1, 1);
+            List<twitter4j.Status> list = twitter.getMentionsTimeline(paging);
+            mention = list.get(0);
         } catch (Exception e) {
             return false;
         }
@@ -174,12 +180,11 @@ public class MainInitTask extends AsyncTask<Void, Integer, Boolean> {
                 data.setRetweetedById(0);
                 data.setReplyTo(status.getInReplyToStatusId());
             }
-            if (status.isRetweetedByMe() || status.isRetweeted()) { //
+            if (status.isRetweetedByMe() || status.isRetweeted()) {
                 data.setRetweet(true);
                 data.setRetweetedByName(context.getString(R.string.tweet_retweeted_by_me));
                 data.setRetweetedById(useId);
             }
-
             action.addTweet(data);
             mainDataList.add(data);
         }
@@ -232,16 +237,30 @@ public class MainInitTask extends AsyncTask<Void, Integer, Boolean> {
                 srl.setRefreshing(false);
                 tweetAdapter.notifyDataSetChanged();
             }
+
+            /* Do something with Mention, remember to write data when MentionInitTask. */
+            long latestMentionId = preferences.getLong(
+                    context.getString(R.string.sp_latest_mention_id),
+                    0
+            );
+            if (mention.getId() > latestMentionId) {
+                boolean pressMention = ((MainActivity) mainFragment.getActivity()).isPressMention();
+                if (pressMention) {
+                    ((MainActivity) mainFragment.getActivity()).setPressMention(false);
+                } else {
+                    ((MainActivity) mainFragment.getActivity()).setMentionStatus(true);
+                }
+            }
         } else {
             if (isFirstSignIn) {
                 editor.putString(context.getString(R.string.sp_is_first_sign_in), "true").commit();
                 mainFragment.setContentEmpty(true);
-                mainFragment.setEmptyText(R.string.tweet_get_timeline_failed);
+                mainFragment.setEmptyText(R.string.main_get_timeline_failed);
                 mainFragment.setContentShown(true);
             } else {
                 srl.setRefreshing(false);
             }
         }
-        mainFragment.setRefreshFlag(Flag.TWEET_TASK_DIED);
+        mainFragment.setRefreshFlag(Flag.MAIN_TASK_DIED);
     }
 }

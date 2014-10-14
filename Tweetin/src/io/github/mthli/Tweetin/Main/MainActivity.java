@@ -39,13 +39,20 @@ public class MainActivity extends FragmentActivity {
 
     private MainFragment mainFragment;
 
-    private MenuItem notification;
-    private Drawable notificationDefault;
-    private Drawable notificationActive;
+    private MenuItem mention;
+    private Drawable mentionDefault;
+    private Drawable mentionActive;
+    private boolean pressMention = false;
+    public boolean isPressMention() {
+        return pressMention;
+    }
+    public void setPressMention(Boolean pressMention) {
+        this.pressMention = pressMention;
+    }
 
     private void getNotificationActive() {
-        notificationDefault = getResources().getDrawable(R.drawable.ic_action_mention);
-        Bitmap bitmap = ((BitmapDrawable) notificationDefault).getBitmap();
+        mentionDefault = getResources().getDrawable(R.drawable.ic_action_mention);
+        Bitmap bitmap = ((BitmapDrawable) mentionDefault).getBitmap();
         bitmap = bitmap.copy(bitmap.getConfig(), true);
         Paint paint = new Paint();
         paint.setColor(getResources().getColor(R.color.red_alert));
@@ -57,7 +64,7 @@ public class MainActivity extends FragmentActivity {
                 7,
                 paint
         );
-        notificationActive = new BitmapDrawable(getResources(), bitmap);
+        mentionActive = new BitmapDrawable(getResources(), bitmap);
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,22 +108,25 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        notification = menu.getItem(0);
+        mention = menu.getItem(0);
         return true;
     }
 
-    public void setNotificationStatus(boolean hasNotification) {
-        if (hasNotification) {
-            notification.setIcon(notificationDefault);
+    public void setMentionStatus(boolean hasMention) {
+        if (hasMention) {
+            mention.setIcon(mentionActive);
         } else {
-            notification.setIcon(notificationActive);
+            mention.setIcon(mentionDefault);
         }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.main_menu_mention:
-                /* Do something with onActivityResult() */
+                /* Do something */
+                pressMention = true;
+
+                /* Maybe do something with onActivityResult() */
                 ActivityAnim anim = new ActivityAnim();
                 Intent intent_mention = new Intent(this, MentionActivity.class);
                 startActivity(intent_mention);
