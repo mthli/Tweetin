@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.Post.PostActivity;
+import io.github.mthli.Tweetin.Profile.ProfileActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.Base.Tweet;
 import io.github.mthli.Tweetin.Unit.ActivityAnim;
@@ -220,6 +221,20 @@ public class DetailActivity extends FragmentActivity {
     private void thisStatusAdapter() {
         Glide.with(this).load(thisTweet.getAvatarUrl())
                 .crossFade().into(thisStatusAvatar);
+        thisStatusAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailActivity.this, ProfileActivity.class);
+                intent.putExtra(
+                        getString(R.string.profile_intent_user_id),
+                        thisTweet.getUserId()
+                );
+                ActivityAnim anim = new ActivityAnim();
+                startActivity(intent);
+                anim.rightIn(DetailActivity.this);
+            }
+        });
+
         thisStatusCreatedAt.setText(
                 getShortCreatedAt(thisTweet.getCreatedAt())
         );

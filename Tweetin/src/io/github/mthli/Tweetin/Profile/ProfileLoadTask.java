@@ -3,7 +3,6 @@ package io.github.mthli.Tweetin.Profile;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -59,11 +58,6 @@ public class ProfileLoadTask extends AsyncTask<Void, Integer, Boolean> {
     }
 
     private void profileFragmentAdapter() {
-        /* Do something */
-        System.out.println("------------------------------");
-        System.out.println(user.getProfileBackgroundColor());
-        System.out.println("------------------------------");
-
         CircleImageView avatar = (CircleImageView) view
                 .findViewById(R.id.profile_avatar);
         String avatarURL = user.getBiggerProfileImageURL();

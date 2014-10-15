@@ -98,7 +98,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                 .crossFade()
                 .into(holder.avatar);
 
-        /* Do something */
         holder.avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

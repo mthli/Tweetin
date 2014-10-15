@@ -1,6 +1,7 @@
 package io.github.mthli.Tweetin.Detail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.AsyncTask;
@@ -17,8 +18,10 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.mthli.Tweetin.Profile.ProfileActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.Base.Tweet;
+import io.github.mthli.Tweetin.Unit.ActivityAnim;
 import twitter4j.*;
 
 import java.text.SimpleDateFormat;
@@ -240,6 +243,20 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
                     .load(replyToStatus.getRetweetedStatus().getUser().getBiggerProfileImageURL())
                     .crossFade()
                     .into(replyToStatusAvatar);
+            replyToStatusAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(detailActivity, ProfileActivity.class);
+                    intent.putExtra(
+                            detailActivity.getString(R.string.profile_intent_user_id),
+                            replyToStatus.getRetweetedStatus().getUser().getId()
+                    );
+                    ActivityAnim anim = new ActivityAnim();
+                    detailActivity.startActivity(intent);
+                    anim.rightIn(detailActivity);
+                }
+            });
+
             replyToStatusCreatedAt.setText(
                     getShortCreatedAt(
                             format.format(replyToStatus.getRetweetedStatus().getCreatedAt())
@@ -294,6 +311,20 @@ public class DetailLoadTask extends AsyncTask<Void, Integer, Boolean> {
                     .load(replyToStatus.getUser().getBiggerProfileImageURL())
                     .crossFade()
                     .into(replyToStatusAvatar);
+            replyToStatusAvatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(detailActivity, ProfileActivity.class);
+                    intent.putExtra(
+                            detailActivity.getString(R.string.profile_intent_user_id),
+                            replyToStatus.getUser().getId()
+                    );
+                    ActivityAnim anim = new ActivityAnim();
+                    detailActivity.startActivity(intent);
+                    anim.rightIn(detailActivity);
+                }
+            });
+
             replyToStatusCreatedAt.setText(
                     getShortCreatedAt(
                             format.format(replyToStatus.getCreatedAt())
