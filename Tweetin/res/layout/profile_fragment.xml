@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/tumblr_dark_blue">
+
+    <!-- Do something -->
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    android:background="@drawable/driibo_shot_default">
+
+        <View android:id="@+id/profile_background_color"
+              android:layout_width="match_parent"
+              android:layout_height="150dp"
+              android:layout_alignParentTop="true">
+        </View>
+
+        <!-- Do something -->
+        <LinearLayout android:orientation="vertical"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="7dp"
+                      android:layout_marginRight="7dp"
+                      android:paddingBottom="12dp"
+                      android:layout_marginTop="50dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_avatar"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    app:border_width="0dp">
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <TextView android:id="@+id/profile_name"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="5dp"
+                      android:gravity="center"
+                      android:textColor="@color/text"
+                      android:textSize="18sp"
+                      android:singleLine="true"
+                      android:ellipsize="end">
+            </TextView>
+
+            <LinearLayout android:orientation="horizontal"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:gravity="center">
+
+                <TextView android:id="@+id/profile_screen_name"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="12sp"
+                          android:textColor="@color/hint"
+                          android:singleLine="true"
+                          android:ellipsize="end">
+                </TextView>
+
+                <TextView android:id="@+id/profile_protect"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:paddingLeft="5dp"
+                          android:drawableLeft="@drawable/ic_tweet_protect"
+                          android:drawablePadding="2dp"
+                          android:textSize="12sp"
+                          android:textColor="@color/hint"
+                          android:visibility="gone">
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView android:id="@+id/profile_description"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="12dp"
+                      android:layout_gravity="center"
+                      android:gravity="center"
+                      android:textSize="14sp"
+                      android:textColor="@color/text"
+                      android:autoLink="web|email|map"
+                      android:visibility="gone">
+            </TextView>
+
+            <TextView android:id="@+id/profile_location"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="12dp"
+                      android:layout_gravity="center"
+                      android:drawableLeft="@drawable/ic_check_in"
+                      android:drawablePadding="2dp"
+                      android:textSize="12sp"
+                      android:textColor="@color/hint"
+                      android:singleLine="true"
+                      android:ellipsize="end"
+                      android:visibility="gone">
+            </TextView>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

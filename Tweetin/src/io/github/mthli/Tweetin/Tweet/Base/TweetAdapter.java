@@ -2,6 +2,7 @@ package io.github.mthli.Tweetin.Tweet.Base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,25 +10,29 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.mthli.Tweetin.Profile.ProfileActivity;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Tweet.Base.Tweet;
+import io.github.mthli.Tweetin.Unit.ActivityAnim;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 public class TweetAdapter extends ArrayAdapter<Tweet> {
+    private Activity activity;
     private Context context;
     private int layoutResId;
     private List<Tweet> tweetList;
 
     public TweetAdapter(
+            Activity activity,
             Context context,
             int layoutResId,
             List<Tweet> tweetList
     ) {
         super(context, layoutResId, tweetList);
 
+        this.activity = activity;
         this.context = context;
         this.layoutResId = layoutResId;
         this.tweetList = tweetList;
@@ -86,7 +91,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder = (Holder) view.getTag();
         }
 
-        Tweet tweet = tweetList.get(position);
+        final Tweet tweet = tweetList.get(position);
 
         Glide.with(context)
                 .load(tweet.getAvatarUrl())
@@ -97,7 +102,14 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         holder.avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* Do something */
+                Intent intent = new Intent(context, ProfileActivity.class);
+                intent.putExtra(
+                        context.getString(R.string.profile_intent_user_id),
+                        tweet.getUserId()
+                );
+                ActivityAnim anim = new ActivityAnim();
+                context.startActivity(intent);
+                anim.rightIn(activity);
             }
         });
 
@@ -113,7 +125,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         }
         holder.text.setText(tweet.getText());
 
-        /* Do something with Location */
         if (tweet.getCheckIn() != null) {
             holder.checkIn.setVisibility(View.VISIBLE);
             holder.checkIn.setText(tweet.getCheckIn());

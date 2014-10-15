@@ -258,6 +258,7 @@ public class MainFragment extends ProgressFragment {
 
         ListView listView = (ListView) view.findViewById(R.id.main_fragment_timeline);
         tweetAdapter = new TweetAdapter(
+                getActivity(),
                 view.getContext(),
                 R.layout.tweet,
                 tweetList

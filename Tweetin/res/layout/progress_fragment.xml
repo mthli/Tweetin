@@ -13,7 +13,7 @@
                   android:orientation="vertical"
                   android:visibility="gone">
 
-        <ProgressBar style="?android:attr/progressBarStyleInverse"
+        <ProgressBar style="?android:attr/progressBarStyleLargeInverse"
                      android:id="@android:id/progress"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content">

@@ -84,6 +84,7 @@
                           android:layout_toRightOf="@id/tweet_screen_name"
                           android:paddingLeft="5dp"
                           android:drawableLeft="@drawable/ic_tweet_protect"
+                          android:drawablePadding="2dp"
                           android:textSize="12sp"
                           android:textColor="@color/hint"
                           android:singleLine="true"

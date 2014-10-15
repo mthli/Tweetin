@@ -194,4 +194,16 @@
     </string>
     <string name="mention_finish">MENTION_FINISH</string>
 
+    <!-- Profile -->
+    <string name="profile_label">Profile</string>
+    <string name="profile_intent_user_id">
+        PROFILE_INTENT_USER_ID
+    </string>
+    <string name="profile_background_image">
+        Profile background image.
+    </string>
+    <string name="profile_get_user_data_failed">
+        Get user data failed.
+    </string>
+
 </resources>

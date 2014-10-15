@@ -101,4 +101,7 @@
     <!-- MentionActivityTheme -->
     <style name="MentionActivityTheme" parent="BaseTheme" />
 
+    <!-- ProfileActivityTheme -->
+    <style name="ProfileActivityTheme" parent="BaseTheme" />
+
 </resources>
