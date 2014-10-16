@@ -97,6 +97,7 @@ public class PostActivity extends Activity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             SystemBarTintManager manager = new SystemBarTintManager(this);
             manager.setStatusBarTintEnabled(true);
+            manager.setNavigationBarTintEnabled(true);
             int color = getResources().getColor(R.color.tumblr_dark_blue);
             manager.setTintColor(color);
         }

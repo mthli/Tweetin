@@ -70,5 +70,12 @@
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 
+        <!-- AboutActivity -->
+        <activity android:name=".About.AboutActivity"
+                  android:label="@string/about_label"
+                  android:theme="@style/AboutActivityTheme"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
+
     </application>
 </manifest>

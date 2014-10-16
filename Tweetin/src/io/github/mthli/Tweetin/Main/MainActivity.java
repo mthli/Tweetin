@@ -16,8 +16,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.*;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import io.github.mthli.Tweetin.About.AboutActivity;
+import io.github.mthli.Tweetin.Database.Main.MainAction;
+import io.github.mthli.Tweetin.Database.Mention.MentionAction;
 import io.github.mthli.Tweetin.Mention.MentionActivity;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Splash.SplashActivity;
 import io.github.mthli.Tweetin.Tweet.Base.Tweet;
 import io.github.mthli.Tweetin.Tweet.Base.TweetAdapter;
 import io.github.mthli.Tweetin.Unit.ActivityAnim;
@@ -82,6 +86,7 @@ public class MainActivity extends FragmentActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             SystemBarTintManager manager = new SystemBarTintManager(this);
             manager.setStatusBarTintEnabled(true);
+            manager.setNavigationBarTintEnabled(true);
             int color = getResources().getColor(R.color.tumblr_dark_blue);
             manager.setTintColor(color);
         }
@@ -127,21 +132,49 @@ public class MainActivity extends FragmentActivity {
             mention.setIcon(mentionDefault);
         }
     }
+    private void  clearSharePreferences() {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.remove(getString(R.string.sp_is_first_sign_in));
+        editor.remove(getString(R.string.sp_consumer_key));
+        editor.remove(getString(R.string.sp_consumer_secret));
+        editor.remove(getString(R.string.sp_use_id));
+        editor.remove(getString(R.string.sp_access_token));
+        editor.remove(getString(R.string.sp_access_token_secret));
+        editor.remove(getString(R.string.sp_latest_mention_id));
+        editor.commit();
+    }
+    private void clearDatabase() {
+        MainAction mainAction = new MainAction(this);
+        mainAction.opewDatabase(true);
+        mainAction.deleteAll();
+        mainAction.closeDatabase();
+        MentionAction mentionAction = new MentionAction(this);
+        mentionAction.opewDatabase(true);
+        mentionAction.deleteAll();
+        mentionAction.closeDatabase();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
+        ActivityAnim anim = new ActivityAnim();
         switch (menuItem.getItemId()) {
             case R.id.main_menu_mention:
                 pressMention = true;
-                ActivityAnim anim = new ActivityAnim();
                 Intent intent_mention = new Intent(this, MentionActivity.class);
                 startActivityForResult(intent_mention, 0);
                 anim.rightIn(this);
                 break;
             case R.id.main_menu_about:
-                /* Do something */
+                Intent intent_about = new Intent(this, AboutActivity.class);
+                startActivity(intent_about);
+                anim.rightIn(this);
                 break;
             case R.id.main_menu_sign_out:
-                /* Do something */
+                mainFragment.allTaskDown();
+                clearSharePreferences();
+                clearDatabase();
+                Intent intent_splash = new Intent(this, SplashActivity.class);
+                startActivity(intent_splash);
+                finish();
             default:
                 break;
         }
@@ -209,10 +242,8 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            ActivityAnim anim = new ActivityAnim();
             mainFragment.allTaskDown();
             finish();
-            anim.rightOut(this);
         }
 
         return true;

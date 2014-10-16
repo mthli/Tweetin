@@ -105,7 +105,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="8.75dp"
             android:layout_marginRight="8.75dp"
-            android:textColor="@color/secondary_text"
+            android:textColor="@color/text"
             android:background="@drawable/profile_follow_button_selector">
     </Button>
 

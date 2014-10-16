@@ -230,4 +230,7 @@
         UnFollow failed.
     </string>
 
+    <!-- About -->
+    <string name="about_label">About</string>
+
 </resources>

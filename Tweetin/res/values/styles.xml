@@ -8,7 +8,6 @@
 
     <!-- BaseTheme -->
     <style name="BaseTheme" parent="android:Theme.Holo.Light">
-        <!-- Do something -->
         <item name="actionBarOverlayTopOffset">?android:actionBarSize</item>
         <item name="actionBarInsetStart">?android:actionBarSize</item>
         <item name="spinnerBarInsetStart">?android:actionBarSize</item>
@@ -16,7 +15,11 @@
         <item name="popupItemBackground">?android:selectableItemBackground</item>
 
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/tumblr_dark_blue</item>
+
         <item name="android:homeAsUpIndicator">@drawable/ic_action_up</item>
         <item name="android:actionOverflowButtonStyle">@style/OverflowIconStyle</item>
         <item name="android:actionBarStyle">@style/ActionBarStyle</item>
@@ -103,5 +106,8 @@
 
     <!-- ProfileActivityTheme -->
     <style name="ProfileActivityTheme" parent="BaseTheme" />
+
+    <!-- AboutActivityTheme -->
+    <style name="AboutActivityTheme" parent="BaseTheme" />
 
 </resources>
