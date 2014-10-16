@@ -7,9 +7,16 @@ import io.github.mthli.Tweetin.R;
 
 public class ProfileFragment extends ProgressFragment {
     private ProfileLoadTask profileLoadTask;
+    private ProfileFollowTask profileFollowTask;
+    public void setProfileFollowTask(ProfileFollowTask profileFollowTask) {
+        this.profileFollowTask = profileFollowTask;
+    }
     public void allTaskDown() {
         if (profileLoadTask != null && profileLoadTask.getStatus() == AsyncTask.Status.RUNNING) {
             profileLoadTask.cancel(true);
+        }
+        if (profileFollowTask != null && profileFollowTask.getStatus() == AsyncTask.Status.RUNNING) {
+            profileFollowTask.cancel(true);
         }
     }
 

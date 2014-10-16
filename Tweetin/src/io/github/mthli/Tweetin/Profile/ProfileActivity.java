@@ -18,9 +18,13 @@ import twitter4j.auth.AccessToken;
 
 public class ProfileActivity extends FragmentActivity {
     private Twitter twitter;
+    private long useId;
     private long userId;
     public Twitter getTwitter() {
         return twitter;
+    }
+    public long getUseId() {
+        return useId;
     }
     public long getUserId() {
         return userId;
@@ -45,6 +49,7 @@ public class ProfileActivity extends FragmentActivity {
                 getString(R.string.sp_name),
                 MODE_PRIVATE
         );
+        useId = preferences.getLong(getString(R.string.sp_use_id), 0);
         String conKey = preferences.getString(getString(R.string.sp_consumer_key), null);
         String conSecret = preferences.getString(getString(R.string.sp_consumer_secret), null);
         String accToken = preferences.getString(getString(R.string.sp_access_token), null);

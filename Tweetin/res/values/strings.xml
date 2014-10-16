@@ -205,5 +205,29 @@
     <string name="profile_get_user_data_failed">
         Get user data failed.
     </string>
+    <string name="profile_follow">
+        Follow
+    </string>
+    <string name="profile_unfollow">
+        UnFollow
+    </string>
+    <string name="profile_follow_ing">
+        Following&#8230;
+    </string>
+    <string name="profile_follow_successful">
+        Follow successful.
+    </string>
+    <string name="profile_follow_failed">
+        Follow failed.
+    </string>
+    <string name="profile_unfollow_ing">
+        UnFollowing&#8230;
+    </string>
+    <string name="profile_unfollow_successful">
+        UnFollow successful.
+    </string>
+    <string name="profile_unfollow_failed">
+        UnFollow failed.
+    </string>
 
 </resources>

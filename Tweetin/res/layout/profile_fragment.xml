@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/tumblr_dark_blue">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/tumblr_dark_blue">
 
-    <!-- Do something -->
-    <RelativeLayout android:layout_width="match_parent"
+    <RelativeLayout android:id="@+id/profile_info"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
                     android:layout_marginRight="7dp"
+                    android:layout_alignParentTop="true"
                     android:background="@drawable/driibo_shot_default">
 
         <LinearLayout android:orientation="vertical"
@@ -98,4 +98,15 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+    <Button android:id="@+id/profile_follow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profile_info"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="8.75dp"
+            android:layout_marginRight="8.75dp"
+            android:textColor="@color/secondary_text"
+            android:background="@drawable/profile_follow_button_selector">
+    </Button>
+
+</RelativeLayout>
