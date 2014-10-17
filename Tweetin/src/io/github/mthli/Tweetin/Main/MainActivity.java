@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.*;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 import io.github.mthli.Tweetin.About.AboutActivity;
 import io.github.mthli.Tweetin.Database.Main.MainAction;
 import io.github.mthli.Tweetin.Database.Mention.MentionAction;
@@ -251,6 +252,7 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onDestroy() {
+        Crouton.cancelAllCroutons();
         mainFragment.allTaskDown();
         super.onDestroy();
     }

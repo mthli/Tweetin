@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import io.github.mthli.Tweetin.Detail.DetailActivity;
 import io.github.mthli.Tweetin.Post.PostActivity;
 import io.github.mthli.Tweetin.R;
@@ -126,10 +128,10 @@ public class MainFragment extends ProgressFragment {
                 text
         );
         manager.setPrimaryClip(data);
-        Toast.makeText(
-                view.getContext(),
+        Crouton.makeText(
+                getActivity(),
                 R.string.tweet_copy_successful,
-                Toast.LENGTH_SHORT
+                Style.INFO
         ).show();
     }
     private void showItemLongClickDialog(final int location) {
