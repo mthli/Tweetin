@@ -14,11 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import de.hdodenhof.circleimageview.CircleImageView;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import io.github.mthli.Tweetin.Post.PostActivity;
 import io.github.mthli.Tweetin.Profile.ProfileActivity;
 import io.github.mthli.Tweetin.R;
@@ -383,10 +382,10 @@ public class DetailActivity extends FragmentActivity {
                 text
         );
         manager.setPrimaryClip(data);
-        Crouton.makeText(
+        Toast.makeText(
                 this,
                 R.string.tweet_copy_successful,
-                Style.INFO
+                Toast.LENGTH_SHORT
         ).show();
     }
     @Override
@@ -415,7 +414,6 @@ public class DetailActivity extends FragmentActivity {
 
     @Override
     public void onDestroy() {
-        Crouton.cancelAllCroutons();
         detailFinish();
         super.onDestroy();
     }

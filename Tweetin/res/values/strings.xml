@@ -51,7 +51,7 @@
         Get AccessToken failed.
     </string>
     <string name="splash_sign_in_wait">
-        Wait a moment.
+        Wait a moment, a web page will be shown in this dialog.
     </string>
 
     <!-- Main -->

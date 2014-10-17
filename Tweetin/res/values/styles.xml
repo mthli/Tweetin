@@ -15,8 +15,6 @@
         <item name="popupItemBackground">?android:selectableItemBackground</item>
 
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:clipToPadding">false</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@color/tumblr_dark_blue</item>
 

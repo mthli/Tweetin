@@ -16,9 +16,8 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.R;
 import twitter4j.Twitter;
@@ -77,10 +76,10 @@ public class SplashActivity extends Activity {
                 conKey = conKeyEidt.getText().toString();
                 conSecret = conSecretEidt.getText().toString();
                 if (conKey.length() == 0 || conSecret.length() == 0) {
-                    Crouton.makeText(
+                    Toast.makeText(
                             SplashActivity.this,
                             R.string.splash_sign_in_miss_oauth,
-                            Style.ALERT
+                            Toast.LENGTH_SHORT
                     ).show();
                 } else {
                     progressDialog = new ProgressDialog(SplashActivity.this);
@@ -111,10 +110,10 @@ public class SplashActivity extends Activity {
                     case SIGN_IN_FIRST_FAILED:
                         progressDialog.hide();
                         progressDialog.dismiss();
-                        Crouton.makeText(
+                        Toast.makeText(
                                 SplashActivity.this,
                                 R.string.splash_sign_in_authorization_failed,
-                                Style.ALERT
+                                Toast.LENGTH_SHORT
                         ).show();
                         break;
                     case SIGN_IN_SECOND_SUCCESSFUL:
@@ -128,10 +127,10 @@ public class SplashActivity extends Activity {
                     case SIGN_IN_SECOND_FAILED:
                         progressDialog.hide();
                         progressDialog.dismiss();
-                        Crouton.makeText(
+                        Toast.makeText(
                                 SplashActivity.this,
                                 R.string.splash_sign_in_get_access_token_failed,
-                                Style.ALERT
+                                Toast.LENGTH_SHORT
                         ).show();
                         break;
                     default:
@@ -155,7 +154,6 @@ public class SplashActivity extends Activity {
 
     @Override
     public void onDestroy() {
-        Crouton.cancelAllCroutons();
         super.onDestroy();
     }
 
@@ -192,10 +190,10 @@ public class SplashActivity extends Activity {
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(authUrl);
 
-        Crouton.makeText(
+        Toast.makeText(
                 SplashActivity.this,
                 R.string.splash_sign_in_wait,
-                Style.INFO
+                Toast.LENGTH_SHORT
         ).show();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -254,10 +252,10 @@ public class SplashActivity extends Activity {
         EditText pinText = (EditText) layout.findViewById(R.id.splash_sign_in_dialog_pin);
         pin = pinText.getText().toString();
         if (pin.length() == 0) {
-            Crouton.makeText(
+            Toast.makeText(
                     SplashActivity.this,
                     R.string.splash_sign_in_miss_pin,
-                    Style.ALERT
+                    Toast.LENGTH_SHORT
             ).show();
         } else {
             progressDialog = new ProgressDialog(SplashActivity.this);

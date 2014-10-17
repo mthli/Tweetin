@@ -4,7 +4,9 @@
              xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/tumblr_dark_blue">
+             android:background="@color/tumblr_dark_blue"
+             android:fitsSystemWindows="true"
+             android:clipToPadding="false">
 
     <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/main_swipe_container"

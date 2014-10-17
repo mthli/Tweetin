@@ -4,7 +4,9 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/tumblr_dark_blue">
+              android:background="@color/tumblr_dark_blue"
+              android:fitsSystemWindows="true"
+              android:clipToPadding="false">
 
     <!-- Do something -->
 

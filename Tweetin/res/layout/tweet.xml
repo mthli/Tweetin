@@ -6,7 +6,9 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:padding="14dp"
-              android:background="@drawable/driibo_shot_default">
+              android:background="@drawable/driibo_shot_default"
+              android:fitsSystemWindows="true"
+              android:clipToPadding="false">
 
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="wrap_content">

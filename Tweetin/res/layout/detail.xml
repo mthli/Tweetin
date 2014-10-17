@@ -5,7 +5,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/tumblr_dark_blue"
-                android:descendantFocusability="blocksDescendants">
+                android:descendantFocusability="blocksDescendants"
+                android:fitsSystemWindows="true"
+                android:clipToPadding="false">
 
     <RelativeLayout android:id="@+id/detail_option"
                     android:layout_width="match_parent"
