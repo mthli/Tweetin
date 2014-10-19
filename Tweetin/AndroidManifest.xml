@@ -24,6 +24,7 @@
         <!-- SplashActivity -->
         <activity android:name=".Splash.SplashActivity"
                   android:label="@string/splash_label"
+                  android:icon="@drawable/ic_launcher"
                   android:theme="@style/SplashActivityTheme"
                   android:windowSoftInputMode="adjustPan|stateHidden"
                   android:configChanges="orientation|keyboardHidden|screenSize">
@@ -36,6 +37,7 @@
         <!-- MainActivity -->
         <activity android:name=".Main.MainActivity"
                   android:label="@string/main_label"
+                  android:icon="@drawable/ic_twitter_bird"
                   android:theme="@style/MainActivityTheme"
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
@@ -43,6 +45,7 @@
         <!-- PostActivity -->
         <activity android:name=".Post.PostActivity"
                   android:label="@string/post_label"
+                  android:icon="@drawable/ic_twitter_bird"
                   android:theme="@style/PostActivityTheme"
                   android:windowSoftInputMode="adjustResize|stateAlwaysVisible"
                   android:configChanges="orientation|keyboardHidden|screenSize">
@@ -51,6 +54,7 @@
         <!-- DetailActivity -->
         <activity android:name=".Detail.DetailActivity"
                   android:label="@string/detail_label"
+                  android:icon="@drawable/ic_twitter_bird"
                   android:theme="@style/DetailActivityTheme"
                   android:windowSoftInputMode="adjustResize"
                   android:configChanges="orientation|keyboardHidden|screenSize">
@@ -59,6 +63,7 @@
         <!-- MentionActivity -->
         <activity android:name=".Mention.MentionActivity"
                   android:label="@string/mention_label"
+                  android:icon="@drawable/ic_twitter_bird"
                   android:theme="@style/MentionActivityTheme"
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
@@ -66,6 +71,7 @@
         <!-- ProfileActivity -->
         <activity android:name=".Profile.ProfileActivity"
                   android:label="@string/profile_label"
+                  android:icon="@drawable/ic_twitter_bird"
                   android:theme="@style/ProfileActivityTheme"
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
@@ -73,6 +79,7 @@
         <!-- AboutActivity -->
         <activity android:name=".About.AboutActivity"
                   android:label="@string/about_label"
+                  android:icon="@drawable/ic_twitter_bird"
                   android:theme="@style/AboutActivityTheme"
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>

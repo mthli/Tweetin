@@ -16,7 +16,7 @@
 
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@color/tumblr_dark_blue</item>
+        <item name="android:windowBackground">@color/background_dark_blue</item>
 
         <item name="android:homeAsUpIndicator">@drawable/ic_action_up</item>
         <item name="android:actionOverflowButtonStyle">@style/OverflowIconStyle</item>

@@ -4,7 +4,7 @@
              xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/tumblr_dark_blue"
+             android:background="@color/background_dark_blue"
              android:fitsSystemWindows="true"
              android:clipToPadding="false">
 
@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="7dp"
-            android:background="@color/tumblr_dark_blue">
+            android:background="@color/background_dark_blue">
 
         <ListView android:id="@+id/main_fragment_timeline"
                   android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                   android:divider="@color/transparent"
                   android:dividerHeight="3dp"
                   android:drawSelectorOnTop="true"
-                  android:background="@color/tumblr_dark_blue">
+                  android:background="@color/background_dark_blue">
         </ListView>
 
     </android.support.v4.widget.SwipeRefreshLayout>

@@ -98,7 +98,7 @@ public class PostActivity extends Activity {
             SystemBarTintManager manager = new SystemBarTintManager(this);
             manager.setStatusBarTintEnabled(true);
             manager.setNavigationBarTintEnabled(true);
-            int color = getResources().getColor(R.color.tumblr_dark_blue);
+            int color = getResources().getColor(R.color.background_dark_blue);
             manager.setTintColor(color);
         }
         ActionBar actionBar = getActionBar();
@@ -134,7 +134,7 @@ public class PostActivity extends Activity {
                 postEdit.setSelection(reply.length());
 
                 if (reply.length() > 140) {
-                    countWords.setTextColor(getResources().getColor(R.color.red_alert));
+                    countWords.setTextColor(getResources().getColor(R.color.red_mention));
                     countWords.setText(String.valueOf(reply.length()));
                 } else {
                     countWords.setTextColor(getResources().getColor(R.color.hint));
@@ -165,7 +165,7 @@ public class PostActivity extends Activity {
                 postEdit.setText(quote);
 
                 if (quote.length() > 140) {
-                    countWords.setTextColor(getResources().getColor(R.color.red_alert));
+                    countWords.setTextColor(getResources().getColor(R.color.red_mention));
                     countWords.setText(String.valueOf(quote.length()));
                 } else {
                     countWords.setTextColor(getResources().getColor(R.color.hint));
@@ -211,7 +211,7 @@ public class PostActivity extends Activity {
                     countWords.setTextColor(getResources().getColor(R.color.hint));
                     countWords.setText(String.valueOf(text.length()));
                 } else {
-                    countWords.setTextColor(getResources().getColor(R.color.red_alert));
+                    countWords.setTextColor(getResources().getColor(R.color.red_mention));
                     countWords.setText(String.valueOf(text.length()));
                 }
             }

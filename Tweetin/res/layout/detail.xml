@@ -4,7 +4,7 @@
                 xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/tumblr_dark_blue"
+                android:background="@color/background_dark_blue"
                 android:descendantFocusability="blocksDescendants"
                 android:fitsSystemWindows="true"
                 android:clipToPadding="false">
@@ -12,7 +12,7 @@
     <RelativeLayout android:id="@+id/detail_option"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/tumblr_dark_blue"
+                    android:background="@color/background_dark_blue"
                     android:layout_alignParentBottom="true"
                     android:padding="15dp">
 

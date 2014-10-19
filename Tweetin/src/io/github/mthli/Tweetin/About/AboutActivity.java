@@ -21,7 +21,7 @@ public class AboutActivity extends Activity {
             SystemBarTintManager manager = new SystemBarTintManager(this);
             manager.setStatusBarTintEnabled(true);
             manager.setNavigationBarTintEnabled(true);
-            int color = getResources().getColor(R.color.tumblr_dark_blue);
+            int color = getResources().getColor(R.color.background_dark_blue);
             manager.setTintColor(color);
         }
         getActionBar().setDisplayHomeAsUpEnabled(true);

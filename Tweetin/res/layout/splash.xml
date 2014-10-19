@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/tumblr_dark_blue"
+                android:background="@color/background_dark_blue"
                 android:fitsSystemWindows="true"
                 android:clipToPadding="false">
 
@@ -62,7 +62,7 @@
                 android:layout_marginRight="20dp"
                 android:background="@drawable/splash_sign_in_button_selector"
                 android:text="@string/splash_sign_in_button"
-                android:textColor="@color/tumblr_dark_blue">
+                android:textColor="@color/background_dark_blue">
         </Button>
 
         <Button android:id="@+id/splash_help_button"

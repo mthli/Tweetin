@@ -3,14 +3,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/tumblr_dark_blue"
+             android:background="@color/background_dark_blue"
              android:fitsSystemWindows="true"
              android:clipToPadding="false">
 
     <LinearLayout android:id="@+id/progress_container"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                  android:background="@color/tumblr_dark_blue"
+                  android:background="@color/background_dark_blue"
                   android:gravity="center"
                   android:orientation="vertical"
                   android:visibility="gone">
@@ -26,7 +26,7 @@
     <FrameLayout android:id="@+id/content_container"
                  android:layout_width="match_parent"
                  android:layout_height="match_parent"
-                 android:background="@color/tumblr_dark_blue">
+                 android:background="@color/background_dark_blue">
 
         <TextView android:id="@android:id/empty"
                   android:layout_width="match_parent"
