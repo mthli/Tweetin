@@ -1,13 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/background_dark_blue"
-              android:fitsSystemWindows="true"
-              android:clipToPadding="false">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background_dark_blue"
+                android:fitsSystemWindows="true"
+                android:clipToPadding="false">
 
-    <!-- Do something -->
+    <RelativeLayout android:id="@+id/about_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/driibo_shot_default">
 
-</LinearLayout>
+        <LinearLayout android:orientation="vertical"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="7dp"
+                      android:layout_marginRight="7dp"
+                      android:paddingBottom="12dp"
+                      android:layout_marginTop="50dp">
+
+            <ImageView android:id="@+id/about_icon"
+                       android:contentDescription="@string/about_icon_cd"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center"
+                       android:src="@drawable/about_icon">
+            </ImageView>
+
+            <TextView android:id="@+id/about_name"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="5dp"
+                      android:gravity="center"
+                      android:text="@string/app_name"
+                      android:textColor="@color/background_dark_blue"
+                      android:textSize="18sp"
+                      android:singleLine="true"
+                      android:ellipsize="end">
+            </TextView>
+
+            <TextView android:id="@+id/about_tweetin"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="5dp"
+                      android:gravity="center"
+                      android:text="@string/about_tweetin"
+                      android:textSize="14sp"
+                      android:textColor="@color/text">
+            </TextView>
+
+            <TextView android:id="@+id/about_author"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="5dp"
+                      android:gravity="center"
+                      android:text="@string/about_author"
+                      android:textSize="12sp"
+                      android:textColor="@color/hint"
+                      android:singleLine="true"
+                      android:ellipsize="end">
+            </TextView>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <Button android:id="@+id/about_github"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/about_info"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="8.75dp"
+            android:layout_marginRight="8.75dp"
+            android:text="@string/about_github"
+            android:textColor="@color/text"
+            android:background="@drawable/round_button_selector">
+    </Button>
+
+</RelativeLayout>

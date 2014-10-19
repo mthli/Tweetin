@@ -129,5 +129,12 @@
 
     <!-- About -->
     <string name="about_label">关于</string>
+    <string name="about_tweetin">
+        迄今为止又一款第三方Twitter客户端。\n
+        启动器图标来自Double-J Design。
+    </string>
+    <string name="about_author">
+        作者：matthewlee0725@gmail.com
+    </string>
 
 </resources>

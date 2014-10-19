@@ -237,5 +237,19 @@
 
     <!-- About -->
     <string name="about_label">About</string>
+    <string name="about_icon_cd">
+        About icon
+    </string>
+    <string name="about_github">GitHub</string>
+    <string name="about_github_url">
+        https://github.com/mthli/Tweetin
+    </string>
+    <string name="about_tweetin">
+        Yet another Twitter unofficial client.\n
+        Launcher icon created by Double-J Design.
+    </string>
+    <string name="about_author">
+        Author: matthewlee0725@gmail.com
+    </string>
 
 </resources>
