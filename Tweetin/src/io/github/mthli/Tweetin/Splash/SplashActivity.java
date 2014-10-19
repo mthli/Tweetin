@@ -20,10 +20,13 @@ import android.widget.Toast;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.R;
+import org.apache.commons.io.IOUtils;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
+
+import java.io.InputStream;
 
 public class SplashActivity extends Activity {
     private static final int SIGN_IN_FIRST_SUCCESSFUL = 0x100;
@@ -95,7 +98,7 @@ public class SplashActivity extends Activity {
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* Do something */
+                showHowToDialog();
             }
         });
 
@@ -304,5 +307,45 @@ public class SplashActivity extends Activity {
                 getString(R.string.sp_access_token_secret),
                 accessToken.getTokenSecret()
         ).commit();
+    }
+
+    private void showHowToDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
+        builder.setCancelable(false);
+
+        String lang;
+        if (getResources().getConfiguration().locale.getLanguage().equals("zh")) {
+            lang = getString(R.string.splash_how_to_zh);
+        } else {
+            lang = getString(R.string.splash_how_to_en);
+        }
+        String str = null;
+        try {
+            InputStream inputStream = getResources().getAssets().open(lang);
+            str = IOUtils.toString(inputStream);
+        } catch (Exception e) {
+            /* Do nothing */
+        }
+
+        WebView webView = new WebView(SplashActivity.this);
+        webView.loadDataWithBaseURL(
+                getString(R.string.splash_how_to_base_url),
+                str,
+                null,
+                "UTF-8",
+                null
+        );
+        builder.setView(webView);
+
+        builder.setPositiveButton(
+                getString(R.string.splash_how_to_ok),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        /* Do nothing */
+                    }
+                }
+        );
+        builder.create().show();
     }
 }

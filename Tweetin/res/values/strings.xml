@@ -31,7 +31,6 @@
     <string name="splash_sign_in_dialog_pin">Pin</string>
     <string name="splash_sign_in_dialog_next">Next</string>
     <string name="splash_sign_in_dialog_accept">Accept</string>
-    <string name="splash_sign_in_dialog_help">Help</string>
     <string name="splash_sign_in_start_authorization">
         Start Authorization&#8230;
     </string>
@@ -53,6 +52,16 @@
     <string name="splash_sign_in_wait">
         Wait a moment, a web page will be shown in this dialog.
     </string>
+    <string name="splash_how_to_en">
+        HowTo_en.html
+    </string>
+    <string name="splash_how_to_zh">
+        HowTo_zh.html
+    </string>
+    <string name="splash_how_to_base_url">
+        file:///android_asset/
+    </string>
+    <string name="splash_how_to_ok">OK</string>
 
     <!-- Main -->
     <string name="main_label">Tweetin</string>
@@ -66,7 +75,6 @@
     </string>
 
     <!-- Tweet -->
-    <string name="tweet_block">Block</string>
     <string name="tweet_date_format">
         HH:mm MM.dd
     </string>
@@ -198,9 +206,6 @@
     <string name="profile_label">Profile</string>
     <string name="profile_intent_user_id">
         PROFILE_INTENT_USER_ID
-    </string>
-    <string name="profile_background_image">
-        Profile background image.
     </string>
     <string name="profile_get_user_data_failed">
         Get user data failed.
