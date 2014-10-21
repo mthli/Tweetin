@@ -2,19 +2,21 @@
 
 <resources>
 
-    <color name="background_dark_blue">#0063B0</color>
-    <color name="ptr_red">#DB4437</color>
-    <color name="ptr_yellow">#F4B400</color>
-    <color name="ptr_blue">#4285F4</color>
-    <color name="ptr_green">#0F9D58</color>
+    <color name="background_dark_blue">@color/text</color>
+    <color name="driibo_dark_blue">#3F83AA</color>
+
+    <color name="tumblr_ptr_red">#D95E40</color>
+    <color name="tumblr_ptr_yellow">#F2992E</color>
+    <color name="tumblr_ptr_blue">#37AAD4</color>
+    <color name="tumblr_ptr_green">#56BC8A</color>
 
     <color name="dark">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="transparent">@android:color/transparent</color>
 
-    <color name="red_mention">@color/ptr_red</color>
+    <color name="red_mention">#FF413C</color>
     <color name="grey_100">#F5F5F5</color>
-    <color name="splash_text_hint">#003259</color>
+    <color name="splash_text_hint">@color/secondary_text</color>
 
     <color name="text">#212121</color>
     <color name="secondary_text">#727272</color>

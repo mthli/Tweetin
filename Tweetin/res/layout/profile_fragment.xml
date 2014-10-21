@@ -37,7 +37,7 @@
                       android:layout_height="wrap_content"
                       android:layout_marginTop="5dp"
                       android:gravity="center"
-                      android:textColor="@color/background_dark_blue"
+                      android:textColor="@color/driibo_dark_blue"
                       android:textSize="18sp"
                       android:singleLine="true"
                       android:ellipsize="end">

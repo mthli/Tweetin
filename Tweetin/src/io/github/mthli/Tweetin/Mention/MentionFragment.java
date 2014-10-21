@@ -276,10 +276,10 @@ public class MentionFragment extends ProgressFragment {
 
         srl = (SwipeRefreshLayout) view.findViewById(R.id.mention_swipe_container);
         srl.setColorSchemeResources(
-                R.color.ptr_red,
-                R.color.ptr_yellow,
-                R.color.ptr_blue,
-                R.color.ptr_green
+                R.color.tumblr_ptr_red,
+                R.color.tumblr_ptr_yellow,
+                R.color.tumblr_ptr_blue,
+                R.color.tumblr_ptr_green
         );
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
