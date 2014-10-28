@@ -4,4 +4,48 @@
     <!-- App info -->
     <string name="app_name">Tweetin</string>
 
+    <!-- SharePreferences -->
+    <string name="sp_name">SP_NAME</string>
+    <string name="sp_use_id">SP_USE_ID</string>
+    <string name="sp_consumer_key">SP_CONSUMER_KEY</string>
+    <string name="sp_consumer_secret">SP_CONSUMER_SECRET</string>
+    <string name="sp_access_token">SP_ACCESS_TOKEN</string>
+    <string name="sp_access_token_secret">SP_ACCESS_TOKEN_SECRET</string>
+
+    <!-- Splash -->
+    <string name="splash_tweetin">SPLASH_TWEETIN</string>
+    <string name="splash_description">
+        Yet another Twitter unofficial client.
+    </string>
+    <string name="splash_consumer_key">Key</string>
+    <string name="splash_consumer_secret">Secret</string>
+    <string name="splash_sign_in">Sign in</string>
+    <string name="splash_how_to">
+        How to get Key and Secret?
+    </string>
+    <string name="splash_pd_start_authorization">
+        Start Authorization&#8230;
+    </string>
+    <string name="splash_webview_dialog_next">Next</string>
+    <string name="splash_pin_dialog_pin">Pin</string>
+    <string name="splash_pin_dialog_accept">Accept</string>
+    <string name="splash_pd_get_access_token">
+        Get AccessToken&#8230;
+    </string>
+    <string name="splash_toast_wait">
+        Please wait a moment, a webpage will be shown in this dialog.
+    </string>
+    <string name="splash_toast_miss_oauth">
+        Please complete your OAuth info.
+    </string>
+    <string name="splash_toast_miss_pin">
+        Miss Pin value.
+    </string>
+    <string name="splash_toast_authorization_failed">
+        Authorization failed.
+    </string>
+    <string name="splash_toast_get_access_token_failed">
+        Get AccessToken failed.
+    </string>
+
 </resources>

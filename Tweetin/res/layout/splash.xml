@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/black">
+
+    <ImageView android:id="@+id/splash_tweetin"
+               android:contentDescription="@string/splash_tweetin"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:paddingTop="100dp"
+               android:src="@drawable/tweetin">
+    </ImageView>
+
+    <TextView android:id="@+id/splash_description"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="7dp"
+              android:gravity="center_horizontal"
+              android:text="@string/splash_description"
+              android:textColor="@color/white"
+              android:textSize="12sp">
+    </TextView>
+
+    <EditText android:id="@+id/splash_consumer_key"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp"
+              android:layout_marginLeft="15dp"
+              android:layout_marginRight="15dp"
+              android:background="@drawable/edittext"
+              android:textColor="@color/white"
+              android:hint="@string/splash_consumer_key"
+              android:textColorHint="@color/hint"
+              android:textCursorDrawable="@null">
+    </EditText>
+
+    <EditText android:id="@+id/splash_consumer_secret"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="15dp"
+              android:layout_marginRight="15dp"
+              android:background="@drawable/edittext"
+              android:textColor="@color/white"
+              android:hint="@string/splash_consumer_secret"
+              android:textColorHint="@color/hint"
+              android:textCursorDrawable="@null">
+    </EditText>
+
+    <Button android:id="@+id/splash_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/round_button_selector"
+            android:text="@string/splash_sign_in"
+            android:textColor="@color/text">
+    </Button>
+
+    <TextView android:id="@+id/splash_how_to"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="7dp"
+              android:gravity="center"
+              android:background="@color/transparent"
+              android:text="@string/splash_how_to"
+              android:textSize="12sp"
+              android:textColor="@color/white">
+    </TextView>
+
+</LinearLayout>

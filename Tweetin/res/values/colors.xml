@@ -2,4 +2,15 @@
 
 <resources>
 
+    <color name="white">@android:color/white</color>
+    <color name="black">@android:color/black</color>
+    <color name="grey">#F5F5F5</color>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="background">@android:color/background_light</color>
+
+    <color name="text">#212121</color>
+    <color name="secondary_text">#727272</color>
+    <color name="hint">#B8B8B8</color>
+    <color name="dividers">#DADADA</color>
+
 </resources>
