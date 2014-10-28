@@ -1,30 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
 
-    <!-- BaseTheme -->
-    <declare-styleable name="BaseTheme">
-        <attr name="actionBarOverlayTopOffset" format="dimension" />
-        <attr name="actionBarInsetStart" format="dimension" />
-        <attr name="spinnerBarInsetStart" format="dimension" />
-        <attr name="selectableItemBackgroundBorderless" format="dimension" />
-        <attr name="popupItemBackground" format="dimension" />
-    </declare-styleable>
+<resources>
 
     <!-- CircleImageView -->
     <declare-styleable name="CircleImageView">
         <attr name="border_width" format="dimension" />
         <attr name="border_color" format="color" />
-    </declare-styleable>
-
-    <!-- FloatingActionButton -->
-    <declare-styleable name="FloatingActionButton">
-        <attr name="fab_colorPressed" format="color"/>
-        <attr name="fab_colorNormal" format="color"/>
-        <attr name="fab_shadow" format="boolean"/>
-        <attr name="fab_type" format="enum">
-            <enum name="normal" value="0"/>
-            <enum name="mini" value="1"/>
-        </attr>
     </declare-styleable>
 
 </resources>

@@ -3,7 +3,7 @@ Tweetin
 
 Yet another Twitter unofficial client.
 
-**UNDER DEVELOPMENT.**
+**REBUILD!!!**
 
 ## How to use the source code?
 

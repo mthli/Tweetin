@@ -1,88 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="io.github.mthli.Tweetin"
           android:versionCode="1"
           android:versionName="1.0">
-
-    <!-- SDK -->
-    <uses-sdk android:minSdkVersion="16" />
-
-    <!-- Permission -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <!-- Application -->
-    <application android:label="@string/app_name"
-                 android:icon="@drawable/ic_launcher"
-                 android:allowBackup="true"
-                 android:largeHeap="true">
-
-        <!-- SplashActivity -->
-        <activity android:name=".Splash.SplashActivity"
-                  android:label="@string/splash_label"
-                  android:icon="@drawable/ic_launcher"
-                  android:theme="@style/SplashActivityTheme"
-                  android:windowSoftInputMode="adjustPan|stateHidden"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
+    <uses-sdk android:minSdkVersion="20"/>
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+        <activity android:name=".Main.MainActivity"
+                  android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <!-- MainActivity -->
-        <activity android:name=".Main.MainActivity"
-                  android:label="@string/main_label"
-                  android:icon="@drawable/ic_twitter_bird"
-                  android:theme="@style/MainActivityTheme"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-
-        <!-- PostActivity -->
-        <activity android:name=".Post.PostActivity"
-                  android:label="@string/post_label"
-                  android:icon="@drawable/ic_twitter_bird"
-                  android:theme="@style/PostActivityTheme"
-                  android:windowSoftInputMode="adjustResize|stateAlwaysVisible"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-
-        <!-- DetailActivity -->
-        <activity android:name=".Detail.DetailActivity"
-                  android:label="@string/detail_label"
-                  android:icon="@drawable/ic_twitter_bird"
-                  android:theme="@style/DetailActivityTheme"
-                  android:windowSoftInputMode="adjustResize"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-
-        <!-- MentionActivity -->
-        <activity android:name=".Mention.MentionActivity"
-                  android:label="@string/mention_label"
-                  android:icon="@drawable/ic_twitter_bird"
-                  android:theme="@style/MentionActivityTheme"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-
-        <!-- ProfileActivity -->
-        <activity android:name=".Profile.ProfileActivity"
-                  android:label="@string/profile_label"
-                  android:icon="@drawable/ic_twitter_bird"
-                  android:theme="@style/ProfileActivityTheme"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-
-        <!-- AboutActivity -->
-        <activity android:name=".About.AboutActivity"
-                  android:label="@string/about_label"
-                  android:icon="@drawable/ic_twitter_bird"
-                  android:theme="@style/AboutActivityTheme"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-
     </application>
 </manifest>

@@ -43,7 +43,7 @@ public class ProgressFragment extends Fragment {
     public ProgressFragment() {
     }
 
-    /*
+    /**
      * Provide default implementation to return a simple view.  Subclasses
      * can override to replace with their own layout.  If doing so, the
      * returned view hierarchy <em>must</em> have a progress container  whose id
