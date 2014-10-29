@@ -3,10 +3,11 @@
 <resources>
 
     <color name="white">@android:color/white</color>
-    <color name="black">@android:color/black</color>
     <color name="grey">#F5F5F5</color>
+    <color name="black">@android:color/black</color>
     <color name="transparent">@android:color/transparent</color>
-    <color name="background">@android:color/background_light</color>
+
+    <!-- Do something with SwipeRefreshLayout -->
 
     <color name="text">#212121</color>
     <color name="secondary_text">#727272</color>

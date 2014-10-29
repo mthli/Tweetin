@@ -4,13 +4,17 @@
 
     <!-- SplashActivityTheme -->
     <style name="SplashActivityTheme" parent="android:Theme.DeviceDefault.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:editTextBackground">@drawable/edittext</item>
         <item name="android:editTextStyle">@style/EditTextStyle</item>
     </style>
     <!-- EditTextStyle -->
     <style name="EditTextStyle" parent="android:Widget.Holo.Light.EditText">
         <item name="android:background">@drawable/edittext</item>
+    </style>
+
+    <!-- MainActivityTheme -->
+    <style name="MainActivityTheme" parent="android:Theme.DeviceDefault.Light.NoActionBar">
+        <!-- Do nothing -->
     </style>
 
 </resources>

@@ -11,6 +11,8 @@
     <string name="sp_consumer_secret">SP_CONSUMER_SECRET</string>
     <string name="sp_access_token">SP_ACCESS_TOKEN</string>
     <string name="sp_access_token_secret">SP_ACCESS_TOKEN_SECRET</string>
+    <string name="sp_is_first_sign_in">SP_IS_FIRST_SIGN_IN</string>
+    <string name="sp_latest_mention_id">SP_LATEST_MENTION_ID</string>
 
     <!-- Splash -->
     <string name="splash_tweetin">SPLASH_TWEETIN</string>
@@ -47,5 +49,11 @@
     <string name="splash_toast_get_access_token_failed">
         Get AccessToken failed.
     </string>
+
+    <!-- Tweet -->
+    <string name="tweet_date_format">
+        HH:mm MM.dd
+    </string>
+    <string name="tweet_retweet_by_me">Me</string>
 
 </resources>

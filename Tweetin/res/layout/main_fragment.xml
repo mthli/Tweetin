@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+    <!-- Do something -->
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/main_swipe_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="7dp">
+
+        <!-- Do something -->
+        <com.etiennelawlor.quickreturn.library.views.NotifyingListView
+                android:id="@+id/main_fragment_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/transparent">
+        </com.etiennelawlor.quickreturn.library.views.NotifyingListView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</FrameLayout>

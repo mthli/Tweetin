@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.*;
+import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.R;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -201,8 +203,13 @@ public class SplashActivity extends Activity {
         editor = preferences.edit();
         long useId = preferences.getLong(getString(R.string.sp_use_id), 0);
         if (useId > 0) {
-            /* Do something with intent */
-            System.out.println("OOOOOOOOOOOOOOOOOOOO");
+            editor.putBoolean(
+                    getString(R.string.sp_is_first_sign_in),
+                    false
+            ).commit();
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         final EditText conKeyEdit = (EditText) findViewById(R.id.splash_consumer_key);
@@ -260,8 +267,13 @@ public class SplashActivity extends Activity {
                     case GET_ACCESS_TOKEN_SUCCESSFUL:
                         progressDialog.hide();
                         progressDialog.dismiss();
-                        /* Do something with intent */
-                        System.out.println("XXXXXXXXXXXXXXXXXXX");
+                        editor.putBoolean(
+                                getString(R.string.sp_is_first_sign_in),
+                                true
+                        ).commit();
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
                         break;
                     case GET_ACCESS_TOKEN_FAILED:
                         progressDialog.hide();
