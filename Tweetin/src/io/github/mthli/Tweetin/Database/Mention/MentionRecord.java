@@ -1,6 +1,39 @@
-package io.github.mthli.Tweetin.Tweet;
+package io.github.mthli.Tweetin.Database.Mention;
 
-public class Tweet {
+public class MentionRecord {
+    public static final String TABLE = "MENTION";
+    public static final String STATUS_ID = "STATUS_ID";
+    public static final String REPLY_TO_STATUS_ID = "REPLY_TO_STATUS_ID";
+    public static final String USER_ID = "USER_ID";
+    public static final String RETWEETED_BY_USER_ID = "RETWEETED_BY_USER_ID";
+    public static final String AVATAR_URL = "AVATAR_URL";
+    public static final String CREATED_AT = "CREATED_AT";
+    public static final String NAME = "NAME";
+    public static final String SCREEN_NAME = "SCREEN_NAME";
+    public static final String PROTECT = "PROTECT";
+    public static final String TEXT = "TEXT";
+    public static final String CHECK_IN = "CHECK_IN";
+    public static final String RETWEET = "RETWEET";
+    public static final String RETWEETED_BY_USER_NAME = "REWTEETED_BY_USER_NAME";
+
+    public static final String CREATE_SQL = "CREATE TABLE "
+            + TABLE
+            + " ("
+            + " " + STATUS_ID + " integer,"
+            + " " + REPLY_TO_STATUS_ID + " integer,"
+            + " " + USER_ID + " integer,"
+            + " " + RETWEETED_BY_USER_ID + " integer,"
+            + " " + AVATAR_URL + " text,"
+            + " " + CREATED_AT + " text,"
+            + " " + NAME + " text,"
+            + " " + SCREEN_NAME + " text,"
+            + " " + PROTECT + " text,"
+            + " " + TEXT + " text,"
+            + " " + CHECK_IN + " text,"
+            + " " + RETWEET + " text,"
+            + " " + RETWEETED_BY_USER_NAME + " text"
+            + ")";
+
     private long statusId;
     private long replyToStatusId;
     private long userId;
@@ -9,13 +42,13 @@ public class Tweet {
     private String createdAt;
     private String name;
     private String screenName;
-    private boolean protect;
+    private String protect;
     private String text;
     private String checkIn;
-    private boolean retweet;
+    private String retweet;
     private String retweetedByUserName;
 
-    public Tweet() {
+    public MentionRecord() {
         this.statusId = -1;
         this.replyToStatusId = -1;
         this.userId = -1;
@@ -24,10 +57,10 @@ public class Tweet {
         this.createdAt = null;
         this.name = null;
         this.screenName = null;
-        this.protect = false;
+        this.protect = null;
         this.text = null;
         this.checkIn = null;
-        this.retweet = false;
+        this.retweet = null;
         this.retweetedByUserName = null;
     }
 
@@ -88,10 +121,14 @@ public class Tweet {
     }
 
     public boolean isProtect() {
-        return protect;
+        return protect.equals("true");
     }
     public void setProtect(boolean protect) {
-        this.protect = protect;
+        if (protect) {
+            this.protect = "true";
+        } else {
+            this.protect = "false";
+        }
     }
 
     public String getText() {
@@ -109,10 +146,14 @@ public class Tweet {
     }
 
     public boolean isRetweet() {
-        return retweet;
+        return retweet.equals("true");
     }
     public void setRetweet(boolean retweet) {
-        this.retweet = retweet;
+        if (retweet) {
+            this.retweet = "true";
+        } else {
+            this.retweet = "false";
+        }
     }
 
     public String getRetweetedByUserName() {

@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Tweet;
+package io.github.mthli.Tweetin.Tweet.Base;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Tweet.Base.Tweet;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
