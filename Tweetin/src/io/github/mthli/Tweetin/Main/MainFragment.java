@@ -10,6 +10,7 @@ import com.etiennelawlor.quickreturn.library.views.NotifyingListView;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.Base.Tweet;
 import io.github.mthli.Tweetin.Tweet.Base.TweetAdapter;
+import io.github.mthli.Tweetin.Tweet.Timeline.TimelineInitTask;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
@@ -18,20 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragment extends ProgressFragment {
-
-    private Twitter twitter;
-    private long useId;
-    public Twitter getTwitter() {
-        return twitter;
-    }
-    public long getUseId() {
-        return useId;
-    }
-
-    private SharedPreferences sharedPreferences;
-    public SharedPreferences getSharedPreferences() {
-        return sharedPreferences;
-    }
 
     private View view;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -47,6 +34,22 @@ public class MainFragment extends ProgressFragment {
     public TweetAdapter getTweetAdapter() {
         return tweetAdapter;
     }
+
+    private SharedPreferences sharedPreferences;
+    public SharedPreferences getSharedPreferences() {
+        return sharedPreferences;
+    }
+
+    private Twitter twitter;
+    private long useId;
+    public Twitter getTwitter() {
+        return twitter;
+    }
+    public long getUseId() {
+        return useId;
+    }
+
+    private TimelineInitTask timelineInitTask;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -98,8 +101,17 @@ public class MainFragment extends ProgressFragment {
         /* Do something */
         NotifyingListView listView = (NotifyingListView) view
                 .findViewById(R.id.main_fragment_listview);
+        tweetAdapter = new TweetAdapter(
+                view.getContext(),
+                R.layout.tweet,
+                tweetList
+        );
+        listView.setAdapter(tweetAdapter);
+        tweetAdapter.notifyDataSetChanged();
 
         /* Do something */
+        timelineInitTask = new TimelineInitTask(MainFragment.this);
+        timelineInitTask.execute();
     }
 
     /* Do something */

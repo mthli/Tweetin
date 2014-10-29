@@ -56,4 +56,9 @@
     </string>
     <string name="tweet_retweet_by_me">Me</string>
 
+    <!-- Timeline -->
+    <string name="timeline_error_get_timeline_failed">
+        Get timeline failed, pull to refresh.
+    </string>
+
 </resources>
