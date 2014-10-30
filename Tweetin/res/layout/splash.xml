@@ -7,7 +7,7 @@
               android:background="@color/black">
 
     <ImageView android:id="@+id/splash_tweetin"
-               android:contentDescription="@string/splash_tweetin"
+               android:contentDescription="@null"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:paddingTop="100dp"

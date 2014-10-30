@@ -34,10 +34,17 @@
 
         <!-- TimelineActivity -->
         <activity android:name=".Timeline.TimelineActivity"
-                  android:label="@string/app_name"
                   android:theme="@style/TimelineActivityTheme"
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
+
+        <!-- PostActivity -->
+        <activity android:name=".Post.PostActivity"
+                  android:theme="@style/PostActivityTheme"
+                  android:windowSoftInputMode="adjustResize|stateAlwaysVisible"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
+
 
     </application>
 </manifest>

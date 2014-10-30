@@ -7,6 +7,9 @@
     <color name="black">@android:color/black</color>
     <color name="transparent">@android:color/transparent</color>
 
+    <color name="red">#D9534F</color>
+    <color name="blue">#5bC0DE</color>
+
     <color name="text">#212121</color>
     <color name="secondary_text">#727272</color>
     <color name="hint">#B8B8B8</color>

@@ -15,7 +15,6 @@
     <string name="sp_latest_mention_id">SP_LATEST_MENTION_ID</string>
 
     <!-- Splash -->
-    <string name="splash_tweetin">SPLASH_TWEETIN</string>
     <string name="splash_description">
         Yet another Twitter unofficial client.
     </string>
@@ -68,6 +67,21 @@
     <!-- Timeline -->
     <string name="timeline_error_get_timeline_failed">
         Get timeline failed, pull to refresh.
+    </string>
+
+    <!-- Post -->
+    <string name="post_flag">POST_FLAG</string>
+    <string name="post_hint">
+        What\'s on your mind?
+    </string>
+    <string name="post_ing">
+        Posting&#8230;
+    </string>
+    <string name="post_successful">
+        Post successful.
+    </string>
+    <string name="post_failed">
+        Post failed.
     </string>
 
 </resources>

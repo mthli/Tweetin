@@ -17,4 +17,9 @@
         <!-- Do nothing -->
     </style>
 
+    <!-- PostActivity -->
+    <style name="PostActivityTheme" parent="android:Theme.DeviceDefault.Light.NoActionBar">
+        <!-- Do nothing -->
+    </style>
+
 </resources>

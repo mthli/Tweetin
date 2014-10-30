@@ -57,7 +57,7 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
         builder.setContentText(oldTweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
-        notificationManager.notify(Flag.POST_ID, notification);
+        notificationManager.notify(Flag.POST_NOTIFICATION_ID, notification);
     }
 
     @Override
@@ -95,8 +95,8 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             builder.setContentText(oldTweet.getText());
             Notification notification = builder.build();
             notification.flags = Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(Flag.POST_ID, notification);
-            notificationManager.cancel(Flag.POST_ID);
+            notificationManager.notify(Flag.POST_NOTIFICATION_ID, notification);
+            notificationManager.cancel(Flag.POST_NOTIFICATION_ID);
         } catch (Exception e) {
             /* Do something with Icon */
             builder.setTicker(
@@ -108,7 +108,7 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             builder.setContentText(oldTweet.getText());
             Notification notification = builder.build();
             notification.flags = Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(Flag.POST_ID, notification);
+            notificationManager.notify(Flag.POST_NOTIFICATION_ID, notification);
 
             return false;
         }

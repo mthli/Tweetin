@@ -1,6 +1,7 @@
 package io.github.mthli.Tweetin.Timeline;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
+import io.github.mthli.Tweetin.Post.PostActivity;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
@@ -161,7 +164,14 @@ public class TimelineFragment extends ProgressFragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* Do something */
+                Intent intent = new Intent(getActivity(), PostActivity.class);
+                intent.putExtra(
+                        getString(R.string.post_flag),
+                        Flag.POST_ORIGINAL
+                );
+                ActivityAnim anim = new ActivityAnim();
+                startActivity(intent);
+                anim.fade(getActivity());
             }
         });
         floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
