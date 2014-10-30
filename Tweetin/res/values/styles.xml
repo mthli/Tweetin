@@ -12,8 +12,8 @@
         <item name="android:background">@drawable/edittext</item>
     </style>
 
-    <!-- MainActivityTheme -->
-    <style name="MainActivityTheme" parent="android:Theme.DeviceDefault.Light.NoActionBar">
+    <!-- TimelineActivityTheme -->
+    <style name="TimelineActivityTheme" parent="android:Theme.DeviceDefault.Light.NoActionBar">
         <!-- Do nothing -->
     </style>
 

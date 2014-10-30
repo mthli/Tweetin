@@ -47,8 +47,8 @@ public class MentionAction {
         } else {
             values.put(MentionRecord.PROTECT, "false");
         }
-        values.put(MentionRecord.TEXT, record.getText());
         values.put(MentionRecord.CHECK_IN, record.getCheckIn());
+        values.put(MentionRecord.TEXT, record.getText());
         if (record.isRetweet()) {
             values.put(MentionRecord.RETWEET, "true");
         } else {
@@ -101,8 +101,8 @@ public class MentionAction {
         record.setProtect(
                 cursor.getString(8).equals("true")
         );
-        record.setText(cursor.getString(9));
-        record.setCheckIn(cursor.getString(10));
+        record.setCheckIn(cursor.getString(9));
+        record.setText(cursor.getString(10));
         record.setRetweet(
                 cursor.getString(11).equals("true")
         );
@@ -124,8 +124,8 @@ public class MentionAction {
                         MentionRecord.NAME,
                         MentionRecord.SCREEN_NAME,
                         MentionRecord.PROTECT,
-                        MentionRecord.TEXT,
                         MentionRecord.CHECK_IN,
+                        MentionRecord.TEXT,
                         MentionRecord.RETWEET,
                         MentionRecord.RETWEETED_BY_USER_NAME
                 },

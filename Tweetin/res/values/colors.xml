@@ -7,8 +7,6 @@
     <color name="black">@android:color/black</color>
     <color name="transparent">@android:color/transparent</color>
 
-    <!-- Do something with SwipeRefreshLayout -->
-
     <color name="text">#212121</color>
     <color name="secondary_text">#727272</color>
     <color name="hint">#B8B8B8</color>

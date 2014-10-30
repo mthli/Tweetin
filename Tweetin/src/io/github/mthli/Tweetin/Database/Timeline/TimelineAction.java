@@ -47,8 +47,8 @@ public class TimelineAction {
         } else {
             values.put(TimelineRecord.PROTECT, "false");
         }
-        values.put(TimelineRecord.TEXT, record.getText());
         values.put(TimelineRecord.CHECK_IN, record.getCheckIn());
+        values.put(TimelineRecord.TEXT, record.getText());
         if (record.isRetweet()) {
             values.put(TimelineRecord.RETWEET, "true");
         } else {
@@ -100,8 +100,8 @@ public class TimelineAction {
         record.setProtect(
                 cursor.getString(8).equals("true")
         );
-        record.setText(cursor.getString(9));
-        record.setCheckIn(cursor.getString(10));
+        record.setCheckIn(cursor.getString(9));
+        record.setText(cursor.getString(10));
         record.setRetweet(
                 cursor.getString(11).equals("true")
         );
@@ -123,8 +123,8 @@ public class TimelineAction {
                         TimelineRecord.NAME,
                         TimelineRecord.SCREEN_NAME,
                         TimelineRecord.PROTECT,
-                        TimelineRecord.TEXT,
                         TimelineRecord.CHECK_IN,
+                        TimelineRecord.TEXT,
                         TimelineRecord.RETWEET,
                         TimelineRecord.RETWEETED_BY_USER_NAME
                 },

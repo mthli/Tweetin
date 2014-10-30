@@ -32,10 +32,10 @@
             </intent-filter>
         </activity>
 
-        <!-- MainActivity -->
-        <activity android:name=".Main.MainActivity"
+        <!-- TimelineActivity -->
+        <activity android:name=".Timeline.TimelineActivity"
                   android:label="@string/app_name"
-                  android:theme="@style/MainActivityTheme"
+                  android:theme="@style/TimelineActivityTheme"
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 

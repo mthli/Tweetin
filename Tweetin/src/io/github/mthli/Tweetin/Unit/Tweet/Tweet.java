@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Tweet.Base;
+package io.github.mthli.Tweetin.Unit.Tweet;
 
 public class Tweet {
     private long statusId;
@@ -10,8 +10,8 @@ public class Tweet {
     private String name;
     private String screenName;
     private boolean protect;
-    private String text;
     private String checkIn;
+    private String text;
     private boolean retweet;
     private String retweetedByUserName;
 
@@ -25,8 +25,8 @@ public class Tweet {
         this.name = null;
         this.screenName = null;
         this.protect = false;
-        this.text = null;
         this.checkIn = null;
+        this.text = null;
         this.retweet = false;
         this.retweetedByUserName = null;
     }
@@ -94,18 +94,18 @@ public class Tweet {
         this.protect = protect;
     }
 
-    public String getText() {
-        return text;
-    }
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public String getCheckIn() {
         return checkIn;
     }
     public void setCheckIn(String checkIn) {
         this.checkIn = checkIn;
+    }
+
+    public String getText() {
+        return text;
+    }
+    public void setText(String text) {
+        this.text = text;
     }
 
     public boolean isRetweet() {

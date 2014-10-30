@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Tweet.Base;
+package io.github.mthli.Tweetin.Unit.Tweet;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Tweet.Base.Tweet;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -105,15 +104,21 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         holder.screenName.setText(tweet.getScreenName());
         if (tweet.isProtect()) {
             holder.protect.setVisibility(View.VISIBLE);
+        } else {
+            holder.protect.setVisibility(View.GONE);
         }
-        holder.text.setText(tweet.getText());
         if (tweet.getCheckIn() != null) {
             holder.checkIn.setText(tweet.getCheckIn());
             holder.checkIn.setVisibility(View.VISIBLE);
+        } else {
+            holder.checkIn.setVisibility(View.GONE);
         }
+        holder.text.setText(tweet.getText());
         if (tweet.isRetweet()) {
             holder.retweetedByUserName.setText(tweet.getRetweetedByUserName());
             holder.retweetedByUserName.setVisibility(View.VISIBLE);
+        } else {
+            holder.retweetedByUserName.setVisibility(View.GONE);
         }
 
         return view;

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/timeline_swipe_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="7dp">
+
+        <ListView android:id="@+id/timeline_fragment_listview"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:divider="@color/transparent"
+                  android:dividerHeight="1dp"
+                  android:scrollbars="none"
+                  android:scrollingCache="true"
+                  android:choiceMode="singleChoice"
+                  android:drawSelectorOnTop="true">
+        </ListView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/timeline_floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_action_add"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/grey"
+            app:fab_shadow="true"
+            app:fab_type="mini">
+    </com.melnykov.fab.FloatingActionButton>
+
+</FrameLayout>

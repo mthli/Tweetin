@@ -29,7 +29,7 @@
                   android:visibility="gone">
 
         <!-- Do something -->
-        <ProgressBar style="?android:attr/progressBarStyleLargeInverse"
+        <ProgressBar style="?android:attr/progressBarStyleInverse"
                      android:id="@android:id/progress"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content">
@@ -46,7 +46,8 @@
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:gravity="center"
-                  android:textAppearance="?android:attr/textAppearanceLarge">
+                  android:textColor="@color/hint"
+                  android:textSize="14sp">
         </TextView>
 
     </FrameLayout>
