@@ -38,9 +38,6 @@ public class TimelineFragment extends ProgressFragment {
     public SwipeRefreshLayout getSwipeRefreshLayout() {
         return swipeRefreshLayout;
     }
-    public FloatingActionButton getFloatingActionButton() {
-        return floatingActionButton;
-    }
 
     private List<Tweet> tweetList = new ArrayList<Tweet>();
     private TweetAdapter tweetAdapter;
@@ -78,7 +75,15 @@ public class TimelineFragment extends ProgressFragment {
         return false;
     }
     public void cancelAllTask() {
-        /* Do something */
+        if (timelineInitTask != null && timelineInitTask.getStatus() == AsyncTask.Status.RUNNING) {
+            timelineInitTask.cancel(true);
+        }
+        if (timelineMoreTask != null && timelineMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
+            timelineMoreTask.cancel(true);
+        }
+        if (timelineRetweetTask != null && timelineRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
+            timelineRetweetTask.cancel(true);
+        }
     }
 
     @Override
@@ -141,7 +146,11 @@ public class TimelineFragment extends ProgressFragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                /* Do something */
+                timelineInitTask = new TimelineInitTask(
+                        TimelineFragment.this,
+                        true
+                );
+                timelineInitTask.execute();
             }
         });
 

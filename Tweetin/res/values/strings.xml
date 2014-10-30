@@ -55,6 +55,15 @@
         HH:mm MM.dd
     </string>
     <string name="tweet_retweet_by_me">Me</string>
+    <string name="tweet_rewteet_ing">
+        Retweeting&#8230;
+    </string>
+    <string name="tweet_retweet_successful">
+        Retweet successful.
+    </string>
+    <string name="tweet_retweet_failed">
+        Retweet failed.
+    </string>
 
     <!-- Timeline -->
     <string name="timeline_error_get_timeline_failed">
