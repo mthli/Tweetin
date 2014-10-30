@@ -2,6 +2,7 @@ package io.github.mthli.Tweetin.Timeline;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -23,7 +24,9 @@ import java.util.List;
 
 public class TimelineFragment extends ProgressFragment {
     private View view;
+
     private int refreshFlag = Flag.TIMELINE_TASK_IDLE;
+    private boolean isMoveToBottom = false;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton floatingActionButton;
     public int getRefreshFlag() {
@@ -65,6 +68,18 @@ public class TimelineFragment extends ProgressFragment {
     private TimelineInitTask timelineInitTask;
     private TimelineMoreTask timelineMoreTask;
     private TimelineRetweetTask timelineRetweetTask;
+    public boolean isSomeTaskRunning() {
+        if (
+                (timelineInitTask != null && timelineInitTask.getStatus() == AsyncTask.Status.RUNNING)
+                || (timelineMoreTask != null && timelineMoreTask.getStatus() == AsyncTask.Status.RUNNING)
+        ) {
+            return true;
+        }
+        return false;
+    }
+    public void cancelAllTask() {
+        /* Do something */
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -174,12 +189,25 @@ public class TimelineFragment extends ProgressFragment {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                /* Do something */
+                if (previous < firstVisibleItem) {
+                    isMoveToBottom = true;
+                    floatingActionButton.hide();
+                }
+                if (previous > firstVisibleItem) {
+                    isMoveToBottom = false;
+                    floatingActionButton.show();
+                }
+                previous = firstVisibleItem;
+
+                if (totalItemCount == firstVisibleItem + visibleItemCount) {
+                    if (!isSomeTaskRunning() && isMoveToBottom) {
+                        timelineMoreTask = new TimelineMoreTask(TimelineFragment.this);
+                        timelineMoreTask.execute();
+                    }
+                }
             }
         });
 
-
-        /* Do something */
         timelineInitTask = new TimelineInitTask(
                 TimelineFragment.this,
                 false

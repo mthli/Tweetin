@@ -4,8 +4,11 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
+import twitter4j.Paging;
+import twitter4j.Place;
 import twitter4j.Twitter;
 
 import java.text.SimpleDateFormat;
@@ -28,14 +31,34 @@ public class TimelineMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        /* Do something */
+        if (timelineFragment.getRefreshFlag() == Flag.TIMELINE_TASK_RUNNING) {
+            onCancelled();
+        } else {
+            timelineFragment.setRefreshFlag(Flag.TIMELINE_TASK_RUNNING);
+        }
+
+        context = timelineFragment.getContentView().getContext();
+        twitter = timelineFragment.getTwitter();
+        useId = timelineFragment.getUseId();
+
+        tweetAdapter = timelineFragment.getTweetAdapter();
+        tweetList = timelineFragment.getTweetList();
+
+        swipeRefreshLayout = timelineFragment.getSwipeRefreshLayout();
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     private List<twitter4j.Status> statusList;
     private static int count = 2;
     @Override
     protected Boolean doInBackground(Void... params) {
-        /* Do something */
+        try {
+            Paging paging = new Paging(count, 40);
+            statusList = twitter.getHomeTimeline(paging);
+            count++;
+        } catch (Exception e) {
+            return false;
+        }
 
         if (isCancelled()) {
             return false;
@@ -59,10 +82,79 @@ public class TimelineMoreTask extends AsyncTask<Void, Integer, Boolean> {
             SimpleDateFormat format = new SimpleDateFormat(
                     context.getString(R.string.tweet_date_format)
             );
-            /* Do something */
-        } else {
-            /* Do something */
+            for (twitter4j.Status status : statusList) {
+                Tweet tweet = new Tweet();
+                if (status.isRetweet()) {
+                    tweet.setStatusId(status.getId());
+                    tweet.setReplyToStatusId(
+                            status.getRetweetedStatus().getInReplyToStatusId()
+                    );
+                    tweet.setUserId(
+                            status.getRetweetedStatus().getUser().getId()
+                    );
+                    tweet.setRetweetedByUserId(status.getUser().getId());
+                    tweet.setAvatarURL(
+                            status.getRetweetedStatus().getUser().getBiggerProfileImageURL()
+                    );
+                    tweet.setCreatedAt(
+                            format.format(status.getRetweetedStatus().getCreatedAt())
+                    );
+                    tweet.setName(
+                            status.getRetweetedStatus().getUser().getName()
+                    );
+                    tweet.setScreenName(
+                            "@" + status.getRetweetedStatus().getUser().getScreenName()
+                    );
+                    tweet.setProtect(
+                            status.getRetweetedStatus().getUser().isProtected()
+                    );
+                    Place place = status.getRetweetedStatus().getPlace();
+                    if (place != null) {
+                        tweet.setCheckIn(place.getFullName());
+                    } else {
+                        tweet.setCheckIn(null);
+                    }
+                    tweet.setText(
+                            status.getRetweetedStatus().getText()
+                    );
+                    tweet.setRetweet(true);
+                    tweet.setRetweetedByUserName(
+                            status.getUser().getName()
+                    );
+                } else {
+                    tweet.setStatusId(status.getId());
+                    tweet.setReplyToStatusId(status.getInReplyToStatusId());
+                    tweet.setUserId(status.getUser().getId());
+                    tweet.setRetweetedByUserId(-1);
+                    tweet.setAvatarURL(status.getUser().getBiggerProfileImageURL());
+                    tweet.setCreatedAt(
+                            format.format(status.getCreatedAt())
+                    );
+                    tweet.setName(status.getUser().getName());
+                    tweet.setScreenName("@" + status.getUser().getScreenName());
+                    tweet.setProtect(status.getUser().isProtected());
+                    Place place = status.getPlace();
+                    if (place != null) {
+                        tweet.setCheckIn(place.getFullName());
+                    } else {
+                        tweet.setCheckIn(null);
+                    }
+                    tweet.setText(status.getText());
+                    tweet.setRetweet(false);
+                    tweet.setRetweetedByUserName(null);
+                }
+                if (status.isRetweetedByMe() || status.isRetweeted()) {
+                    tweet.setRetweetedByUserId(useId);
+                    tweet.setRetweet(true);
+                    tweet.setRetweetedByUserName(
+                            context.getString(R.string.tweet_retweet_by_me)
+                    );
+                }
+                tweetList.add(tweet);
+            }
+            tweetAdapter.notifyDataSetChanged();
         }
-        /* Do something */
+        swipeRefreshLayout.setRefreshing(false);
+        timelineFragment.setRefreshFlag(Flag.TIMELINE_TASK_IDLE);
     }
 }
