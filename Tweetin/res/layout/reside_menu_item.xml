@@ -8,19 +8,19 @@
               android:paddingTop="15dp"
               android:paddingBottom="15dp">
 
-    <ImageView android:contentDescription="@null"
+    <ImageView android:id="@+id/iv_icon"
+               android:contentDescription="@null"
                android:layout_width="30dp"
                android:layout_height="30dp"
-               android:scaleType="centerCrop"
-               android:id="@+id/iv_icon">
+               android:scaleType="centerCrop">
     </ImageView>
 
-    <TextView android:layout_width="match_parent"
+    <TextView android:id="@+id/tv_title"
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:textColor="@android:color/white"
               android:textSize="18sp"
-              android:layout_marginLeft="10dp"
-              android:id="@+id/tv_title">
+              android:layout_marginLeft="10dp">
     </TextView>
 
 </LinearLayout>

@@ -16,7 +16,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.*;
-import io.github.mthli.Main.MainActivity;
+import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.R;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;

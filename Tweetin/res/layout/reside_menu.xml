@@ -26,12 +26,12 @@
                 android:layout_width="180dp"
                 android:layout_height="match_parent">
 
-        <LinearLayout
-                android:id="@+id/layout_left_menu"
-                android:orientation="vertical"
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+        <LinearLayout android:id="@+id/layout_left_menu"
+                      android:orientation="vertical"
+                      android:layout_gravity="center_vertical"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="5dp">
         </LinearLayout>
 
     </ScrollView>
@@ -48,6 +48,7 @@
                       android:layout_gravity="center_vertical"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
+                      android:layout_marginTop="5dp"
                       android:gravity="right">
         </LinearLayout>
 

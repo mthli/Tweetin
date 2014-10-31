@@ -33,8 +33,8 @@
         </activity>
 
         <!-- MainActivity -->
-        <activity android:name="io.github.mthli.Main.MainActivity"
-                  android:theme="@style/TimelineActivityTheme"
+        <activity android:name=".Main.MainActivity"
+                  android:theme="@style/MainActivityTheme"
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 

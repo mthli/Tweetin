@@ -28,7 +28,6 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
     private List<Tweet> tweetList;
     private List<TimelineRecord> timelineRecordList = new ArrayList<TimelineRecord>();
 
-    private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isFirstSignIn;
@@ -57,7 +56,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
         tweetAdapter = timelineFragment.getTweetAdapter();
         tweetList = timelineFragment.getTweetList();
 
-        sharedPreferences = timelineFragment.getSharedPreferences();
+        SharedPreferences sharedPreferences = timelineFragment.getSharedPreferences();
         editor = sharedPreferences.edit();
         swipeRefreshLayout = timelineFragment.getSwipeRefreshLayout();
 
@@ -243,8 +242,8 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweetAdapter.notifyDataSetChanged();
                 timelineFragment.setContentShown(true);
             } else {
-                swipeRefreshLayout.setRefreshing(false);
                 tweetAdapter.notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             /* Do something with Mention */
