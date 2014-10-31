@@ -22,7 +22,7 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     private List<Tweet> tweetList;
     private Tweet oldTweet;
     private Tweet newTweet;
-    private int position = 0;
+    private int position;
 
     private NotificationManager notificationManager;
     private Notification.Builder builder;

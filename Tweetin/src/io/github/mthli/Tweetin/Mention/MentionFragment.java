@@ -2,6 +2,7 @@ package io.github.mthli.Tweetin.Mention;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
+import io.github.mthli.Tweetin.Database.Mention.MentionAction;
+import io.github.mthli.Tweetin.Database.Mention.MentionRecord;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
@@ -22,6 +25,7 @@ import java.util.List;
 
 public class MentionFragment extends ProgressFragment {
     private View view;
+    public static boolean reload = false;
 
     private int refreshFlag = Flag.MENTION_TASK_IDLE;
     private boolean isMoveToBottom = false;
@@ -62,7 +66,27 @@ public class MentionFragment extends ProgressFragment {
     private MentionInitTask mentionInitTask;
     private MentionMoreTask mentionMoreTask;
     private MentionRetweetTask mentionRetweetTask;
-    /* Do something */
+    public boolean isSomeTaskRunning() {
+        if (
+                (mentionInitTask != null && mentionInitTask.getStatus() == AsyncTask.Status.RUNNING)
+                || (mentionMoreTask != null && mentionMoreTask.getStatus() == AsyncTask.Status.RUNNING)
+        ) {
+            return true;
+        }
+        return false;
+    }
+    public void cancelAllTask() {
+        if (mentionInitTask != null && mentionInitTask.getStatus() == AsyncTask.Status.RUNNING) {
+            mentionInitTask.cancel(true);
+        }
+        if (mentionMoreTask != null && mentionMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
+            mentionMoreTask.cancel(true);
+        }
+        if (mentionRetweetTask != null && mentionRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
+            mentionRetweetTask.cancel(true);
+        }
+    }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -151,16 +175,53 @@ public class MentionFragment extends ProgressFragment {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                /* Do something */
+                if (previous < firstVisibleItem) {
+                    isMoveToBottom = true;
+                }
+                if (previous > firstVisibleItem) {
+                    isMoveToBottom = false;
+                }
+                previous = firstVisibleItem;
+
+                if (totalItemCount == firstVisibleItem + visibleItemCount) {
+                    if (!isSomeTaskRunning() && isMoveToBottom) {
+                        mentionMoreTask = new MentionMoreTask(MentionFragment.this);
+                        mentionMoreTask.execute();
+                    }
+                }
             }
         });
 
-        /* Do something */
-        mentionInitTask = new MentionInitTask(
-                MentionFragment.this,
-                false
-        );
-        mentionInitTask.execute();
+        if (reload) {
+            MentionAction action = new MentionAction(view.getContext());
+            action.openDatabase(false);
+            List<MentionRecord> mentionRecordList = action.getMentionRecordList();
+            action.closeDatabase();
+            tweetList.clear();
+            for (MentionRecord record : mentionRecordList) {
+                Tweet tweet = new Tweet();
+                tweet.setStatusId(record.getStatusId());
+                tweet.setReplyToStatusId(record.getReplyToStatusId());
+                tweet.setUserId(record.getUserId());
+                tweet.setRetweetedByUserId(record.getRetweetedByUserId());
+                tweet.setAvatarURL(record.getAvatarURL());
+                tweet.setCreatedAt(record.getCreatedAt());
+                tweet.setName(record.getName());
+                tweet.setScreenName(record.getScreenName());
+                tweet.setProtect(record.isProtect());
+                tweet.setCheckIn(record.getCheckIn());
+                tweet.setText(record.getText());
+                tweet.setRetweet(record.isRetweet());
+                tweet.setRetweetedByUserName(record.getRetweetedByUserName());
+                tweetList.add(tweet);
+            }
+        } else {
+            mentionInitTask = new MentionInitTask(
+                    MentionFragment.this,
+                    false
+            );
+            mentionInitTask.execute();
+        }
     }
 
     /* Do something */

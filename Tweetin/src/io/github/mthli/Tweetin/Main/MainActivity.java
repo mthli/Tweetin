@@ -22,18 +22,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity {
-    private FragmentTransaction fragmentTransaction;
     private TimelineFragment timelineFragment;
     private MentionFragment mentionFragment;
     private FavoriteFragment favoriteFragment;
     private DiscoveryFragment discoveryFragment;
     private SettingFragment settingFragment;
-    private int currentFlag = Flag.IN_TIMELINE_FRAGMENT;
-    public int getCurrentFlag() {
-        return currentFlag;
+    private int fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
+    public int getFragmentFlag() {
+        return fragmentFlag;
     }
-    public void setCurrentFlag(int currentFlag) {
-        this.currentFlag = currentFlag;
+    public void setFragmentFlag(int fragmentFlag) {
+        this.fragmentFlag = fragmentFlag;
     }
 
     private ResideMenu resideMenu;
@@ -50,9 +49,14 @@ public class MainActivity extends FragmentActivity {
 
         initResideMenu();
 
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        timelineFragment = (TimelineFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.timeline_fragment);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction();
+        timelineFragment = new TimelineFragment();
+        fragmentTransaction.replace(
+                android.R.id.content,
+                timelineFragment
+        );
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -76,7 +80,7 @@ public class MainActivity extends FragmentActivity {
 
     /* Do something */
     private Fragment getCurrentFragment() {
-        switch (currentFlag) {
+        switch (fragmentFlag) {
             case Flag.IN_TIMELINE_FRAGMENT:
                 return timelineFragment;
             case Flag.IN_MENTION_FRAGMENT:
@@ -138,8 +142,15 @@ public class MainActivity extends FragmentActivity {
         timelineItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentFlag != Flag.IN_TIMELINE_FRAGMENT) {
-                    /* Do something */
+                if (fragmentFlag != Flag.IN_TIMELINE_FRAGMENT) {
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                            .beginTransaction();
+                    fragmentTransaction.replace(
+                            android.R.id.content,
+                            timelineFragment
+                    );
+                    fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
+                    fragmentTransaction.commit();
                     resideMenu.closeMenu();
                 } else {
                     resideMenu.closeMenu();
@@ -149,8 +160,16 @@ public class MainActivity extends FragmentActivity {
         mentionItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentFlag != Flag.IN_MENTION_FRAGMENT) {
-                    /* Do something */
+                if (fragmentFlag != Flag.IN_MENTION_FRAGMENT) {
+                    mentionFragment = new MentionFragment();
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                            .beginTransaction();
+                    fragmentTransaction.replace(
+                            android.R.id.content,
+                            mentionFragment
+                    );
+                    fragmentFlag = Flag.IN_MENTION_FRAGMENT;
+                    fragmentTransaction.commit();
                     resideMenu.closeMenu();
                 } else {
                     resideMenu.closeMenu();
@@ -160,8 +179,9 @@ public class MainActivity extends FragmentActivity {
         favoriteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentFlag != Flag.IN_FAVORITE_FRAGMENT) {
+                if(fragmentFlag != Flag.IN_FAVORITE_FRAGMENT) {
                     /* Do something */
+                    resideMenu.closeMenu();
                 } else {
                     resideMenu.closeMenu();
                 }
@@ -170,8 +190,9 @@ public class MainActivity extends FragmentActivity {
         discoveryItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentFlag != Flag.IN_DISCOVERY_FRAGMENT) {
+                if (fragmentFlag != Flag.IN_DISCOVERY_FRAGMENT) {
                     /* Do something */
+                    resideMenu.closeMenu();
                 } else {
                     resideMenu.closeMenu();
                 }
@@ -180,8 +201,9 @@ public class MainActivity extends FragmentActivity {
         settingItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentFlag != Flag.IN_SETTING_FRAGMENT) {
+                if (fragmentFlag != Flag.IN_SETTING_FRAGMENT) {
                     /* Do something */
+                    resideMenu.closeMenu();
                 } else {
                     resideMenu.closeMenu();
                 }

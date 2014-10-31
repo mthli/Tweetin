@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
+import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
+import io.github.mthli.Tweetin.Database.Timeline.TimelineRecord;
 import io.github.mthli.Tweetin.Post.PostActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
@@ -27,6 +29,7 @@ import java.util.List;
 
 public class TimelineFragment extends ProgressFragment {
     private View view;
+    public static boolean reload = false;
 
     private int refreshFlag = Flag.TIMELINE_TASK_IDLE;
     private boolean isMoveToBottom = false;
@@ -226,11 +229,37 @@ public class TimelineFragment extends ProgressFragment {
             }
         });
 
-        timelineInitTask = new TimelineInitTask(
-                TimelineFragment.this,
-                false
-        );
-        timelineInitTask.execute();
+        if (reload) {
+            TimelineAction action = new TimelineAction(view.getContext());
+            action.openDatabase(false);
+            List<TimelineRecord> timelineRecordList = action.getTimelineRecordList();
+            action.closeDatabase();
+            tweetList.clear();
+            for (TimelineRecord record : timelineRecordList) {
+                Tweet tweet = new Tweet();
+                tweet.setStatusId(record.getStatusId());
+                tweet.setReplyToStatusId(record.getReplyToStatusId());
+                tweet.setUserId(record.getUserId());
+                tweet.setRetweetedByUserId(record.getRetweetedByUserId());
+                tweet.setAvatarURL(record.getAvatarURL());
+                tweet.setCreatedAt(record.getCreatedAt());
+                tweet.setName(record.getName());
+                tweet.setScreenName(record.getScreenName());
+                tweet.setProtect(record.isProtect());
+                tweet.setCheckIn(record.getCheckIn());
+                tweet.setText(record.getText());
+                tweet.setRetweet(record.isRetweet());
+                tweet.setRetweetedByUserName(record.getRetweetedByUserName());
+                tweetList.add(tweet);
+            }
+            tweetAdapter.notifyDataSetChanged();
+        } else {
+            timelineInitTask = new TimelineInitTask(
+                    TimelineFragment.this,
+                    false
+            );
+            timelineInitTask.execute();
+        }
     }
 
     /* Do something */

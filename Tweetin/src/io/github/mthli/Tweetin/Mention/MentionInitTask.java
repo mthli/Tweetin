@@ -259,6 +259,7 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
                 swipeRefreshLayout.setRefreshing(false);
             }
         }
+        mentionFragment.reload = true;
         mentionFragment.setRefreshFlag(Flag.MENTION_TASK_IDLE);
     }
 }
