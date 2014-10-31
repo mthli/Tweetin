@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
+import com.special.ResideMenu.ResideMenu;
+import com.special.ResideMenu.ResideMenuItem;
 import io.github.mthli.Tweetin.Post.PostActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
@@ -232,6 +234,40 @@ public class TimelineFragment extends ProgressFragment {
                 false
         );
         timelineInitTask.execute();
+
+        ResideMenu resideMenu = new ResideMenu(view.getContext());
+        resideMenu.setShadowVisible(false);
+        resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+        resideMenu.setBackgroundColor(
+                getResources().getColor(R.color.black)
+        );
+        resideMenu.attachToActivity(getActivity());
+        List<ResideMenuItem> resideMenuItemList = new ArrayList<ResideMenuItem>();
+        resideMenuItemList.add(
+                new ResideMenuItem(
+                        view.getContext(),
+                        R.drawable.ic_action_timeline,
+                        R.string.reside_menu_item_timeline
+                )
+        );
+        resideMenuItemList.add(
+                new ResideMenuItem(
+                        view.getContext(),
+                        R.drawable.ic_action_mention,
+                        R.string.reside_menu_item_mention
+                )
+        );
+        resideMenuItemList.add(
+                new ResideMenuItem(
+                        view.getContext(),
+                        R.drawable.ic_action_setting,
+                        R.string.reside_menu_item_setting
+                )
+        );
+        resideMenu.setMenuItems(
+                resideMenuItemList,
+                ResideMenu.DIRECTION_LEFT
+        );
     }
 
     /* Do something */

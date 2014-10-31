@@ -3,7 +3,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
              android:layout_width="match_parent"
-             android:layout_height="wrap_content">
+             android:layout_height="wrap_content"
+             android:background="@color/background">
 
     <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/timeline_swipe_container"

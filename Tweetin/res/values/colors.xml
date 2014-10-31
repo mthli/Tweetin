@@ -4,6 +4,7 @@
 
     <color name="white">@android:color/white</color>
     <color name="grey">#F5F5F5</color>
+    <color name="background">#F3F3F3</color>
     <color name="black">@android:color/black</color>
     <color name="transparent">@android:color/transparent</color>
 
