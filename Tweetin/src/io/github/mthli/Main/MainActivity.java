@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Timeline;
+package io.github.mthli.Main;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,14 +6,15 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Timeline.TimelineFragment;
 
-public class TimelineActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity {
     private TimelineFragment timelineFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.timeline);
+        setContentView(R.layout.main);
 
         timelineFragment = (TimelineFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.timeline_fragment);

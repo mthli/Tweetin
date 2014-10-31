@@ -265,7 +265,7 @@ public class ResideMenu extends FrameLayout{
         isOpened = true;
         AnimatorSet scaleDown_activity = buildScaleDownAnimation(viewActivity, mScaleValue, mScaleValue);
         AnimatorSet scaleDown_shadow = buildScaleDownAnimation(imageViewShadow,
-        		mScaleValue + shadowAdjustScaleX, mScaleValue + shadowAdjustScaleY);
+                mScaleValue + shadowAdjustScaleX, mScaleValue + shadowAdjustScaleY);
         AnimatorSet alpha_menu = buildMenuAnimation(scrollViewMenu, 1.0f);
         scaleDown_shadow.addListener(animationListener);
         scaleDown_activity.playTogether(scaleDown_shadow);
@@ -391,9 +391,13 @@ public class ResideMenu extends FrameLayout{
                 ObjectAnimator.ofFloat(target, "scaleY", targetScaleY)
         );
 
-        scaleDown.setInterpolator(AnimationUtils.loadInterpolator(activity,
-                android.R.anim.decelerate_interpolator));
-        scaleDown.setDuration(250);
+        scaleDown.setInterpolator(
+                AnimationUtils.loadInterpolator(
+                        activity,
+                        android.R.anim.decelerate_interpolator
+                )
+        );
+        scaleDown.setDuration(256);
         return scaleDown;
     }
 
@@ -413,7 +417,7 @@ public class ResideMenu extends FrameLayout{
                 ObjectAnimator.ofFloat(target, "scaleY", targetScaleY)
         );
 
-        scaleUp.setDuration(250);
+        scaleUp.setDuration(256);
         return scaleUp;
     }
 
@@ -424,7 +428,7 @@ public class ResideMenu extends FrameLayout{
                 ObjectAnimator.ofFloat(target, "alpha", alpha)
         );
 
-        alphaAnimation.setDuration(250);
+        alphaAnimation.setDuration(256);
         return alphaAnimation;
     }
 
@@ -576,7 +580,7 @@ public class ResideMenu extends FrameLayout{
         activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.widthPixels;
     }
-    
+
     public void setScaleValue(float scaleValue) {
         this.mScaleValue = scaleValue;
     }

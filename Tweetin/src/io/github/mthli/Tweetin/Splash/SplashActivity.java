@@ -16,7 +16,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.*;
-import io.github.mthli.Tweetin.Timeline.TimelineActivity;
+import io.github.mthli.Main.MainActivity;
 import io.github.mthli.Tweetin.R;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -207,7 +207,7 @@ public class SplashActivity extends Activity {
                     getString(R.string.sp_is_first_sign_in),
                     false
             ).commit();
-            Intent intent = new Intent(SplashActivity.this, TimelineActivity.class);
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
@@ -271,7 +271,7 @@ public class SplashActivity extends Activity {
                                 getString(R.string.sp_is_first_sign_in),
                                 true
                         ).commit();
-                        Intent intent = new Intent(SplashActivity.this, TimelineActivity.class);
+                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                         break;

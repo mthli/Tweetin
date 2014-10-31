@@ -32,8 +32,8 @@
             </intent-filter>
         </activity>
 
-        <!-- TimelineActivity -->
-        <activity android:name=".Timeline.TimelineActivity"
+        <!-- MainActivity -->
+        <activity android:name="io.github.mthli.Main.MainActivity"
                   android:theme="@style/TimelineActivityTheme"
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>

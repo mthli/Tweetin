@@ -31,6 +31,7 @@ public class PostActivity extends Activity {
     private EditText postEdit;
     private ToggleButton postCheckInButton;
     private ToggleButton postPhotoButton;
+    private Button postSentButton;
     private TextView countWords;
     private String photoPath = null;
     public EditText getPostEdit() {
@@ -82,6 +83,7 @@ public class PostActivity extends Activity {
         postCheckInButton = (ToggleButton) findViewById(R.id.post_check_in_button);
         postPhotoButton = (ToggleButton) findViewById(R.id.post_photo_button);
         countWords = (TextView) findViewById(R.id.post_count_words);
+        postSentButton = (Button) findViewById(R.id.post_sent_button);
 
         postFlag = getIntent().getIntExtra(
                 getString(R.string.post_flag),
@@ -115,7 +117,6 @@ public class PostActivity extends Activity {
                             intent,
                             Flag.POST_PHOTO
                     );
-                    /* Maybe do something with ActivityAnim */
                 } else {
                     postPhoto.setVisibility(View.GONE);
                 }
@@ -147,6 +148,13 @@ public class PostActivity extends Activity {
                     );
                     countWords.setText(String.valueOf(text.length()));
                 }
+            }
+        });
+
+        postSentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /* Do something */
             }
         });
     }
