@@ -263,7 +263,6 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 swipeRefreshLayout.setRefreshing(false);
             }
         }
-        timelineFragment.reload = true;
         timelineFragment.setRefreshFlag(Flag.TIMELINE_TASK_IDLE);
     }
 }

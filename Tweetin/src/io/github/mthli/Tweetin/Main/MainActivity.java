@@ -49,13 +49,14 @@ public class MainActivity extends FragmentActivity {
 
         initResideMenu();
 
+        /* Do something */
+        timelineFragment = new TimelineFragment();
+        mentionFragment = new MentionFragment();
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
-        timelineFragment = new TimelineFragment();
-        fragmentTransaction.replace(
-                android.R.id.content,
-                timelineFragment
-        );
+        fragmentTransaction.add(android.R.id.content, timelineFragment);
+        fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
         fragmentTransaction.commit();
     }
 
@@ -145,10 +146,9 @@ public class MainActivity extends FragmentActivity {
                 if (fragmentFlag != Flag.IN_TIMELINE_FRAGMENT) {
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                             .beginTransaction();
-                    fragmentTransaction.replace(
-                            android.R.id.content,
-                            timelineFragment
-                    );
+                    fragmentTransaction.hide(
+                            getCurrentFragment()
+                    ).show(timelineFragment);
                     fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
                     fragmentTransaction.commit();
                     resideMenu.closeMenu();
@@ -161,13 +161,17 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 if (fragmentFlag != Flag.IN_MENTION_FRAGMENT) {
-                    mentionFragment = new MentionFragment();
                     FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                             .beginTransaction();
-                    fragmentTransaction.replace(
-                            android.R.id.content,
-                            mentionFragment
-                    );
+                    if (mentionFragment.isAdded()) {
+                        fragmentTransaction.hide(
+                                getCurrentFragment()
+                        ).show(mentionFragment);
+                    } else {
+                        fragmentTransaction.hide(
+                                getCurrentFragment()
+                        ).add(android.R.id.content, mentionFragment);
+                    }
                     fragmentFlag = Flag.IN_MENTION_FRAGMENT;
                     fragmentTransaction.commit();
                     resideMenu.closeMenu();

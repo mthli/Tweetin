@@ -19,13 +19,15 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
-             android:layout_height="match_parent">
+             android:layout_height="match_parent"
+             android:background="@color/background">
 
     <LinearLayout android:id="@+id/progress_container"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:gravity="center"
                   android:orientation="vertical"
+                  android:background="@color/background"
                   android:visibility="gone">
 
         <!-- Do something -->
@@ -39,7 +41,8 @@
 
     <FrameLayout android:id="@+id/content_container"
                  android:layout_width="match_parent"
-                 android:layout_height="match_parent">
+                 android:layout_height="match_parent"
+                 android:background="@color/background">
 
         <!-- Do something -->
         <TextView android:id="@android:id/empty"

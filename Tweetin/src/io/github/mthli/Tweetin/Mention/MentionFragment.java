@@ -25,7 +25,6 @@ import java.util.List;
 
 public class MentionFragment extends ProgressFragment {
     private View view;
-    public static boolean reload = false;
 
     private int refreshFlag = Flag.MENTION_TASK_IDLE;
     private boolean isMoveToBottom = false;
@@ -147,7 +146,11 @@ public class MentionFragment extends ProgressFragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                /* Do something */
+                mentionInitTask = new MentionInitTask(
+                        MentionFragment.this,
+                        true
+                );
+                mentionInitTask.execute();
             }
         });
 
@@ -192,36 +195,11 @@ public class MentionFragment extends ProgressFragment {
             }
         });
 
-        if (reload) {
-            MentionAction action = new MentionAction(view.getContext());
-            action.openDatabase(false);
-            List<MentionRecord> mentionRecordList = action.getMentionRecordList();
-            action.closeDatabase();
-            tweetList.clear();
-            for (MentionRecord record : mentionRecordList) {
-                Tweet tweet = new Tweet();
-                tweet.setStatusId(record.getStatusId());
-                tweet.setReplyToStatusId(record.getReplyToStatusId());
-                tweet.setUserId(record.getUserId());
-                tweet.setRetweetedByUserId(record.getRetweetedByUserId());
-                tweet.setAvatarURL(record.getAvatarURL());
-                tweet.setCreatedAt(record.getCreatedAt());
-                tweet.setName(record.getName());
-                tweet.setScreenName(record.getScreenName());
-                tweet.setProtect(record.isProtect());
-                tweet.setCheckIn(record.getCheckIn());
-                tweet.setText(record.getText());
-                tweet.setRetweet(record.isRetweet());
-                tweet.setRetweetedByUserName(record.getRetweetedByUserName());
-                tweetList.add(tweet);
-            }
-        } else {
-            mentionInitTask = new MentionInitTask(
-                    MentionFragment.this,
-                    false
-            );
-            mentionInitTask.execute();
-        }
+        mentionInitTask = new MentionInitTask(
+                MentionFragment.this,
+                false
+        );
+        mentionInitTask.execute();
     }
 
     /* Do something */
