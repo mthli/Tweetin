@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class MentionHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "MENTION.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "MENTION_2.db";
+    private static final int DATABASE_VERSION = 2;
 
     public MentionHelper(Context context) {
         super(

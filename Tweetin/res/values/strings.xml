@@ -19,6 +19,7 @@
         HH:mm MM.dd
     </string>
     <string name="tweet_retweet_by_me">Me</string>
+    <string name="tweet_favorite">Favorite</string>
     <string name="tweet_rewteet_ing">
         Retweeting&#8230;
     </string>

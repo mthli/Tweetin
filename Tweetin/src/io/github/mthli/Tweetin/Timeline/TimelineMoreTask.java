@@ -121,6 +121,9 @@ public class TimelineMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setRetweetedByUserName(
                             status.getUser().getName()
                     );
+                    tweet.setFavorite(
+                            status.getRetweetedStatus().isFavorited()
+                    );
                 } else {
                     tweet.setStatusId(status.getId());
                     tweet.setReplyToStatusId(status.getInReplyToStatusId());
@@ -142,6 +145,7 @@ public class TimelineMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setText(status.getText());
                     tweet.setRetweet(false);
                     tweet.setRetweetedByUserName(null);
+                    tweet.setFavorite(status.isFavorited());
                 }
                 if (status.isRetweetedByMe() || status.isRetweeted()) {
                     tweet.setRetweetedByUserId(useId);

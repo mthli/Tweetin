@@ -15,6 +15,7 @@ public class TimelineRecord {
     public static final String TEXT = "TEXT";
     public static final String RETWEET = "RETWEET";
     public static final String RETWEETED_BY_USER_NAME = "REWTEETED_BY_USER_NAME";
+    public static final String FAVORITE = "FAVORITE";
 
     public static final String CREATE_SQL = "CREATE TABLE "
             + TABLE
@@ -31,7 +32,8 @@ public class TimelineRecord {
             + " " + CHECK_IN + " text,"
             + " " + TEXT + " text,"
             + " " + RETWEET + " text,"
-            + " " + RETWEETED_BY_USER_NAME + " text"
+            + " " + RETWEETED_BY_USER_NAME + " text,"
+            + " " + FAVORITE + " text"
             + ")";
 
     private long statusId;
@@ -47,6 +49,7 @@ public class TimelineRecord {
     private String text;
     private String retweet;
     private String retweetedByUserName;
+    private String favorite;
 
     public TimelineRecord() {
         this.statusId = -1;
@@ -62,6 +65,7 @@ public class TimelineRecord {
         this.text = null;
         this.retweet = null;
         this.retweetedByUserName = null;
+        this.favorite = null;
     }
 
     public long getStatusId() {
@@ -161,5 +165,16 @@ public class TimelineRecord {
     }
     public void setRetweetedByUserName(String retweetedByUserName) {
         this.retweetedByUserName = retweetedByUserName;
+    }
+
+    public boolean isFavorite() {
+        return favorite.equals("true");
+    }
+    public void setFavorite(boolean favorite) {
+        if (favorite) {
+            this.favorite = "true";
+        } else {
+            this.favorite = "false";
+        }
     }
 }

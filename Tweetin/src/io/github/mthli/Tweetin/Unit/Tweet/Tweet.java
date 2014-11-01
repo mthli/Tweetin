@@ -14,6 +14,7 @@ public class Tweet {
     private String text;
     private boolean retweet;
     private String retweetedByUserName;
+    private boolean favorite;
 
     public Tweet() {
         this.statusId = -1;
@@ -29,6 +30,7 @@ public class Tweet {
         this.text = null;
         this.retweet = false;
         this.retweetedByUserName = null;
+        this.favorite = false;
     }
 
     public long getStatusId() {
@@ -120,5 +122,12 @@ public class Tweet {
     }
     public void setRetweetedByUserName(String retweetedByUserName) {
         this.retweetedByUserName = retweetedByUserName;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 }

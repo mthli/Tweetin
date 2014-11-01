@@ -96,6 +96,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setText(record.getText());
                 tweet.setRetweet(record.isRetweet());
                 tweet.setRetweetedByUserName(record.getRetweetedByUserName());
+                tweet.setFavorite(record.isFavorite());
                 tweetList.add(tweet);
             }
             tweetAdapter.notifyDataSetChanged();
@@ -161,6 +162,9 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 record.setRetweetedByUserName(
                         status.getUser().getName()
                 );
+                record.setFavorite(
+                        status.getRetweetedStatus().isFavorited()
+                );
             } else {
                 record.setStatusId(status.getId());
                 record.setReplyToStatusId(status.getInReplyToStatusId());
@@ -182,6 +186,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 record.setText(status.getText());
                 record.setRetweet(false);
                 record.setRetweetedByUserName(null);
+                record.setFavorite(status.isFavorited());
             }
             if (status.isRetweetedByMe() || status.isRetweeted()) {
                 record.setRetweetedByUserId(useId);
@@ -230,6 +235,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setText(record.getText());
                 tweet.setRetweet(record.isRetweet());
                 tweet.setRetweetedByUserName(record.getRetweetedByUserName());
+                tweet.setFavorite(record.isFavorite());
                 tweetList.add(tweet);
             }
 
@@ -237,7 +243,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 editor.putBoolean(
                         context.getString(R.string.sp_is_first_sign_in),
                         false
-                );
+                ).commit();
                 timelineFragment.setContentEmpty(false);
                 tweetAdapter.notifyDataSetChanged();
                 timelineFragment.setContentShown(true);

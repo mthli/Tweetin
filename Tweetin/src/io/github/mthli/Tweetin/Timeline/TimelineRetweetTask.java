@@ -82,7 +82,7 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
 
             TimelineAction action = new TimelineAction(context);
             action.openDatabase(true);
-            action.updatedByMe(oldTweet.getStatusId());
+            action.updatedByRetweet(oldTweet.getStatusId());
             action.closeDatabase();
 
             /* Do something with Icon */

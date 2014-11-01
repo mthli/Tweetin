@@ -55,11 +55,16 @@ public class MentionAction {
             values.put(MentionRecord.RETWEET, "false");
         }
         values.put(MentionRecord.RETWEETED_BY_USER_NAME, record.getRetweetedByUserName());
+        if (record.isFavorite()) {
+            values.put(MentionRecord.FAVORITE, "true");
+        } else {
+            values.put(MentionRecord.FAVORITE, "false");
+        }
         database.insert(MentionRecord.TABLE, null, values);
     }
 
 
-    public void updatedByMe(long statusId) {
+    public void updatedByRetweet(long statusId) {
         SharedPreferences preferences = context.getSharedPreferences(
                 context.getString(R.string.sp_name),
                 Context.MODE_PRIVATE
@@ -82,6 +87,10 @@ public class MentionAction {
                 MentionRecord.STATUS_ID + "=?",
                 new String[] {String.valueOf(statusId)}
         );
+    }
+
+    public void updatedByFavorite(long statusId) {
+        /* Do something */
     }
 
     public void deleteAll() {
@@ -107,6 +116,9 @@ public class MentionAction {
                 cursor.getString(11).equals("true")
         );
         record.setRetweetedByUserName(cursor.getString(12));
+        record.setFavorite(
+                cursor.getString(13).equals("true")
+        );
 
         return record;
     }
@@ -127,7 +139,8 @@ public class MentionAction {
                         MentionRecord.CHECK_IN,
                         MentionRecord.TEXT,
                         MentionRecord.RETWEET,
-                        MentionRecord.RETWEETED_BY_USER_NAME
+                        MentionRecord.RETWEETED_BY_USER_NAME,
+                        MentionRecord.FAVORITE
                 },
                 null,
                 null,

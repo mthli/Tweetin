@@ -55,10 +55,15 @@ public class TimelineAction {
             values.put(TimelineRecord.RETWEET, "false");
         }
         values.put(TimelineRecord.RETWEETED_BY_USER_NAME, record.getRetweetedByUserName());
+        if (record.isFavorite()) {
+            values.put(TimelineRecord.FAVORITE, "true");
+        } else {
+            values.put(TimelineRecord.FAVORITE, "false");
+        }
         database.insert(TimelineRecord.TABLE, null, values);
     }
 
-    public void updatedByMe(long statusId) {
+    public void updatedByRetweet(long statusId) {
         SharedPreferences preferences = context.getSharedPreferences(
                 context.getString(R.string.sp_name),
                 Context.MODE_PRIVATE
@@ -81,6 +86,10 @@ public class TimelineAction {
                 TimelineRecord.STATUS_ID + "=?",
                 new String[] {String.valueOf(statusId)}
         );
+    }
+
+    public void updatedByFavorite(long statusId) {
+        /* Do something */
     }
 
     public void deleteAll() {
@@ -106,6 +115,9 @@ public class TimelineAction {
                 cursor.getString(11).equals("true")
         );
         record.setRetweetedByUserName(cursor.getString(12));
+        record.setFavorite(
+                cursor.getString(13).equals("true")
+        );
 
         return record;
     }
@@ -126,7 +138,8 @@ public class TimelineAction {
                         TimelineRecord.CHECK_IN,
                         TimelineRecord.TEXT,
                         TimelineRecord.RETWEET,
-                        TimelineRecord.RETWEETED_BY_USER_NAME
+                        TimelineRecord.RETWEETED_BY_USER_NAME,
+                        TimelineRecord.FAVORITE
                 },
                 null,
                 null,
