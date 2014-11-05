@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +16,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.*;
-import com.balysv.materialripple.MaterialRippleLayout;
 import io.github.mthli.Tweetin.Main.MainActivity;
 import io.github.mthli.Tweetin.R;
 import twitter4j.Twitter;
@@ -218,13 +216,6 @@ public class SplashActivity extends Activity {
         final EditText conSecretEdit = (EditText) findViewById(R.id.splash_consumer_secret);
 
         Button signIn = (Button) findViewById(R.id.splash_sign_in);
-        MaterialRippleLayout.on(signIn)
-                .rippleOverlay(true)
-                .rippleColor(getResources().getColor(R.color.black))
-                .rippleAlpha(0.1f)
-                .rippleDiameterDp(10)
-                .rippleDuration(350)
-                .create();
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,5 +1,6 @@
 package io.github.mthli.Tweetin.Timeline;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,12 +10,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
 import io.github.mthli.Tweetin.Post.PostActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
+import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
@@ -191,7 +195,7 @@ public class TimelineFragment extends ProgressFragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                /* Do something */
+                showItemLongClickDialog(position);
                 return true;
             }
         });
@@ -234,4 +238,33 @@ public class TimelineFragment extends ProgressFragment {
     }
 
     /* Do something */
+    private void showItemLongClickDialog(int location) {
+        LinearLayout linearLayout = (LinearLayout) getActivity()
+                .getLayoutInflater().inflate(
+                        R.layout.context_menu,
+                        null
+                );
+        ListView menu = (ListView) linearLayout.findViewById(R.id.context_menu_listview);
+        List<String> menuItem = new ArrayList<String>();
+
+        int flag;
+        Tweet tweet = tweetList.get(location);
+        /* Do something */
+
+        ContextMenuAdapter contextMenuAdapter = new ContextMenuAdapter(
+                view.getContext(),
+                R.layout.context_menu_item,
+                menuItem
+        );
+        menu.setAdapter(contextMenuAdapter);
+        contextMenuAdapter.notifyDataSetChanged();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setView(linearLayout);
+        builder.setCancelable(true);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        /* Do something */
+    }
 }

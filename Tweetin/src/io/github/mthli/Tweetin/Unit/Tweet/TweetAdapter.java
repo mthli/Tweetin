@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.R;
@@ -120,17 +121,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.checkIn.setVisibility(View.GONE);
         }
         holder.text.setText(tweet.getText());
-        /*
-        if (tweet.isRetweet()) {
-            holder.retweetedByUserName.setText(tweet.getRetweetedByUserName());
-            holder.retweetedByUserName.setVisibility(View.VISIBLE);
-            holder.info.setVisibility(View.VISIBLE);
-        } else {
-            holder.retweetedByUserName.setVisibility(View.GONE);
-            holder.info.setVisibility(View.GONE);
-        }
-        */
-
         if (tweet.isRetweet() || tweet.isFavorite()) {
             if (tweet.isRetweet()) {
                 holder.retweetedByUserName.setText(
