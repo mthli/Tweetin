@@ -49,7 +49,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
             timelineFragment.setRefreshFlag(Flag.TIMELINE_TASK_RUNNING);
         }
 
-        context = timelineFragment.getView().getContext();
+        context = timelineFragment.getContentView().getContext();
         twitter = timelineFragment.getTwitter();
         useId = timelineFragment.getUseId();
 
@@ -60,9 +60,10 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
         editor = sharedPreferences.edit();
         swipeRefreshLayout = timelineFragment.getSwipeRefreshLayout();
 
+        /* Do something */
         if (
                 sharedPreferences.getBoolean(
-                        context.getString(R.string.sp_is_first_sign_in),
+                        context.getString(R.string.sp_is_timeline_first),
                         false
                 )
         ) {
@@ -241,7 +242,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
 
             if (isFirstSignIn) {
                 editor.putBoolean(
-                        context.getString(R.string.sp_is_first_sign_in),
+                        context.getString(R.string.sp_is_timeline_first),
                         false
                 ).commit();
                 timelineFragment.setContentEmpty(false);
@@ -257,9 +258,9 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
         } else {
             if (isFirstSignIn) {
                 editor.putBoolean(
-                        context.getString(R.string.sp_is_first_sign_in),
+                        context.getString(R.string.sp_is_timeline_first),
                         true
-                );
+                ).commit();
                 timelineFragment.setContentEmpty(true);
                 timelineFragment.setEmptyText(
                         R.string.timeline_error_get_timeline_failed

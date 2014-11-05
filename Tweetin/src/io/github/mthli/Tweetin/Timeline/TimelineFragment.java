@@ -12,8 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
-import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
-import io.github.mthli.Tweetin.Database.Timeline.TimelineRecord;
 import io.github.mthli.Tweetin.Post.PostActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
@@ -31,7 +29,7 @@ public class TimelineFragment extends ProgressFragment {
     private View view;
 
     private int refreshFlag = Flag.TIMELINE_TASK_IDLE;
-    private boolean isMoveToBottom = false;
+    private boolean moveToBottom = false;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FloatingActionButton floatingActionButton;
     public int getRefreshFlag() {
@@ -73,8 +71,8 @@ public class TimelineFragment extends ProgressFragment {
     public boolean isSomeTaskRunning() {
         if (
                 (timelineInitTask != null && timelineInitTask.getStatus() == AsyncTask.Status.RUNNING)
-                        || (timelineMoreTask != null && timelineMoreTask.getStatus() == AsyncTask.Status.RUNNING)
-                ) {
+                || (timelineMoreTask != null && timelineMoreTask.getStatus() == AsyncTask.Status.RUNNING)
+        ) {
             return true;
         }
         return false;
@@ -210,17 +208,17 @@ public class TimelineFragment extends ProgressFragment {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if (previous < firstVisibleItem) {
-                    isMoveToBottom = true;
+                    moveToBottom = true;
                     floatingActionButton.hide();
                 }
                 if (previous > firstVisibleItem) {
-                    isMoveToBottom = false;
+                    moveToBottom = false;
                     floatingActionButton.show();
                 }
                 previous = firstVisibleItem;
 
                 if (totalItemCount == firstVisibleItem + visibleItemCount) {
-                    if (!isSomeTaskRunning() && isMoveToBottom) {
+                    if (!isSomeTaskRunning() && moveToBottom) {
                         timelineMoreTask = new TimelineMoreTask(TimelineFragment.this);
                         timelineMoreTask.execute();
                     }

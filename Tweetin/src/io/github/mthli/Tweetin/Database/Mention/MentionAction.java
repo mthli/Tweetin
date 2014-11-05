@@ -29,7 +29,7 @@ public class MentionAction {
     }
 
     public void closeDatabase() {
-        helper.close();;
+        helper.close();
     }
 
     public void addRecord(MentionRecord record) {
@@ -89,8 +89,19 @@ public class MentionAction {
         );
     }
 
-    public void updatedByFavorite(long statusId) {
-        /* Do something */
+    public void updatedByFavorite(long statusId, boolean favorite) {
+        ContentValues values = new ContentValues();
+        if (favorite) {
+            values.put(MentionRecord.FAVORITE, "true");
+        } else {
+            values.put(MentionRecord.FAVORITE, "false");
+        }
+        database.update(
+                MentionRecord.TABLE,
+                values,
+                MentionRecord.STATUS_ID + "=?",
+                new String[] {String.valueOf(statusId)}
+        );
     }
 
     public void deleteAll() {

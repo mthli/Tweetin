@@ -49,7 +49,7 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
             mentionFragment.setRefreshFlag(Flag.TIMELINE_TASK_RUNNING);
         }
 
-        context = mentionFragment.getView().getContext();
+        context = mentionFragment.getContentView().getContext();
         twitter = mentionFragment.getTwitter();
         useId = mentionFragment.getUseId();
 

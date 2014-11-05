@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Database.Timeline;
+package io.github.mthli.Tweetin.Database.Favorite;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,13 +10,13 @@ import io.github.mthli.Tweetin.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimelineAction {
+public class FavoriteAction {
     private SQLiteDatabase database;
-    private TimelineHelper helper;
+    private FavoriteHelper helper;
     private Context context;
-
-    public TimelineAction(Context context) {
-        this.helper = new TimelineHelper(context);
+    
+    public FavoriteAction(Context context) {
+        this.helper = new FavoriteHelper(context);
         this.context = context;
     }
 
@@ -32,35 +32,36 @@ public class TimelineAction {
         helper.close();
     }
 
-    public void addRecord(TimelineRecord record) {
+
+    public void addRecord(FavoriteRecord record) {
         ContentValues values = new ContentValues();
-        values.put(TimelineRecord.STATUS_ID, record.getStatusId());
-        values.put(TimelineRecord.REPLY_TO_STATUS_ID, record.getReplyToStatusId());
-        values.put(TimelineRecord.USER_ID, record.getUserId());
-        values.put(TimelineRecord.RETWEETED_BY_USER_ID, record.getRetweetedByUserId());
-        values.put(TimelineRecord.AVATAR_URL, record.getAvatarURL());
-        values.put(TimelineRecord.CREATED_AT, record.getCreatedAt());
-        values.put(TimelineRecord.NAME, record.getName());
-        values.put(TimelineRecord.SCREEN_NAME, record.getScreenName());
+        values.put(FavoriteRecord.STATUS_ID, record.getStatusId());
+        values.put(FavoriteRecord.REPLY_TO_STATUS_ID, record.getReplyToStatusId());
+        values.put(FavoriteRecord.USER_ID, record.getUserId());
+        values.put(FavoriteRecord.RETWEETED_BY_USER_ID, record.getRetweetedByUserId());
+        values.put(FavoriteRecord.AVATAR_URL, record.getAvatarURL());
+        values.put(FavoriteRecord.CREATED_AT, record.getCreatedAt());
+        values.put(FavoriteRecord.NAME, record.getName());
+        values.put(FavoriteRecord.SCREEN_NAME, record.getScreenName());
         if (record.isProtect()) {
-            values.put(TimelineRecord.PROTECT, "true");
+            values.put(FavoriteRecord.PROTECT, "true");
         } else {
-            values.put(TimelineRecord.PROTECT, "false");
+            values.put(FavoriteRecord.PROTECT, "false");
         }
-        values.put(TimelineRecord.CHECK_IN, record.getCheckIn());
-        values.put(TimelineRecord.TEXT, record.getText());
+        values.put(FavoriteRecord.CHECK_IN, record.getCheckIn());
+        values.put(FavoriteRecord.TEXT, record.getText());
         if (record.isRetweet()) {
-            values.put(TimelineRecord.RETWEET, "true");
+            values.put(FavoriteRecord.RETWEET, "true");
         } else {
-            values.put(TimelineRecord.RETWEET, "false");
+            values.put(FavoriteRecord.RETWEET, "false");
         }
-        values.put(TimelineRecord.RETWEETED_BY_USER_NAME, record.getRetweetedByUserName());
+        values.put(FavoriteRecord.RETWEETED_BY_USER_NAME, record.getRetweetedByUserName());
         if (record.isFavorite()) {
-            values.put(TimelineRecord.FAVORITE, "true");
+            values.put(FavoriteRecord.FAVORITE, "true");
         } else {
-            values.put(TimelineRecord.FAVORITE, "false");
+            values.put(FavoriteRecord.FAVORITE, "false");
         }
-        database.insert(TimelineRecord.TABLE, null, values);
+        database.insert(FavoriteRecord.TABLE, null, values);
     }
 
     public void updatedByRetweet(long statusId) {
@@ -74,16 +75,16 @@ public class TimelineAction {
         );
 
         ContentValues values = new ContentValues();
-        values.put(TimelineRecord.RETWEET, "true");
-        values.put(TimelineRecord.RETWEETED_BY_USER_ID, useId);
+        values.put(FavoriteRecord.RETWEET, "true");
+        values.put(FavoriteRecord.RETWEETED_BY_USER_ID, useId);
         values.put(
-                TimelineRecord.RETWEETED_BY_USER_NAME,
+                FavoriteRecord.RETWEETED_BY_USER_NAME,
                 context.getString(R.string.tweet_retweet_by_me)
         );
         database.update(
-                TimelineRecord.TABLE,
+                FavoriteRecord.TABLE,
                 values,
-                TimelineRecord.STATUS_ID + "=?",
+                FavoriteRecord.STATUS_ID + "=?",
                 new String[] {String.valueOf(statusId)}
         );
     }
@@ -91,24 +92,24 @@ public class TimelineAction {
     public void updatedByFavorite(long statusId, boolean favorite) {
         ContentValues values = new ContentValues();
         if (favorite) {
-            values.put(TimelineRecord.FAVORITE, "true");
+            values.put(FavoriteRecord.FAVORITE, "true");
         } else {
-            values.put(TimelineRecord.FAVORITE, "false");
+            values.put(FavoriteRecord.FAVORITE, "false");
         }
         database.update(
-                TimelineRecord.TABLE,
+                FavoriteRecord.TABLE,
                 values,
-                TimelineRecord.STATUS_ID + "=?",
+                FavoriteRecord.STATUS_ID + "=?",
                 new String[] {String.valueOf(statusId)}
         );
     }
 
     public void deleteAll() {
-        database.execSQL("DELETE FROM " + TimelineRecord.TABLE);
+        database.execSQL("DELETE FROM " + FavoriteRecord.TABLE);
     }
 
-    private TimelineRecord getTimelineRecord(Cursor cursor) {
-        TimelineRecord record = new TimelineRecord();
+    private FavoriteRecord getFavoriteRecord(Cursor cursor) {
+        FavoriteRecord record = new FavoriteRecord();
         record.setStatusId(cursor.getLong(0));
         record.setReplyToStatusId(cursor.getLong(1));
         record.setUserId(cursor.getLong(2));
@@ -132,25 +133,25 @@ public class TimelineAction {
 
         return record;
     }
-    public List<TimelineRecord> getTimelineRecordList() {
-        List<TimelineRecord> timelineRecordList = new ArrayList<TimelineRecord>();
+    public List<FavoriteRecord> getFavoriteRecordList() {
+        List<FavoriteRecord> timelineRecordList = new ArrayList<FavoriteRecord>();
         Cursor cursor = database.query(
-                TimelineRecord.TABLE,
+                FavoriteRecord.TABLE,
                 new String[] {
-                        TimelineRecord.STATUS_ID,
-                        TimelineRecord.REPLY_TO_STATUS_ID,
-                        TimelineRecord.USER_ID,
-                        TimelineRecord.RETWEETED_BY_USER_ID,
-                        TimelineRecord.AVATAR_URL,
-                        TimelineRecord.CREATED_AT,
-                        TimelineRecord.NAME,
-                        TimelineRecord.SCREEN_NAME,
-                        TimelineRecord.PROTECT,
-                        TimelineRecord.CHECK_IN,
-                        TimelineRecord.TEXT,
-                        TimelineRecord.RETWEET,
-                        TimelineRecord.RETWEETED_BY_USER_NAME,
-                        TimelineRecord.FAVORITE
+                        FavoriteRecord.STATUS_ID,
+                        FavoriteRecord.REPLY_TO_STATUS_ID,
+                        FavoriteRecord.USER_ID,
+                        FavoriteRecord.RETWEETED_BY_USER_ID,
+                        FavoriteRecord.AVATAR_URL,
+                        FavoriteRecord.CREATED_AT,
+                        FavoriteRecord.NAME,
+                        FavoriteRecord.SCREEN_NAME,
+                        FavoriteRecord.PROTECT,
+                        FavoriteRecord.CHECK_IN,
+                        FavoriteRecord.TEXT,
+                        FavoriteRecord.RETWEET,
+                        FavoriteRecord.RETWEETED_BY_USER_NAME,
+                        FavoriteRecord.FAVORITE
                 },
                 null,
                 null,
@@ -164,7 +165,7 @@ public class TimelineAction {
         }
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            TimelineRecord record = getTimelineRecord(cursor);
+            FavoriteRecord record = getFavoriteRecord(cursor);
             timelineRecordList.add(record);
             cursor.moveToNext();
         }

@@ -50,10 +50,11 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.main);
 
         initResideMenu();
-
-        /* Do something */
         timelineFragment = new TimelineFragment();
         mentionFragment = new MentionFragment();
+        favoriteFragment = new FavoriteFragment();
+        discoveryFragment = new DiscoveryFragment();
+        settingFragment = new SettingFragment();
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
@@ -326,7 +327,20 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 if(fragmentFlag != Flag.IN_FAVORITE_FRAGMENT) {
-                    /* Do something */
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                            .beginTransaction();
+                    if (favoriteFragment.isAdded()) {
+                        fragmentTransaction.hide(
+                                getCurrentFragment()
+                        ).show(favoriteFragment);
+                    } else {
+                        fragmentTransaction.hide(
+                                getCurrentFragment()
+                        ).add(android.R.id.content, favoriteFragment);
+                    }
+                    selectResideMenuItem(Flag.IN_FAVORITE_FRAGMENT);
+                    fragmentFlag = Flag.IN_FAVORITE_FRAGMENT;
+                    fragmentTransaction.commit();
                     resideMenu.closeMenu();
                 } else {
                     resideMenu.closeMenu();

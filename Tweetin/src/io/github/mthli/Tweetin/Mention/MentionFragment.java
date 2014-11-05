@@ -10,8 +10,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
-import io.github.mthli.Tweetin.Database.Mention.MentionAction;
-import io.github.mthli.Tweetin.Database.Mention.MentionRecord;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
@@ -27,7 +25,7 @@ public class MentionFragment extends ProgressFragment {
     private View view;
 
     private int refreshFlag = Flag.MENTION_TASK_IDLE;
-    private boolean isMoveToBottom = false;
+    private boolean moveToBottom = false;
     private SwipeRefreshLayout swipeRefreshLayout;
     public int getRefreshFlag() {
         return refreshFlag;
@@ -64,7 +62,7 @@ public class MentionFragment extends ProgressFragment {
 
     private MentionInitTask mentionInitTask;
     private MentionMoreTask mentionMoreTask;
-    private MentionRetweetTask mentionRetweetTask;
+    /* Do something */
     public boolean isSomeTaskRunning() {
         if (
                 (mentionInitTask != null && mentionInitTask.getStatus() == AsyncTask.Status.RUNNING)
@@ -81,9 +79,7 @@ public class MentionFragment extends ProgressFragment {
         if (mentionMoreTask != null && mentionMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
             mentionMoreTask.cancel(true);
         }
-        if (mentionRetweetTask != null && mentionRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mentionRetweetTask.cancel(true);
-        }
+        /* Do something */
     }
 
 
@@ -179,15 +175,15 @@ public class MentionFragment extends ProgressFragment {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if (previous < firstVisibleItem) {
-                    isMoveToBottom = true;
+                    moveToBottom = true;
                 }
                 if (previous > firstVisibleItem) {
-                    isMoveToBottom = false;
+                    moveToBottom = false;
                 }
                 previous = firstVisibleItem;
 
                 if (totalItemCount == firstVisibleItem + visibleItemCount) {
-                    if (!isSomeTaskRunning() && isMoveToBottom) {
+                    if (!isSomeTaskRunning() && moveToBottom) {
                         mentionMoreTask = new MentionMoreTask(MentionFragment.this);
                         mentionMoreTask.execute();
                     }

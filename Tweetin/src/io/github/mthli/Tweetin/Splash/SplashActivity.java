@@ -204,7 +204,7 @@ public class SplashActivity extends Activity {
         long useId = preferences.getLong(getString(R.string.sp_use_id), 0);
         if (useId > 0) {
             editor.putBoolean(
-                    getString(R.string.sp_is_first_sign_in),
+                    getString(R.string.sp_is_timeline_first),
                     false
             ).commit();
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
@@ -268,7 +268,7 @@ public class SplashActivity extends Activity {
                         progressDialog.hide();
                         progressDialog.dismiss();
                         editor.putBoolean(
-                                getString(R.string.sp_is_first_sign_in),
+                                getString(R.string.sp_is_timeline_first),
                                 true
                         ).commit();
                         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
