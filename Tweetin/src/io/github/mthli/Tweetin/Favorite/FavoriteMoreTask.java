@@ -151,7 +151,7 @@ public class FavoriteMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setRetweetedByUserId(useId);
                     tweet.setRetweet(true);
                     tweet.setRetweetedByUserName(
-                            context.getString(R.string.tweet_retweet_by_me)
+                            context.getString(R.string.tweet_info_retweet_by_me)
                     );
                 }
                 tweetList.add(tweet);

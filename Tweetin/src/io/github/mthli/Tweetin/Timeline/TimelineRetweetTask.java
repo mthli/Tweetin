@@ -49,10 +49,10 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
         builder = new Notification.Builder(context);
         /* Do something with Icon */
         builder.setTicker(
-                context.getString(R.string.tweet_rewteet_ing)
+                context.getString(R.string.tweet_notification_rewteet_ing)
         );
         builder.setContentTitle(
-                context.getString(R.string.tweet_rewteet_ing)
+                context.getString(R.string.tweet_notification_rewteet_ing)
         );
         builder.setContentText(oldTweet.getText());
         Notification notification = builder.build();
@@ -79,6 +79,7 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             newTweet.setText(oldTweet.getText());
             newTweet.setRetweet(oldTweet.isRetweet());
             newTweet.setRetweetedByUserName(oldTweet.getRetweetedByUserName());
+            newTweet.setFavorite(oldTweet.isFavorite());
 
             TimelineAction action = new TimelineAction(context);
             action.openDatabase(true);
@@ -87,10 +88,10 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
 
             /* Do something with Icon */
             builder.setTicker(
-                    context.getString(R.string.tweet_retweet_successful)
+                    context.getString(R.string.tweet_notification_retweet_successful)
             );
             builder.setContentTitle(
-                    context.getString(R.string.tweet_retweet_successful)
+                    context.getString(R.string.tweet_notification_retweet_successful)
             );
             builder.setContentText(oldTweet.getText());
             Notification notification = builder.build();
@@ -100,10 +101,10 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
         } catch (Exception e) {
             /* Do something with Icon */
             builder.setTicker(
-                    context.getString(R.string.tweet_retweet_failed)
+                    context.getString(R.string.tweet_notification_retweet_failed)
             );
             builder.setContentTitle(
-                    context.getString(R.string.tweet_retweet_failed)
+                    context.getString(R.string.tweet_notification_retweet_failed)
             );
             builder.setContentText(oldTweet.getText());
             Notification notification = builder.build();

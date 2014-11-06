@@ -111,7 +111,6 @@
               android:textColor="@color/text">
     </TextView>
 
-    <!-- Do something -->
     <LinearLayout android:id="@+id/tweet_info"
                   android:orientation="horizontal"
                   android:layout_width="match_parent"

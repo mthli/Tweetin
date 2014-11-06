@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.balysv.materialripple.MaterialRippleLayout;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.R;
@@ -132,7 +131,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             }
             if (tweet.isFavorite()) {
                 holder.favorite.setText(
-                        context.getString(R.string.tweet_favorite)
+                        context.getString(R.string.tweet_info_favorite)
                 );
                 holder.favorite.setVisibility(View.VISIBLE);
             } else {

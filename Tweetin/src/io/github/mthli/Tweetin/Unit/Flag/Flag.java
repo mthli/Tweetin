@@ -16,9 +16,12 @@ public class Flag {
     public static final int DISCOVERY_TASK_RUNNING = 0x206;
     public static final int DISCOVERY_TASK_IDLE = 0x207;
 
-    public static final int POST_NOTIFICATION_ID = 0x300;
-    public static final int POST_ORIGINAL = 0x301;
-    public static final int POST_REPLY = 0x302;
-    public static final int POST_QUOTE = 0x303;
-    public static final int POST_PHOTO = 0x304;
+    public static final int STATUS_X_BY_ME = 0x300;
+    public static final int STATUS_NONE = 0x301;
+
+    public static final int POST_NOTIFICATION_ID = 0x400;
+    public static final int POST_ORIGINAL = 0x401;
+    public static final int POST_REPLY = 0x402;
+    public static final int POST_QUOTE = 0x403;
+    public static final int POST_PHOTO = 0x404;
 }

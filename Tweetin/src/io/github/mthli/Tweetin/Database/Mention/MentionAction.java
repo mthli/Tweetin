@@ -79,7 +79,7 @@ public class MentionAction {
         values.put(MentionRecord.RETWEETED_BY_USER_ID, useId);
         values.put(
                 MentionRecord.RETWEETED_BY_USER_NAME,
-                context.getString(R.string.tweet_retweet_by_me)
+                context.getString(R.string.tweet_info_retweet_by_me)
         );
         database.update(
                 MentionRecord.TABLE,

@@ -193,7 +193,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 record.setRetweetedByUserId(useId);
                 record.setRetweet(true);
                 record.setRetweetedByUserName(
-                        context.getString(R.string.tweet_retweet_by_me)
+                        context.getString(R.string.tweet_info_retweet_by_me)
                 );
             }
             action.addRecord(record);

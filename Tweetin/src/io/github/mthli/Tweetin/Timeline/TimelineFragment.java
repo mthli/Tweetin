@@ -1,18 +1,12 @@
 package io.github.mthli.Tweetin.Timeline;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import com.balysv.materialripple.MaterialRippleLayout;
+import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
 import io.github.mthli.Tweetin.Post.PostActivity;
@@ -72,6 +66,7 @@ public class TimelineFragment extends ProgressFragment {
     private TimelineInitTask timelineInitTask;
     private TimelineMoreTask timelineMoreTask;
     private TimelineRetweetTask timelineRetweetTask;
+    private TimelineFavoriteTask timelineFavoriteTask;
     public boolean isSomeTaskRunning() {
         if (
                 (timelineInitTask != null && timelineInitTask.getStatus() == AsyncTask.Status.RUNNING)
@@ -91,6 +86,7 @@ public class TimelineFragment extends ProgressFragment {
         if (timelineRetweetTask != null && timelineRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
             timelineRetweetTask.cancel(true);
         }
+        /* Do something */
     }
 
     @Override
@@ -238,23 +234,100 @@ public class TimelineFragment extends ProgressFragment {
     }
 
     /* Do something */
-    private void showItemLongClickDialog(int location) {
+    private void reply(int loaction) {
+        Intent intent = new Intent(getActivity(), PostActivity.class);
+        ActivityAnim anim = new ActivityAnim();
+        intent.putExtra(
+                getString(R.string.post_flag),
+                Flag.POST_REPLY
+        );
+        intent.putExtra(
+                getString(R.string.post_status_id),
+                tweetList.get(loaction).getStatusId()
+        );
+        intent.putExtra(
+                getString(R.string.post_status_screen_name),
+                tweetList.get(loaction).getScreenName()
+        );
+        startActivity(intent);
+        anim.fade(getActivity());
+    }
+    private void quote(int location) {
+        Intent intent = new Intent(getActivity(), PostActivity.class);
+        ActivityAnim anim = new ActivityAnim();
+        intent.putExtra(
+                getString(R.string.post_flag),
+                Flag.POST_QUOTE
+        );
+        intent.putExtra(
+                getString(R.string.post_status_id),
+                tweetList.get(location).getStatusId()
+        );
+        intent.putExtra(
+                getString(R.string.post_status_screen_name),
+                tweetList.get(location).getScreenName()
+        );
+        intent.putExtra(
+                getString(R.string.post_status_text),
+                tweetList.get(location).getText()
+        );
+        startActivity(intent);
+        anim.fade(getActivity());
+    }
+    private void clip(int location) {
+        ClipboardManager manager = (ClipboardManager) getActivity()
+                .getSystemService(Context.CLIPBOARD_SERVICE);
+        String text = tweetList.get(location).getText();
+        ClipData data = ClipData.newPlainText(
+                getString(R.string.tweet_copy_label),
+                text
+        );
+        manager.setPrimaryClip(data);
+        Toast.makeText(
+                view.getContext(),
+                R.string.tweet_notification_copy_successful,
+                Toast.LENGTH_SHORT
+        ).show();
+    }
+    private void showItemLongClickDialog(final int location) {
         LinearLayout linearLayout = (LinearLayout) getActivity()
                 .getLayoutInflater().inflate(
                         R.layout.context_menu,
                         null
                 );
         ListView menu = (ListView) linearLayout.findViewById(R.id.context_menu_listview);
-        List<String> menuItem = new ArrayList<String>();
+        List<String> menuItemList = new ArrayList<String>();
 
-        int flag;
-        Tweet tweet = tweetList.get(location);
-        /* Do something */
-
+        final int flag;
+        final Tweet tweet = tweetList.get(location);
+        if (tweet.getRetweetedByUserId() != 0 && tweet.getRetweetedByUserId() == useId) {
+            flag = Flag.STATUS_X_BY_ME;
+            menuItemList.add(view.getContext().getString(R.string.tweet_menu_reply));
+            menuItemList.add(view.getContext().getString(R.string.tweet_menu_quote));
+            if (!tweet.isFavorite()) {
+                menuItemList.add(view.getContext().getString(R.string.tweet_menu_favorite));
+            }
+            menuItemList.add(view.getContext().getString(R.string.tweet_menu_copy));
+        } else {
+            menuItemList.add(view.getContext().getString(R.string.tweet_menu_reply));
+            if (tweet.getUserId() != useId) {
+                flag = Flag.STATUS_NONE;
+                if (!tweet.isProtect()) {
+                    menuItemList.add(view.getContext().getString(R.string.tweet_menu_retweet));
+                }
+            } else {
+                flag = Flag.STATUS_X_BY_ME;
+            }
+            menuItemList.add(view.getContext().getString(R.string.tweet_menu_quote));
+            if (!tweet.isFavorite()) {
+                menuItemList.add(view.getContext().getString(R.string.tweet_menu_favorite));
+            }
+            menuItemList.add(view.getContext().getString(R.string.tweet_menu_copy));
+        }
         ContextMenuAdapter contextMenuAdapter = new ContextMenuAdapter(
                 view.getContext(),
                 R.layout.context_menu_item,
-                menuItem
+                menuItemList
         );
         menu.setAdapter(contextMenuAdapter);
         contextMenuAdapter.notifyDataSetChanged();
@@ -262,9 +335,71 @@ public class TimelineFragment extends ProgressFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setView(linearLayout);
         builder.setCancelable(true);
-        AlertDialog alertDialog = builder.create();
+        final AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        /* Do something */
+        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                switch (flag) {
+                    case Flag.STATUS_X_BY_ME:
+                        switch (position) {
+                            case 0:
+                                reply(location);
+                                break;
+                            case 1:
+                                quote(location);
+                                break;
+                            case 2:
+                                if (!tweet.isFavorite()) {
+                                    /* Do something */
+                                } else {
+                                    clip(location);
+                                }
+                                break;
+                            case 3:
+                                clip(location);
+                            default:
+                                break;
+                        }
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    case Flag.STATUS_NONE:
+                        switch (position) {
+                            case 0:
+                                reply(location);
+                                break;
+                            case 1:
+                                /* Do something */
+                                break;
+                            case 2:
+                                quote(location);
+                                break;
+                            case 3:
+                                if (!tweet.isFavorite()) {
+                                    /* Do something */
+                                } else {
+                                    clip(location);
+                                }
+                                break;
+                            case 4:
+                                clip(location);
+                                break;
+                            default:
+                                break;
+                        }
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    default:
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                }
+            }
+        });
     }
+
+
 }

@@ -19,16 +19,26 @@
     <string name="tweet_date_format">
         HH:mm MM.dd
     </string>
-    <string name="tweet_retweet_by_me">Me</string>
-    <string name="tweet_favorite">Favorite</string>
-    <string name="tweet_rewteet_ing">
+    <string name="tweet_info_retweet_by_me">Me</string>
+    <string name="tweet_info_favorite">Favorite</string>
+    <string name="tweet_menu_reply">Reply</string>
+    <string name="tweet_menu_retweet">Retweet</string>
+    <string name="tweet_menu_quote">Quote</string>
+    <string name="tweet_menu_favorite">Favorite</string>
+    <string name="tweet_menu_un_favorite">UnFavorite</string>
+    <string name="tweet_menu_copy">Copy</string>
+    <string name="tweet_notification_rewteet_ing">
         Retweeting&#8230;
     </string>
-    <string name="tweet_retweet_successful">
+    <string name="tweet_notification_retweet_successful">
         Retweet successful.
     </string>
-    <string name="tweet_retweet_failed">
+    <string name="tweet_notification_retweet_failed">
         Retweet failed.
+    </string>
+    <string name="tweet_copy_label">TWEET_COPY_LABEL</string>
+    <string name="tweet_notification_copy_successful">
+        Copy successful.
     </string>
 
     <!-- ResideMenu -->
@@ -88,6 +98,9 @@
 
     <!-- Post -->
     <string name="post_flag">POST_FLAG</string>
+    <string name="post_status_id">POST_STATUS_ID</string>
+    <string name="post_status_screen_name">POST_STATUS_SCREEN_NAME</string>
+    <string name="post_status_text">POST_STATUS_TEXT</string>
     <string name="post_hint">
         What\'s on your mind?
     </string>
