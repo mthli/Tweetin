@@ -86,7 +86,8 @@ public class TimelineMoreTask extends AsyncTask<Void, Integer, Boolean> {
             for (twitter4j.Status status : statusList) {
                 Tweet tweet = new Tweet();
                 if (status.isRetweet()) {
-                    tweet.setStatusId(status.getId());
+                    tweet.setOriginalStatusId(status.getId());
+                    tweet.setAfterRetweetStatusId(-1); //
                     tweet.setReplyToStatusId(
                             status.getRetweetedStatus().getInReplyToStatusId()
                     );
@@ -122,11 +123,16 @@ public class TimelineMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setRetweetedByUserName(
                             status.getUser().getName()
                     );
-                    tweet.setFavorite(
-                            status.getRetweetedStatus().isFavorited()
-                    );
+                    if (status.getRetweetedStatus().isFavorited()) {
+                        tweet.setAfterFavoriteStatusId(status.getRetweetedStatus().getId()); //
+                        tweet.setFavorite(true);
+                    } else {
+                        tweet.setAfterFavoriteStatusId(-1); //
+                        tweet.setFavorite(false);
+                    }
                 } else {
-                    tweet.setStatusId(status.getId());
+                    tweet.setOriginalStatusId(status.getId());
+                    tweet.setAfterRetweetStatusId(-1); //
                     tweet.setReplyToStatusId(status.getInReplyToStatusId());
                     tweet.setUserId(status.getUser().getId());
                     tweet.setRetweetedByUserId(-1);
@@ -146,13 +152,20 @@ public class TimelineMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setText(status.getText());
                     tweet.setRetweet(false);
                     tweet.setRetweetedByUserName(null);
-                    tweet.setFavorite(status.isFavorited());
+                    if (status.isFavorited()) {
+                        tweet.setAfterFavoriteStatusId(status.getId()); //
+                        tweet.setFavorite(true);
+                    } else {
+                        tweet.setAfterFavoriteStatusId(-1); //
+                        tweet.setFavorite(false);
+                    }
                 }
                 if (status.isRetweetedByMe() || status.isRetweeted()) {
+                    tweet.setAfterRetweetStatusId(status.getId()); //
                     tweet.setRetweetedByUserId(useId);
                     tweet.setRetweet(true);
                     tweet.setRetweetedByUserName(
-                            context.getString(R.string.tweet_info_retweet_by_me)
+                            context.getString(R.string.tweet_info_retweeted_by_me)
                     );
                 }
                 tweetList.add(tweet);

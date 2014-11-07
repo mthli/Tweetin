@@ -246,7 +246,7 @@ public class TimelineFragment extends ProgressFragment {
         );
         intent.putExtra(
                 getString(R.string.post_status_id),
-                tweetList.get(loaction).getStatusId()
+                tweetList.get(loaction).getOriginalStatusId()
         );
         intent.putExtra(
                 getString(R.string.post_status_screen_name),
@@ -264,7 +264,7 @@ public class TimelineFragment extends ProgressFragment {
         );
         intent.putExtra(
                 getString(R.string.post_status_id),
-                tweetList.get(location).getStatusId()
+                tweetList.get(location).getOriginalStatusId()
         );
         intent.putExtra(
                 getString(R.string.post_status_screen_name),

@@ -2,10 +2,9 @@ package io.github.mthli.Tweetin.Database.Mention;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,9 @@ public class MentionAction {
 
     public void addRecord(MentionRecord record) {
         ContentValues values = new ContentValues();
-        values.put(MentionRecord.STATUS_ID, record.getStatusId());
+        values.put(MentionRecord.ORIGINAL_STATUS_ID, record.getOriginalStatusId());
+        values.put(MentionRecord.AFTER_RETWEET_STATUS_ID, record.getAfterRetweetStatusId());
+        values.put(MentionRecord.AFTER_FAVORITE_STATUS_ID, record.getAfterFavoriteStatusId());
         values.put(MentionRecord.REPLY_TO_STATUS_ID, record.getReplyToStatusId());
         values.put(MentionRecord.USER_ID, record.getUserId());
         values.put(MentionRecord.RETWEETED_BY_USER_ID, record.getRetweetedByUserId());
@@ -63,54 +64,65 @@ public class MentionAction {
         database.insert(MentionRecord.TABLE, null, values);
     }
 
-
-    public void updatedByRetweet(long statusId, boolean retweet) {
-        SharedPreferences preferences = context.getSharedPreferences(
-                context.getString(R.string.sp_name),
-                Context.MODE_PRIVATE
-        );
-        long useId = preferences.getLong(
-                context.getString(R.string.sp_use_id),
-                -1
-        );
-
+    /* Do something */
+    public void updatedByRetweet(Tweet newTweet) {
         ContentValues values = new ContentValues();
-        if (retweet) {
-            values.put(MentionRecord.RETWEET, "true");
-            values.put(MentionRecord.RETWEETED_BY_USER_ID, useId);
+        values.put(
+                MentionRecord.AFTER_RETWEET_STATUS_ID,
+                newTweet.getAfterRetweetStatusId()
+        );
+        values.put(
+                MentionRecord.RETWEETED_BY_USER_ID,
+                newTweet.getRetweetedByUserId()
+        );
+        if (newTweet.isRetweet()) {
             values.put(
-                    MentionRecord.RETWEETED_BY_USER_NAME,
-                    context.getString(R.string.tweet_info_retweet_by_me)
+                    MentionRecord.RETWEET,
+                    "true"
             );
         } else {
-            values.put(MentionRecord.RETWEET, "false");
-            values.put(MentionRecord.RETWEETED_BY_USER_ID, -1);
-            /* Do something */
             values.put(
-                    MentionRecord.RETWEETED_BY_USER_NAME,
-                    (String) null
+                    MentionRecord.RETWEET,
+                    "false"
             );
         }
+        values.put(
+                MentionRecord.RETWEETED_BY_USER_NAME,
+                newTweet.getRetweetedByUserName()
+        );
+
         database.update(
                 MentionRecord.TABLE,
                 values,
-                MentionRecord.STATUS_ID + "=?",
-                new String[] {String.valueOf(statusId)}
+                MentionRecord.ORIGINAL_STATUS_ID + "=?",
+                new String[] {String.valueOf(newTweet.getOriginalStatusId())}
         );
     }
 
-    public void updatedByFavorite(long statusId, boolean favorite) {
+    /* Do something */
+    public void updatedByFavorite(Tweet newTweet) {
         ContentValues values = new ContentValues();
-        if (favorite) {
-            values.put(MentionRecord.FAVORITE, "true");
+        values.put(
+                MentionRecord.AFTER_FAVORITE_STATUS_ID,
+                newTweet.getAfterFavoriteStatusId()
+        );
+        if (newTweet.isFavorite()) {
+            values.put(
+                    MentionRecord.FAVORITE,
+                    "true"
+            );
         } else {
-            values.put(MentionRecord.FAVORITE, "false");
+            values.put(
+                    MentionRecord.FAVORITE,
+                    "false"
+            );
         }
+
         database.update(
                 MentionRecord.TABLE,
                 values,
-                MentionRecord.STATUS_ID + "=?",
-                new String[] {String.valueOf(statusId)}
+                MentionRecord.ORIGINAL_STATUS_ID + "=?",
+                new String[] {String.valueOf(newTweet.getOriginalStatusId())}
         );
     }
 
@@ -120,25 +132,27 @@ public class MentionAction {
 
     private MentionRecord getMentionRecord(Cursor cursor) {
         MentionRecord record = new MentionRecord();
-        record.setStatusId(cursor.getLong(0));
-        record.setReplyToStatusId(cursor.getLong(1));
-        record.setUserId(cursor.getLong(2));
-        record.setRetweetedByUserId(cursor.getLong(3));
-        record.setAvatarURL(cursor.getString(4));
-        record.setCreatedAt(cursor.getString(5));
-        record.setName(cursor.getString(6));
-        record.setScreenName(cursor.getString(7));
+        record.setOriginalStatusId(cursor.getLong(0));
+        record.setAfterRetweetStatusId(cursor.getLong(1));
+        record.setAfterFavoriteStatusId(cursor.getLong(2));
+        record.setReplyToStatusId(cursor.getLong(3));
+        record.setUserId(cursor.getLong(4));
+        record.setRetweetedByUserId(cursor.getLong(5));
+        record.setAvatarURL(cursor.getString(6));
+        record.setCreatedAt(cursor.getString(7));
+        record.setName(cursor.getString(8));
+        record.setScreenName(cursor.getString(9));
         record.setProtect(
-                cursor.getString(8).equals("true")
+                cursor.getString(10).equals("true")
         );
-        record.setCheckIn(cursor.getString(9));
-        record.setText(cursor.getString(10));
+        record.setCheckIn(cursor.getString(11));
+        record.setText(cursor.getString(12));
         record.setRetweet(
-                cursor.getString(11).equals("true")
-        );
-        record.setRetweetedByUserName(cursor.getString(12));
-        record.setFavorite(
                 cursor.getString(13).equals("true")
+        );
+        record.setRetweetedByUserName(cursor.getString(14));
+        record.setFavorite(
+                cursor.getString(15).equals("true")
         );
 
         return record;
@@ -148,7 +162,9 @@ public class MentionAction {
         Cursor cursor = database.query(
                 MentionRecord.TABLE,
                 new String[] {
-                        MentionRecord.STATUS_ID,
+                        MentionRecord.ORIGINAL_STATUS_ID,
+                        MentionRecord.AFTER_RETWEET_STATUS_ID,
+                        MentionRecord.AFTER_FAVORITE_STATUS_ID,
                         MentionRecord.REPLY_TO_STATUS_ID,
                         MentionRecord.USER_ID,
                         MentionRecord.RETWEETED_BY_USER_ID,

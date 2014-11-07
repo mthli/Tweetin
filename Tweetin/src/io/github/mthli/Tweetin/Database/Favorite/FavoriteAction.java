@@ -2,10 +2,9 @@ package io.github.mthli.Tweetin.Database.Favorite;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,9 @@ public class FavoriteAction {
 
     public void addRecord(FavoriteRecord record) {
         ContentValues values = new ContentValues();
-        values.put(FavoriteRecord.STATUS_ID, record.getStatusId());
+        values.put(FavoriteRecord.ORIGINAL_STATUS_ID, record.getOriginalStatusId());
+        values.put(FavoriteRecord.AFTER_RETWEET_STATUS_ID, record.getAfterRetweetStatusId());
+        values.put(FavoriteRecord.AFTER_FAVORITE_STATUS_ID, record.getAfterFavoriteStatusId());
         values.put(FavoriteRecord.REPLY_TO_STATUS_ID, record.getReplyToStatusId());
         values.put(FavoriteRecord.USER_ID, record.getUserId());
         values.put(FavoriteRecord.RETWEETED_BY_USER_ID, record.getRetweetedByUserId());
@@ -64,53 +65,65 @@ public class FavoriteAction {
         database.insert(FavoriteRecord.TABLE, null, values);
     }
 
-    public void updatedByRetweet(long statusId, boolean retweet) {
-        SharedPreferences preferences = context.getSharedPreferences(
-                context.getString(R.string.sp_name),
-                Context.MODE_PRIVATE
-        );
-        long useId = preferences.getLong(
-                context.getString(R.string.sp_use_id),
-                -1
-        );
-
+    /* Do something */
+    public void updatedByRetweet(Tweet newTweet) {
         ContentValues values = new ContentValues();
-        if (retweet) {
-            values.put(FavoriteRecord.RETWEET, "true");
-            values.put(FavoriteRecord.RETWEETED_BY_USER_ID, useId);
+        values.put(
+                FavoriteRecord.AFTER_RETWEET_STATUS_ID,
+                newTweet.getAfterRetweetStatusId()
+        );
+        values.put(
+                FavoriteRecord.RETWEETED_BY_USER_ID,
+                newTweet.getRetweetedByUserId()
+        );
+        if (newTweet.isRetweet()) {
             values.put(
-                    FavoriteRecord.RETWEETED_BY_USER_NAME,
-                    context.getString(R.string.tweet_info_retweet_by_me)
+                    FavoriteRecord.RETWEET,
+                    "true"
             );
         } else {
-            values.put(FavoriteRecord.RETWEET, "false");
-            values.put(FavoriteRecord.RETWEETED_BY_USER_ID, -1);
-            /* Do something */
             values.put(
-                    FavoriteRecord.RETWEETED_BY_USER_NAME,
-                    (String) null
+                    FavoriteRecord.RETWEET,
+                    "false"
             );
         }
+        values.put(
+                FavoriteRecord.RETWEETED_BY_USER_NAME,
+                newTweet.getRetweetedByUserName()
+        );
+
         database.update(
                 FavoriteRecord.TABLE,
                 values,
-                FavoriteRecord.STATUS_ID + "=?",
-                new String[] {String.valueOf(statusId)}
+                FavoriteRecord.ORIGINAL_STATUS_ID + "=?",
+                new String[] {String.valueOf(newTweet.getOriginalStatusId())}
         );
     }
 
-    public void updatedByFavorite(long statusId, boolean favorite) {
+    /* Do something */
+    public void updatedByFavorite(Tweet newTweet) {
         ContentValues values = new ContentValues();
-        if (favorite) {
-            values.put(FavoriteRecord.FAVORITE, "true");
+        values.put(
+                FavoriteRecord.AFTER_FAVORITE_STATUS_ID,
+                newTweet.getAfterFavoriteStatusId()
+        );
+        if (newTweet.isFavorite()) {
+            values.put(
+                    FavoriteRecord.FAVORITE,
+                    "true"
+            );
         } else {
-            values.put(FavoriteRecord.FAVORITE, "false");
+            values.put(
+                    FavoriteRecord.FAVORITE,
+                    "false"
+            );
         }
+
         database.update(
                 FavoriteRecord.TABLE,
                 values,
-                FavoriteRecord.STATUS_ID + "=?",
-                new String[] {String.valueOf(statusId)}
+                FavoriteRecord.ORIGINAL_STATUS_ID + "=?",
+                new String[] {String.valueOf(newTweet.getOriginalStatusId())}
         );
     }
 
@@ -120,25 +133,27 @@ public class FavoriteAction {
 
     private FavoriteRecord getFavoriteRecord(Cursor cursor) {
         FavoriteRecord record = new FavoriteRecord();
-        record.setStatusId(cursor.getLong(0));
-        record.setReplyToStatusId(cursor.getLong(1));
-        record.setUserId(cursor.getLong(2));
-        record.setRetweetedByUserId(cursor.getLong(3));
-        record.setAvatarURL(cursor.getString(4));
-        record.setCreatedAt(cursor.getString(5));
-        record.setName(cursor.getString(6));
-        record.setScreenName(cursor.getString(7));
+        record.setOriginalStatusId(cursor.getLong(0));
+        record.setAfterRetweetStatusId(cursor.getLong(1));
+        record.setAfterFavoriteStatusId(cursor.getLong(2));
+        record.setReplyToStatusId(cursor.getLong(3));
+        record.setUserId(cursor.getLong(4));
+        record.setRetweetedByUserId(cursor.getLong(5));
+        record.setAvatarURL(cursor.getString(6));
+        record.setCreatedAt(cursor.getString(7));
+        record.setName(cursor.getString(8));
+        record.setScreenName(cursor.getString(9));
         record.setProtect(
-                cursor.getString(8).equals("true")
+                cursor.getString(10).equals("true")
         );
-        record.setCheckIn(cursor.getString(9));
-        record.setText(cursor.getString(10));
+        record.setCheckIn(cursor.getString(11));
+        record.setText(cursor.getString(12));
         record.setRetweet(
-                cursor.getString(11).equals("true")
-        );
-        record.setRetweetedByUserName(cursor.getString(12));
-        record.setFavorite(
                 cursor.getString(13).equals("true")
+        );
+        record.setRetweetedByUserName(cursor.getString(14));
+        record.setFavorite(
+                cursor.getString(15).equals("true")
         );
 
         return record;
@@ -148,7 +163,9 @@ public class FavoriteAction {
         Cursor cursor = database.query(
                 FavoriteRecord.TABLE,
                 new String[] {
-                        FavoriteRecord.STATUS_ID,
+                        FavoriteRecord.ORIGINAL_STATUS_ID,
+                        FavoriteRecord.AFTER_RETWEET_STATUS_ID,
+                        FavoriteRecord.AFTER_FAVORITE_STATUS_ID,
                         FavoriteRecord.REPLY_TO_STATUS_ID,
                         FavoriteRecord.USER_ID,
                         FavoriteRecord.RETWEETED_BY_USER_ID,

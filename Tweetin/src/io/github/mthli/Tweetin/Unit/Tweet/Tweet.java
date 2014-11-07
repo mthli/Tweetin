@@ -1,7 +1,9 @@
 package io.github.mthli.Tweetin.Unit.Tweet;
 
 public class Tweet {
-    private long statusId;
+    private long originalStatusId;
+    private long afterRetweetStatusId;
+    private long afterFavoriteStatusId;
     private long replyToStatusId;
     private long userId;
     private long retweetedByUserId;
@@ -17,7 +19,9 @@ public class Tweet {
     private boolean favorite;
 
     public Tweet() {
-        this.statusId = -1;
+        this.originalStatusId = -1;
+        this.afterRetweetStatusId = -1;
+        this.afterFavoriteStatusId = -1;
         this.replyToStatusId = -1;
         this.userId = -1;
         this.retweetedByUserId = -1;
@@ -33,11 +37,11 @@ public class Tweet {
         this.favorite = false;
     }
 
-    public long getStatusId() {
-        return statusId;
+    public long getOriginalStatusId() {
+        return originalStatusId;
     }
-    public void setStatusId(long statusId) {
-        this.statusId = statusId;
+    public void setOriginalStatusId(long originalStatusId) {
+        this.originalStatusId = originalStatusId;
     }
 
     public long getReplyToStatusId() {
@@ -45,6 +49,20 @@ public class Tweet {
     }
     public void setReplyToStatusId(long replyToStatusId) {
         this.replyToStatusId = replyToStatusId;
+    }
+
+    public long getAfterRetweetStatusId() {
+        return afterRetweetStatusId;
+    }
+    public void setAfterRetweetStatusId(long afterRetweetStatusId) {
+        this.afterRetweetStatusId = afterRetweetStatusId;
+    }
+
+    public long getAfterFavoriteStatusId() {
+        return afterFavoriteStatusId;
+    }
+    public void setAfterFavoriteStatusId(long afterFavoriteStatusId) {
+        this.afterFavoriteStatusId = afterFavoriteStatusId;
     }
 
     public long getUserId() {

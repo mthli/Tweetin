@@ -84,7 +84,9 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
             tweetList.clear();
             for (FavoriteRecord record : favoriteRecordList) {
                 Tweet tweet = new Tweet();
-                tweet.setStatusId(record.getStatusId());
+                tweet.setOriginalStatusId(record.getOriginalStatusId());
+                tweet.setAfterRetweetStatusId(record.getAfterRetweetStatusId());
+                tweet.setAfterFavoriteStatusId(record.getAfterFavoriteStatusId());
                 tweet.setReplyToStatusId(record.getReplyToStatusId());
                 tweet.setUserId(record.getUserId());
                 tweet.setRetweetedByUserId(record.getRetweetedByUserId());
@@ -127,7 +129,8 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
         for (twitter4j.Status status : statusList) {
             FavoriteRecord record = new FavoriteRecord();
             if (status.isRetweet()) {
-                record.setStatusId(status.getId());
+                record.setOriginalStatusId(status.getId());
+                record.setAfterRetweetStatusId(-1); //
                 record.setReplyToStatusId(
                         status.getRetweetedStatus().getInReplyToStatusId()
                 );
@@ -163,11 +166,16 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
                 record.setRetweetedByUserName(
                         status.getUser().getName()
                 );
-                record.setFavorite(
-                        status.getRetweetedStatus().isFavorited()
-                );
+                if (status.getRetweetedStatus().isFavorited()) {
+                    record.setAfterFavoriteStatusId(status.getRetweetedStatus().getId()); //
+                    record.setFavorite(true);
+                } else {
+                    record.setAfterFavoriteStatusId(-1); //
+                    record.setFavorite(false);
+                }
             } else {
-                record.setStatusId(status.getId());
+                record.setOriginalStatusId(status.getId());
+                record.setAfterRetweetStatusId(-1); //
                 record.setReplyToStatusId(status.getInReplyToStatusId());
                 record.setUserId(status.getUser().getId());
                 record.setRetweetedByUserId(-1);
@@ -187,13 +195,20 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
                 record.setText(status.getText());
                 record.setRetweet(false);
                 record.setRetweetedByUserName(null);
-                record.setFavorite(status.isFavorited());
+                if (status.isFavorited()) {
+                    record.setAfterFavoriteStatusId(status.getId()); //
+                    record.setFavorite(true);
+                } else {
+                    record.setAfterFavoriteStatusId(-1); //
+                    record.setFavorite(false);
+                }
             }
             if (status.isRetweetedByMe() || status.isRetweeted()) {
+                record.setAfterRetweetStatusId(status.getId()); //
                 record.setRetweetedByUserId(useId);
                 record.setRetweet(true);
                 record.setRetweetedByUserName(
-                        context.getString(R.string.tweet_info_retweet_by_me)
+                        context.getString(R.string.tweet_info_retweeted_by_me)
                 );
             }
             action.addRecord(record);
@@ -223,7 +238,9 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
             tweetList.clear();
             for (FavoriteRecord record : favoriteRecordList) {
                 Tweet tweet = new Tweet();
-                tweet.setStatusId(record.getStatusId());
+                tweet.setOriginalStatusId(record.getOriginalStatusId());
+                tweet.setAfterRetweetStatusId(record.getAfterRetweetStatusId());
+                tweet.setAfterFavoriteStatusId(record.getAfterFavoriteStatusId());
                 tweet.setReplyToStatusId(record.getReplyToStatusId());
                 tweet.setUserId(record.getUserId());
                 tweet.setRetweetedByUserId(record.getRetweetedByUserId());

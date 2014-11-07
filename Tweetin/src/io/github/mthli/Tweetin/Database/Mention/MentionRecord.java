@@ -2,7 +2,9 @@ package io.github.mthli.Tweetin.Database.Mention;
 
 public class MentionRecord {
     public static final String TABLE = "MENTION";
-    public static final String STATUS_ID = "STATUS_ID";
+    public static final String ORIGINAL_STATUS_ID = "ORIGINAL_STATUS_ID";
+    public static final String AFTER_RETWEET_STATUS_ID = "AFTER_RETWEET_STATUS_ID";
+    public static final String AFTER_FAVORITE_STATUS_ID = "AFTER_FAVORITE_STATUS_ID";
     public static final String REPLY_TO_STATUS_ID = "REPLY_TO_STATUS_ID";
     public static final String USER_ID = "USER_ID";
     public static final String RETWEETED_BY_USER_ID = "RETWEETED_BY_USER_ID";
@@ -20,7 +22,9 @@ public class MentionRecord {
     public static final String CREATE_SQL = "CREATE TABLE "
             + TABLE
             + " ("
-            + " " + STATUS_ID + " integer,"
+            + " " + ORIGINAL_STATUS_ID + " integer,"
+            + " " + AFTER_RETWEET_STATUS_ID + " integer,"
+            + " " + AFTER_FAVORITE_STATUS_ID + " integer,"
             + " " + REPLY_TO_STATUS_ID + " integer,"
             + " " + USER_ID + " integer,"
             + " " + RETWEETED_BY_USER_ID + " integer,"
@@ -36,7 +40,9 @@ public class MentionRecord {
             + " " + FAVORITE + " text"
             + ")";
 
-    private long statusId;
+    private long originalStatusId;
+    private long afterRetweetStatusId;
+    private long afterFavoriteStatusId;
     private long replyToStatusId;
     private long userId;
     private long retweetedByUserId;
@@ -52,7 +58,9 @@ public class MentionRecord {
     private String favorite;
 
     public MentionRecord() {
-        this.statusId = -1;
+        this.originalStatusId = -1;
+        this.afterRetweetStatusId = -1;
+        this.afterFavoriteStatusId = -1;
         this.replyToStatusId = -1;
         this.userId = -1;
         this.retweetedByUserId = -1;
@@ -68,11 +76,25 @@ public class MentionRecord {
         this.favorite = null;
     }
 
-    public long getStatusId() {
-        return statusId;
+    public long getOriginalStatusId() {
+        return originalStatusId;
     }
-    public void setStatusId(long statusId) {
-        this.statusId = statusId;
+    public void setOriginalStatusId(long originalStatusId) {
+        this.originalStatusId = originalStatusId;
+    }
+
+    public long getAfterRetweetStatusId() {
+        return afterRetweetStatusId;
+    }
+    public void setAfterRetweetStatusId(long afterRetweetStatusId) {
+        this.afterRetweetStatusId = afterRetweetStatusId;
+    }
+
+    public long getAfterFavoriteStatusId() {
+        return afterFavoriteStatusId;
+    }
+    public void setAfterFavoriteStatusId(long afterFavoriteStatusId) {
+        this.afterFavoriteStatusId = afterFavoriteStatusId;
     }
 
     public long getReplyToStatusId() {

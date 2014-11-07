@@ -5,8 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class TimelineHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "TIMELINE_2.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "TIMELINE_3.db";
+    private static final int DATABASE_VERSION = 3;
 
     public TimelineHelper(Context context) {
         super(
