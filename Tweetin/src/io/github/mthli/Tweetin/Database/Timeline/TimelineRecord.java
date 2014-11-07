@@ -2,9 +2,7 @@ package io.github.mthli.Tweetin.Database.Timeline;
 
 public class TimelineRecord {
     public static final String TABLE = "TIMELINE";
-    public static final String ORIGINAL_STATUS_ID = "ORIGINAL_STATUS_ID";
-    public static final String AFTER_RETWEET_STATUS_ID = "AFTER_RETWEET_STATUS_ID";
-    public static final String AFTER_FAVORITE_STATUS_ID = "AFTER_FAVORITE_STATUS_ID";
+    public static final String STATUS_ID = "STATUS_ID";
     public static final String REPLY_TO_STATUS_ID = "REPLY_TO_STATUS_ID";
     public static final String USER_ID = "USER_ID";
     public static final String RETWEETED_BY_USER_ID = "RETWEETED_BY_USER_ID";
@@ -22,9 +20,7 @@ public class TimelineRecord {
     public static final String CREATE_SQL = "CREATE TABLE "
             + TABLE
             + " ("
-            + " " + ORIGINAL_STATUS_ID + " integer,"
-            + " " + AFTER_RETWEET_STATUS_ID + " integer,"
-            + " " + AFTER_FAVORITE_STATUS_ID + " integer,"
+            + " " + STATUS_ID + " integer,"
             + " " + REPLY_TO_STATUS_ID + " integer,"
             + " " + USER_ID + " integer,"
             + " " + RETWEETED_BY_USER_ID + " integer,"
@@ -40,9 +36,7 @@ public class TimelineRecord {
             + " " + FAVORITE + " text"
             + ")";
 
-    private long originalStatusId;
-    private long afterRetweetStatusId;
-    private long afterFavoriteStatusId;
+    private long statusId;
     private long replyToStatusId;
     private long userId;
     private long retweetedByUserId;
@@ -58,9 +52,7 @@ public class TimelineRecord {
     private String favorite;
 
     public TimelineRecord() {
-        this.originalStatusId = -1;
-        this.afterRetweetStatusId = -1;
-        this.afterFavoriteStatusId = -1;
+        this.statusId = -1;
         this.replyToStatusId = -1;
         this.userId = -1;
         this.retweetedByUserId = -1;
@@ -76,25 +68,11 @@ public class TimelineRecord {
         this.favorite = null;
     }
 
-    public long getOriginalStatusId() {
-        return originalStatusId;
+    public long getStatusId() {
+        return statusId;
     }
-    public void setOriginalStatusId(long originalStatusId) {
-        this.originalStatusId = originalStatusId;
-    }
-    
-    public long getAfterRetweetStatusId() {
-        return afterRetweetStatusId;
-    }
-    public void setAfterRetweetStatusId(long afterRetweetStatusId) {
-        this.afterRetweetStatusId = afterRetweetStatusId;
-    }
-    
-    public long getAfterFavoriteStatusId() {
-        return afterFavoriteStatusId;
-    }
-    public void setAfterFavoriteStatusId(long afterFavoriteStatusId) {
-        this.afterFavoriteStatusId = afterFavoriteStatusId;
+    public void setStatusId(long statusId) {
+        this.statusId = statusId;
     }
 
     public long getReplyToStatusId() {

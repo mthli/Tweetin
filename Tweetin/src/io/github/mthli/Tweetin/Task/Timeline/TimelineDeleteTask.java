@@ -1,4 +1,4 @@
 package io.github.mthli.Tweetin.Task.Timeline;
 
-public class TimelineUnFavoriteTask {
+public class TimelineDeleteTask {
 }

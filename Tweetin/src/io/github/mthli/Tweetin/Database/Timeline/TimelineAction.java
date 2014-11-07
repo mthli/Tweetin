@@ -2,8 +2,10 @@ package io.github.mthli.Tweetin.Database.Timeline;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 
 import java.util.ArrayList;
@@ -33,9 +35,7 @@ public class TimelineAction {
 
     public void addRecord(TimelineRecord record) {
         ContentValues values = new ContentValues();
-        values.put(TimelineRecord.ORIGINAL_STATUS_ID, record.getOriginalStatusId());
-        values.put(TimelineRecord.AFTER_RETWEET_STATUS_ID, record.getAfterRetweetStatusId());
-        values.put(TimelineRecord.AFTER_FAVORITE_STATUS_ID, record.getAfterFavoriteStatusId());
+        values.put(TimelineRecord.STATUS_ID, record.getStatusId());
         values.put(TimelineRecord.REPLY_TO_STATUS_ID, record.getReplyToStatusId());
         values.put(TimelineRecord.USER_ID, record.getUserId());
         values.put(TimelineRecord.RETWEETED_BY_USER_ID, record.getRetweetedByUserId());
@@ -64,65 +64,60 @@ public class TimelineAction {
         database.insert(TimelineRecord.TABLE, null, values);
     }
 
-    /* Do something */
-    public void updatedByRetweet(Tweet newTweet) {
+    public void updatedByRetweet(long statusId) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.sp_name),
+                Context.MODE_PRIVATE
+        );
+        long useId = sharedPreferences.getLong(
+                context.getString(R.string.sp_use_id),
+                -1
+        );
+
         ContentValues values = new ContentValues();
         values.put(
-                TimelineRecord.AFTER_RETWEET_STATUS_ID,
-                newTweet.getAfterRetweetStatusId()
+                TimelineRecord.RETWEETED_BY_USER_ID,
+                useId
         );
         values.put(
-                TimelineRecord.RETWEETED_BY_USER_ID,
-                newTweet.getRetweetedByUserId()
+                TimelineRecord.RETWEET,
+                "true"
         );
-        if (newTweet.isRetweet()) {
-            values.put(
-                    TimelineRecord.RETWEET,
-                    "true"
-            );
-        } else {
-            values.put(
-                    TimelineRecord.RETWEET,
-                    "false"
-            );
-        }
         values.put(
                 TimelineRecord.RETWEETED_BY_USER_NAME,
-                newTweet.getRetweetedByUserName()
+                context.getString(R.string.tweet_info_retweeted_by_me)
         );
 
         database.update(
                 TimelineRecord.TABLE,
                 values,
-                TimelineRecord.ORIGINAL_STATUS_ID + "=?",
-                new String[] {String.valueOf(newTweet.getOriginalStatusId())}
+                TimelineRecord.STATUS_ID + "=?",
+                new String[] {String.valueOf(statusId)}
         );
     }
 
-    /* Do something */
-    public void updatedByFavorite(Tweet newTweet) {
+    public void updatedByFavorite(long statusId) {
         ContentValues values = new ContentValues();
         values.put(
-                TimelineRecord.AFTER_FAVORITE_STATUS_ID,
-                newTweet.getAfterFavoriteStatusId()
+                TimelineRecord.FAVORITE,
+                "true"
         );
-        if (newTweet.isFavorite()) {
-            values.put(
-                    TimelineRecord.FAVORITE,
-                    "true"
-            );
-        } else {
-            values.put(
-                    TimelineRecord.FAVORITE,
-                    "false"
-            );
-        }
-
         database.update(
                 TimelineRecord.TABLE,
                 values,
-                TimelineRecord.ORIGINAL_STATUS_ID + "=?",
-                new String[] {String.valueOf(newTweet.getOriginalStatusId())}
+                TimelineRecord.STATUS_ID + "=?",
+                new String[] {String.valueOf(statusId)}
+        );
+    }
+
+    public void deleteRecord(long statusId) {
+        database.execSQL("DELETE FROM "
+                        + TimelineRecord.TABLE
+                        + " WHERE "
+                        + TimelineRecord.STATUS_ID
+                        + " like \""
+                        + String.valueOf(statusId)
+                        + "\""
         );
     }
 
@@ -132,27 +127,25 @@ public class TimelineAction {
 
     private TimelineRecord getTimelineRecord(Cursor cursor) {
         TimelineRecord record = new TimelineRecord();
-        record.setOriginalStatusId(cursor.getLong(0));
-        record.setAfterRetweetStatusId(cursor.getLong(1));
-        record.setAfterFavoriteStatusId(cursor.getLong(2));
-        record.setReplyToStatusId(cursor.getLong(3));
-        record.setUserId(cursor.getLong(4));
-        record.setRetweetedByUserId(cursor.getLong(5));
-        record.setAvatarURL(cursor.getString(6));
-        record.setCreatedAt(cursor.getString(7));
-        record.setName(cursor.getString(8));
-        record.setScreenName(cursor.getString(9));
+        record.setStatusId(cursor.getLong(0));
+        record.setReplyToStatusId(cursor.getLong(1));
+        record.setUserId(cursor.getLong(2));
+        record.setRetweetedByUserId(cursor.getLong(3));
+        record.setAvatarURL(cursor.getString(4));
+        record.setCreatedAt(cursor.getString(5));
+        record.setName(cursor.getString(6));
+        record.setScreenName(cursor.getString(7));
         record.setProtect(
-                cursor.getString(10).equals("true")
+                cursor.getString(8).equals("true")
         );
-        record.setCheckIn(cursor.getString(11));
-        record.setText(cursor.getString(12));
+        record.setCheckIn(cursor.getString(9));
+        record.setText(cursor.getString(10));
         record.setRetweet(
-                cursor.getString(13).equals("true")
+                cursor.getString(11).equals("true")
         );
-        record.setRetweetedByUserName(cursor.getString(14));
+        record.setRetweetedByUserName(cursor.getString(12));
         record.setFavorite(
-                cursor.getString(15).equals("true")
+                cursor.getString(13).equals("true")
         );
 
         return record;
@@ -162,9 +155,7 @@ public class TimelineAction {
         Cursor cursor = database.query(
                 TimelineRecord.TABLE,
                 new String[] {
-                        TimelineRecord.ORIGINAL_STATUS_ID,
-                        TimelineRecord.AFTER_RETWEET_STATUS_ID,
-                        TimelineRecord.AFTER_FAVORITE_STATUS_ID,
+                        TimelineRecord.STATUS_ID,
                         TimelineRecord.REPLY_TO_STATUS_ID,
                         TimelineRecord.USER_ID,
                         TimelineRecord.RETWEETED_BY_USER_ID,

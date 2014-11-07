@@ -58,22 +58,19 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
         builder.setContentText(oldTweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
-        notificationManager.notify(Flag.POST_NOTIFICATION_ID, notification);
+        notificationManager.notify(Flag.NOTIFICATION_ID, notification);
     }
 
-    private twitter4j.Status status;
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            status = twitter.retweetStatus(oldTweet.getOriginalStatusId());
+            twitter.retweetStatus(oldTweet.getStatusId());
 
             newTweet = new Tweet();
-            newTweet.setOriginalStatusId(oldTweet.getOriginalStatusId());
-            newTweet.setAfterRetweetStatusId(status.getId()); //
-            newTweet.setAfterFavoriteStatusId(oldTweet.getAfterFavoriteStatusId());
+            newTweet.setStatusId(oldTweet.getStatusId());
             newTweet.setReplyToStatusId(oldTweet.getReplyToStatusId());
             newTweet.setUserId(oldTweet.getUserId());
-            newTweet.setRetweetedByUserId(timelineFragment.getUseId()); //
+            newTweet.setRetweetedByUserId(timelineFragment.getUseId());
             newTweet.setAvatarURL(oldTweet.getAvatarURL());
             newTweet.setCreatedAt(oldTweet.getCreatedAt());
             newTweet.setName(oldTweet.getName());
@@ -81,20 +78,42 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             newTweet.setProtect(oldTweet.isProtect());
             newTweet.setCheckIn(oldTweet.getCheckIn());
             newTweet.setText(oldTweet.getText());
-            newTweet.setRetweet(true); //
+            newTweet.setRetweet(true);
             newTweet.setRetweetedByUserName(
-                    context.getString(R.string.tweet_info_retweeted_by_me) //
+                    context.getString(R.string.tweet_info_retweeted_by_me)
             );
             newTweet.setFavorite(oldTweet.isFavorite());
 
             TimelineAction action = new TimelineAction(context);
             action.openDatabase(true);
-            action.updatedByRetweet(newTweet);
+            action.updatedByRetweet(oldTweet.getStatusId());
             action.closeDatabase();
 
-            /* Do something */
+            builder.setSmallIcon(R.drawable.ic_tweet_notification);
+            builder.setTicker(
+                    context.getString(R.string.tweet_notification_retweet_successful)
+            );
+            builder.setContentTitle(
+                    context.getString(R.string.tweet_notification_retweet_successful)
+            );
+            builder.setContentText(oldTweet.getText());
+            Notification notification = builder.build();
+            notification.flags = Notification.FLAG_AUTO_CANCEL;
+            notificationManager.notify(Flag.NOTIFICATION_ID, notification);
+            notificationManager.cancel(Flag.NOTIFICATION_ID);
         } catch (Exception e) {
-            /* Do something */
+            builder.setSmallIcon(R.drawable.ic_tweet_notification);
+            builder.setTicker(
+                    context.getString(R.string.tweet_notification_retweet_failed)
+            );
+            builder.setContentTitle(
+                    context.getString(R.string.tweet_notification_retweet_failed)
+            );
+            builder.setContentText(oldTweet.getText());
+            Notification notification = builder.build();
+            notification.flags = Notification.FLAG_AUTO_CANCEL;
+            notificationManager.notify(Flag.NOTIFICATION_ID, notification);
+
             return false;
         }
 
@@ -117,7 +136,9 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         if (result) {
-            /* Do something */
+            tweetList.remove(position);
+            tweetList.add(position, newTweet);
+            tweetAdapter.notifyDataSetChanged();
         }
     }
 }

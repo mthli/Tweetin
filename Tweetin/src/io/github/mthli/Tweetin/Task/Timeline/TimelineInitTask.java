@@ -85,9 +85,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
             tweetList.clear();
             for (TimelineRecord record : timelineRecordList) {
                 Tweet tweet = new Tweet();
-                tweet.setOriginalStatusId(record.getOriginalStatusId());
-                tweet.setAfterRetweetStatusId(record.getAfterRetweetStatusId());
-                tweet.setAfterFavoriteStatusId(record.getAfterFavoriteStatusId());
+                tweet.setStatusId(record.getStatusId());
                 tweet.setReplyToStatusId(record.getReplyToStatusId());
                 tweet.setUserId(record.getUserId());
                 tweet.setRetweetedByUserId(record.getRetweetedByUserId());
@@ -130,8 +128,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
         for (twitter4j.Status status : statusList) {
             TimelineRecord record = new TimelineRecord();
             if (status.isRetweet()) {
-                record.setOriginalStatusId(status.getId());
-                record.setAfterRetweetStatusId(-1); //
+                record.setStatusId(status.getId());
                 record.setReplyToStatusId(
                         status.getRetweetedStatus().getInReplyToStatusId()
                 );
@@ -167,16 +164,9 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 record.setRetweetedByUserName(
                         status.getUser().getName()
                 );
-                if (status.getRetweetedStatus().isFavorited()) {
-                    record.setAfterFavoriteStatusId(status.getRetweetedStatus().getId()); //
-                    record.setFavorite(true);
-                } else {
-                    record.setAfterFavoriteStatusId(-1); //
-                    record.setFavorite(false);
-                }
+                record.setFavorite(status.getRetweetedStatus().isFavorited());
             } else {
-                record.setOriginalStatusId(status.getId());
-                record.setAfterRetweetStatusId(-1); //
+                record.setStatusId(status.getId());
                 record.setReplyToStatusId(status.getInReplyToStatusId());
                 record.setUserId(status.getUser().getId());
                 record.setRetweetedByUserId(-1);
@@ -196,16 +186,9 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 record.setText(status.getText());
                 record.setRetweet(false);
                 record.setRetweetedByUserName(null);
-                if (status.isFavorited()) {
-                    record.setAfterFavoriteStatusId(status.getId()); //
-                    record.setFavorite(true);
-                } else {
-                    record.setAfterFavoriteStatusId(-1); //
-                    record.setFavorite(false);
-                }
+                record.setFavorite(status.isFavorited());
             }
             if (status.isRetweetedByMe() || status.isRetweeted()) {
-                record.setAfterRetweetStatusId(status.getId()); //
                 record.setRetweetedByUserId(useId);
                 record.setRetweet(true);
                 record.setRetweetedByUserName(
@@ -239,9 +222,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
             tweetList.clear();
             for (TimelineRecord record : timelineRecordList) {
                 Tweet tweet = new Tweet();
-                tweet.setOriginalStatusId(record.getOriginalStatusId());
-                tweet.setAfterRetweetStatusId(record.getAfterRetweetStatusId());
-                tweet.setAfterFavoriteStatusId(record.getAfterFavoriteStatusId());
+                tweet.setStatusId(record.getStatusId());
                 tweet.setReplyToStatusId(record.getReplyToStatusId());
                 tweet.setUserId(record.getUserId());
                 tweet.setRetweetedByUserId(record.getRetweetedByUserId());

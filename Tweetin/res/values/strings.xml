@@ -36,18 +36,8 @@
     <string name="tweet_notification_retweet_failed">
         Retweet failed.
     </string>
-    <!-- UnRetweet -->
-    <string name="tweet_notification_un_retweet_ing">
-        UnRetweeting&#8230;
-    </string>
-    <string name="tweet_notification_un_retweet_successful">
-        UnRetweet successful.
-    </string>
-    <string name="tweet_notification_un_retweet_failed">
-        UnRtweet failed.
-    </string>
     <!-- Favorite -->
-    <string name="tweet_notification_favoriting">
+    <string name="tweet_notification_favorite_ing">
         Favoriting&#8230;
     </string>
     <string name="tweet_notification_favorite_successful">
@@ -55,16 +45,6 @@
     </string>
     <string name="tweet_notification_favorite_failed">
         Favorite failed.
-    </string>
-    <!-- UnFavorite -->
-    <string name="tweet_notification_un_favoriting">
-        UnFavoriting&#8230;
-    </string>
-    <string name="tweet_notification_un_favorite_successful">
-        UnFavorite successful.
-    </string>
-    <string name="tweet_notification_un_favorite_failed">
-        UnFavorite failed.
     </string>
     <!-- Copy -->
     <string name="tweet_copy_label">TWEET_COPY_LABEL</string>
@@ -82,11 +62,15 @@
     <string name="context_menu_item_reply">Reply</string>
     <string name="context_menu_item_delete">Delete</string>
     <string name="context_menu_item_retweet">Retweet</string>
-    <string name="context_menu_item_un_retweet">UnRewteet</string>
     <string name="context_menu_item_quote">Quote</string>
     <string name="context_menu_item_favorite">Favorite</string>
-    <string name="context_menu_item_un_favorite">UnFavorite</string>
     <string name="context_menu_item_copy">Copy</string>
+    <string name="context_toast_already_retweet">
+        Already retweet.
+    </string>
+    <string name="context_toast_already_favorite">
+        Already favorite.
+    </string>
 
     <!-- Splash -->
     <string name="splash_description">

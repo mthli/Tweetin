@@ -11,10 +11,7 @@ import com.devspark.progressfragment.ProgressFragment;
 import com.melnykov.fab.FloatingActionButton;
 import io.github.mthli.Tweetin.Activity.Post.PostActivity;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Task.Timeline.TimelineFavoriteTask;
-import io.github.mthli.Tweetin.Task.Timeline.TimelineInitTask;
-import io.github.mthli.Tweetin.Task.Timeline.TimelineMoreTask;
-import io.github.mthli.Tweetin.Task.Timeline.TimelineRetweetTask;
+import io.github.mthli.Tweetin.Task.Timeline.*;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
@@ -69,6 +66,7 @@ public class TimelineFragment extends ProgressFragment {
 
     private TimelineInitTask timelineInitTask;
     private TimelineMoreTask timelineMoreTask;
+    private TimelineDeleteTask timelineDeleteTask;
     private TimelineRetweetTask timelineRetweetTask;
     private TimelineFavoriteTask timelineFavoriteTask;
     public boolean isSomeTaskRunning() {
@@ -87,10 +85,13 @@ public class TimelineFragment extends ProgressFragment {
         if (timelineMoreTask != null && timelineMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
             timelineMoreTask.cancel(true);
         }
+        /* Do something */
         if (timelineRetweetTask != null && timelineRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
             timelineRetweetTask.cancel(true);
         }
-        /* Do something */
+        if (timelineFavoriteTask != null && timelineFavoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            timelineFavoriteTask.cancel(true);
+        }
     }
 
     @Override
@@ -237,6 +238,7 @@ public class TimelineFragment extends ProgressFragment {
         timelineInitTask.execute();
     }
 
+    private AlertDialog alertDialog;
     private void reply(int loaction) {
         Intent intent = new Intent(getActivity(), PostActivity.class);
         ActivityAnim anim = new ActivityAnim();
@@ -246,7 +248,7 @@ public class TimelineFragment extends ProgressFragment {
         );
         intent.putExtra(
                 getString(R.string.post_status_id),
-                tweetList.get(loaction).getOriginalStatusId()
+                tweetList.get(loaction).getStatusId()
         );
         intent.putExtra(
                 getString(R.string.post_status_screen_name),
@@ -264,7 +266,7 @@ public class TimelineFragment extends ProgressFragment {
         );
         intent.putExtra(
                 getString(R.string.post_status_id),
-                tweetList.get(location).getOriginalStatusId()
+                tweetList.get(location).getStatusId()
         );
         intent.putExtra(
                 getString(R.string.post_status_screen_name),
@@ -276,22 +278,6 @@ public class TimelineFragment extends ProgressFragment {
         );
         startActivity(intent);
         anim.fade(getActivity());
-    }
-    /* Do something */
-    private void multipleAtTwo(int flag) {
-        switch (flag) {
-            case Flag.STATUS_NONE:
-                /* Do something */
-                break;
-            case Flag.STATUS_RETWEETED_BY_ME:
-                /* Do something */
-                break;
-            case Flag.STATUS_SENT_BY_ME:
-                /* Do something */
-                break;
-            default:
-                break;
-        }
     }
     private void clip(int location) {
         ClipboardManager manager = (ClipboardManager) getActivity()
@@ -308,6 +294,29 @@ public class TimelineFragment extends ProgressFragment {
                 Toast.LENGTH_SHORT
         ).show();
     }
+    private void multipleAtTwo(int flag, int location) {
+        switch (flag) {
+            case Flag.STATUS_NONE:
+                timelineRetweetTask = new TimelineRetweetTask(
+                        TimelineFragment.this,
+                        location
+                );
+                timelineRetweetTask.execute();
+                break;
+            case Flag.STATUS_RETWEETED_BY_ME:
+                Toast.makeText(
+                        getActivity(),
+                        R.string.context_toast_already_retweet,
+                        Toast.LENGTH_SHORT
+                ).show();
+                break;
+            case Flag.STATUS_SENT_BY_ME:
+                /* Do something */
+                break;
+            default:
+                break;
+        }
+    }
     private void showItemLongClickDialog(final int location) {
         LinearLayout linearLayout = (LinearLayout) getActivity()
                 .getLayoutInflater().inflate(
@@ -321,10 +330,9 @@ public class TimelineFragment extends ProgressFragment {
         final Tweet tweet = tweetList.get(location);
         menuItemList.add(getString(R.string.context_menu_item_reply));
         menuItemList.add(getString(R.string.context_menu_item_quote));
-        /* DO something */
-        if (tweet.getRetweetedByUserId() != -1 && tweet.getRetweetedByUserId() == useId){
+        if (tweet.getRetweetedByUserId() != -1 && tweet.getRetweetedByUserId() == useId) {
             flag = Flag.STATUS_RETWEETED_BY_ME;
-            menuItemList.add(getString(R.string.context_menu_item_un_retweet));
+            menuItemList.add(getString(R.string.context_menu_item_retweet));
         } else {
             if (tweet.getUserId() != useId) {
                 flag = Flag.STATUS_NONE;
@@ -334,11 +342,7 @@ public class TimelineFragment extends ProgressFragment {
                 menuItemList.add(getString(R.string.context_menu_item_delete));
             }
         }
-        if (!tweet.isFavorite()) {
-            menuItemList.add(getString(R.string.context_menu_item_favorite));
-        } else {
-            menuItemList.add(getString(R.string.context_menu_item_un_favorite));
-        }
+        menuItemList.add(getString(R.string.context_menu_item_favorite));
         menuItemList.add(getString(R.string.context_menu_item_copy));
 
         ContextMenuAdapter contextMenuAdapter = new ContextMenuAdapter(
@@ -352,7 +356,7 @@ public class TimelineFragment extends ProgressFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setView(linearLayout);
         builder.setCancelable(true);
-        final AlertDialog alertDialog = builder.create();
+        alertDialog = builder.create();
         alertDialog.show();
 
         menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -370,15 +374,23 @@ public class TimelineFragment extends ProgressFragment {
                         alertDialog.dismiss();
                         break;
                     case 2:
-                        multipleAtTwo(flag);
+                        multipleAtTwo(flag, location);
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
                     case 3:
                         if (!tweet.isFavorite()) {
-                            /* Do something */
+                            timelineFavoriteTask = new TimelineFavoriteTask(
+                                    TimelineFragment.this,
+                                    location
+                            );
+                            timelineFavoriteTask.execute();
                         } else {
-                            /* Do something */
+                            Toast.makeText(
+                                    getActivity(),
+                                    R.string.context_toast_already_favorite,
+                                    Toast.LENGTH_SHORT
+                            ).show();
                         }
                         alertDialog.hide();
                         alertDialog.dismiss();
