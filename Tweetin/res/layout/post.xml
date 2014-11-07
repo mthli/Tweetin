@@ -37,17 +37,17 @@
                           android:textOn="">
             </ToggleButton>
 
-            <Button android:id="@+id/post_sent_button"
+            <Button android:id="@+id/post_send_button"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/post_sent_button_selector">
+                    android:background="@drawable/post_send_button_selector">
             </Button>
 
             <TextView android:id="@+id/post_count_words"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:layout_toLeftOf="@id/post_sent_button"
+                      android:layout_toLeftOf="@id/post_send_button"
                       android:layout_marginTop="7dp"
                       android:layout_marginRight="8dp"
                       android:background="@color/transparent"

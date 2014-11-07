@@ -64,7 +64,7 @@ public class MentionAction {
     }
 
 
-    public void updatedByRetweet(long statusId) {
+    public void updatedByRetweet(long statusId, boolean retweet) {
         SharedPreferences preferences = context.getSharedPreferences(
                 context.getString(R.string.sp_name),
                 Context.MODE_PRIVATE
@@ -75,12 +75,22 @@ public class MentionAction {
         );
 
         ContentValues values = new ContentValues();
-        values.put(MentionRecord.RETWEET, "true");
-        values.put(MentionRecord.RETWEETED_BY_USER_ID, useId);
-        values.put(
-                MentionRecord.RETWEETED_BY_USER_NAME,
-                context.getString(R.string.tweet_info_retweet_by_me)
-        );
+        if (retweet) {
+            values.put(MentionRecord.RETWEET, "true");
+            values.put(MentionRecord.RETWEETED_BY_USER_ID, useId);
+            values.put(
+                    MentionRecord.RETWEETED_BY_USER_NAME,
+                    context.getString(R.string.tweet_info_retweet_by_me)
+            );
+        } else {
+            values.put(MentionRecord.RETWEET, "false");
+            values.put(MentionRecord.RETWEETED_BY_USER_ID, -1);
+            /* Do something */
+            values.put(
+                    MentionRecord.RETWEETED_BY_USER_NAME,
+                    (String) null
+            );
+        }
         database.update(
                 MentionRecord.TABLE,
                 values,

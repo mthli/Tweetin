@@ -20,7 +20,7 @@
                  android:largeHeap="true">
 
         <!-- SplashActivity -->
-        <activity android:name=".Splash.SplashActivity"
+        <activity android:name=".Activity.Splash.SplashActivity"
                   android:label="@string/app_name"
                   android:icon="@drawable/ic_launcher"
                   android:theme="@style/SplashActivityTheme"
@@ -33,13 +33,13 @@
         </activity>
 
         <!-- MainActivity -->
-        <activity android:name=".Main.MainActivity"
+        <activity android:name=".Activity.Main.MainActivity"
                   android:theme="@style/MainActivityTheme"
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 
         <!-- PostActivity -->
-        <activity android:name=".Post.PostActivity"
+        <activity android:name=".Activity.Post.PostActivity"
                   android:theme="@style/PostActivityTheme"
                   android:windowSoftInputMode="adjustResize|stateAlwaysVisible"
                   android:configChanges="orientation|keyboardHidden|screenSize">

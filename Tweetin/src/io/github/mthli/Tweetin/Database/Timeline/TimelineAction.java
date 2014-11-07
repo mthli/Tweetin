@@ -63,7 +63,7 @@ public class TimelineAction {
         database.insert(TimelineRecord.TABLE, null, values);
     }
 
-    public void updatedByRetweet(long statusId) {
+    public void updatedByRetweet(long statusId, boolean retweet) {
         SharedPreferences preferences = context.getSharedPreferences(
                 context.getString(R.string.sp_name),
                 Context.MODE_PRIVATE
@@ -74,12 +74,22 @@ public class TimelineAction {
         );
 
         ContentValues values = new ContentValues();
-        values.put(TimelineRecord.RETWEET, "true");
-        values.put(TimelineRecord.RETWEETED_BY_USER_ID, useId);
-        values.put(
-                TimelineRecord.RETWEETED_BY_USER_NAME,
-                context.getString(R.string.tweet_info_retweet_by_me)
-        );
+        if (retweet) {
+            values.put(TimelineRecord.RETWEET, "true");
+            values.put(TimelineRecord.RETWEETED_BY_USER_ID, useId);
+            values.put(
+                    TimelineRecord.RETWEETED_BY_USER_NAME,
+                    context.getString(R.string.tweet_info_retweet_by_me)
+            );
+        } else {
+            values.put(TimelineRecord.RETWEET, "false");
+            values.put(TimelineRecord.RETWEETED_BY_USER_ID, -1);
+            /* Do something */
+            values.put(
+                    TimelineRecord.RETWEETED_BY_USER_NAME,
+                    (String) null
+            );
+        }
         database.update(
                 TimelineRecord.TABLE,
                 values,

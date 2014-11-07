@@ -64,7 +64,7 @@ public class FavoriteAction {
         database.insert(FavoriteRecord.TABLE, null, values);
     }
 
-    public void updatedByRetweet(long statusId) {
+    public void updatedByRetweet(long statusId, boolean retweet) {
         SharedPreferences preferences = context.getSharedPreferences(
                 context.getString(R.string.sp_name),
                 Context.MODE_PRIVATE
@@ -75,12 +75,22 @@ public class FavoriteAction {
         );
 
         ContentValues values = new ContentValues();
-        values.put(FavoriteRecord.RETWEET, "true");
-        values.put(FavoriteRecord.RETWEETED_BY_USER_ID, useId);
-        values.put(
-                FavoriteRecord.RETWEETED_BY_USER_NAME,
-                context.getString(R.string.tweet_info_retweet_by_me)
-        );
+        if (retweet) {
+            values.put(FavoriteRecord.RETWEET, "true");
+            values.put(FavoriteRecord.RETWEETED_BY_USER_ID, useId);
+            values.put(
+                    FavoriteRecord.RETWEETED_BY_USER_NAME,
+                    context.getString(R.string.tweet_info_retweet_by_me)
+            );
+        } else {
+            values.put(FavoriteRecord.RETWEET, "false");
+            values.put(FavoriteRecord.RETWEETED_BY_USER_ID, -1);
+            /* Do something */
+            values.put(
+                    FavoriteRecord.RETWEETED_BY_USER_NAME,
+                    (String) null
+            );
+        }
         database.update(
                 FavoriteRecord.TABLE,
                 values,

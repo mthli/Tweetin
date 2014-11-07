@@ -21,12 +21,7 @@
     </string>
     <string name="tweet_info_retweet_by_me">Me</string>
     <string name="tweet_info_favorite">Favorite</string>
-    <string name="tweet_menu_reply">Reply</string>
-    <string name="tweet_menu_retweet">Retweet</string>
-    <string name="tweet_menu_quote">Quote</string>
-    <string name="tweet_menu_favorite">Favorite</string>
-    <string name="tweet_menu_un_favorite">UnFavorite</string>
-    <string name="tweet_menu_copy">Copy</string>
+    <!-- Do something with reply -->
     <string name="tweet_notification_rewteet_ing">
         Retweeting&#8230;
     </string>
@@ -47,6 +42,15 @@
     <string name="reside_menu_item_favorite">Favorite</string>
     <string name="reside_menu_item_discovery">Discovery</string>
     <string name="reside_menu_item_setting">Setting</string>
+    <!-- ContextMenu -->
+    <string name="context_menu_item_reply">Reply</string>
+    <string name="context_menu_item_delete">Delete</string>
+    <string name="context_menu_item_retweet">Retweet</string>
+    <string name="context_menu_item_un_retweet">UnRewteet</string>
+    <string name="context_menu_item_quote">Quote</string>
+    <string name="context_menu_item_favorite">Favorite</string>
+    <string name="context_menu_item_un_favorite">UnFavorite</string>
+    <string name="context_menu_item_copy">Copy</string>
 
     <!-- Splash -->
     <string name="splash_description">
