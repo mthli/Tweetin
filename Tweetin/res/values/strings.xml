@@ -23,8 +23,14 @@
     <string name="tweet_info_favorite">Favorite</string>
     <!-- Do something with reply -->
     <!-- Delete -->
+    <string name="tweet_notification_delete_ing">
+        Deleting&#8230;
+    </string>
     <string name="tweet_notification_delete_successful">
         Delete successful.
+    </string>
+    <string name="tweet_notification_delete_failed">
+        Delete failed.
     </string>
     <!-- Retweet -->
     <string name="tweet_notification_rewteet_ing">

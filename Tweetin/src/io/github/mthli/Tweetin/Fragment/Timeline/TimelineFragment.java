@@ -85,7 +85,9 @@ public class TimelineFragment extends ProgressFragment {
         if (timelineMoreTask != null && timelineMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
             timelineMoreTask.cancel(true);
         }
-        /* Do something */
+        if (timelineDeleteTask != null && timelineDeleteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            timelineDeleteTask.cancel(true);
+        }
         if (timelineRetweetTask != null && timelineRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
             timelineRetweetTask.cancel(true);
         }
@@ -311,7 +313,11 @@ public class TimelineFragment extends ProgressFragment {
                 ).show();
                 break;
             case Flag.STATUS_SENT_BY_ME:
-                /* Do something */
+                timelineDeleteTask = new TimelineDeleteTask(
+                        TimelineFragment.this,
+                        location
+                );
+                timelineDeleteTask.execute();
                 break;
             default:
                 break;

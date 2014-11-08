@@ -64,7 +64,6 @@ public class FavoriteAction {
         database.insert(FavoriteRecord.TABLE, null, values);
     }
 
-    /* Do something */
     public void updatedByRetweet(long statusId) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.sp_name),
@@ -97,7 +96,6 @@ public class FavoriteAction {
         );
     }
 
-    /* Do something */
     public void updatedByFavorite(long statusId) {
         ContentValues values = new ContentValues();
         values.put(
@@ -109,6 +107,17 @@ public class FavoriteAction {
                 values,
                 FavoriteRecord.STATUS_ID + "=?",
                 new String[] {String.valueOf(statusId)}
+        );
+    }
+
+    public void deleteRecord(long statusId) {
+        database.execSQL("DELETE FROM "
+                        + FavoriteRecord.TABLE
+                        + " WHERE "
+                        + FavoriteRecord.STATUS_ID
+                        + " like \""
+                        + String.valueOf(statusId)
+                        + "\""
         );
     }
 

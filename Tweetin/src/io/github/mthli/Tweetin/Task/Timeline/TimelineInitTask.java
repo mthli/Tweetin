@@ -70,11 +70,25 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
         ) {
             isFirstSignIn = true;
             timelineFragment.setContentShown(false);
+
+            System.out.println("--------------");
+            System.out.println("XXXXXXXXXXXXXX");
+            System.out.println("--------------");
+
         } else {
             isFirstSignIn = false;
             if (!swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(true);
+
+                System.out.println("--------------");
+                System.out.println("KKKKKKKKKKKKKK");
+                System.out.println("--------------");
             }
+
+            System.out.println("--------------");
+            System.out.println("OOOOOOOOOOOOOO");
+            System.out.println("--------------");
+
         }
 
         if (!isPullToRefresh) {

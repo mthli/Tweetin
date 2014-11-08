@@ -63,7 +63,6 @@ public class MentionAction {
         database.insert(MentionRecord.TABLE, null, values);
     }
 
-    /* Do something */
     public void updatedByRetweet(long statusId) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.sp_name),
@@ -96,7 +95,6 @@ public class MentionAction {
         );
     }
 
-    /* Do something */
     public void updatedByFavorite(long statusId) {
         ContentValues values = new ContentValues();
         values.put(
@@ -108,6 +106,17 @@ public class MentionAction {
                 values,
                 MentionRecord.STATUS_ID + "=?",
                 new String[] {String.valueOf(statusId)}
+        );
+    }
+
+    public void deleteRecord(long statusId) {
+        database.execSQL("DELETE FROM "
+                        + MentionRecord.TABLE
+                        + " WHERE "
+                        + MentionRecord.STATUS_ID
+                        + " like \""
+                        + String.valueOf(statusId)
+                        + "\""
         );
     }
 
