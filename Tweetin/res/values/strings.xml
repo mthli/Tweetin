@@ -115,15 +115,15 @@
 
     <!-- Timeline -->
     <string name="timeline_error_get_timeline_failed">
-        Get timeline failed, pull to refresh.
+        Get timeline failed.
     </string>
     <!-- Mention -->
     <string name="mention_error_get_mention_failed">
-        Get mention failed, pull to refresh.
+        Get mention failed.
     </string>
     <!-- Favorite -->
     <string name="favorite_error_get_favorite_failed">
-        Get favorite failed, pull to refresh.
+        Get favorite failed.
     </string>
 
     <!-- Post -->

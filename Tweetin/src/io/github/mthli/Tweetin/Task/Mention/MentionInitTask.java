@@ -2,8 +2,10 @@ package io.github.mthli.Tweetin.Task.Mention;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.Display;
 import io.github.mthli.Tweetin.Database.Mention.MentionAction;
 import io.github.mthli.Tweetin.Database.Mention.MentionRecord;
 import io.github.mthli.Tweetin.Fragment.Mention.MentionFragment;

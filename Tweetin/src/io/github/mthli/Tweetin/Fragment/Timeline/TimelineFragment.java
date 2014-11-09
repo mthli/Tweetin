@@ -2,9 +2,11 @@ package io.github.mthli.Tweetin.Fragment.Timeline;
 
 import android.app.AlertDialog;
 import android.content.*;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.Display;
 import android.view.View;
 import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
@@ -151,6 +153,18 @@ public class TimelineFragment extends ProgressFragment {
                 R.color.secondary_text,
                 R.color.text,
                 R.color.secondary_text
+        );
+        /* Just working now */
+        Display display = getActivity()
+                .getWindowManager()
+                .getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int height = size.y;
+        swipeRefreshLayout.setProgressViewOffset(
+                false,
+                0,
+                height / 10
         );
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

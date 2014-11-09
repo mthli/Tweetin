@@ -2,8 +2,10 @@ package io.github.mthli.Tweetin.Task.Timeline;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.Display;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineRecord;
 import io.github.mthli.Tweetin.Fragment.Timeline.TimelineFragment;
@@ -70,25 +72,11 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
         ) {
             isFirstSignIn = true;
             timelineFragment.setContentShown(false);
-
-            System.out.println("--------------");
-            System.out.println("XXXXXXXXXXXXXX");
-            System.out.println("--------------");
-
         } else {
             isFirstSignIn = false;
             if (!swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(true);
-
-                System.out.println("--------------");
-                System.out.println("KKKKKKKKKKKKKK");
-                System.out.println("--------------");
             }
-
-            System.out.println("--------------");
-            System.out.println("OOOOOOOOOOOOOO");
-            System.out.println("--------------");
-
         }
 
         if (!isPullToRefresh) {

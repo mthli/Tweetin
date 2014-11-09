@@ -4,6 +4,8 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
+import io.github.mthli.Tweetin.Database.Favorite.FavoriteAction;
+import io.github.mthli.Tweetin.Database.Mention.MentionAction;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
 import io.github.mthli.Tweetin.Fragment.Timeline.TimelineFragment;
 import io.github.mthli.Tweetin.R;
@@ -86,8 +88,16 @@ public class TimelineRetweetTask extends AsyncTask<Void, Integer, Boolean> {
 
             TimelineAction action = new TimelineAction(context);
             action.openDatabase(true);
-            action.updatedByRetweet(oldTweet.getStatusId());
+            action.updatedByRetweet(oldTweet.getStatusId()); //
             action.closeDatabase();
+            MentionAction mentionAction = new MentionAction(context);
+            mentionAction.openDatabase(true);
+            mentionAction.updatedByRetweet(oldTweet.getStatusId()); //
+            mentionAction.closeDatabase();
+            FavoriteAction favoriteAction = new FavoriteAction(context);
+            favoriteAction.openDatabase(true);
+            favoriteAction.updatedByRetweet(oldTweet.getStatusId()); //
+            favoriteAction.closeDatabase();
 
             builder.setSmallIcon(R.drawable.ic_tweet_notification);
             builder.setTicker(

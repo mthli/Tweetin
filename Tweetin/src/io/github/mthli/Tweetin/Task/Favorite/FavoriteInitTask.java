@@ -2,8 +2,10 @@ package io.github.mthli.Tweetin.Task.Favorite;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.Display;
 import io.github.mthli.Tweetin.Database.Favorite.FavoriteAction;
 import io.github.mthli.Tweetin.Database.Favorite.FavoriteRecord;
 import io.github.mthli.Tweetin.Fragment.Favorite.FavoriteFragment;
