@@ -22,4 +22,9 @@
         <!-- Do nothing -->
     </style>
 
+    <!-- ProfileActivity -->
+    <style name="ProfileActivityTheme" parent="android:Theme.DeviceDefault.Light.NoActionBar">
+        <!-- Do nothing -->
+    </style>
+
 </resources>

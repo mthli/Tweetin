@@ -220,7 +220,7 @@ public class SplashActivity extends Activity {
         /* Ripple Effect */
         MaterialRippleLayout.on(signIn)
                 .rippleOverlay(true)
-                .rippleColor(getResources().getColor(R.color.black))
+                .rippleColor(getResources().getColor(R.color.text))
                 .rippleAlpha(0.1f)
                 .rippleDiameterDp(10)
                 .rippleDuration(350)

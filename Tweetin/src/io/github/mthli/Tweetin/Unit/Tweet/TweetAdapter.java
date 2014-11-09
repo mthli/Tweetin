@@ -2,6 +2,7 @@ package io.github.mthli.Tweetin.Unit.Tweet;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +11,29 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.mthli.Tweetin.Activity.ProfileActivity;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 public class TweetAdapter extends ArrayAdapter<Tweet> {
+    private Activity activity;
     private Context context;
     private int layoutResId;
     private List<Tweet> tweetList;
 
     public TweetAdapter(
+            Activity activity,
             Context context,
             int layoutResId,
             List<Tweet> tweetList
     ) {
         super(context, layoutResId, tweetList);
 
+        this.activity = activity;
         this.context = context;
         this.layoutResId = layoutResId;
         this.tweetList = tweetList;
@@ -99,7 +105,14 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         holder.avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /* Do something */
+                Intent intent = new Intent(context, ProfileActivity.class);
+                intent.putExtra(
+                        context.getString(R.string.profile_user_id),
+                        tweet.getUserId()
+                );
+                ActivityAnim anim = new ActivityAnim();
+                context.startActivity(intent);
+                anim.rightIn(activity);
             }
         });
 

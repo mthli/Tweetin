@@ -52,15 +52,15 @@
     <string name="tweet_notification_add_favorite_failed">
         Add favorite failed.
     </string>
-    <!-- Cancel favorite -->
-    <string name="tweet_notification_cancel_favorite_ing">
-        Cancelling favorite&#8230;
+    <!-- UnFavorite -->
+    <string name="tweet_notification_un_favorite_ing">
+        UnFavoriting&#8230;
     </string>
-    <string name="tweet_notification_cancel_favorite_successful">
-        Cancel favorite successful.
+    <string name="tweet_notification_un_favorite_successful">
+        UnFavorite successful.
     </string>
-    <string name="tweet_notification_cancel_favorite_failed">
-        Cancel favorite failed.
+    <string name="tweet_notification_un_favorite_failed">
+        UnFavorite failed.
     </string>
     <!-- Copy -->
     <string name="tweet_copy_label">TWEET_COPY_LABEL</string>
@@ -80,7 +80,7 @@
     <string name="context_menu_item_retweet">Retweet</string>
     <string name="context_menu_item_quote">Quote</string>
     <string name="context_menu_item_favorite">Favorite</string>
-    <string name="context_menu_item_cancel">Cancel</string>
+    <string name="context_menu_item_un_favorite">UnFavorite</string>
     <string name="context_menu_item_copy">Copy</string>
     <string name="context_toast_already_retweet">
         Already retweet.
@@ -156,6 +156,32 @@
     </string>
     <string name="post_notification_post_failed">
         Post failed.
+    </string>
+
+    <!-- Profile -->
+    <string name="profile_user_id">PROFILE_USER_ID</string>
+    <string name="profile_error_get_user_profile_failed">
+        Get user profile failed.
+    </string>
+    <string name="profile_follow">Follow</string>
+    <string name="profile_un_follow">UnFollow</string>
+    <string name="profile_notification_follow_ing">
+        Following&#8230;
+    </string>
+    <string name="profile_notification_follow_successful">
+        Follow successful.
+    </string>
+    <string name="profile_notification_follow_failed">
+        Follow failed.
+    </string>
+    <string name="profile_notification_un_follow_ing">
+        UnFollowing&#8230;
+    </string>
+    <string name="profile_notification_un_follow_successful">
+        UnFollow successful.
+    </string>
+    <string name="profile_notification_un_follow_failed">
+        UnFollow failed.
     </string>
 
 </resources>

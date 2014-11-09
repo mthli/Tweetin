@@ -143,6 +143,7 @@ public class MentionFragment extends ProgressFragment {
         ListView listView = (ListView) view
                 .findViewById(R.id.mention_fragment_listview);
         tweetAdapter = new TweetAdapter(
+                getActivity(),
                 view.getContext(),
                 R.layout.tweet,
                 tweetList

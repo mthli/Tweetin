@@ -51,10 +51,10 @@ public class FavoriteCancelTask extends AsyncTask<Void, Integer, Boolean> {
         builder = new Notification.Builder(context);
         builder.setSmallIcon(R.drawable.ic_tweet_notification);
         builder.setTicker(
-                context.getString(R.string.tweet_notification_cancel_favorite_ing)
+                context.getString(R.string.tweet_notification_un_favorite_ing)
         );
         builder.setContentTitle(
-                context.getString(R.string.tweet_notification_cancel_favorite_ing)
+                context.getString(R.string.tweet_notification_un_favorite_ing)
         );
         builder.setContentText(oldTweet.getText());
         Notification notification = builder.build();
@@ -82,10 +82,10 @@ public class FavoriteCancelTask extends AsyncTask<Void, Integer, Boolean> {
 
             builder.setSmallIcon(R.drawable.ic_tweet_notification);
             builder.setTicker(
-                    context.getString(R.string.tweet_notification_cancel_favorite_successful)
+                    context.getString(R.string.tweet_notification_un_favorite_successful)
             );
             builder.setContentTitle(
-                    context.getString(R.string.tweet_notification_cancel_favorite_successful)
+                    context.getString(R.string.tweet_notification_un_favorite_successful)
             );
             builder.setContentText(oldTweet.getText());
             Notification notification = builder.build();
@@ -95,10 +95,10 @@ public class FavoriteCancelTask extends AsyncTask<Void, Integer, Boolean> {
         } catch (Exception e) {
             builder.setSmallIcon(R.drawable.ic_tweet_notification);
             builder.setTicker(
-                    context.getString(R.string.tweet_notification_cancel_favorite_failed)
+                    context.getString(R.string.tweet_notification_un_favorite_failed)
             );
             builder.setContentTitle(
-                    context.getString(R.string.tweet_notification_cancel_favorite_failed)
+                    context.getString(R.string.tweet_notification_un_favorite_failed)
             );
             builder.setContentText(oldTweet.getText());
             Notification notification = builder.build();

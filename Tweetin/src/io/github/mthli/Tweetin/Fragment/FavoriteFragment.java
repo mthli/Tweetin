@@ -138,6 +138,7 @@ public class FavoriteFragment extends ProgressFragment {
         ListView listView = (ListView) view
                 .findViewById(R.id.favorite_fragment_listview);
         tweetAdapter = new TweetAdapter(
+                getActivity(),
                 view.getContext(),
                 R.layout.tweet,
                 tweetList
@@ -332,7 +333,7 @@ public class FavoriteFragment extends ProgressFragment {
                 menuItemList.add(getString(R.string.context_menu_item_delete));
             }
         }
-        menuItemList.add(getString(R.string.context_menu_item_cancel));
+        menuItemList.add(getString(R.string.context_menu_item_un_favorite));
         menuItemList.add(getString(R.string.context_menu_item_copy));
 
         ContextMenuAdapter contextMenuAdapter = new ContextMenuAdapter(

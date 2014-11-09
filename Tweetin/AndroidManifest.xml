@@ -45,6 +45,11 @@
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 
+        <!-- ProfileActivity -->
+        <activity android:name=".Activity.ProfileActivity"
+                  android:theme="@style/ProfileActivityTheme"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
 
     </application>
 </manifest>
