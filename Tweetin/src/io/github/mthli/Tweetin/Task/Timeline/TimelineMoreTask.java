@@ -3,7 +3,7 @@ package io.github.mthli.Tweetin.Task.Timeline;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
-import io.github.mthli.Tweetin.Fragment.Timeline.TimelineFragment;
+import io.github.mthli.Tweetin.Fragment.TimelineFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;

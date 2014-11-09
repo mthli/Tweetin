@@ -20,10 +20,11 @@ public class Flag {
     public static final int STATUS_RETWEETED_BY_ME = 0x301;
     public static final int STATUS_SENT_BY_ME = 0x302;
 
-    public static final int NOTIFICATION_ID = 0x400;
+    public static final int NOTIFICATION_PROGRESS_ID = 0x400;
+    public static final int NOTIFICATION_MENTION_ID = 0x401;
 
-    public static final int POST_ORIGINAL = 0x401;
-    public static final int POST_REPLY = 0x402;
-    public static final int POST_QUOTE = 0x403;
-    public static final int POST_PHOTO = 0x404;
+    public static final int POST_ORIGINAL = 0x402;
+    public static final int POST_REPLY = 0x403;
+    public static final int POST_QUOTE = 0x404;
+    public static final int POST_PHOTO = 0x405;
 }

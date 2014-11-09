@@ -1,14 +1,14 @@
 package io.github.mthli.Tweetin.Task.Timeline;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.Display;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineRecord;
-import io.github.mthli.Tweetin.Fragment.Timeline.TimelineFragment;
+import io.github.mthli.Tweetin.Fragment.TimelineFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
@@ -31,6 +31,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
     private List<Tweet> tweetList;
     private List<TimelineRecord> timelineRecordList = new ArrayList<TimelineRecord>();
 
+    private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isFirstSignIn;
@@ -59,11 +60,10 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
         tweetAdapter = timelineFragment.getTweetAdapter();
         tweetList = timelineFragment.getTweetList();
 
-        SharedPreferences sharedPreferences = timelineFragment.getSharedPreferences();
+        sharedPreferences = timelineFragment.getSharedPreferences();
         editor = sharedPreferences.edit();
         swipeRefreshLayout = timelineFragment.getSwipeRefreshLayout();
 
-        /* Do something */
         if (
                 sharedPreferences.getBoolean(
                         context.getString(R.string.sp_is_timeline_first),
@@ -107,12 +107,16 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
+    private twitter4j.Status mention;
     @Override
     protected Boolean doInBackground(Void... params) {
         List<twitter4j.Status> statusList;
         try {
             Paging paging = new Paging(1, 40);
             statusList = twitter.getHomeTimeline(paging);
+            paging = new Paging(1, 1);
+            List<twitter4j.Status> list = twitter.getMentionsTimeline(paging);
+            mention = list.get(0);
         } catch (Exception e) {
             return false;
         }
@@ -254,8 +258,27 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 swipeRefreshLayout.setRefreshing(false);
             }
 
-            /* Do something with Mention */
-
+            long latestMentionId = sharedPreferences.getLong(
+                    context.getString(R.string.sp_latest_mention_id),
+                    -1
+            );
+            if (mention.getId() > latestMentionId) {
+                NotificationManager manager = (NotificationManager) context
+                        .getSystemService(Context.NOTIFICATION_SERVICE);
+                Notification.Builder builder = new Notification.Builder(context);
+                builder.setSmallIcon(R.drawable.ic_tweet_notification);
+                builder.setTicker(
+                        context.getString(R.string.mention_notification_new_mention)
+                );
+                builder.setContentTitle(
+                        context.getString(R.string.mention_notification_new_mention)
+                );
+                builder.setContentText(mention.getText());
+                /* Do something */
+                Notification notification = builder.build();
+                notification.flags = Notification.FLAG_AUTO_CANCEL;
+                manager.notify(Flag.NOTIFICATION_MENTION_ID, notification);
+            }
         } else {
             if (isFirstSignIn) {
                 editor.putBoolean(

@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Activity.Detail;
+package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
 

@@ -16,7 +16,7 @@ import twitter4j.Twitter;
 
 import java.util.List;
 
-public class FavoriteRetweetTask extends AsyncTask<Void, Integer, Boolean> {
+public class FavoriteCancelTask extends AsyncTask<Void, Integer, Boolean> {
     private FavoriteFragment favoriteFragment;
     private Context context;
     private Twitter twitter;
@@ -24,13 +24,12 @@ public class FavoriteRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
     private Tweet oldTweet;
-    private Tweet newTweet;
     private int position;
 
     private NotificationManager notificationManager;
     private Notification.Builder builder;
 
-    public FavoriteRetweetTask(
+    public FavoriteCancelTask(
             FavoriteFragment favoriteFragment,
             int position
     ) {
@@ -52,10 +51,10 @@ public class FavoriteRetweetTask extends AsyncTask<Void, Integer, Boolean> {
         builder = new Notification.Builder(context);
         builder.setSmallIcon(R.drawable.ic_tweet_notification);
         builder.setTicker(
-                context.getString(R.string.tweet_notification_rewteet_ing)
+                context.getString(R.string.tweet_notification_cancel_favorite_ing)
         );
         builder.setContentTitle(
-                context.getString(R.string.tweet_notification_rewteet_ing)
+                context.getString(R.string.tweet_notification_cancel_favorite_ing)
         );
         builder.setContentText(oldTweet.getText());
         Notification notification = builder.build();
@@ -66,45 +65,27 @@ public class FavoriteRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            twitter.retweetStatus(oldTweet.getStatusId());
+            twitter.destroyFavorite(oldTweet.getStatusId());
 
-            newTweet = new Tweet();
-            newTweet.setStatusId(oldTweet.getStatusId());
-            newTweet.setReplyToStatusId(oldTweet.getReplyToStatusId());
-            newTweet.setUserId(oldTweet.getUserId());
-            newTweet.setRetweetedByUserId(favoriteFragment.getUseId());
-            newTweet.setAvatarURL(oldTweet.getAvatarURL());
-            newTweet.setCreatedAt(oldTweet.getCreatedAt());
-            newTweet.setName(oldTweet.getName());
-            newTweet.setScreenName(oldTweet.getScreenName());
-            newTweet.setProtect(oldTweet.isProtect());
-            newTweet.setCheckIn(oldTweet.getCheckIn());
-            newTweet.setText(oldTweet.getText());
-            newTweet.setRetweet(true);
-            newTweet.setRetweetedByUserName(
-                    context.getString(R.string.tweet_info_retweeted_by_me)
-            );
-            newTweet.setFavorite(oldTweet.isFavorite());
-
-            TimelineAction action = new TimelineAction(context);
-            action.openDatabase(true);
-            action.updatedByRetweet(oldTweet.getStatusId()); //
-            action.closeDatabase();
+            TimelineAction timelineAction = new TimelineAction(context);
+            timelineAction.openDatabase(true);
+            timelineAction.deleteRecord(oldTweet.getStatusId()); //
+            timelineAction.closeDatabase();
             MentionAction mentionAction = new MentionAction(context);
             mentionAction.openDatabase(true);
-            mentionAction.updatedByRetweet(oldTweet.getStatusId()); //
+            mentionAction.deleteRecord(oldTweet.getStatusId()); //
             mentionAction.closeDatabase();
             FavoriteAction favoriteAction = new FavoriteAction(context);
             favoriteAction.openDatabase(true);
-            favoriteAction.updatedByRetweet(oldTweet.getStatusId()); //
+            favoriteAction.deleteRecord(oldTweet.getStatusId()); //
             favoriteAction.closeDatabase();
 
             builder.setSmallIcon(R.drawable.ic_tweet_notification);
             builder.setTicker(
-                    context.getString(R.string.tweet_notification_retweet_successful)
+                    context.getString(R.string.tweet_notification_cancel_favorite_successful)
             );
             builder.setContentTitle(
-                    context.getString(R.string.tweet_notification_retweet_successful)
+                    context.getString(R.string.tweet_notification_cancel_favorite_successful)
             );
             builder.setContentText(oldTweet.getText());
             Notification notification = builder.build();
@@ -114,10 +95,10 @@ public class FavoriteRetweetTask extends AsyncTask<Void, Integer, Boolean> {
         } catch (Exception e) {
             builder.setSmallIcon(R.drawable.ic_tweet_notification);
             builder.setTicker(
-                    context.getString(R.string.tweet_notification_retweet_failed)
+                    context.getString(R.string.tweet_notification_cancel_favorite_failed)
             );
             builder.setContentTitle(
-                    context.getString(R.string.tweet_notification_retweet_failed)
+                    context.getString(R.string.tweet_notification_cancel_favorite_failed)
             );
             builder.setContentText(oldTweet.getText());
             Notification notification = builder.build();
@@ -147,7 +128,6 @@ public class FavoriteRetweetTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onPostExecute(Boolean result) {
         if (result) {
             tweetList.remove(position);
-            tweetList.add(position, newTweet);
             tweetAdapter.notifyDataSetChanged();
         }
     }

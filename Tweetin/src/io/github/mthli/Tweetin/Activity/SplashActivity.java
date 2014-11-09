@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Activity.Splash;
+package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,7 +18,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.*;
 import com.balysv.materialripple.MaterialRippleLayout;
-import io.github.mthli.Tweetin.Activity.Main.MainActivity;
 import io.github.mthli.Tweetin.R;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -218,16 +217,14 @@ public class SplashActivity extends Activity {
         final EditText conSecretEdit = (EditText) findViewById(R.id.splash_consumer_secret);
 
         Button signIn = (Button) findViewById(R.id.splash_sign_in);
-        /* Need test on LOLLIPOP */
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            MaterialRippleLayout.on(signIn)
-                    .rippleOverlay(true)
-                    .rippleColor(getResources().getColor(R.color.black))
-                    .rippleAlpha(0.1f)
-                    .rippleDiameterDp(10)
-                    .rippleDuration(350)
-                    .create();
-        }
+        /* Ripple Effect */
+        MaterialRippleLayout.on(signIn)
+                .rippleOverlay(true)
+                .rippleColor(getResources().getColor(R.color.black))
+                .rippleAlpha(0.1f)
+                .rippleDiameterDp(10)
+                .rippleDuration(350)
+                .create();
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

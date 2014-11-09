@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Fragment.Timeline;
+package io.github.mthli.Tweetin.Fragment;
 
 import android.app.AlertDialog;
 import android.content.*;
@@ -10,10 +10,9 @@ import android.view.Display;
 import android.view.View;
 import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
-import com.melnykov.fab.FloatingActionButton;
-import io.github.mthli.Tweetin.Activity.Post.PostActivity;
+import io.github.mthli.Tweetin.Activity.PostActivity;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Task.Timeline.*;
+import io.github.mthli.Tweetin.Task.Favorite.*;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
@@ -26,13 +25,12 @@ import twitter4j.auth.AccessToken;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimelineFragment extends ProgressFragment {
+public class FavoriteFragment extends ProgressFragment {
     private View view;
 
-    private int refreshFlag = Flag.TIMELINE_TASK_IDLE;
+    private int refreshFlag = Flag.FAVORITE_TASK_IDLE;
     private boolean moveToBottom = false;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private FloatingActionButton floatingActionButton;
     public int getRefreshFlag() {
         return refreshFlag;
     }
@@ -66,42 +64,43 @@ public class TimelineFragment extends ProgressFragment {
         return useId;
     }
 
-    private TimelineInitTask timelineInitTask;
-    private TimelineMoreTask timelineMoreTask;
-    private TimelineDeleteTask timelineDeleteTask;
-    private TimelineRetweetTask timelineRetweetTask;
-    private TimelineFavoriteTask timelineFavoriteTask;
+    private FavoriteInitTask favoriteInitTask;
+    private FavoriteMoreTask favoriteMoreTask;
+    private FavoriteDeleteTask favoriteDeleteTask;
+    private FavoriteRetweetTask favoriteRetweetTask;
+    private FavoriteCancelTask favoriteCancelTask;
     public boolean isSomeTaskRunning() {
         if (
-                (timelineInitTask != null && timelineInitTask.getStatus() == AsyncTask.Status.RUNNING)
-                || (timelineMoreTask != null && timelineMoreTask.getStatus() == AsyncTask.Status.RUNNING)
+                (favoriteInitTask != null && favoriteInitTask.getStatus() == AsyncTask.Status.RUNNING)
+                || (favoriteMoreTask != null && favoriteMoreTask.getStatus() == AsyncTask.Status.RUNNING)
+
         ) {
             return true;
         }
         return false;
     }
     public void cancelAllTask() {
-        if (timelineInitTask != null && timelineInitTask.getStatus() == AsyncTask.Status.RUNNING) {
-            timelineInitTask.cancel(true);
+        if (favoriteInitTask != null && favoriteInitTask.getStatus() == AsyncTask.Status.RUNNING) {
+            favoriteInitTask.cancel(true);
         }
-        if (timelineMoreTask != null && timelineMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
-            timelineMoreTask.cancel(true);
+        if (favoriteMoreTask != null && favoriteMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
+            favoriteMoreTask.cancel(true);
         }
-        if (timelineDeleteTask != null && timelineDeleteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            timelineDeleteTask.cancel(true);
+        if (favoriteDeleteTask != null && favoriteDeleteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            favoriteDeleteTask.cancel(true);
         }
-        if (timelineRetweetTask != null && timelineRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
-            timelineRetweetTask.cancel(true);
+        if (favoriteRetweetTask != null && favoriteRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
+            favoriteRetweetTask.cancel(true);
         }
-        if (timelineFavoriteTask != null && timelineFavoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            timelineFavoriteTask.cancel(true);
+        if (favoriteCancelTask != null && favoriteCancelTask.getStatus() == AsyncTask.Status.RUNNING) {
+            favoriteCancelTask.cancel(true);
         }
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setContentView(R.layout.timeline_fragment);
+        setContentView(R.layout.favorite_fragment);
         view = getContentView();
         setContentEmpty(false);
         setContentShown(true);
@@ -137,7 +136,7 @@ public class TimelineFragment extends ProgressFragment {
         twitter.setOAuthAccessToken(token);
 
         ListView listView = (ListView) view
-                .findViewById(R.id.timeline_fragment_listview);
+                .findViewById(R.id.favorite_fragment_listview);
         tweetAdapter = new TweetAdapter(
                 view.getContext(),
                 R.layout.tweet,
@@ -147,7 +146,7 @@ public class TimelineFragment extends ProgressFragment {
         tweetAdapter.notifyDataSetChanged();
 
         swipeRefreshLayout = (SwipeRefreshLayout) view
-                .findViewById(R.id.timeline_swipe_container);
+                .findViewById(R.id.favorite_swipe_container);
         swipeRefreshLayout.setColorSchemeResources(
                 R.color.text,
                 R.color.secondary_text,
@@ -169,36 +168,11 @@ public class TimelineFragment extends ProgressFragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                timelineInitTask = new TimelineInitTask(
-                        TimelineFragment.this,
+                favoriteInitTask = new FavoriteInitTask(
+                        FavoriteFragment.this,
                         true
                 );
-                timelineInitTask.execute();
-            }
-        });
-
-        floatingActionButton = (FloatingActionButton) view
-                .findViewById(R.id.timeline_floating_action_button);
-        floatingActionButton.attachToListView(listView);
-        floatingActionButton.show();
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PostActivity.class);
-                intent.putExtra(
-                        getString(R.string.post_flag),
-                        Flag.POST_ORIGINAL
-                );
-                ActivityAnim anim = new ActivityAnim();
-                startActivity(intent);
-                anim.fade(getActivity());
-            }
-        });
-        floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                /* Do something */
-                return true;
+                favoriteInitTask.execute();
             }
         });
 
@@ -221,37 +195,33 @@ public class TimelineFragment extends ProgressFragment {
 
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE) {
-                    /* Do nothing */
-                }
+                /* Do nothing */
             }
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if (previous < firstVisibleItem) {
                     moveToBottom = true;
-                    floatingActionButton.hide();
                 }
                 if (previous > firstVisibleItem) {
                     moveToBottom = false;
-                    floatingActionButton.show();
                 }
                 previous = firstVisibleItem;
 
                 if (totalItemCount == firstVisibleItem + visibleItemCount) {
                     if (!isSomeTaskRunning() && moveToBottom) {
-                        timelineMoreTask = new TimelineMoreTask(TimelineFragment.this);
-                        timelineMoreTask.execute();
+                        favoriteMoreTask = new FavoriteMoreTask(FavoriteFragment.this);
+                        favoriteMoreTask.execute();
                     }
                 }
             }
         });
 
-        timelineInitTask = new TimelineInitTask(
-                TimelineFragment.this,
+        favoriteInitTask = new FavoriteInitTask(
+                FavoriteFragment.this,
                 false
         );
-        timelineInitTask.execute();
+        favoriteInitTask.execute();
     }
 
     private AlertDialog alertDialog;
@@ -313,11 +283,11 @@ public class TimelineFragment extends ProgressFragment {
     private void multipleAtTwo(int flag, int location) {
         switch (flag) {
             case Flag.STATUS_NONE:
-                timelineRetweetTask = new TimelineRetweetTask(
-                        TimelineFragment.this,
+                favoriteRetweetTask = new FavoriteRetweetTask(
+                        FavoriteFragment.this,
                         location
                 );
-                timelineRetweetTask.execute();
+                favoriteRetweetTask.execute();
                 break;
             case Flag.STATUS_RETWEETED_BY_ME:
                 Toast.makeText(
@@ -327,11 +297,11 @@ public class TimelineFragment extends ProgressFragment {
                 ).show();
                 break;
             case Flag.STATUS_SENT_BY_ME:
-                timelineDeleteTask = new TimelineDeleteTask(
-                        TimelineFragment.this,
+                favoriteDeleteTask = new FavoriteDeleteTask(
+                        FavoriteFragment.this,
                         location
                 );
-                timelineDeleteTask.execute();
+                favoriteDeleteTask.execute();
                 break;
             default:
                 break;
@@ -362,7 +332,7 @@ public class TimelineFragment extends ProgressFragment {
                 menuItemList.add(getString(R.string.context_menu_item_delete));
             }
         }
-        menuItemList.add(getString(R.string.context_menu_item_favorite));
+        menuItemList.add(getString(R.string.context_menu_item_cancel));
         menuItemList.add(getString(R.string.context_menu_item_copy));
 
         ContextMenuAdapter contextMenuAdapter = new ContextMenuAdapter(
@@ -399,19 +369,11 @@ public class TimelineFragment extends ProgressFragment {
                         alertDialog.dismiss();
                         break;
                     case 3:
-                        if (!tweet.isFavorite()) {
-                            timelineFavoriteTask = new TimelineFavoriteTask(
-                                    TimelineFragment.this,
-                                    location
-                            );
-                            timelineFavoriteTask.execute();
-                        } else {
-                            Toast.makeText(
-                                    getActivity(),
-                                    R.string.context_toast_already_favorite,
-                                    Toast.LENGTH_SHORT
-                            ).show();
-                        }
+                        favoriteCancelTask = new FavoriteCancelTask(
+                                FavoriteFragment.this,
+                                location
+                        );
+                        favoriteCancelTask.execute();
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;

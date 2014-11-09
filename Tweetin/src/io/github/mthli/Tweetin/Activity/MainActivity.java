@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Activity.Main;
+package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
-import io.github.mthli.Tweetin.Fragment.Discovery.DiscoveryFragment;
-import io.github.mthli.Tweetin.Fragment.Favorite.FavoriteFragment;
-import io.github.mthli.Tweetin.Fragment.Mention.MentionFragment;
+import io.github.mthli.Tweetin.Fragment.DiscoveryFragment;
+import io.github.mthli.Tweetin.Fragment.FavoriteFragment;
+import io.github.mthli.Tweetin.Fragment.MentionFragment;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Fragment.Setting.SettingFragment;
-import io.github.mthli.Tweetin.Fragment.Timeline.TimelineFragment;
+import io.github.mthli.Tweetin.Fragment.SettingFragment;
+import io.github.mthli.Tweetin.Fragment.TimelineFragment;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 
 import java.util.ArrayList;

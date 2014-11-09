@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import io.github.mthli.Tweetin.Database.Favorite.FavoriteAction;
 import io.github.mthli.Tweetin.Database.Mention.MentionAction;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
-import io.github.mthli.Tweetin.Fragment.Timeline.TimelineFragment;
+import io.github.mthli.Tweetin.Fragment.TimelineFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
@@ -59,7 +59,7 @@ public class TimelineDeleteTask extends AsyncTask<Void, Integer, Boolean> {
         builder.setContentText(oldTweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
-        notificationManager.notify(Flag.NOTIFICATION_ID, notification);
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
     }
 
     @Override
@@ -90,8 +90,8 @@ public class TimelineDeleteTask extends AsyncTask<Void, Integer, Boolean> {
             builder.setContentText(oldTweet.getText());
             Notification notification = builder.build();
             notification.flags = Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(Flag.NOTIFICATION_ID, notification);
-            notificationManager.cancel(Flag.NOTIFICATION_ID);
+            notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+            notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
         } catch (Exception e) {
             builder.setSmallIcon(R.drawable.ic_tweet_notification);
             builder.setTicker(
@@ -103,7 +103,7 @@ public class TimelineDeleteTask extends AsyncTask<Void, Integer, Boolean> {
             builder.setContentText(oldTweet.getText());
             Notification notification = builder.build();
             notification.flags = Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(Flag.NOTIFICATION_ID, notification);
+            notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
 
             return false;
         }

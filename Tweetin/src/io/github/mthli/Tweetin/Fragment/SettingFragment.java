@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Fragment.Setting;
+package io.github.mthli.Tweetin.Fragment;
 
 import com.devspark.progressfragment.ProgressFragment;
 

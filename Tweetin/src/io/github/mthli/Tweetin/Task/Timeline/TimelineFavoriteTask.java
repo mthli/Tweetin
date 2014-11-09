@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import io.github.mthli.Tweetin.Database.Favorite.FavoriteAction;
 import io.github.mthli.Tweetin.Database.Mention.MentionAction;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
-import io.github.mthli.Tweetin.Fragment.Timeline.TimelineFragment;
+import io.github.mthli.Tweetin.Fragment.TimelineFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
@@ -16,7 +16,8 @@ import twitter4j.Twitter;
 
 import java.util.List;
 
-public class TimelineFavoriteTask extends AsyncTask<Void, Integer, Boolean> {private TimelineFragment timelineFragment;
+public class TimelineFavoriteTask extends AsyncTask<Void, Integer, Boolean> {
+    private TimelineFragment timelineFragment;
     private Context context;
     private Twitter twitter;
 
@@ -51,15 +52,15 @@ public class TimelineFavoriteTask extends AsyncTask<Void, Integer, Boolean> {pri
         builder = new Notification.Builder(context);
         builder.setSmallIcon(R.drawable.ic_tweet_notification);
         builder.setTicker(
-                context.getString(R.string.tweet_notification_favorite_ing)
+                context.getString(R.string.tweet_notification_add_favorite_ing)
         );
         builder.setContentTitle(
-                context.getString(R.string.tweet_notification_favorite_ing)
+                context.getString(R.string.tweet_notification_add_favorite_ing)
         );
         builder.setContentText(oldTweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
-        notificationManager.notify(Flag.NOTIFICATION_ID, notification);
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
     }
 
     @Override
@@ -100,28 +101,28 @@ public class TimelineFavoriteTask extends AsyncTask<Void, Integer, Boolean> {pri
 
             builder.setSmallIcon(R.drawable.ic_tweet_notification);
             builder.setTicker(
-                    context.getString(R.string.tweet_notification_favorite_successful)
+                    context.getString(R.string.tweet_notification_add_favorite_successful)
             );
             builder.setContentTitle(
-                    context.getString(R.string.tweet_notification_favorite_successful)
+                    context.getString(R.string.tweet_notification_add_favorite_successful)
             );
             builder.setContentText(oldTweet.getText());
             Notification notification = builder.build();
             notification.flags = Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(Flag.NOTIFICATION_ID, notification);
-            notificationManager.cancel(Flag.NOTIFICATION_ID);
+            notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+            notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
         } catch (Exception e) {
             builder.setSmallIcon(R.drawable.ic_tweet_notification);
             builder.setTicker(
-                    context.getString(R.string.tweet_notification_favorite_failed)
+                    context.getString(R.string.tweet_notification_add_favorite_failed)
             );
             builder.setContentTitle(
-                    context.getString(R.string.tweet_notification_favorite_failed)
+                    context.getString(R.string.tweet_notification_add_favorite_failed)
             );
             builder.setContentText(oldTweet.getText());
             Notification notification = builder.build();
             notification.flags = Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(Flag.NOTIFICATION_ID, notification);
+            notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
 
             return false;
         }

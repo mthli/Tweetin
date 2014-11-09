@@ -42,15 +42,25 @@
     <string name="tweet_notification_retweet_failed">
         Retweet failed.
     </string>
-    <!-- Favorite -->
-    <string name="tweet_notification_favorite_ing">
-        Favoriting&#8230;
+    <!-- Add favorite -->
+    <string name="tweet_notification_add_favorite_ing">
+        Adding favorite&#8230;
     </string>
-    <string name="tweet_notification_favorite_successful">
-        Favorite successful.
+    <string name="tweet_notification_add_favorite_successful">
+        Add favorite successful.
     </string>
-    <string name="tweet_notification_favorite_failed">
-        Favorite failed.
+    <string name="tweet_notification_add_favorite_failed">
+        Add favorite failed.
+    </string>
+    <!-- Cancel favorite -->
+    <string name="tweet_notification_cancel_favorite_ing">
+        Cancelling favorite&#8230;
+    </string>
+    <string name="tweet_notification_cancel_favorite_successful">
+        Cancel favorite successful.
+    </string>
+    <string name="tweet_notification_cancel_favorite_failed">
+        Cancel favorite failed.
     </string>
     <!-- Copy -->
     <string name="tweet_copy_label">TWEET_COPY_LABEL</string>
@@ -70,6 +80,7 @@
     <string name="context_menu_item_retweet">Retweet</string>
     <string name="context_menu_item_quote">Quote</string>
     <string name="context_menu_item_favorite">Favorite</string>
+    <string name="context_menu_item_cancel">Cancel</string>
     <string name="context_menu_item_copy">Copy</string>
     <string name="context_toast_already_retweet">
         Already retweet.
@@ -115,15 +126,18 @@
 
     <!-- Timeline -->
     <string name="timeline_error_get_timeline_failed">
-        Get timeline failed.
+        Get timeline failed, try reopen Tweetin.
     </string>
     <!-- Mention -->
     <string name="mention_error_get_mention_failed">
-        Get mention failed.
+        Get mention failed, try reopen Tweetin.
+    </string>
+    <string name="mention_notification_new_mention">
+        New mention!
     </string>
     <!-- Favorite -->
     <string name="favorite_error_get_favorite_failed">
-        Get favorite failed.
+        Get favorite failed, try reopen Tweetin.
     </string>
 
     <!-- Post -->
@@ -134,13 +148,13 @@
     <string name="post_hint">
         What\'s on your mind?
     </string>
-    <string name="post_ing">
+    <string name="post_notification_post_ing">
         Posting&#8230;
     </string>
-    <string name="post_successful">
+    <string name="post_notification_post_successful">
         Post successful.
     </string>
-    <string name="post_failed">
+    <string name="post_notification_post_failed">
         Post failed.
     </string>
 
