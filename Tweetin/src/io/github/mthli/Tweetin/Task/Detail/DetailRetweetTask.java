@@ -77,6 +77,7 @@ public class DetailRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             newTweet.setScreenName(oldTweet.getScreenName());
             newTweet.setProtect(oldTweet.isProtect());
             newTweet.setCheckIn(oldTweet.getCheckIn());
+            newTweet.setPhotoURL(oldTweet.getPhotoURL());
             newTweet.setText(oldTweet.getText());
             newTweet.setRetweet(true);
             newTweet.setRetweetedByUserName(

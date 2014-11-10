@@ -175,7 +175,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.checkIn.setVisibility(View.GONE);
         }
 
-        /* Do something */
         if (detail) {
             if (tweet.getPhotoURL() != null) {
                 ImageRequest imageRequest = new ImageRequest(

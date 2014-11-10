@@ -74,7 +74,7 @@ public class ProfileActivity extends FragmentActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE) {
+        if (newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE) {
             /* Do nothing */
         }
         else{

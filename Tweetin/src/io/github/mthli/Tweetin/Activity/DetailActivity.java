@@ -237,7 +237,6 @@ public class DetailActivity extends Activity {
         floatingActionButton = (FloatingActionButton) findViewById(
                 R.id.detail_floating_action_button
         );
-        floatingActionButton.attachToListView(listView);
         floatingActionButton.show();
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -288,27 +287,6 @@ public class DetailActivity extends Activity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 showItemLongClickDialog(position);
                 return true;
-            }
-        });
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            private int previous = 0;
-
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE) {
-                    /* Do nothing */
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (previous < firstVisibleItem) {
-                    floatingActionButton.hide();
-                }
-                if (previous > firstVisibleItem) {
-                    floatingActionButton.show();
-                }
-                previous = firstVisibleItem;
             }
         });
 
