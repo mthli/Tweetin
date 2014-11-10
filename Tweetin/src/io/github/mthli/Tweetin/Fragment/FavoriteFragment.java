@@ -10,6 +10,7 @@ import android.view.Display;
 import android.view.View;
 import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
+import io.github.mthli.Tweetin.Activity.DetailActivity;
 import io.github.mthli.Tweetin.Activity.PostActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Favorite.*;
@@ -97,6 +98,77 @@ public class FavoriteFragment extends ProgressFragment {
         }
     }
 
+    private void tweetToDetail(int position) {
+        ActivityAnim anim = new ActivityAnim();
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtra(
+                getString(R.string.detail_intent_from_position),
+                position
+        );
+        Tweet tweet = tweetList.get(position);
+        intent.putExtra(
+                getString(R.string.detail_intent_status_id),
+                tweet.getStatusId()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_reply_to_status_id),
+                tweet.getReplyToStatusId()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_user_id),
+                tweet.getUserId()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_retweeted_by_user_id),
+                tweet.getRetweetedByUserId()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_avatar_url),
+                tweet.getAvatarURL()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_created_at),
+                tweet.getCreatedAt()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_name),
+                tweet.getName()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_screen_name),
+                tweet.getScreenName()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_protect),
+                tweet.isProtect()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_check_in),
+                tweet.getCheckIn()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_text),
+                tweet.getText()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_photo_url),
+                tweet.getPhotoURL()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_retweet),
+                tweet.isRetweet()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_retweeted_by_user_name),
+                tweet.getRetweetedByUserName()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_favorite),
+                tweet.isFavorite()
+        );
+        startActivityForResult(intent, 0);
+        anim.rightIn(getActivity());
+    }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -141,7 +213,8 @@ public class FavoriteFragment extends ProgressFragment {
                 getActivity(),
                 view.getContext(),
                 R.layout.tweet,
-                tweetList
+                tweetList,
+                false
         );
         listView.setAdapter(tweetAdapter);
         tweetAdapter.notifyDataSetChanged();
@@ -154,7 +227,6 @@ public class FavoriteFragment extends ProgressFragment {
                 R.color.text,
                 R.color.secondary_text
         );
-        /* Just working now */
         Display display = getActivity()
                 .getWindowManager()
                 .getDefaultDisplay();
@@ -177,11 +249,10 @@ public class FavoriteFragment extends ProgressFragment {
             }
         });
 
-        /* Do something */
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /* Do something */
+                tweetToDetail(position);
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -230,15 +301,15 @@ public class FavoriteFragment extends ProgressFragment {
         Intent intent = new Intent(getActivity(), PostActivity.class);
         ActivityAnim anim = new ActivityAnim();
         intent.putExtra(
-                getString(R.string.post_flag),
+                getString(R.string.post_intent_flag),
                 Flag.POST_REPLY
         );
         intent.putExtra(
-                getString(R.string.post_status_id),
+                getString(R.string.post_intent_status_id),
                 tweetList.get(loaction).getStatusId()
         );
         intent.putExtra(
-                getString(R.string.post_status_screen_name),
+                getString(R.string.post_intent_status_screen_name),
                 tweetList.get(loaction).getScreenName()
         );
         startActivity(intent);
@@ -248,19 +319,19 @@ public class FavoriteFragment extends ProgressFragment {
         Intent intent = new Intent(getActivity(), PostActivity.class);
         ActivityAnim anim = new ActivityAnim();
         intent.putExtra(
-                getString(R.string.post_flag),
+                getString(R.string.post_intent_flag),
                 Flag.POST_QUOTE
         );
         intent.putExtra(
-                getString(R.string.post_status_id),
+                getString(R.string.post_intent_status_id),
                 tweetList.get(location).getStatusId()
         );
         intent.putExtra(
-                getString(R.string.post_status_screen_name),
+                getString(R.string.post_intent_status_screen_name),
                 tweetList.get(location).getScreenName()
         );
         intent.putExtra(
-                getString(R.string.post_status_text),
+                getString(R.string.post_intent_status_text),
                 tweetList.get(location).getText()
         );
         startActivity(intent);

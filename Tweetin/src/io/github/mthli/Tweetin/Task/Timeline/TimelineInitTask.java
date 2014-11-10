@@ -34,15 +34,15 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private boolean isFirstSignIn;
-    private boolean isPullToRefresh;
+    private boolean firstSignIn;
+    private boolean pullToRefresh;
 
     public TimelineInitTask(
             TimelineFragment timelineFragment,
-            boolean isPullToRefresh
+            boolean pullToRefresh
     ) {
         this.timelineFragment = timelineFragment;
-        this.isPullToRefresh = isPullToRefresh;
+        this.pullToRefresh = pullToRefresh;
     }
 
     @Override
@@ -70,16 +70,16 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                         false
                 )
         ) {
-            isFirstSignIn = true;
+            firstSignIn = true;
             timelineFragment.setContentShown(false);
         } else {
-            isFirstSignIn = false;
+            firstSignIn = false;
             if (!swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(true);
             }
         }
 
-        if (!isPullToRefresh) {
+        if (!pullToRefresh) {
             TimelineAction action = new TimelineAction(context);
             action.openDatabase(false);
             timelineRecordList = action.getTimelineRecordList();
@@ -245,7 +245,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweetList.add(tweet);
             }
 
-            if (isFirstSignIn) {
+            if (firstSignIn) {
                 editor.putBoolean(
                         context.getString(R.string.sp_is_timeline_first),
                         false
@@ -280,7 +280,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 manager.notify(Flag.NOTIFICATION_MENTION_ID, notification);
             }
         } else {
-            if (isFirstSignIn) {
+            if (firstSignIn) {
                 editor.putBoolean(
                         context.getString(R.string.sp_is_timeline_first),
                         true

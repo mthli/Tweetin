@@ -31,15 +31,15 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
 
     private SharedPreferences.Editor editor;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private boolean isFirstSignIn;
-    private boolean isPullToRefresh;
+    private boolean firstSignIn;
+    private boolean pullToRefresh;
 
     public FavoriteInitTask(
             FavoriteFragment favoriteFragment,
-            boolean isPullToRefresh
+            boolean pullToRefresh
     ) {
         this.favoriteFragment = favoriteFragment;
-        this.isPullToRefresh = isPullToRefresh;
+        this.pullToRefresh = pullToRefresh;
     }
 
     @Override
@@ -67,16 +67,16 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
                         true
                 )
         ) {
-            isFirstSignIn = true;
+            firstSignIn = true;
             favoriteFragment.setContentShown(false);
         } else {
-            isFirstSignIn = false;
+            firstSignIn = false;
             if (!swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(true);
             }
         }
 
-        if (!isPullToRefresh) {
+        if (!pullToRefresh) {
             FavoriteAction action = new FavoriteAction(context);
             action.openDatabase(false);
             favoriteRecordList = action.getFavoriteRecordList();
@@ -238,7 +238,7 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweetList.add(tweet);
             }
 
-            if (isFirstSignIn) {
+            if (firstSignIn) {
                 editor.putBoolean(
                         context.getString(R.string.sp_is_favorite_first),
                         false
@@ -251,7 +251,7 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
                 swipeRefreshLayout.setRefreshing(false);
             }
         } else {
-            if (isFirstSignIn) {
+            if (firstSignIn) {
                 editor.putBoolean(
                         context.getString(R.string.sp_is_favorite_first),
                         true

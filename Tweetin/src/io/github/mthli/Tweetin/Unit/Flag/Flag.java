@@ -15,6 +15,8 @@ public class Flag {
     public static final int FAVORITE_TASK_IDLE = 0x205;
     public static final int DISCOVERY_TASK_RUNNING = 0x206;
     public static final int DISCOVERY_TASK_IDLE = 0x207;
+    public static final int DETAIL_TASK_RUNNING = 0x208;
+    public static final int DETAIL_TASK_IDLE = 0x209;
 
     public static final int STATUS_NONE = 0x300;
     public static final int STATUS_RETWEETED_BY_ME = 0x301;

@@ -107,7 +107,7 @@ public class PostActivity extends Activity {
         postSendButton = (Button) findViewById(R.id.post_send_button);
 
         postFlag = getIntent().getIntExtra(
-                getString(R.string.post_flag),
+                getString(R.string.post_intent_flag),
                 0
         );
         switch (postFlag) {
@@ -119,11 +119,11 @@ public class PostActivity extends Activity {
                 break;
             case Flag.POST_REPLY:
                 statusId = getIntent().getLongExtra(
-                        getString(R.string.post_status_id),
+                        getString(R.string.post_intent_status_id),
                         -1
                 );
                 String reply = getIntent().getStringExtra(
-                        getString(R.string.post_status_screen_name)
+                        getString(R.string.post_intent_status_screen_name)
                 );
                 if (!reply.startsWith("@")) {
                     reply = "@" + reply;
@@ -146,24 +146,24 @@ public class PostActivity extends Activity {
                 break;
             case Flag.POST_QUOTE:
                 statusId = getIntent().getLongExtra(
-                        getString(R.string.post_status_id),
+                        getString(R.string.post_intent_status_id),
                         -1
                 );
                 screenName = getIntent().getStringExtra(
-                        getString(R.string.post_status_screen_name)
+                        getString(R.string.post_intent_status_screen_name)
                 );
                 String quote = "RT ";
-                if (getIntent().getStringExtra(getString(R.string.post_status_screen_name)).startsWith("@")) {
+                if (getIntent().getStringExtra(getString(R.string.post_intent_status_screen_name)).startsWith("@")) {
                     quote = quote
-                            + getIntent().getStringExtra(getString(R.string.post_status_screen_name))
+                            + getIntent().getStringExtra(getString(R.string.post_intent_status_screen_name))
                             + ": "
-                            + getIntent().getStringExtra(getString(R.string.post_status_text));
+                            + getIntent().getStringExtra(getString(R.string.post_intent_status_text));
                 } else {
                     quote = quote
                             + " @"
-                            + getIntent().getStringExtra(getString(R.string.post_status_screen_name))
+                            + getIntent().getStringExtra(getString(R.string.post_intent_status_screen_name))
                             + ": "
-                            + getIntent().getStringExtra(getString(R.string.post_status_text));
+                            + getIntent().getStringExtra(getString(R.string.post_intent_status_text));
                 }
                 postEdit.setText(quote);
                 postEdit.setSelection(quote.length());

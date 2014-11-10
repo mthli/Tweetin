@@ -38,6 +38,13 @@
                   android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 
+        <!-- DetailActivity -->
+        <activity android:name=".Activity.DetailActivity"
+                  android:theme="@style/DetailActivityTheme"
+                  android:windowSoftInputMode="stateHidden"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
+
         <!-- PostActivity -->
         <activity android:name=".Activity.PostActivity"
                   android:theme="@style/PostActivityTheme"

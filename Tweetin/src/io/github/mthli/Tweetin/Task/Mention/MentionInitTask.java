@@ -31,15 +31,15 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
 
     private SharedPreferences.Editor editor;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private boolean isFirstSignIn;
-    private boolean isPullToRefresh;
+    private boolean firstSignIn;
+    private boolean pullToRefresh;
 
     public MentionInitTask(
             MentionFragment mentionFragment,
-            boolean isPullToRefresh
+            boolean pullToRefresh
     ) {
         this.mentionFragment = mentionFragment;
-        this.isPullToRefresh = isPullToRefresh;
+        this.pullToRefresh = pullToRefresh;
     }
 
     @Override
@@ -67,16 +67,16 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
                         -1
                 ) == -1
                 ) {
-            isFirstSignIn = true;
+            firstSignIn = true;
             mentionFragment.setContentShown(false);
         } else {
-            isFirstSignIn = false;
+            firstSignIn = false;
             if (!swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(true);
             }
         }
 
-        if (!isPullToRefresh) {
+        if (!pullToRefresh) {
             MentionAction action = new MentionAction(context);
             action.openDatabase(false);
             mentionRecordList = action.getMentionRecordList();
@@ -245,7 +245,7 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
                     mention.getId()
             ).commit();
 
-            if (isFirstSignIn) {
+            if (firstSignIn) {
                 mentionFragment.setContentEmpty(false);
                 tweetAdapter.notifyDataSetChanged();
                 mentionFragment.setContentShown(true);
@@ -254,7 +254,7 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
                 swipeRefreshLayout.setRefreshing(false);
             }
         } else {
-            if (isFirstSignIn) {
+            if (firstSignIn) {
                 mentionFragment.setContentEmpty(true);
                 mentionFragment.setEmptyText(
                         R.string.mention_error_get_mention_failed

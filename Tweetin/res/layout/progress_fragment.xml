@@ -30,7 +30,6 @@
                   android:background="@color/background"
                   android:visibility="gone">
 
-        <!-- Do something -->
         <ProgressBar style="?android:attr/progressBarStyleInverse"
                      android:id="@android:id/progress"
                      android:layout_width="wrap_content"
@@ -44,7 +43,6 @@
                  android:layout_height="match_parent"
                  android:background="@color/background">
 
-        <!-- Do something -->
         <TextView android:id="@android:id/empty"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"

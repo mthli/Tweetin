@@ -51,7 +51,7 @@ public class ProfileActivity extends FragmentActivity {
 
         Intent intent = getIntent();
         userId = intent.getLongExtra(
-                getString(R.string.profile_user_id),
+                getString(R.string.profile_intent_user_id),
                 0
         );
 

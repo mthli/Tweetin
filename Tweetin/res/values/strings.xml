@@ -140,11 +140,64 @@
         Get favorite failed, try reopen Tweetin.
     </string>
 
+    <!-- Detail -->
+    <string name="detail_intent_from_position">
+        DETAIL_INTENT_FROM_POSITION
+    </string>
+    <string name="detail_intent_status_id">
+        DETAIL_INTENT_STATUS_ID
+    </string>
+    <string name="detail_intent_reply_to_status_id">
+        DETAIL_INTENT_REPLY_TO_STATUS_ID
+    </string>
+    <string name="detail_intent_user_id">
+        DETAIL_INTENT_USER_ID
+    </string>
+    <string name="detail_intent_retweeted_by_user_id">
+        DETAIL_INTENT_RETWEETED_BY_USER_ID
+    </string>
+    <string name="detail_intent_avatar_url">
+        DETAIL_INTENT_AVATAR_URL
+    </string>
+    <string name="detail_intent_created_at">
+        DETAIL_INTENT_CREATED_AT
+    </string>
+    <string name="detail_intent_name">
+        DETAIL_INTENT_NAME
+    </string>
+    <string name="detail_intent_screen_name">
+        DETAIL_INTENT_SCREEN_NAME
+    </string>
+    <string name="detail_intent_protect">
+        DETAIL_INTENT_PROTECT
+    </string>
+    <string name="detail_intent_check_in">
+        DETAIL_INTENT_CHECK_IN
+    </string>
+    <string name="detail_intent_text">
+        DETAIL_INTENT_TEXT
+    </string>
+    <string name="detail_intent_photo_url">
+        DETAIL_INTENT_PHOTO_URL
+    </string>
+    <string name="detail_intent_retweet">
+        DETAIL_INTENT_RETWEET
+    </string>
+    <string name="detail_intent_retweeted_by_user_name">
+        DETAIL_INTENT_RETWEETED_BY_USER_NAME
+    </string>
+    <string name="detail_intent_favorite">
+        DETAIL_INTENT_FAVORITE
+    </string>
+    <string name="detail_error_get_detail_failed">
+        Get detail failed.
+    </string>
+
     <!-- Post -->
-    <string name="post_flag">POST_FLAG</string>
-    <string name="post_status_id">POST_STATUS_ID</string>
-    <string name="post_status_screen_name">POST_STATUS_SCREEN_NAME</string>
-    <string name="post_status_text">POST_STATUS_TEXT</string>
+    <string name="post_intent_flag">POST_INTENT_FLAG</string>
+    <string name="post_intent_status_id">POST_INTENT_STATUS_ID</string>
+    <string name="post_intent_status_screen_name">POST_INTENT_STATUS_SCREEN_NAME</string>
+    <string name="post_intent_status_text">POST_INTENT_STATUS_TEXT</string>
     <string name="post_hint">
         What\'s on your mind?
     </string>
@@ -159,7 +212,7 @@
     </string>
 
     <!-- Profile -->
-    <string name="profile_user_id">PROFILE_USER_ID</string>
+    <string name="profile_intent_user_id">PROFILE_INTENT_USER_ID</string>
     <string name="profile_error_get_user_profile_failed">
         Get user profile failed.
     </string>
