@@ -19,6 +19,7 @@ import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Post.PostTask;
@@ -234,6 +235,8 @@ public class PostActivity extends Activity {
                 ActivityAnim anim = new ActivityAnim();
                 PostTask postTask = new PostTask(PostActivity.this);
                 postTask.execute();
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(postEdit.getWindowToken(), 0);
                 finish();
                 anim.fade(PostActivity.this);
             }

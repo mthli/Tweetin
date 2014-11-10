@@ -15,7 +15,7 @@ import twitter4j.Relationship;
 import twitter4j.Twitter;
 import twitter4j.User;
 
-public class ProfileLoadTask extends AsyncTask<Void, Integer, Boolean> {
+public class ProfileInitTask extends AsyncTask<Void, Integer, Boolean> {
     private ProfileFragment profileFragment;
     private Context context;
     private View view;
@@ -26,7 +26,7 @@ public class ProfileLoadTask extends AsyncTask<Void, Integer, Boolean> {
     private User user;
     private boolean isFollowing;
 
-    public ProfileLoadTask(ProfileFragment profileFragment) {
+    public ProfileInitTask(ProfileFragment profileFragment) {
         this.profileFragment = profileFragment;
         this.isFollowing = false;
     }

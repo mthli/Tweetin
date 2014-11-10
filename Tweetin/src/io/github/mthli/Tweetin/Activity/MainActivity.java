@@ -19,6 +19,8 @@ import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Fragment.SettingFragment;
 import io.github.mthli.Tweetin.Fragment.TimelineFragment;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
+import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
+import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,44 +45,6 @@ public class MainActivity extends FragmentActivity {
     private ResideMenuItem favoriteItem;
     private ResideMenuItem discoveryItem;
     private ResideMenuItem settingItem;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-
-        initResideMenu();
-        timelineFragment = new TimelineFragment();
-        mentionFragment = new MentionFragment();
-        favoriteFragment = new FavoriteFragment();
-        discoveryFragment = new DiscoveryFragment();
-        settingFragment = new SettingFragment();
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                .beginTransaction();
-        fragmentTransaction.add(android.R.id.content, timelineFragment);
-        fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
-        fragmentTransaction.commit();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            /* Do something */
-        }
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE) {
-            /* Do nothing */
-        }
-        else{
-            /* Do nothing */
-        }
-    }
 
     /* Do something */
     private void selectResideMenuItem(int targetFragmentFlag) {
@@ -369,5 +333,95 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+
+        initResideMenu();
+        timelineFragment = new TimelineFragment();
+        mentionFragment = new MentionFragment();
+        favoriteFragment = new FavoriteFragment();
+        discoveryFragment = new DiscoveryFragment();
+        settingFragment = new SettingFragment();
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction();
+        fragmentTransaction.add(android.R.id.content, timelineFragment);
+        fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            int position = data.getIntExtra(
+                    getString(R.string.detail_intent_from_position),
+                    -1
+            );
+            boolean deleteFromDetail = data.getBooleanExtra(
+                    getString(R.string.detail_intent_is_delete_at_detail),
+                    false
+            );
+            boolean retweetFromDetail = data.getBooleanExtra(
+                    getString(R.string.detail_intent_is_retweet_at_detail),
+                    false
+            );
+            boolean favoriteFromDetail = data.getBooleanExtra(
+                    getString(R.string.detail_intent_is_favorite_at_detail),
+                    false
+            );
+            TweetAdapter tweetAdapter;
+            List<Tweet> tweetList;
+            switch (fragmentFlag) {
+                case Flag.IN_TIMELINE_FRAGMENT:
+                    tweetAdapter = timelineFragment.getTweetAdapter();
+                    tweetList = timelineFragment.getTweetList();
+                    break;
+                case Flag.IN_MENTION_FRAGMENT:
+                    tweetAdapter = mentionFragment.getTweetAdapter();
+                    tweetList = mentionFragment.getTweetList();
+                    break;
+                case Flag.IN_FAVORITE_FRAGMENT:
+                    tweetAdapter = favoriteFragment.getTweetAdapter();
+                    tweetList = favoriteFragment.getTweetList();
+                    break;
+                default:
+                    tweetAdapter = timelineFragment.getTweetAdapter();
+                    tweetList = timelineFragment.getTweetList();
+                    break;
+            }
+            if (position >= 0) {
+                Tweet tweet = tweetList.get(position);
+                if (retweetFromDetail) {
+                    tweet.setRetweet(true);
+                    tweet.setRetweetedByUserId(timelineFragment.getUseId());
+                    tweet.setRetweetedByUserName(
+                            getString(R.string.tweet_info_retweeted_by_me)
+                    );
+                }
+                if (favoriteFromDetail) {
+                    tweet.setFavorite(true);
+                }
+                if (deleteFromDetail) {
+                    tweetList.remove(position);
+                }
+                tweetAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE) {
+            /* Do nothing */
+        }
+        else{
+            /* Do nothing */
+        }
     }
 }

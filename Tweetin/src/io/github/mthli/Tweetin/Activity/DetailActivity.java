@@ -1,21 +1,22 @@
 package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.app.AlertDialog;
+import android.content.*;
+import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.*;
 import com.melnykov.fab.FloatingActionButton;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Detail.*;
+import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
+import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
@@ -78,7 +79,15 @@ public class DetailActivity extends Activity {
         if (detailInitTask != null && detailInitTask.getStatus() == AsyncTask.Status.RUNNING) {
             detailInitTask.cancel(true);
         }
-        /* Do something */
+        if (detailDeleteTask != null && detailDeleteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            detailDeleteTask.cancel(true);
+        }
+        if (detailRetweetTask != null && detailRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
+            detailRetweetTask.cancel(true);
+        }
+        if (detailFavoriteTask != null && detailFavoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            detailFavoriteTask.cancel(true);
+        }
     }
 
     public Tweet getTweetFromIntent() {
@@ -233,20 +242,51 @@ public class DetailActivity extends Activity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* Do something */
+                Intent intent = new Intent(DetailActivity.this, PostActivity.class);
+                ActivityAnim anim = new ActivityAnim();
+                intent.putExtra(
+                        getString(R.string.post_intent_flag),
+                        Flag.POST_REPLY
+                );
+                intent.putExtra(
+                        getString(R.string.post_intent_status_id),
+                        getTweetFromIntent().getStatusId()
+                );
+                intent.putExtra(
+                        getString(R.string.post_intent_status_screen_name),
+                        getTweetFromIntent().getScreenName()
+                );
+                startActivity(intent);
+                anim.fade(DetailActivity.this);
             }
         });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /* Do something */
+                Tweet tweet = tweetList.get(position);
+                Intent intent = new Intent(DetailActivity.this, PostActivity.class);
+                ActivityAnim anim = new ActivityAnim();
+                intent.putExtra(
+                        getString(R.string.post_intent_flag),
+                        Flag.POST_REPLY
+                );
+                intent.putExtra(
+                        getString(R.string.post_intent_status_id),
+                        tweet.getStatusId()
+                );
+                intent.putExtra(
+                        getString(R.string.post_intent_status_screen_name),
+                        tweet.getScreenName()
+                );
+                startActivity(intent);
+                anim.fade(DetailActivity.this);
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                /* Do something */
+                showItemLongClickDialog(position);
                 return true;
             }
         });
@@ -277,4 +317,206 @@ public class DetailActivity extends Activity {
     }
 
     /* Do something */
+    private AlertDialog alertDialog;
+    private boolean deleteFromDetail = false;
+    private boolean retweetFromDetail = false;
+    private boolean favoriteFromDetail = false;
+    public void setDeleteFromDetail(boolean deleteFromDetail) {
+        this.deleteFromDetail = deleteFromDetail;
+    }
+    public void setRetweetFromDetail(boolean retweetFromDetail) {
+        this.retweetFromDetail = retweetFromDetail;
+    }
+    public void setFavoriteFromDetail(boolean favoriteFromDetail) {
+        this.favoriteFromDetail = favoriteFromDetail;
+    }
+    private void quote(int location) {
+        Intent intent = new Intent(this, PostActivity.class);
+        ActivityAnim anim = new ActivityAnim();
+        intent.putExtra(
+                getString(R.string.post_intent_flag),
+                Flag.POST_QUOTE
+        );
+        intent.putExtra(
+                getString(R.string.post_intent_status_id),
+                tweetList.get(location).getStatusId()
+        );
+        intent.putExtra(
+                getString(R.string.post_intent_status_screen_name),
+                tweetList.get(location).getScreenName()
+        );
+        intent.putExtra(
+                getString(R.string.post_intent_status_text),
+                tweetList.get(location).getText()
+        );
+        startActivity(intent);
+        anim.fade(this);
+    }
+    private void clip(int location) {
+        ClipboardManager manager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        String text = tweetList.get(location).getText();
+        ClipData data = ClipData.newPlainText(
+                getString(R.string.tweet_copy_label),
+                text
+        );
+        manager.setPrimaryClip(data);
+        Toast.makeText(
+                this,
+                R.string.tweet_notification_copy_successful,
+                Toast.LENGTH_SHORT
+        ).show();
+    }
+    private void multipleAtOne(int flag, int location) {
+        switch (flag) {
+            case Flag.STATUS_NONE:
+                detailRetweetTask = new DetailRetweetTask(this, location);
+                detailRetweetTask.execute();
+                break;
+            case Flag.STATUS_RETWEETED_BY_ME:
+                Toast.makeText(
+                        this,
+                        R.string.context_toast_already_retweet,
+                        Toast.LENGTH_SHORT
+                ).show();
+                break;
+            case Flag.STATUS_SENT_BY_ME:
+                detailDeleteTask = new DetailDeleteTask(this, location);
+                detailDeleteTask.execute();
+                break;
+            default:
+                break;
+        }
+    }
+    private void showItemLongClickDialog(final int location) {
+        LinearLayout linearLayout = (LinearLayout) getLayoutInflater()
+                .inflate(
+                        R.layout.context_menu,
+                        null
+                );
+        ListView menu = (ListView) linearLayout.findViewById(R.id.context_menu_listview);
+        List<String> menuItemList = new ArrayList<String>();
+
+        final int flag;
+        final Tweet tweet = tweetList.get(location);
+        menuItemList.add(getString(R.string.context_menu_item_quote));
+        if (tweet.getRetweetedByUserId() != -1 && tweet.getRetweetedByUserId() == useId) {
+            flag = Flag.STATUS_RETWEETED_BY_ME;
+            menuItemList.add(getString(R.string.context_menu_item_retweet));
+        } else {
+            if (tweet.getUserId() != useId) {
+                flag = Flag.STATUS_NONE;
+                menuItemList.add(getString(R.string.context_menu_item_retweet));
+            } else {
+                flag = Flag.STATUS_SENT_BY_ME;
+                menuItemList.add(getString(R.string.context_menu_item_delete));
+            }
+        }
+        menuItemList.add(getString(R.string.context_menu_item_favorite));
+        menuItemList.add(getString(R.string.context_menu_item_copy));
+
+        ContextMenuAdapter contextMenuAdapter = new ContextMenuAdapter(
+                this,
+                R.layout.context_menu_item,
+                menuItemList
+        );
+        menu.setAdapter(contextMenuAdapter);
+        contextMenuAdapter.notifyDataSetChanged();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(linearLayout);
+        builder.setCancelable(true);
+        alertDialog = builder.create();
+        alertDialog.show();
+
+        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        quote(location);
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    case 1:
+                        multipleAtOne(flag, location);
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    case 2:
+                        if (!tweet.isFavorite()) {
+                            detailFavoriteTask = new DetailFavoriteTask(
+                                    DetailActivity.this,
+                                    location
+                            );
+                            detailFavoriteTask.execute();
+                        } else {
+                            Toast.makeText(
+                                    DetailActivity.this,
+                                    R.string.context_toast_already_favorite,
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    case 3:
+                        clip(location);
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    default:
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                }
+            }
+        });
+    }
+
+    public void finishDetail() {
+        Intent intent = new Intent();
+        intent.putExtra(
+                getString(R.string.detail_intent_from_position),
+                getIntent().getIntExtra(
+                        getString(R.string.detail_intent_from_position),
+                        -1
+                )
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_is_delete_at_detail),
+                deleteFromDetail
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_is_retweet_at_detail),
+                retweetFromDetail
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_is_favorite_at_detail),
+                favoriteFromDetail
+        );
+        cancelAllTask();
+        setResult(RESULT_OK, intent);
+        ActivityAnim anim = new ActivityAnim();
+        finish();
+        anim.rightOut(this);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finishDetail();
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE) {
+            /* Do nothing */
+        }
+        else{
+            /* Do nothing */
+        }
+    }
 }

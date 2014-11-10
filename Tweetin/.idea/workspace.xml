@@ -107,88 +107,29 @@
     <ui_properties converted="true" />
     <breakpoint_rules converted="true" />
   </component>
-  <component name="DockManager">
-    <window id="2">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="TimelineInitTask.java" pinned="false" current="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Timeline/TimelineInitTask.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.0" vertical-offset="3015" max-vertical-offset="4575">
-                    <caret line="201" column="18" selection-start-line="197" selection-start-column="16" selection-end-line="201" selection-end-column="18" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="TimelineFragment.java" pinned="false" current="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Fragment/TimelineFragment.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state vertical-scroll-proportion="0.888" vertical-offset="3675" max-vertical-offset="7035">
-                    <caret line="312" column="11" selection-start-line="282" selection-start-column="11" selection-end-line="312" selection-end-column="11" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="Tweetin" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="detail.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/res/layout/detail.xml">
+      <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.2088608" vertical-offset="128" max-vertical-offset="705">
-              <caret line="34" column="50" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DetailActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/DetailActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1977" max-vertical-offset="2580">
-              <caret line="17" column="45" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.25385934" vertical-offset="557" max-vertical-offset="1320">
+              <caret line="198" column="34" selection-start-line="198" selection-start-column="34" selection-end-line="198" selection-end-column="34" />
               <folding>
-                <element signature="method#getTweetFromIntent#0;class#DetailActivity#0" expanded="false" />
-                <element signature="e#2680#2723#0" expanded="true" />
-                <element signature="e#2823#2875#0" expanded="true" />
-                <element signature="e#2966#3007#0" expanded="true" />
-                <element signature="e#3109#3163#0" expanded="true" />
-                <element signature="e#3261#3305#0" expanded="true" />
-                <element signature="e#3383#3427#0" expanded="true" />
-                <element signature="e#3500#3538#0" expanded="true" />
-                <element signature="e#3617#3662#0" expanded="true" />
-                <element signature="e#3740#3781#0" expanded="true" />
-                <element signature="e#3880#3922#0" expanded="true" />
-                <element signature="e#3995#4033#0" expanded="true" />
-                <element signature="e#4110#4153#0" expanded="true" />
-                <element signature="e#4231#4272#0" expanded="true" />
-                <element signature="e#4383#4439#0" expanded="true" />
-                <element signature="e#4518#4560#0" expanded="true" />
-                <element signature="e#5470#5497#0" expanded="true" />
-                <element signature="e#5606#5635#0" expanded="true" />
-                <element signature="e#5741#5776#0" expanded="true" />
-                <element signature="e#5887#5925#0" expanded="true" />
-                <element signature="e#6033#6068#0" expanded="true" />
-                <element signature="e#6182#6224#0" expanded="true" />
-                <element signature="e#8078#8232#0" expanded="true" />
-                <element signature="e#8221#8222#0" expanded="true" />
-                <element signature="e#8276#8491#0" expanded="true" />
-                <element signature="e#8480#8481#0" expanded="true" />
-                <element signature="class#8837:9582" expanded="false" />
+                <element signature="method#selectResideMenuItem#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#getCurrentFragment#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#initResideMenu#0;class#MainActivity#0" expanded="false" />
+                <element signature="e#8747#8781#0" expanded="true" />
+                <element signature="e#9113#9146#0" expanded="true" />
+                <element signature="e#9294#9328#0" expanded="true" />
+                <element signature="e#9478#9513#0" expanded="true" />
+                <element signature="e#9659#9692#0" expanded="true" />
+                <element signature="method#onActivityResult#0;class#MainActivity#0" expanded="false" />
+                <element signature="e#14859#14906#0" expanded="true" />
+                <element signature="e#16753#16799#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -204,7 +145,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Database/Timeline/TimelineHelper.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Timeline/TimelineMoreTask.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Database/Timeline/TimelineAction.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Database/Favorite/FavoriteAction.java" />
@@ -223,7 +163,6 @@
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Favorite/FavoriteCancelTask.java" />
         <option value="$PROJECT_DIR$/res/drawable/post_send_button_selector.xml" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Post/PostTask.java" />
-        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/PostActivity.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Profile/ProfileTask.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Mention/MentionRetweetTask.java" />
         <option value="$PROJECT_DIR$/res/layout/profile.xml" />
@@ -236,16 +175,12 @@
         <option value="$PROJECT_DIR$/res/layout/profile_fragment.xml" />
         <option value="$PROJECT_DIR$/res/layout/progress_fragment.xml" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailMoreTask.java" />
-        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailRetweetTask.java" />
-        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailDeleteTask.java" />
-        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailFavoriteTask.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Unit/Flag/Flag.java" />
         <option value="$PROJECT_DIR$/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Fragment/TimelineFragment.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Fragment/MentionFragment.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Fragment/FavoriteFragment.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Unit/Tweet/Tweet.java" />
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/res/layout/tweet.xml" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Unit/Tweet/TweetAdapter.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Timeline/TimelineInitTask.java" />
@@ -253,16 +188,20 @@
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Favorite/FavoriteInitTask.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailInitTask.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/DetailActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/detail.xml" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailDeleteTask.java" />
+        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailFavoriteTask.java" />
+        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailRetweetTask.java" />
+        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/DetailActivity.java" />
+        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/PostActivity.java" />
+        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/MainActivity.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-2" />
-    <option name="y" value="-3" />
-    <option name="width" value="1370" />
-    <option name="height" value="748" />
+    <option name="width" value="683" />
+    <option name="height" value="741" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -346,6 +285,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Task" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tweetin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tweetin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Tweetin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Fragment" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -383,24 +344,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tweetin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Tweetin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -487,7 +430,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Dropbox/Projects/Bitocle/2.2 Release/Source/Bitocle/res/layout/main.xml" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Dropbox/Projects/Tweetin/1.0 Release/Source/Tweetin/src/io/github/mthli/Tweetin/Main/MainActivity.java" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -678,8 +621,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2" y="-3" width="1370" height="748" extended-state="6" />
-    <editor active="false" />
+    <frame x="0" y="0" width="683" height="741" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -694,14 +637,14 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2953451" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.32857144" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" x="164" y="270" width="1086" height="471" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.32857144" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" x="164" y="270" width="1086" height="471" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.5949764" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="722" y="73" width="337" height="610" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41428572" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.5949764" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="722" y="73" width="337" height="610" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41091493" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -735,66 +678,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Mention/MentionRetweetTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27363184" vertical-offset="585" max-vertical-offset="2400">
-          <caret line="50" column="64" selection-start-line="49" selection-start-column="8" selection-end-line="50" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/splash.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35368043" vertical-offset="643" max-vertical-offset="1200">
-          <caret line="56" column="44" selection-start-line="56" selection-start-column="44" selection-end-line="56" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/Projects/Tweetin/1.0 Release/Source/Tweetin/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="596">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/Projects/Tweetin/1.0 Release/Source/Tweetin/res/layout/profile.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21159874" vertical-offset="0" max-vertical-offset="638">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="14" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/Projects/Tweetin/1.0 Release/Source/Tweetin/res/layout/profile_fragment.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.568" vertical-offset="1160" max-vertical-offset="1785">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="111" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/Projects/Tweetin/1.0 Release/Source/Tweetin/src/io/github/mthli/Tweetin/Profile/ProfileFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
-          <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Dropbox/Projects/Tweetin/1.0 Release/Source/Tweetin/src/io/github/mthli/Tweetin/Profile/ProfileLoadTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="545" max-vertical-offset="1170">
-          <caret line="115" column="5" selection-start-line="115" selection-start-column="5" selection-end-line="127" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/SplashActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.553719" vertical-offset="2815" max-vertical-offset="4455">
-          <caret line="222" column="65" selection-start-line="222" selection-start-column="65" selection-end-line="222" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Dropbox/Projects/Tweetin/1.0 Release/Source/Tweetin/src/io/github/mthli/Tweetin/Profile/ProfileFollowTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1505" max-vertical-offset="2130">
@@ -813,13 +696,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="615">
           <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/ProfileActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.5128205" vertical-offset="0" max-vertical-offset="1260">
-          <caret line="65" column="42" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -855,7 +731,7 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Profile/ProfileLoadTask.java">
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Profile/ProfileInitTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.30679932" vertical-offset="1405" max-vertical-offset="2145">
           <caret line="106" column="27" selection-start-line="106" selection-start-column="27" selection-end-line="106" selection-end-column="27" />
@@ -878,27 +754,6 @@
       </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailRetweetTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.048231512" vertical-offset="0" max-vertical-offset="311">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailFavoriteTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.045045044" vertical-offset="0" max-vertical-offset="333">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailDeleteTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.045045044" vertical-offset="0" max-vertical-offset="333">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/profile.xml">
@@ -928,13 +783,6 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
           <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.144" vertical-offset="585" max-vertical-offset="5400">
-          <caret line="49" column="38" selection-start-line="46" selection-start-column="4" selection-end-line="49" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -1087,22 +935,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailInitTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.2902684" vertical-offset="1204" max-vertical-offset="1800">
-          <caret line="29" column="55" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
-          <folding>
-            <element signature="e#823#830#0" expanded="true" />
-            <element signature="e#982#983#0" expanded="true" />
-            <element signature="e#1034#1035#0" expanded="true" />
-            <element signature="method#getReplyToStatusList#0;class#DetailInitTask#0" expanded="false" />
-            <element signature="e#1793#1811#0" expanded="true" />
-            <element signature="e#2387#2405#0" expanded="true" />
-            <element signature="method#getTweetWithDetails#0;class#DetailInitTask#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/values/dimens.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="596">
@@ -1115,14 +947,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.40268457" vertical-offset="0" max-vertical-offset="615">
           <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60402685" vertical-offset="2520" max-vertical-offset="3690">
-          <caret line="192" column="26" selection-start-line="192" selection-start-column="26" selection-end-line="192" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -1186,59 +1010,230 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Fragment/TimelineFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.888" vertical-offset="3675" max-vertical-offset="7035">
-          <caret line="312" column="11" selection-start-line="282" selection-start-column="11" selection-end-line="312" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/DetailActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1977" max-vertical-offset="2580">
-          <caret line="17" column="45" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
-          <folding>
-            <element signature="method#getTweetFromIntent#0;class#DetailActivity#0" expanded="false" />
-            <element signature="e#2680#2723#0" expanded="true" />
-            <element signature="e#2823#2875#0" expanded="true" />
-            <element signature="e#2966#3007#0" expanded="true" />
-            <element signature="e#3109#3163#0" expanded="true" />
-            <element signature="e#3261#3305#0" expanded="true" />
-            <element signature="e#3383#3427#0" expanded="true" />
-            <element signature="e#3500#3538#0" expanded="true" />
-            <element signature="e#3617#3662#0" expanded="true" />
-            <element signature="e#3740#3781#0" expanded="true" />
-            <element signature="e#3880#3922#0" expanded="true" />
-            <element signature="e#3995#4033#0" expanded="true" />
-            <element signature="e#4110#4153#0" expanded="true" />
-            <element signature="e#4231#4272#0" expanded="true" />
-            <element signature="e#4383#4439#0" expanded="true" />
-            <element signature="e#4518#4560#0" expanded="true" />
-            <element signature="e#5470#5497#0" expanded="true" />
-            <element signature="e#5606#5635#0" expanded="true" />
-            <element signature="e#5741#5776#0" expanded="true" />
-            <element signature="e#5887#5925#0" expanded="true" />
-            <element signature="e#6033#6068#0" expanded="true" />
-            <element signature="e#6182#6224#0" expanded="true" />
-            <element signature="e#8078#8232#0" expanded="true" />
-            <element signature="e#8221#8222#0" expanded="true" />
-            <element signature="e#8276#8491#0" expanded="true" />
-            <element signature="e#8480#8481#0" expanded="true" />
-            <element signature="class#8837:9582" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/detail.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2088608" vertical-offset="128" max-vertical-offset="705">
+        <state vertical-scroll-proportion="0.66204506" vertical-offset="128" max-vertical-offset="705">
           <caret line="34" column="50" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
           <folding />
         </state>
       </provider>
       <provider editor-type-id="android-designer">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Timeline/TimelineRetweetTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.808" vertical-offset="1775" max-vertical-offset="2400">
+          <caret line="152" column="5" selection-start-line="135" selection-start-column="4" selection-end-line="152" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Timeline/TimelineFavoriteTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.808" vertical-offset="1775" max-vertical-offset="2400">
+          <caret line="152" column="5" selection-start-line="65" selection-start-column="4" selection-end-line="152" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Timeline/TimelineDeleteTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.472" vertical-offset="1460" max-vertical-offset="2085">
+          <caret line="117" column="25" selection-start-line="117" selection-start-column="25" selection-end-line="117" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Fragment/SettingFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09950249" vertical-offset="0" max-vertical-offset="603">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6268657" vertical-offset="2502" max-vertical-offset="3825">
+          <caret line="192" column="41" selection-start-line="192" selection-start-column="41" selection-end-line="192" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailRetweetTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.82587063" vertical-offset="1767" max-vertical-offset="2430">
+          <caret line="151" column="58" selection-start-line="151" selection-start-column="58" selection-end-line="151" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/Projects/Tweetin/1.0 Release/Source/Tweetin/src/io/github/mthli/Tweetin/Detail/DetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="10.06518" vertical-offset="12" max-vertical-offset="6420">
+          <caret line="418" column="5" selection-start-line="414" selection-start-column="4" selection-end-line="418" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Dropbox/Projects/Tweetin/1.0 Release/Source/Tweetin/src/io/github/mthli/Tweetin/Main/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.3312" vertical-offset="2862" max-vertical-offset="3960">
+          <caret line="187" column="47" selection-start-line="184" selection-start-column="3" selection-end-line="187" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/DetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3857" max-vertical-offset="4440">
+          <caret line="473" column="5" selection-start-line="473" selection-start-column="5" selection-end-line="473" selection-end-column="5" />
+          <folding>
+            <element signature="e#3192#3235#0" expanded="true" />
+            <element signature="e#3335#3387#0" expanded="true" />
+            <element signature="e#3478#3519#0" expanded="true" />
+            <element signature="e#3621#3675#0" expanded="true" />
+            <element signature="e#3773#3817#0" expanded="true" />
+            <element signature="e#3895#3939#0" expanded="true" />
+            <element signature="e#4012#4050#0" expanded="true" />
+            <element signature="e#4129#4174#0" expanded="true" />
+            <element signature="e#4252#4293#0" expanded="true" />
+            <element signature="e#4392#4434#0" expanded="true" />
+            <element signature="e#4507#4545#0" expanded="true" />
+            <element signature="e#4622#4665#0" expanded="true" />
+            <element signature="e#4743#4784#0" expanded="true" />
+            <element signature="e#4895#4951#0" expanded="true" />
+            <element signature="e#5030#5072#0" expanded="true" />
+            <element signature="e#5982#6009#0" expanded="true" />
+            <element signature="e#6118#6147#0" expanded="true" />
+            <element signature="e#6253#6288#0" expanded="true" />
+            <element signature="e#6399#6437#0" expanded="true" />
+            <element signature="e#6545#6580#0" expanded="true" />
+            <element signature="e#6694#6736#0" expanded="true" />
+            <element signature="e#8884#8920#0" expanded="true" />
+            <element signature="e#9038#9079#0" expanded="true" />
+            <element signature="e#9216#9266#0" expanded="true" />
+            <element signature="e#9912#9948#0" expanded="true" />
+            <element signature="e#10066#10107#0" expanded="true" />
+            <element signature="e#10229#10279#0" expanded="true" />
+            <element signature="class#10818:11563" expanded="false" />
+            <element signature="method#quote#0;class#DetailActivity#0" expanded="false" />
+            <element signature="e#12422#12458#0" expanded="true" />
+            <element signature="e#12544#12585#0" expanded="true" />
+            <element signature="e#12693#12743#0" expanded="true" />
+            <element signature="e#12853#12896#0" expanded="true" />
+            <element signature="method#clip#0;class#DetailActivity#0" expanded="false" />
+            <element signature="e#13278#13314#0" expanded="true" />
+            <element signature="e#13448#13491#0" expanded="true" />
+            <element signature="method#multipleAtOne#0;class#DetailActivity#0" expanded="false" />
+            <element signature="e#13943#13981#0" expanded="true" />
+            <element signature="method#showItemLongClickDialog#0;class#DetailActivity#0" expanded="false" />
+            <element signature="e#14710#14718#0" expanded="true" />
+            <element signature="e#14825#14868#0" expanded="true" />
+            <element signature="e#15039#15084#0" expanded="true" />
+            <element signature="e#15224#15269#0" expanded="true" />
+            <element signature="e#15373#15417#0" expanded="true" />
+            <element signature="e#15469#15515#0" expanded="true" />
+            <element signature="e#15543#15585#0" expanded="true" />
+            <element signature="e#16114#17885#0" expanded="true" />
+            <element signature="e#17221#17260#0" expanded="true" />
+            <element signature="e#17874#17875#0" expanded="true" />
+            <element signature="method#finishDetail#0;class#DetailActivity#0" expanded="false" />
+            <element signature="e#18007#18054#0" expanded="true" />
+            <element signature="e#18121#18168#0" expanded="true" />
+            <element signature="method#onKeyDown#0;class#DetailActivity#0" expanded="false" />
+            <element signature="method#onConfigurationChanged#0;class#DetailActivity#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Post/PostTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1742" max-vertical-offset="2910">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/PostActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="5.6346483" vertical-offset="0" max-vertical-offset="4545">
+          <caret line="238" column="79" selection-start-line="238" selection-start-column="79" selection-end-line="238" selection-end-column="79" />
+          <folding>
+            <element signature="e#8579#9086#0" expanded="true" />
+            <element signature="e#9075#9076#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailInitTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74614066" vertical-offset="0" max-vertical-offset="1770">
+          <caret line="29" column="55" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
+          <folding>
+            <element signature="e#823#830#0" expanded="true" />
+            <element signature="method#getReplyToStatusList#0;class#DetailInitTask#0" expanded="false" />
+            <element signature="e#1793#1811#0" expanded="true" />
+            <element signature="e#2387#2405#0" expanded="true" />
+            <element signature="method#getTweetWithDetails#0;class#DetailInitTask#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailDeleteTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.3190393" vertical-offset="0" max-vertical-offset="2145">
+          <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="133" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Task/Detail/DetailFavoriteTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.8850772" vertical-offset="0" max-vertical-offset="2430">
+          <caret line="151" column="57" selection-start-line="151" selection-start-column="57" selection-end-line="151" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Fragment/TimelineFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="8.336192" vertical-offset="0" max-vertical-offset="6510">
+          <caret line="389" column="24" selection-start-line="389" selection-start-column="24" selection-end-line="389" selection-end-column="24" />
+          <folding>
+            <element signature="method#quote#0;class#TimelineFragment#0" expanded="false" />
+            <element signature="method#clip#0;class#TimelineFragment#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/ProfileActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5111492" vertical-offset="587" max-vertical-offset="1260">
+          <caret line="65" column="42" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25385934" vertical-offset="557" max-vertical-offset="1320">
+          <caret line="198" column="34" selection-start-line="198" selection-start-column="34" selection-end-line="198" selection-end-column="34" />
+          <folding>
+            <element signature="method#selectResideMenuItem#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#getCurrentFragment#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#initResideMenu#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#8747#8781#0" expanded="true" />
+            <element signature="e#9113#9146#0" expanded="true" />
+            <element signature="e#9294#9328#0" expanded="true" />
+            <element signature="e#9478#9513#0" expanded="true" />
+            <element signature="e#9659#9692#0" expanded="true" />
+            <element signature="method#onActivityResult#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#14859#14906#0" expanded="true" />
+            <element signature="e#16753#16799#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

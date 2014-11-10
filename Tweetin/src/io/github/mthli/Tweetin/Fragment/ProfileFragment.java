@@ -5,17 +5,17 @@ import android.os.Bundle;
 import com.devspark.progressfragment.ProgressFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Profile.ProfileFollowTask;
-import io.github.mthli.Tweetin.Task.Profile.ProfileLoadTask;
+import io.github.mthli.Tweetin.Task.Profile.ProfileInitTask;
 
 public class ProfileFragment extends ProgressFragment {
-    private ProfileLoadTask profileLoadTask;
+    private ProfileInitTask profileInitTask;
     private ProfileFollowTask profileFollowTask;
     public void setProfileFollowTask(ProfileFollowTask profileFollowTask) {
         this.profileFollowTask = profileFollowTask;
     }
     public void allTaskDown() {
-        if (profileLoadTask != null && profileLoadTask.getStatus() == AsyncTask.Status.RUNNING) {
-            profileLoadTask.cancel(true);
+        if (profileInitTask != null && profileInitTask.getStatus() == AsyncTask.Status.RUNNING) {
+            profileInitTask.cancel(true);
         }
         if (profileFollowTask != null && profileFollowTask.getStatus() == AsyncTask.Status.RUNNING) {
             profileFollowTask.cancel(true);
@@ -29,7 +29,7 @@ public class ProfileFragment extends ProgressFragment {
         setContentEmpty(false);
         setContentShown(true);
 
-        profileLoadTask = new ProfileLoadTask(this);
-        profileLoadTask.execute();
+        profileInitTask = new ProfileInitTask(this);
+        profileInitTask.execute();
     }
 }

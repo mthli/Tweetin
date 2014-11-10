@@ -189,6 +189,15 @@
     <string name="detail_intent_favorite">
         DETAIL_INTENT_FAVORITE
     </string>
+    <string name="detail_intent_is_delete_at_detail">
+        DETAIL_INTENT_IS_DELETE_AT_DETAIL
+    </string>
+    <string name="detail_intent_is_retweet_at_detail">
+        DETAIL_INTENT_IS_RETWEET_AT_DETAIL
+    </string>
+    <string name="detail_intent_is_favorite_at_detail">
+        DETAIL_INTENT_IS_FAVORITE_AT_DETAIL
+    </string>
     <string name="detail_error_get_detail_failed">
         Get detail failed.
     </string>
