@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 import io.github.mthli.Tweetin.Activity.ProfileActivity;
 import io.github.mthli.Tweetin.Fragment.ProfileFragment;
 import io.github.mthli.Tweetin.R;
@@ -21,7 +22,7 @@ public class ProfileFollowTask extends AsyncTask<Void, Integer, Boolean> {
     private boolean isFollowing;
 
     private NotificationManager notificationManager;
-    private Notification.Builder builder;
+    private NotificationCompat.Builder builder;
 
     public ProfileFollowTask(
             ProfileFragment profileFragment,
@@ -41,7 +42,7 @@ public class ProfileFollowTask extends AsyncTask<Void, Integer, Boolean> {
 
         notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        builder = new Notification.Builder(context);
+        builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.ic_tweet_notification);
         if (isFollowing) {
             builder.setTicker(context.getString(R.string.profile_notification_un_follow_ing));

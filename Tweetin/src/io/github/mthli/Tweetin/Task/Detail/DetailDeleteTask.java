@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 import io.github.mthli.Tweetin.Activity.DetailActivity;
 import io.github.mthli.Tweetin.Database.Favorite.FavoriteAction;
 import io.github.mthli.Tweetin.Database.Mention.MentionAction;
@@ -26,7 +27,7 @@ public class DetailDeleteTask extends AsyncTask<Void, Integer, Boolean> {
     private int position;
 
     private NotificationManager notificationManager;
-    private Notification.Builder builder;
+    private NotificationCompat.Builder builder;
 
     public DetailDeleteTask(
             DetailActivity detailActivity,
@@ -46,7 +47,7 @@ public class DetailDeleteTask extends AsyncTask<Void, Integer, Boolean> {
 
         notificationManager = (NotificationManager) detailActivity
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        builder = new Notification.Builder(detailActivity);
+        builder = new NotificationCompat.Builder(detailActivity);
         builder.setSmallIcon(R.drawable.ic_tweet_notification);
         builder.setTicker(
                 detailActivity.getString(R.string.tweet_notification_delete_ing)

@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 import io.github.mthli.Tweetin.Database.Favorite.FavoriteAction;
 import io.github.mthli.Tweetin.Database.Mention.MentionAction;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
@@ -28,7 +29,7 @@ public class MentionFavoriteTask extends AsyncTask<Void, Integer, Boolean> {
     private int position;
 
     private NotificationManager notificationManager;
-    private Notification.Builder builder;
+    private NotificationCompat.Builder builder;
 
     public MentionFavoriteTask(
             MentionFragment mentionFragment,
@@ -49,7 +50,7 @@ public class MentionFavoriteTask extends AsyncTask<Void, Integer, Boolean> {
 
         notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        builder = new Notification.Builder(context);
+        builder = new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.drawable.ic_tweet_notification);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_add_favorite_ing)

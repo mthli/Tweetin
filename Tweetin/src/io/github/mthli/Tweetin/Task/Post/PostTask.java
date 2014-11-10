@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 import io.github.mthli.Tweetin.Activity.PostActivity;
@@ -34,7 +35,7 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
     private String screenName;
 
     private NotificationManager notificationManager;
-    private Notification.Builder builder;
+    private NotificationCompat.Builder builder;
 
     public PostTask(PostActivity postActivity) {
         this.postActivity = postActivity;
@@ -70,7 +71,7 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         LocationManager locationManager = (LocationManager) postActivity
                 .getSystemService(Context.LOCATION_SERVICE);
-        builder = new Notification.Builder(postActivity);
+        builder = new NotificationCompat.Builder(postActivity);
         builder.setSmallIcon(R.drawable.ic_tweet_notification);
         builder.setTicker(
                 postActivity.getString(R.string.post_notification_post_ing)
