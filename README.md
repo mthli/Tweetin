@@ -3,15 +3,17 @@ Tweetin
 
 Yet another Twitter unofficial client.
 
-**REBUILD!!!**
+**UNDER DEVELOPMENT!!!**
 
 ## How to use the source code?
 
-Just import the `Tweetin` folder with your **IntelliJ IDEA**.
+Just import the `Tweetin` folder with your __IntelliJ IDEA__.
 
 ## Thanks:
 
  - [Android-ProgressFragment](https://github.com/johnkil/Android-ProgressFragment "Android-ProgressFragment")
+
+ - [AndroidResideMenu](https://github.com/SpecialCyCi/AndroidResideMenu "AndroidResideMenu")
 
  - [ActivityTransition](https://github.com/ophilbert/ActivityTransition "ActivityTransition")
 
@@ -27,7 +29,9 @@ Just import the `Tweetin` folder with your **IntelliJ IDEA**.
 
  - [Glide](https://github.com/bumptech/glide "Glide")
 
- - [SystemBarTint](https://github.com/jgilfelt/SystemBarTint "SystemBarTint")
+ - [material-ripple](https://github.com/balysv/material-ripple "material-ripple")
+
+ - [SmoothProgressBar](https://github.com/castorflex/SmoothProgressBar "SmoothProgressBar")
 
  - [Twitter4J](https://github.com/yusuke/twitter4j "Twitter4J")
 
