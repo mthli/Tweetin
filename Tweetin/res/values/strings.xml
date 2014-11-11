@@ -123,7 +123,7 @@
     <string name="splash_toast_wait">
         Please wait a moment, a webpage will be shown in this dialog.
     </string>
-    <string name="splash_toast_miss_oauth">
+    <string name="splash_toast_miss_api_info">
         Please complete your OAuth info.
     </string>
     <string name="splash_toast_miss_pin">
@@ -135,6 +135,12 @@
     <string name="splash_toast_get_access_token_failed">
         Get AccessToken failed.
     </string>
+    <string name="splash_how_to_en">HowTo_en.html</string>
+    <string name="splash_how_to_zh">HowTo_zh.html</string>
+    <string name="splash_how_to_base_url">
+        file:///android_asset/
+    </string>
+    <string name="splash_how_to_ok">OK</string>
 
     <!-- Timeline -->
     <string name="timeline_error_get_timeline_failed">

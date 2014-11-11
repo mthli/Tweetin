@@ -90,8 +90,8 @@
     <string name="splash_toast_wait">
         请稍等一会儿，对话框中会出现一个网页。
     </string>
-    <string name="splash_toast_miss_oauth">
-        请完成你的OAuth信息。
+    <string name="splash_toast_miss_api_info">
+        请完成你的API信息。
     </string>
     <string name="splash_toast_miss_pin">
         缺少Pin值。
@@ -102,6 +102,7 @@
     <string name="splash_toast_get_access_token_failed">
         获取AccessToken失败。
     </string>
+    <string name="splash_how_to_ok">好的</string>
 
     <!-- Timeline -->
     <string name="timeline_error_get_timeline_failed">
