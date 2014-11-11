@@ -63,12 +63,17 @@ public class ProfileActivity extends FragmentActivity {
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             ActivityAnim anim = new ActivityAnim();
-            profileFragment.allTaskDown();
+            profileFragment.cancelAllTask();
             finish();
             anim.rightOut(this);
         }
 
         return true;
+    }
+    @Override
+    public void onDestroy() {
+        profileFragment.cancelAllTask();
+        super.onDestroy();
     }
 
     @Override

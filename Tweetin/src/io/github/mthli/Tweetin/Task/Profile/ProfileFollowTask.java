@@ -127,7 +127,7 @@ public class ProfileFollowTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onPostExecute(Boolean result) {
         if (result) {
             ActivityAnim anim = new ActivityAnim();
-            profileFragment.allTaskDown();
+            profileFragment.cancelAllTask();
             profileFragment.getActivity().finish();
             anim.rightOut(profileFragment.getActivity());
         }

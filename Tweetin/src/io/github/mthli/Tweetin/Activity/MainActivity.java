@@ -8,16 +8,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
+import io.github.mthli.Tweetin.Fragment.*;
 import io.github.mthli.Tweetin.Fragment.DiscoveryFragment;
-import io.github.mthli.Tweetin.Fragment.FavoriteFragment;
-import io.github.mthli.Tweetin.Fragment.MentionFragment;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Fragment.SettingFragment;
-import io.github.mthli.Tweetin.Fragment.TimelineFragment;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
@@ -32,12 +31,6 @@ public class MainActivity extends FragmentActivity {
     private DiscoveryFragment discoveryFragment;
     private SettingFragment settingFragment;
     private int fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
-    public int getFragmentFlag() {
-        return fragmentFlag;
-    }
-    public void setFragmentFlag(int fragmentFlag) {
-        this.fragmentFlag = fragmentFlag;
-    }
 
     private ResideMenu resideMenu;
     private ResideMenuItem timelineItem;
@@ -189,6 +182,13 @@ public class MainActivity extends FragmentActivity {
             case Flag.IN_FAVORITE_FRAGMENT:
                 return favoriteFragment;
             case Flag.IN_DISCOVERY_FRAGMENT:
+                EditText editText = discoveryFragment.getSearchBox();
+                editText.clearFocus();
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(
+                                editText.getWindowToken(),
+                                0
+                        );
                 return discoveryFragment;
             case Flag.IN_SETTING_FRAGMENT:
                 return settingFragment;
@@ -314,8 +314,21 @@ public class MainActivity extends FragmentActivity {
         discoveryItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fragmentFlag != Flag.IN_DISCOVERY_FRAGMENT) {
-                    /* Do something */
+                if(fragmentFlag != Flag.IN_DISCOVERY_FRAGMENT) {
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                            .beginTransaction();
+                    if (discoveryFragment.isAdded()) {
+                        fragmentTransaction.hide(
+                                getCurrentFragment()
+                        ).show(discoveryFragment);
+                    } else {
+                        fragmentTransaction.hide(
+                                getCurrentFragment()
+                        ).add(android.R.id.content, discoveryFragment);
+                    }
+                    selectResideMenuItem(Flag.IN_DISCOVERY_FRAGMENT);
+                    fragmentFlag = Flag.IN_DISCOVERY_FRAGMENT;
+                    fragmentTransaction.commit();
                     resideMenu.closeMenu();
                 } else {
                     resideMenu.closeMenu();
@@ -389,6 +402,10 @@ public class MainActivity extends FragmentActivity {
                     tweetAdapter = favoriteFragment.getTweetAdapter();
                     tweetList = favoriteFragment.getTweetList();
                     break;
+                case Flag.IN_DISCOVERY_FRAGMENT:
+                    tweetAdapter = discoveryFragment.getTweetAdapter();
+                    tweetList = discoveryFragment.getTweetList();
+                    break;
                 default:
                     tweetAdapter = timelineFragment.getTweetAdapter();
                     tweetList = timelineFragment.getTweetList();
@@ -413,6 +430,8 @@ public class MainActivity extends FragmentActivity {
             }
         }
     }
+
+    /* Do something with onKeyDown() and onDestroy() */
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

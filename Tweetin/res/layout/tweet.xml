@@ -72,6 +72,7 @@
             <RelativeLayout android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
+                <!-- Need test when too long -->
                 <TextView android:id="@+id/tweet_check_in"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -86,16 +87,19 @@
                           android:visibility="gone">
                 </TextView>
 
+                <!-- Need test when too long -->
                 <TextView android:id="@+id/tweet_screen_name"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_alignParentLeft="true"
+                          android:layout_toLeftOf="@id/tweet_check_in"
                           android:textSize="12sp"
                           android:textColor="@color/hint"
                           android:singleLine="true"
                           android:ellipsize="end">
                 </TextView>
 
+                <!-- Need test when too long -->
                 <TextView android:id="@+id/tweet_protect"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"

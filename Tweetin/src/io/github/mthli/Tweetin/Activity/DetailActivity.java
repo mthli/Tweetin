@@ -486,6 +486,11 @@ public class DetailActivity extends Activity {
 
         return true;
     }
+    @Override
+    public void onDestroy() {
+        finishDetail();
+        super.onDestroy();
+    }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

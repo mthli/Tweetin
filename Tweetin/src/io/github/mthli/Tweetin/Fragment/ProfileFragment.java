@@ -13,7 +13,7 @@ public class ProfileFragment extends ProgressFragment {
     public void setProfileFollowTask(ProfileFollowTask profileFollowTask) {
         this.profileFollowTask = profileFollowTask;
     }
-    public void allTaskDown() {
+    public void cancelAllTask() {
         if (profileInitTask != null && profileInitTask.getStatus() == AsyncTask.Status.RUNNING) {
             profileInitTask.cancel(true);
         }

@@ -246,4 +246,18 @@
         UnFollow failed.
     </string>
 
+    <!-- Discovery -->
+    <string name="discovery_fragment_search_box_hint">
+        Discovery
+    </string>
+    <string name="discovery_toast_please_input_something">
+        Please input something.
+    </string>
+    <string name="discovery_toast_nothing">
+        There is nothing to show.
+    </string>
+    <string name="discovery_toast_discovery_failed">
+        Discovery failed.
+    </string>
+
 </resources>
