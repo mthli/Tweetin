@@ -4,16 +4,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.*;
 import com.balysv.materialripple.MaterialRippleLayout;
 import com.devspark.progressfragment.ProgressFragment;
 import io.github.mthli.Tweetin.Activity.MainActivity;
+import io.github.mthli.Tweetin.Activity.PostActivity;
 import io.github.mthli.Tweetin.Activity.ProfileActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
+import io.github.mthli.Tweetin.Unit.Flag.Flag;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +47,7 @@ public class SettingFragment extends ProgressFragment {
         titleList.add(getString(R.string.setting_title_homepage));
         titleList.add(getString(R.string.setting_title_license));
         titleList.add(getString(R.string.setting_title_version));
+        titleList.add(getString(R.string.setting_title_feedback));
         titleList.add(getString(R.string.setting_title_author));
         titleList.add(getString(R.string.setting_title_thanks));
 
@@ -55,11 +55,12 @@ public class SettingFragment extends ProgressFragment {
         contentList.add(getString(R.string.setting_content_homepage));
         contentList.add(getString(R.string.setting_content_license));
         contentList.add(getString(R.string.setting_content_version));
+        contentList.add(getString(R.string.setting_content_feedback));
         contentList.add(getString(R.string.setting_content_author));
         contentList.add(getString(R.string.setting_content_thanks));
 
         List<Map<String, String>> lists = new ArrayList<Map<String, String>>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             Map<String, String> list = new HashMap<String, String>();
             list.put("title", titleList.get(i));
             list.put("content", contentList.get(i));
@@ -92,9 +93,20 @@ public class SettingFragment extends ProgressFragment {
                         startActivity(intentToLicense);
                         break;
                     case 2:
-                        /* Do nothing */
+                        Uri link = Uri.parse(getString(R.string.setting_link_42));
+                        Intent intentTo42 = new Intent(Intent.ACTION_VIEW, link);
+                        startActivity(intentTo42);
                         break;
                     case 3:
+                        Intent intentToFeedback = new Intent(getActivity(), PostActivity.class);
+                        intentToFeedback.putExtra(
+                                getString(R.string.post_intent_flag),
+                                Flag.POST_FEEDBACK
+                        );
+                        startActivity(intentToFeedback);
+                        anim.fade(getActivity());
+                        break;
+                    case 4:
                         intentToProfile.putExtra(
                                 getString(R.string.profile_intent_user_id),
                                 Long.valueOf(getString(R.string.app_author_id))
@@ -102,7 +114,7 @@ public class SettingFragment extends ProgressFragment {
                         startActivity(intentToProfile);
                         anim.rightIn(getActivity());
                         break;
-                    case 4:
+                    case 5:
                         intentToProfile.putExtra(
                                 getString(R.string.profile_intent_user_id),
                                 Long.valueOf(getString(R.string.app_thanks_id))

@@ -107,9 +107,68 @@ public class PostActivity extends Activity {
         countWords = (TextView) findViewById(R.id.post_count_words);
         postSendButton = (Button) findViewById(R.id.post_send_button);
 
+        postPhotoButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_PICK);
+                    startActivityForResult(
+                            intent,
+                            Flag.POST_PHOTO //
+                    );
+                } else {
+                    postPhoto.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        postEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                /* Do nothing */
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                /* Do nothing */
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (text.length() <= 140) {
+                    countWords.setTextColor(
+                            getResources().getColor(R.color.hint)
+                    );
+                    countWords.setText(String.valueOf(text.length()));
+                } else {
+                    countWords.setTextColor(
+                            getResources().getColor(R.color.red)
+                    );
+                    countWords.setText(String.valueOf(text.length()));
+                }
+            }
+        });
+
+        postSendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityAnim anim = new ActivityAnim();
+                PostTask postTask = new PostTask(PostActivity.this);
+                postTask.execute();
+                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(postEdit.getWindowToken(), 0);
+                finish();
+                anim.fade(PostActivity.this);
+            }
+        });
+
+        /* Do something */
         postFlag = getIntent().getIntExtra(
                 getString(R.string.post_intent_flag),
-                0
+                Flag.POST_SHARE
         );
         switch (postFlag) {
             case Flag.POST_ORIGINAL:
@@ -180,69 +239,91 @@ public class PostActivity extends Activity {
                 }
                 countWords.setText(String.valueOf(quote.length()));
                 break;
-            default:
-                break;
-        }
-
-        postPhotoButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_PICK);
-                    startActivityForResult(
-                            intent,
-                            Flag.POST_PHOTO //
-                    );
-                } else {
-                    postPhoto.setVisibility(View.GONE);
+            case Flag.POST_SHARE:
+                String action = getIntent().getAction();
+                String type = getIntent().getType();
+                if (action.equals(Intent.ACTION_SEND) && type != null) {
+                    if (type.equals("text/plain")) {
+                        String shareText = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+                        postEdit.setText(shareText);
+                        postEdit.setSelection(shareText.length());
+                        if (shareText.length() > 140) {
+                            countWords.setTextColor(
+                                    getResources().getColor(R.color.red)
+                            );
+                        } else {
+                            countWords.setTextColor(
+                                    getResources().getColor(R.color.hint)
+                            );
+                        }
+                        countWords.setText(String.valueOf(shareText.length()));
+                    }
+                    /* Do something with image/* */
                 }
-            }
-        });
-
-        postEdit.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                /* Do nothing */
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                /* Do nothing */
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String text = s.toString();
-                if (text.length() <= 140) {
-                    countWords.setTextColor(
-                            getResources().getColor(R.color.hint)
-                    );
-                    countWords.setText(String.valueOf(text.length()));
-                } else {
+                break;
+            case Flag.POST_FEEDBACK:
+                String feedbackStr = getString(R.string.setting_feedback_str) + " ";
+                postEdit.setText(feedbackStr);
+                postEdit.setSelection(feedbackStr.length());
+                if (feedbackStr.length() > 140) {
                     countWords.setTextColor(
                             getResources().getColor(R.color.red)
                     );
-                    countWords.setText(String.valueOf(text.length()));
+                } else {
+                    countWords.setTextColor(
+                            getResources().getColor(R.color.hint)
+                    );
                 }
-            }
-        });
-
-        postSendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ActivityAnim anim = new ActivityAnim();
-                PostTask postTask = new PostTask(PostActivity.this);
-                postTask.execute();
-                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                        .hideSoftInputFromWindow(postEdit.getWindowToken(), 0);
-                finish();
-                anim.fade(PostActivity.this);
-            }
-        });
+                countWords.setText(String.valueOf(feedbackStr.length()));
+                break;
+            default:
+                countWords.setTextColor(
+                        getResources().getColor(R.color.hint)
+                );
+                countWords.setText("0");
+                break;
+        }
     }
 
+    private void intentWithPhoto(Intent data) {
+        Uri uri = data.getData();
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(this, uri, proj, null, null, null); //
+        Cursor cursor = loader.loadInBackground();
+        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        photoPath = cursor.getString(index);
+        cursor.close();
+
+        Bitmap bitmap = BitmapFactory.decodeFile(photoPath);
+        WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics metrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(metrics);
+        int screenWidth = metrics.widthPixels;
+        int screenHeight = metrics.heightPixels;
+        int bitmapWidth = bitmap.getWidth();
+        int bitmapHeight = bitmap.getHeight();
+        if (bitmapWidth > screenWidth) {
+            float percent = ((float) screenWidth) / ((float) bitmapWidth);
+            Matrix matrix = new Matrix();
+            matrix.postScale(percent, percent);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+            postPhoto.setImageBitmap(bitmap);
+            postPhoto.setVisibility(View.VISIBLE);
+            return;
+        }
+        if (bitmapHeight > screenHeight) {
+            float percent = ((float) screenHeight) / ((float) bitmapHeight);
+            Matrix matrix = new Matrix();
+            matrix.postScale(percent, percent);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+            postPhoto.setImageBitmap(bitmap);
+            postPhoto.setVisibility(View.VISIBLE);
+            return;
+        }
+        postPhoto.setImageBitmap(bitmap);
+        postPhoto.setVisibility(View.VISIBLE);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -252,43 +333,7 @@ public class PostActivity extends Activity {
             return;
         }
         if (requestCode == Flag.POST_PHOTO) { //
-            Uri uri = data.getData();
-            String[] proj = {MediaStore.Images.Media.DATA};
-            CursorLoader loader = new CursorLoader(this, uri, proj, null, null, null);
-            Cursor cursor = loader.loadInBackground();
-            int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            photoPath = cursor.getString(index);
-            cursor.close();
-
-            Bitmap bitmap = BitmapFactory.decodeFile(photoPath);
-            WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-            DisplayMetrics metrics = new DisplayMetrics();
-            manager.getDefaultDisplay().getMetrics(metrics);
-            int screenWidth = metrics.widthPixels;
-            int screenHeight = metrics.heightPixels;
-            int bitmapWidth = bitmap.getWidth();
-            int bitmapHeight = bitmap.getHeight();
-            if (bitmapWidth > screenWidth) {
-                float percent = ((float) screenWidth) / ((float) bitmapWidth);
-                Matrix matrix = new Matrix();
-                matrix.postScale(percent, percent);
-                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
-                postPhoto.setImageBitmap(bitmap);
-                postPhoto.setVisibility(View.VISIBLE);
-                return;
-            }
-            if (bitmapHeight > screenHeight) {
-                float percent = ((float) screenHeight) / ((float) bitmapHeight);
-                Matrix matrix = new Matrix();
-                matrix.postScale(percent, percent);
-                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
-                postPhoto.setImageBitmap(bitmap);
-                postPhoto.setVisibility(View.VISIBLE);
-                return;
-            }
-            postPhoto.setImageBitmap(bitmap);
-            postPhoto.setVisibility(View.VISIBLE);
+            intentWithPhoto(data);
         }
     }
 
@@ -308,8 +353,7 @@ public class PostActivity extends Activity {
         super.onConfigurationChanged(newConfig);
         if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE) {
             /* Do nothing */
-        }
-        else{
+        } else{
             /* Do nothing */
         }
     }

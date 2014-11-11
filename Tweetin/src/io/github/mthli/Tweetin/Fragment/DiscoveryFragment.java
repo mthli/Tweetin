@@ -61,10 +61,14 @@ public class DiscoveryFragment extends ProgressFragment {
     }
 
     private EditText searchBox;
+    private TextView introduction;
     private CircularProgressBar progressBar;
     private ListView listView;
     public EditText getSearchBox() {
         return searchBox;
+    }
+    public TextView getIntroduction() {
+        return introduction;
     }
     public CircularProgressBar getProgressBar() {
         return progressBar;
@@ -209,6 +213,9 @@ public class DiscoveryFragment extends ProgressFragment {
 
         searchBox = (EditText) view.findViewById(
                 R.id.discovery_fragment_search_box
+        );
+        introduction = (TextView) view.findViewById(
+                R.id.discovery_fragment_introduction
         );
         progressBar = (CircularProgressBar) view.findViewById(
                 R.id.discovery_fragment_progress_bar

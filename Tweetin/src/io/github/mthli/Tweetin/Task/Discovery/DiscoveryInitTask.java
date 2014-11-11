@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 import io.github.mthli.Tweetin.Fragment.DiscoveryFragment;
@@ -29,6 +30,7 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
     private List<Tweet> tweetList;
 
     private EditText editText;
+    private TextView introduction;
     private CircularProgressBar progressBar;
     private ListView listView;
     private String queryStr;
@@ -53,10 +55,12 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
         tweetList = discoveryFragment.getTweetList();
 
         editText = discoveryFragment.getSearchBox();
+        introduction = discoveryFragment.getIntroduction();
         progressBar = discoveryFragment.getProgressBar();
         listView = discoveryFragment.getListView();
         queryStr = editText.getText().toString();
 
+        introduction.setVisibility(View.GONE); //
         listView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -172,6 +176,7 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
             if (tweetList.size() <= 0) {
                 tweetAdapter.notifyDataSetChanged();
                 listView.setVisibility(View.GONE);
+                introduction.setVisibility(View.VISIBLE); //
                 Toast.makeText(
                         context,
                         R.string.discovery_toast_nothing,
@@ -184,6 +189,7 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
         } else {
             progressBar.setVisibility(View.GONE);
             listView.setVisibility(View.GONE);
+            introduction.setVisibility(View.VISIBLE); //
             Toast.makeText(
                     context,
                     R.string.discovery_toast_discovery_failed,

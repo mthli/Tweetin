@@ -3,6 +3,8 @@ Tweetin
 
 Yet another Twitter unofficial client.
 
+For Android 4.X and Lollipop.
+
 __UNDER DEVELOPMENT!!!__
 
 ## Screenshots:

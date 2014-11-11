@@ -26,7 +26,17 @@
               android:background="@color/white">
     </EditText>
 
-    <!-- Do something -->
+    <TextView android:id="@+id/discovery_fragment_introduction"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="7dp"
+              android:layout_gravity="center"
+              android:gravity="center"
+              android:text="@string/discovery_fragment_introduction"
+              android:textSize="14sp"
+              android:textColor="@color/hint">
+    </TextView>
+
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="7dp">
