@@ -518,8 +518,8 @@ public class MainActivity extends FragmentActivity {
         ActivityAnim anim = new ActivityAnim();
         startActivity(intent);
         anim.rightOut(this);
+        finish();
     }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -534,7 +534,6 @@ public class MainActivity extends FragmentActivity {
         cancelAllFragmentTask();
         super.onDestroy();
     }
-
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
