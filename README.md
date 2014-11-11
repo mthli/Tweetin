@@ -3,7 +3,11 @@ Tweetin
 
 Yet another Twitter unofficial client.
 
-**UNDER DEVELOPMENT!!!**
+__UNDER DEVELOPMENT!!!__
+
+## Screenshots:
+
+![All.png](/Art/Screenshots/All.png "All.png")
 
 ## How to use the source code?
 
