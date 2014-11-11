@@ -106,18 +106,18 @@
 
     <!-- Timeline -->
     <string name="timeline_error_get_timeline_failed">
-        获取时间线失败，请尝试重新打开应用。
+        获取时间线失败。
     </string>
     <!-- Mention -->
     <string name="mention_error_get_mention_failed">
-        获取提及列表失败，请尝试重新打开应用。
+        获取提及列表失败。
     </string>
     <string name="mention_notification_new_mention">
         您有新的提及！
     </string>
     <!-- Favorite -->
     <string name="favorite_error_get_favorite_failed">
-        获取收藏列表失败，请尝试重新打开应用。
+        获取收藏列表失败。
     </string>
 
     <!-- Detail -->

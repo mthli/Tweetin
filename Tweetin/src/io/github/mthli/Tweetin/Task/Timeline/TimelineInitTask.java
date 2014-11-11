@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineRecord;
@@ -265,7 +266,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
             if (mention.getId() > latestMentionId) {
                 NotificationManager manager = (NotificationManager) context
                         .getSystemService(Context.NOTIFICATION_SERVICE);
-                Notification.Builder builder = new Notification.Builder(context);
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
                 builder.setSmallIcon(R.drawable.ic_tweet_notification);
                 builder.setTicker(
                         context.getString(R.string.mention_notification_new_mention)
@@ -274,7 +275,6 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                         context.getString(R.string.mention_notification_new_mention)
                 );
                 builder.setContentText(mention.getText());
-                /* Do something */
                 Notification notification = builder.build();
                 notification.flags = Notification.FLAG_AUTO_CANCEL;
                 manager.notify(Flag.NOTIFICATION_MENTION_ID, notification);

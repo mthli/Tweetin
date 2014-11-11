@@ -144,18 +144,18 @@
 
     <!-- Timeline -->
     <string name="timeline_error_get_timeline_failed">
-        Get timeline failed, try reopen Tweetin.
+        Get timeline failed.
     </string>
     <!-- Mention -->
     <string name="mention_error_get_mention_failed">
-        Get mention failed, try reopen Tweetin.
+        Get mention list failed.
     </string>
     <string name="mention_notification_new_mention">
         New mention!
     </string>
     <!-- Favorite -->
     <string name="favorite_error_get_favorite_failed">
-        Get favorite failed, try reopen Tweetin.
+        Get favorite list failed.
     </string>
 
     <!-- Detail -->
