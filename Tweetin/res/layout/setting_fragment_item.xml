@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingLeft="15dp"
+              android:paddingRight="15dp"
+              android:gravity="top"
+              android:background="@color/white">
+
+    <TextView android:id="@+id/setting_fragment_item_title"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="10dp"
+              android:textSize="20sp"
+              android:textColor="@color/text"
+              android:singleLine="true"
+              android:ellipsize="start">
+    </TextView>
+
+    <TextView android:id="@+id/setting_fragment_item_content"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingBottom="10dp"
+              android:textSize="12sp"
+              android:textColor="@color/secondary_text"
+              android:singleLine="true"
+              android:ellipsize="start">
+    </TextView>
+
+</LinearLayout>

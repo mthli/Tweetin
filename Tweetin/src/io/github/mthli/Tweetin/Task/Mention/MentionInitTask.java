@@ -44,10 +44,10 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        if (mentionFragment.getRefreshFlag() == Flag.TIMELINE_TASK_RUNNING) {
+        if (mentionFragment.getRefreshFlag() == Flag.MENTION_TASK_RUNNING) {
             onCancelled();
         } else {
-            mentionFragment.setRefreshFlag(Flag.TIMELINE_TASK_RUNNING);
+            mentionFragment.setRefreshFlag(Flag.MENTION_TASK_RUNNING);
         }
 
         context = mentionFragment.getContentView().getContext();

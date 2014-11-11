@@ -294,7 +294,6 @@ public class DetailActivity extends Activity {
         detailInitTask.execute();
     }
 
-    /* Do something */
     private AlertDialog alertDialog;
     private boolean deleteFromDetail = false;
     private boolean retweetFromDetail = false;

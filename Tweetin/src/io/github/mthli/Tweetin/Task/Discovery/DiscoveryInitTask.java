@@ -39,10 +39,10 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        if (discoveryFragment.getRefreshFlag() == Flag.TIMELINE_TASK_RUNNING) {
+        if (discoveryFragment.getRefreshFlag() == Flag.DISCOVERY_TASK_RUNNING) {
             onCancelled();
         } else {
-            discoveryFragment.setRefreshFlag(Flag.TIMELINE_TASK_RUNNING);
+            discoveryFragment.setRefreshFlag(Flag.DISCOVERY_TASK_RUNNING);
         }
 
         context = discoveryFragment.getContentView().getContext();

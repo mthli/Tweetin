@@ -2,11 +2,13 @@ package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -14,9 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
+import io.github.mthli.Tweetin.Database.Favorite.FavoriteAction;
+import io.github.mthli.Tweetin.Database.Mention.MentionAction;
+import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
 import io.github.mthli.Tweetin.Fragment.*;
 import io.github.mthli.Tweetin.Fragment.DiscoveryFragment;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
@@ -39,7 +45,6 @@ public class MainActivity extends FragmentActivity {
     private ResideMenuItem discoveryItem;
     private ResideMenuItem settingItem;
 
-    /* Do something */
     private void selectResideMenuItem(int targetFragmentFlag) {
         ImageView imageView;
         TextView textView;
@@ -339,7 +344,20 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 if (fragmentFlag != Flag.IN_SETTING_FRAGMENT) {
-                    /* Do something */
+                    FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                            .beginTransaction();
+                    if (settingFragment.isAdded()) {
+                        fragmentTransaction.hide(
+                                getCurrentFragment()
+                        ).show(settingFragment);
+                    } else {
+                        fragmentTransaction.hide(
+                                getCurrentFragment()
+                        ).add(android.R.id.content, settingFragment);
+                    }
+                    selectResideMenuItem(Flag.IN_SETTING_FRAGMENT);
+                    fragmentFlag = Flag.IN_SETTING_FRAGMENT;
+                    fragmentTransaction.commit();
                     resideMenu.closeMenu();
                 } else {
                     resideMenu.closeMenu();
@@ -431,7 +449,92 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    /* Do something with onKeyDown() and onDestroy() */
+    private void cancelAllFragmentTask() {
+        timelineFragment.cancelAllTask();
+        mentionFragment.cancelAllTask();
+        favoriteFragment.cancelAllTask();
+        discoveryFragment.cancelAllTask();
+    }
+    private void clearAllDatabase() {
+        TimelineAction timelineAction = new TimelineAction(this);
+        timelineAction.openDatabase(true);
+        timelineAction.deleteAll();
+        timelineAction.closeDatabase();
+        MentionAction mentionAction = new MentionAction(this);
+        mentionAction.openDatabase(true);
+        mentionAction.deleteAll();
+        mentionAction.closeDatabase();
+        FavoriteAction favoriteAction = new FavoriteAction(this);
+        favoriteAction.openDatabase(true);
+        favoriteAction.deleteAll();
+        favoriteAction.closeDatabase();
+    }
+    private void clearSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences(
+                getString(R.string.sp_name),
+                MODE_PRIVATE
+        );
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(
+                getString(R.string.sp_use_id),
+                -1
+        );
+        editor.putString(
+                getString(R.string.sp_consumer_key),
+                null
+        );
+        editor.putString(
+                getString(R.string.splash_consumer_secret),
+                null
+        );
+        editor.putString(
+                getString(R.string.sp_access_token),
+                null
+        );
+        editor.putString(
+                getString(R.string.sp_access_token_secret),
+                null
+        );
+        editor.putBoolean(
+                getString(R.string.sp_is_timeline_first),
+                true
+        );
+        editor.putLong(
+                getString(R.string.sp_latest_mention_id),
+                -1
+        );
+        editor.putBoolean(
+                getString(R.string.sp_is_favorite_first),
+                true
+        );
+        editor.commit();
+    }
+    public void signOut() {
+        cancelAllFragmentTask();
+        clearAllDatabase();
+        clearSharedPreferences();
+
+        Intent intent = new Intent(this, SplashActivity.class);
+        ActivityAnim anim = new ActivityAnim();
+        startActivity(intent);
+        anim.rightOut(this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            cancelAllFragmentTask();
+            finish();
+        }
+
+        return true;
+    }
+    @Override
+    public void onDestroy() {
+        cancelAllFragmentTask();
+        super.onDestroy();
+    }
+
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {

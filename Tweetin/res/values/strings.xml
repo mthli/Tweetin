@@ -3,6 +3,18 @@
 
     <!-- App info -->
     <string name="app_name">Tweetin</string>
+    <string name="app_homepage">
+        https://github.com/mthli/Tweetin
+    </string>
+    <string name="app_license">
+        http://www.apache.org/licenses/LICENSE-2.0.html
+    </string>
+    <string name="app_author_id">
+        1328721930
+    </string>
+    <string name="app_thanks_id">
+        102052300
+    </string>
 
     <!-- SharePreferences -->
     <string name="sp_name">SP_NAME</string>
@@ -259,5 +271,28 @@
     <string name="discovery_toast_discovery_failed">
         Discovery failed.
     </string>
+
+    <!-- Setting -->
+    <string name="setting_title_homepage">Homepage</string>
+    <string name="setting_title_license">License</string>
+    <string name="setting_title_version">Version</string>
+    <string name="setting_title_author">Author</string>
+    <string name="setting_title_thanks">Thanks</string>
+    <string name="setting_content_homepage">
+        https://github.com/mthli/Tweetin
+    </string>
+    <string name="setting_content_license">
+        Apache License, Version 2.0
+    </string>
+    <string name="setting_content_version">
+        0.9.1
+    </string>
+    <string name="setting_content_author">
+        \@mth_li
+    </string>
+    <string name="setting_content_thanks">
+        \@chanszen
+    </string>
+    <string name="setting_fragment_button">Sign out</string>
 
 </resources>
