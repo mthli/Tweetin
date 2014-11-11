@@ -63,7 +63,7 @@
     <string name="context_menu_item_quote">引用</string>
     <string name="context_menu_item_favorite">收藏</string>
     <string name="context_menu_item_un_favorite">取消收藏</string>
-    <string name="context_menu_item_copy">Copy</string>
+    <string name="context_menu_item_copy">拷贝</string>
     <string name="context_toast_already_retweet">
         已经转推过了。
     </string>
