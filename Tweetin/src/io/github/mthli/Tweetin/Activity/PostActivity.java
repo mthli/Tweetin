@@ -109,7 +109,7 @@ public class PostActivity extends Activity {
         screenName = getIntent().getStringExtra(
                 getString(R.string.post_intent_status_screen_name)
         );
-        String quote = "RT ";
+        String quote = " RT ";
         if (getIntent().getStringExtra(getString(R.string.post_intent_status_screen_name)).startsWith("@")) {
             quote = quote
                     + getIntent().getStringExtra(getString(R.string.post_intent_status_screen_name))
