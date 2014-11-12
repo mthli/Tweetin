@@ -11,7 +11,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.widget.SwipeRefreshLayout;
 import io.github.mthli.Tweetin.Activity.DetailActivity;
-import io.github.mthli.Tweetin.Activity.MainActivity;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineRecord;
 import io.github.mthli.Tweetin.Fragment.TimelineFragment;
@@ -427,7 +426,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
 
             long latestMentionId = sharedPreferences.getLong(
                     context.getString(R.string.sp_latest_mention_id),
-                    -1
+                    -1l
             );
             if (mention.getId() > latestMentionId) {
                 NotificationManager manager = (NotificationManager) context

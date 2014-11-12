@@ -31,7 +31,6 @@ public class DetailActivity extends Activity {
 
     private int refreshFlag = Flag.DETAIL_TASK_IDLE;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private FloatingActionButton floatingActionButton;
     public int getRefreshFlag() {
         return refreshFlag;
     }
@@ -230,7 +229,7 @@ public class DetailActivity extends Activity {
             }
         });
 
-        floatingActionButton = (FloatingActionButton) findViewById(
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(
                 R.id.detail_floating_action_button
         );
         floatingActionButton.show();

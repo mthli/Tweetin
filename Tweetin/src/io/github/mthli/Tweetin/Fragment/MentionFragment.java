@@ -1,7 +1,6 @@
 package io.github.mthli.Tweetin.Fragment;
 
 import android.app.AlertDialog;
-import android.app.NotificationManager;
 import android.content.*;
 import android.graphics.Point;
 import android.os.AsyncTask;

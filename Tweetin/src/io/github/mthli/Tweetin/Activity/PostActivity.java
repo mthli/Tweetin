@@ -350,7 +350,7 @@ public class PostActivity extends Activity {
                             R.string.post_toast_have_not_input_anything,
                             Toast.LENGTH_SHORT
                     ).show();
-                } else if (text.length() > 300) {
+                } else if (text.length() > 140) {
                     Toast.makeText(
                             PostActivity.this,
                             R.string.post_toast_tweet_too_long,

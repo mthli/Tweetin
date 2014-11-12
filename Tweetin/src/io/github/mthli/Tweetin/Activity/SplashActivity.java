@@ -204,8 +204,8 @@ public class SplashActivity extends Activity {
                 MODE_PRIVATE
         );
         editor = preferences.edit();
-        long useId = preferences.getLong(getString(R.string.sp_use_id), 0);
-        if (useId > 0) {
+        long useId = preferences.getLong(getString(R.string.sp_use_id), 0l);
+        if (useId > 0l) {
             editor.putBoolean(
                     getString(R.string.sp_is_timeline_first),
                     false
