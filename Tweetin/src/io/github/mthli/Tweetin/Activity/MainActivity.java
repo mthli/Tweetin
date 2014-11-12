@@ -499,6 +499,10 @@ public class MainActivity extends FragmentActivity {
                 getString(R.string.sp_is_timeline_first),
                 true
         );
+        editor.putBoolean(
+                getString(R.string.sp_is_mention_first),
+                true
+        );
         editor.putLong(
                 getString(R.string.sp_latest_mention_id),
                 -1l

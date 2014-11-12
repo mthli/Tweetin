@@ -62,12 +62,20 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
         editor = sharedPreferences.edit();
         swipeRefreshLayout = mentionFragment.getSwipeRefreshLayout();
 
+        /*
         if (
                 sharedPreferences.getLong(
                         context.getString(R.string.sp_latest_mention_id),
                         -1l
                 ) == -1l
                 ) {
+        */
+        if (
+                sharedPreferences.getBoolean(
+                        context.getString(R.string.sp_is_mention_first),
+                        true
+                )
+        ) {
             firstSignIn = true;
             mentionFragment.setContentShown(false);
         } else {
@@ -250,6 +258,10 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
             ).commit();
 
             if (firstSignIn) {
+                editor.putBoolean(
+                        context.getString(R.string.sp_is_mention_first),
+                        false
+                ).commit();
                 mentionFragment.setContentEmpty(false);
                 tweetAdapter.notifyDataSetChanged();
                 mentionFragment.setContentShown(true);

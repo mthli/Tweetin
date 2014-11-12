@@ -123,7 +123,7 @@ public class PostActivity extends Activity {
                     + getIntent().getStringExtra(getString(R.string.post_intent_status_text));
         }
         postEdit.setText(quote);
-        postEdit.setSelection(quote.length());
+        postEdit.setSelection(0);
         if (quote.length() > 140) {
             countWords.setTextColor(
                     getResources().getColor(R.color.red)

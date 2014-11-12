@@ -27,6 +27,7 @@
     <string name="sp_access_token">SP_ACCESS_TOKEN</string>
     <string name="sp_access_token_secret">SP_ACCESS_TOKEN_SECRET</string>
     <string name="sp_is_timeline_first">SP_IS_TIMELINE_FIRST</string>
+    <string name="sp_is_mention_first">SP_IS_MENTION_FIRST</string>
     <string name="sp_latest_mention_id">SP_LATEST_MENTION_ID</string>
     <string name="sp_is_favorite_first">SP_IS_FAVORITE_FIRST</string>
 
