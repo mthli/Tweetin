@@ -1,5 +1,6 @@
 package io.github.mthli.Tweetin.Task.Detail;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Toast;
@@ -48,7 +49,6 @@ public class DetailInitTask extends AsyncTask<Void, Integer, Boolean> {
         currentTweet = detailActivity.getTweetFromIntent();
 
         swipeRefreshLayout.setRefreshing(true);
-        /* Do something */
     }
 
 
@@ -179,7 +179,7 @@ public class DetailInitTask extends AsyncTask<Void, Integer, Boolean> {
             tweet.setStatusId(status.getId());
             tweet.setReplyToStatusId(status.getInReplyToStatusId());
             tweet.setUserId(status.getUser().getId());
-            tweet.setRetweetedByUserId(-1);
+            tweet.setRetweetedByUserId(-1l);
             tweet.setAvatarURL(status.getUser().getBiggerProfileImageURL());
             tweet.setCreatedAt(
                     format.format(status.getCreatedAt())
@@ -238,6 +238,19 @@ public class DetailInitTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         if (result) {
+
+            if (detailActivity.getIntent().getBooleanExtra(
+                    detailActivity.getString(R.string.detail_intent_from_notification),
+                    false
+            )) {
+                SharedPreferences sharedPreferences = detailActivity.getSharedPreferences();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putLong(
+                        detailActivity.getString(R.string.sp_latest_mention_id),
+                        detailActivity.getTweetFromIntent().getStatusId()
+                ).commit();
+            }
+
             currentTweet = getTweetWithDetails(currentStatus);
             tweetList.clear();
             if (replyToStatusList.size() > 0) {

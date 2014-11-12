@@ -127,7 +127,7 @@ public class FavoriteMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     tweet.setStatusId(status.getId());
                     tweet.setReplyToStatusId(status.getInReplyToStatusId());
                     tweet.setUserId(status.getUser().getId());
-                    tweet.setRetweetedByUserId(-1);
+                    tweet.setRetweetedByUserId(-1l);
                     tweet.setAvatarURL(status.getUser().getBiggerProfileImageURL());
                     tweet.setCreatedAt(
                             format.format(status.getCreatedAt())

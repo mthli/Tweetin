@@ -152,10 +152,6 @@ public class TimelineFragment extends ProgressFragment {
                 tweet.getText()
         );
         intent.putExtra(
-                getString(R.string.detail_intent_photo_url),
-                tweet.getPhotoURL()
-        );
-        intent.putExtra(
                 getString(R.string.detail_intent_retweet),
                 tweet.isRetweet()
         );
@@ -184,7 +180,7 @@ public class TimelineFragment extends ProgressFragment {
         );
         useId = sharedPreferences.getLong(
                 getString(R.string.sp_use_id),
-                -1
+                -1l
         );
         String consumerKey = sharedPreferences.getString(
                 getString(R.string.sp_consumer_key),
@@ -415,7 +411,7 @@ public class TimelineFragment extends ProgressFragment {
         final Tweet tweet = tweetList.get(location);
         menuItemList.add(getString(R.string.context_menu_item_reply));
         menuItemList.add(getString(R.string.context_menu_item_quote));
-        if (tweet.getRetweetedByUserId() != -1 && tweet.getRetweetedByUserId() == useId) {
+        if (tweet.getRetweetedByUserId() != -1l && tweet.getRetweetedByUserId() == useId) {
             flag = Flag.STATUS_RETWEETED_BY_ME;
             menuItemList.add(getString(R.string.context_menu_item_retweet));
         } else {

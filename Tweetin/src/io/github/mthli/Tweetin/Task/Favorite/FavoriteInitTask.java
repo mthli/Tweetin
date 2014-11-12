@@ -168,7 +168,7 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
                 record.setStatusId(status.getId());
                 record.setReplyToStatusId(status.getInReplyToStatusId());
                 record.setUserId(status.getUser().getId());
-                record.setRetweetedByUserId(-1);
+                record.setRetweetedByUserId(-1l);
                 record.setAvatarURL(status.getUser().getBiggerProfileImageURL());
                 record.setCreatedAt(
                         format.format(status.getCreatedAt())

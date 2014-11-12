@@ -477,7 +477,7 @@ public class MainActivity extends FragmentActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(
                 getString(R.string.sp_use_id),
-                -1
+                -1l
         );
         editor.putString(
                 getString(R.string.sp_consumer_key),
@@ -501,7 +501,7 @@ public class MainActivity extends FragmentActivity {
         );
         editor.putLong(
                 getString(R.string.sp_latest_mention_id),
-                -1
+                -1l
         );
         editor.putBoolean(
                 getString(R.string.sp_is_favorite_first),

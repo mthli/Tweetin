@@ -4,7 +4,6 @@
     <!-- Tweet -->
     <string name="tweet_info_retweeted_by_me">我</string>
     <string name="tweet_info_favorite">已收藏</string>
-    <!-- Do something with reply -->
     <!-- Delete -->
     <string name="tweet_notification_delete_ing">
         正在删除&#8230;
@@ -137,6 +136,12 @@
     </string>
     <string name="post_notification_post_failed">
         发送失败。
+    </string>
+    <string name="post_toast_have_not_input_anything">
+        你还没有输入任何内容。
+    </string>
+    <string name="post_toast_tweet_too_long">
+        一条推文的长度必须少于140个字符。
     </string>
 
     <!-- Profile -->

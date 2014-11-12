@@ -54,7 +54,7 @@ public class SettingFragment extends ProgressFragment {
         List<String> contentList = new ArrayList<String>();
         contentList.add(getString(R.string.setting_content_homepage));
         contentList.add(getString(R.string.setting_content_license));
-        contentList.add(getString(R.string.setting_content_version));
+        contentList.add(getString(R.string.app_version));
         contentList.add(getString(R.string.setting_content_feedback));
         contentList.add(getString(R.string.setting_content_author));
         contentList.add(getString(R.string.setting_content_thanks));

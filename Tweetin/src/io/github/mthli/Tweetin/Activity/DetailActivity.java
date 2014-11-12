@@ -94,19 +94,19 @@ public class DetailActivity extends Activity {
         Intent intent = getIntent();
         long statusId = intent.getLongExtra(
                 getString(R.string.detail_intent_status_id),
-                -1
+                -1l
         );
         long replyToStatusId = intent.getLongExtra(
                 getString(R.string.detail_intent_reply_to_status_id),
-                -1
+                -1l
         );
         long userId = intent.getLongExtra(
                 getString(R.string.detail_intent_user_id),
-                -1
+                -1l
         );
         long retweetedByUserId = intent.getLongExtra(
                 getString(R.string.detail_intent_retweeted_by_user_id),
-                -1
+                -1l
         );
         String avatarURL = intent.getStringExtra(
                 getString(R.string.detail_intent_avatar_url)
@@ -129,9 +129,6 @@ public class DetailActivity extends Activity {
         );
         String text = intent.getStringExtra(
                 getString(R.string.detail_intent_text)
-        );
-        String photoURL = intent.getStringExtra(
-                getString(R.string.detail_intent_photo_url)
         );
         boolean retweet = intent.getBooleanExtra(
                 getString(R.string.detail_intent_retweet),
@@ -156,7 +153,6 @@ public class DetailActivity extends Activity {
         tweet.setProtect(protect);
         tweet.setCheckIn(checkIn);
         tweet.setText(text);
-        tweet.setPhotoURL(photoURL);
         tweet.setRetweet(retweet);
         tweet.setRetweetedByUserName(retweetedByUserName);
         tweet.setFavorite(favorite);
@@ -174,7 +170,7 @@ public class DetailActivity extends Activity {
         );
         useId = sharedPreferences.getLong(
                 getString(R.string.sp_use_id),
-                -1
+                -1l
         );
         String consumerKey = sharedPreferences.getString(
                 getString(R.string.sp_consumer_key),
@@ -376,7 +372,7 @@ public class DetailActivity extends Activity {
         final int flag;
         final Tweet tweet = tweetList.get(location);
         menuItemList.add(getString(R.string.context_menu_item_quote));
-        if (tweet.getRetweetedByUserId() != -1 && tweet.getRetweetedByUserId() == useId) {
+        if (tweet.getRetweetedByUserId() != -1l && tweet.getRetweetedByUserId() == useId) {
             flag = Flag.STATUS_RETWEETED_BY_ME;
             menuItemList.add(getString(R.string.context_menu_item_retweet));
         } else {

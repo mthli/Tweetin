@@ -1,5 +1,6 @@
 package io.github.mthli.Tweetin.Task.Mention;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -64,8 +65,8 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
         if (
                 sharedPreferences.getLong(
                         context.getString(R.string.sp_latest_mention_id),
-                        -1
-                ) == -1
+                        -1l
+                ) == -1l
                 ) {
             firstSignIn = true;
             mentionFragment.setContentShown(false);
@@ -170,7 +171,7 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
                 record.setStatusId(status.getId());
                 record.setReplyToStatusId(status.getInReplyToStatusId());
                 record.setUserId(status.getUser().getId());
-                record.setRetweetedByUserId(-1);
+                record.setRetweetedByUserId(-1l);
                 record.setAvatarURL(status.getUser().getBiggerProfileImageURL());
                 record.setCreatedAt(
                         format.format(status.getCreatedAt())
@@ -240,6 +241,9 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweetList.add(tweet);
             }
 
+            NotificationManager notificationManager = (NotificationManager) context
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.cancel(Flag.NOTIFICATION_MENTION_ID);
             editor.putLong(
                     context.getString(R.string.sp_latest_mention_id),
                     mention.getId()

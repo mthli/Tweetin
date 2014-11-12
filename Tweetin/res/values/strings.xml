@@ -9,6 +9,9 @@
     <string name="app_license">
         http://www.apache.org/licenses/LICENSE-2.0.html
     </string>
+    <string name="app_version">
+        0.9.5
+    </string>
     <string name="app_author_id">
         1328721930
     </string>
@@ -33,7 +36,6 @@
     </string>
     <string name="tweet_info_retweeted_by_me">Me</string>
     <string name="tweet_info_favorite">Favorite</string>
-    <!-- Do something with reply -->
     <!-- Delete -->
     <string name="tweet_notification_delete_ing">
         Deleting&#8230;
@@ -162,6 +164,9 @@
     <string name="detail_intent_from_position">
         DETAIL_INTENT_FROM_POSITION
     </string>
+    <string name="detail_intent_from_notification">
+        DETAIL_INTENT_FROM_NOTIFICATION
+    </string>
     <string name="detail_intent_status_id">
         DETAIL_INTENT_STATUS_ID
     </string>
@@ -225,6 +230,10 @@
     <string name="post_intent_status_id">POST_INTENT_STATUS_ID</string>
     <string name="post_intent_status_screen_name">POST_INTENT_STATUS_SCREEN_NAME</string>
     <string name="post_intent_status_text">POST_INTENT_STATUS_TEXT</string>
+    <string name="post_intent_resend_flag">POST_INTENT_RESEND_FALG</string>
+    <string name="post_intent_check_in">POST_INTENT_CHECK_IN</string>
+    <string name="post_intent_photo">POST_INTENT_PHOTO</string>
+    <string name="post_intent_photo_path">POST_INTENT_PHOTO_PATH</string>
     <string name="post_hint">
         What\'s on your mind?
     </string>
@@ -236,6 +245,12 @@
     </string>
     <string name="post_notification_post_failed">
         Post failed.
+    </string>
+    <string name="post_toast_have_not_input_anything">
+        You haven\'t input anything.
+    </string>
+    <string name="post_toast_tweet_too_long">
+        A tweet must less than 140 chars.
     </string>
 
     <!-- Profile -->
@@ -293,9 +308,6 @@
     </string>
     <string name="setting_content_license">
         Apache License, Version 2.0
-    </string>
-    <string name="setting_content_version">
-        0.9.3
     </string>
     <string name="setting_content_feedback">
         Send some suggestion to author.

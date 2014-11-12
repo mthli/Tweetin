@@ -2,13 +2,16 @@ package io.github.mthli.Tweetin.Task.Post;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 import io.github.mthli.Tweetin.Activity.PostActivity;
@@ -127,8 +130,9 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
         }
         if (
                 (postFlag == Flag.POST_REPLY || postFlag == Flag.POST_QUOTE)
-                        && text.contains(screenName)
-                ) {
+                && text.contains(screenName)
+                && statusId != -1l
+        ) {
             update.setInReplyToStatusId(statusId);
         }
     }
@@ -159,6 +163,53 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
                     postActivity.getString(R.string.post_notification_post_failed)
             );
             builder.setContentText(text);
+
+            Intent resultIntent = postActivity.getIntent();
+            resultIntent.putExtra(
+                    postActivity.getString(R.string.post_intent_flag),
+                    Flag.POST_RESEND
+            );
+            resultIntent.putExtra(
+                    postActivity.getString(R.string.post_intent_resend_flag),
+                    postFlag
+            );
+            resultIntent.putExtra(
+                    postActivity.getString(R.string.post_intent_status_id),
+                    statusId
+            );
+            resultIntent.putExtra(
+                    postActivity.getString(R.string.post_intent_status_screen_name),
+                    screenName
+            );
+            resultIntent.putExtra(
+                    postActivity.getString(R.string.post_intent_status_text),
+                    text
+            );
+            if (checkIn) {
+                resultIntent.putExtra(
+                        postActivity.getString(R.string.post_intent_check_in),
+                        true
+                );
+            }
+            if (photo) {
+                resultIntent.putExtra(
+                        postActivity.getString(R.string.post_intent_photo),
+                        true
+                );
+                resultIntent.putExtra(
+                        postActivity.getString(R.string.post_intent_photo_path),
+                        photoPath
+                );
+            }
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(postActivity);
+            stackBuilder.addParentStack(PostActivity.class);
+            stackBuilder.addNextIntent(resultIntent);
+            PendingIntent pendingIntent = stackBuilder.getPendingIntent(
+                    0,
+                    PendingIntent.FLAG_ONE_SHOT
+            );
+            builder.setContentIntent(pendingIntent);
+
             Notification notification = builder.build();
             notification.flags = Notification.FLAG_AUTO_CANCEL;
             notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);

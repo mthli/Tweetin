@@ -69,6 +69,192 @@ public class PostActivity extends Activity {
         return photoPath;
     }
 
+    private void initPostOriginal() {
+        countWords.setTextColor(
+                getResources().getColor(R.color.hint)
+        );
+        countWords.setText("0");
+    }
+    private void initPostReply() {
+        statusId = getIntent().getLongExtra(
+                getString(R.string.post_intent_status_id),
+                -1l
+        );
+        String reply = getIntent().getStringExtra(
+                getString(R.string.post_intent_status_screen_name)
+        );
+        if (!reply.startsWith("@")) {
+            reply = "@" + reply;
+        }
+        screenName = reply;
+        reply = reply + " ";
+        postEdit.setText(reply);
+        postEdit.setSelection(reply.length());
+        if (reply.length() > 140) {
+            countWords.setTextColor(
+                    getResources().getColor(R.color.red)
+            );
+        } else {
+            countWords.setTextColor(
+                    getResources().getColor(R.color.hint)
+            );
+        }
+        countWords.setText(String.valueOf(reply.length()));
+    }
+    private void initPostQuote() {
+        statusId = getIntent().getLongExtra(
+                getString(R.string.post_intent_status_id),
+                -1l
+        );
+        screenName = getIntent().getStringExtra(
+                getString(R.string.post_intent_status_screen_name)
+        );
+        String quote = "RT ";
+        if (getIntent().getStringExtra(getString(R.string.post_intent_status_screen_name)).startsWith("@")) {
+            quote = quote
+                    + getIntent().getStringExtra(getString(R.string.post_intent_status_screen_name))
+                    + ": "
+                    + getIntent().getStringExtra(getString(R.string.post_intent_status_text));
+        } else {
+            quote = quote
+                    + " @"
+                    + getIntent().getStringExtra(getString(R.string.post_intent_status_screen_name))
+                    + ": "
+                    + getIntent().getStringExtra(getString(R.string.post_intent_status_text));
+        }
+        postEdit.setText(quote);
+        postEdit.setSelection(quote.length());
+        if (quote.length() > 140) {
+            countWords.setTextColor(
+                    getResources().getColor(R.color.red)
+            );
+        } else {
+            countWords.setTextColor(
+                    getResources().getColor(R.color.hint)
+            );
+        }
+        countWords.setText(String.valueOf(quote.length()));
+    }
+    private void initPostResend() {
+        statusId = getIntent().getLongExtra(
+                getString(R.string.post_intent_status_id),
+                -1l
+        );
+        screenName = getIntent().getStringExtra(
+                getString(R.string.post_intent_status_screen_name)
+        );
+
+        postCheckInButton.setChecked(
+                getIntent().getBooleanExtra(
+                        getString(R.string.post_intent_check_in),
+                        false
+                )
+        );
+
+        String resendText = getIntent().getStringExtra(
+                getString(R.string.post_intent_status_text)
+        );
+        postEdit.setText(resendText);
+        postEdit.setSelection(resendText.length());
+        if (resendText.length() > 140) {
+            countWords.setTextColor(
+                    getResources().getColor(R.color.red)
+            );
+        } else {
+            countWords.setTextColor(
+                    getResources().getColor(R.color.hint)
+            );
+        }
+        countWords.setText(String.valueOf(resendText.length()));
+
+        if (getIntent().getBooleanExtra(
+                getString(R.string.post_intent_photo), false
+        )) {
+            photoPath = getIntent().getStringExtra(
+                    getString(R.string.post_intent_photo_path)
+            );
+            Bitmap bitmap = BitmapFactory.decodeFile(photoPath);
+            WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+            DisplayMetrics metrics = new DisplayMetrics();
+            manager.getDefaultDisplay().getMetrics(metrics);
+            int screenWidth = metrics.widthPixels;
+            int screenHeight = metrics.heightPixels;
+            int bitmapWidth = bitmap.getWidth();
+            int bitmapHeight = bitmap.getHeight();
+            if (bitmapWidth > screenWidth) {
+                float percent = ((float) screenWidth) / ((float) bitmapWidth);
+                Matrix matrix = new Matrix();
+                matrix.postScale(percent, percent);
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+                postPhoto.setImageBitmap(bitmap);
+                postPhoto.setVisibility(View.VISIBLE);
+                postPhotoButton.setChecked(true);
+                postFlag = getIntent().getIntExtra(
+                        getString(R.string.post_intent_resend_flag),
+                        Flag.POST_SHARE
+                );
+                return;
+            }
+            if (bitmapHeight > screenHeight) {
+                float percent = ((float) screenHeight) / ((float) bitmapHeight);
+                Matrix matrix = new Matrix();
+                matrix.postScale(percent, percent);
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+                postPhoto.setImageBitmap(bitmap);
+                postPhoto.setVisibility(View.VISIBLE);
+                postPhotoButton.setChecked(true);
+                postFlag = getIntent().getIntExtra(
+                        getString(R.string.post_intent_resend_flag),
+                        Flag.POST_SHARE
+                );
+                return;
+            }
+        } else {
+            postPhoto.setVisibility(View.GONE);
+            postPhotoButton.setChecked(false);
+            postFlag = getIntent().getIntExtra(
+                    getString(R.string.post_intent_resend_flag),
+                    Flag.POST_SHARE
+            );
+        }
+    }
+    private void initPostFeedback() {
+        String feedbackStr = getString(R.string.setting_feedback_str) + " ";
+        postEdit.setText(feedbackStr);
+        postEdit.setSelection(feedbackStr.length());
+        if (feedbackStr.length() > 140) {
+            countWords.setTextColor(
+                    getResources().getColor(R.color.red)
+            );
+        } else {
+            countWords.setTextColor(
+                    getResources().getColor(R.color.hint)
+            );
+        }
+        countWords.setText(String.valueOf(feedbackStr.length()));
+    }
+    private void initPostShare() {
+        String action = getIntent().getAction();
+        String type = getIntent().getType();
+        if (action.equals(Intent.ACTION_SEND) && type != null) {
+            if (type.equals("text/plain")) {
+                String shareText = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+                postEdit.setText(shareText);
+                postEdit.setSelection(shareText.length());
+                if (shareText.length() > 140) {
+                    countWords.setTextColor(
+                            getResources().getColor(R.color.red)
+                    );
+                } else {
+                    countWords.setTextColor(
+                            getResources().getColor(R.color.hint)
+                    );
+                }
+                countWords.setText(String.valueOf(shareText.length()));
+            }
+                    /* Do something with image/* */
+        }
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,13 +297,15 @@ public class PostActivity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_PICK);
-                    startActivityForResult(
-                            intent,
-                            Flag.POST_PHOTO //
-                    );
+                    if (postFlag != Flag.POST_RESEND) {
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_PICK);
+                        startActivityForResult(
+                                intent,
+                                Flag.POST_PHOTO //
+                        );
+                    }
                 } else {
                     postPhoto.setVisibility(View.GONE);
                 }
@@ -155,132 +343,56 @@ public class PostActivity extends Activity {
         postSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityAnim anim = new ActivityAnim();
-                PostTask postTask = new PostTask(PostActivity.this);
-                postTask.execute();
-                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                        .hideSoftInputFromWindow(postEdit.getWindowToken(), 0);
-                finish();
-                anim.fade(PostActivity.this);
+                String text = postEdit.getText().toString();
+                if (text.length() <= 0) {
+                    Toast.makeText(
+                            PostActivity.this,
+                            R.string.post_toast_have_not_input_anything,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                } else if (text.length() > 300) {
+                    Toast.makeText(
+                            PostActivity.this,
+                            R.string.post_toast_tweet_too_long,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                } else {
+                    ActivityAnim anim = new ActivityAnim();
+                    PostTask postTask = new PostTask(PostActivity.this);
+                    postTask.execute();
+                    ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(postEdit.getWindowToken(), 0);
+                    finish();
+                    anim.fade(PostActivity.this);
+                }
             }
         });
 
-        /* Do something */
         postFlag = getIntent().getIntExtra(
                 getString(R.string.post_intent_flag),
                 Flag.POST_SHARE
         );
         switch (postFlag) {
             case Flag.POST_ORIGINAL:
-                countWords.setTextColor(
-                        getResources().getColor(R.color.hint)
-                );
-                countWords.setText("0");
+                initPostOriginal();
                 break;
             case Flag.POST_REPLY:
-                statusId = getIntent().getLongExtra(
-                        getString(R.string.post_intent_status_id),
-                        -1
-                );
-                String reply = getIntent().getStringExtra(
-                        getString(R.string.post_intent_status_screen_name)
-                );
-                if (!reply.startsWith("@")) {
-                    reply = "@" + reply;
-                }
-                screenName = reply;
-                reply = reply + " ";
-                postEdit.setText(reply);
-                postEdit.setSelection(reply.length());
-
-                if (reply.length() > 140) {
-                    countWords.setTextColor(
-                            getResources().getColor(R.color.red)
-                    );
-                } else {
-                    countWords.setTextColor(
-                            getResources().getColor(R.color.hint)
-                    );
-                }
-                countWords.setText(String.valueOf(reply.length()));
+                initPostReply();
                 break;
             case Flag.POST_QUOTE:
-                statusId = getIntent().getLongExtra(
-                        getString(R.string.post_intent_status_id),
-                        -1
-                );
-                screenName = getIntent().getStringExtra(
-                        getString(R.string.post_intent_status_screen_name)
-                );
-                String quote = "RT ";
-                if (getIntent().getStringExtra(getString(R.string.post_intent_status_screen_name)).startsWith("@")) {
-                    quote = quote
-                            + getIntent().getStringExtra(getString(R.string.post_intent_status_screen_name))
-                            + ": "
-                            + getIntent().getStringExtra(getString(R.string.post_intent_status_text));
-                } else {
-                    quote = quote
-                            + " @"
-                            + getIntent().getStringExtra(getString(R.string.post_intent_status_screen_name))
-                            + ": "
-                            + getIntent().getStringExtra(getString(R.string.post_intent_status_text));
-                }
-                postEdit.setText(quote);
-                postEdit.setSelection(quote.length());
-
-                if (quote.length() > 140) {
-                    countWords.setTextColor(
-                            getResources().getColor(R.color.red)
-                    );
-                } else {
-                    countWords.setTextColor(
-                            getResources().getColor(R.color.hint)
-                    );
-                }
-                countWords.setText(String.valueOf(quote.length()));
+                initPostQuote();
                 break;
-            case Flag.POST_SHARE:
-                String action = getIntent().getAction();
-                String type = getIntent().getType();
-                if (action.equals(Intent.ACTION_SEND) && type != null) {
-                    if (type.equals("text/plain")) {
-                        String shareText = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-                        postEdit.setText(shareText);
-                        postEdit.setSelection(shareText.length());
-                        if (shareText.length() > 140) {
-                            countWords.setTextColor(
-                                    getResources().getColor(R.color.red)
-                            );
-                        } else {
-                            countWords.setTextColor(
-                                    getResources().getColor(R.color.hint)
-                            );
-                        }
-                        countWords.setText(String.valueOf(shareText.length()));
-                    }
-                    /* Do something with image/* */
-                }
+            case Flag.POST_RESEND:
+                initPostResend();
                 break;
             case Flag.POST_FEEDBACK:
-                String feedbackStr = getString(R.string.setting_feedback_str) + " ";
-                postEdit.setText(feedbackStr);
-                postEdit.setSelection(feedbackStr.length());
-                if (feedbackStr.length() > 140) {
-                    countWords.setTextColor(
-                            getResources().getColor(R.color.red)
-                    );
-                } else {
-                    countWords.setTextColor(
-                            getResources().getColor(R.color.hint)
-                    );
-                }
-                countWords.setText(String.valueOf(feedbackStr.length()));
+                initPostFeedback();
+                break;
+            case Flag.POST_SHARE:
+                initPostShare();
                 break;
             default:
-                countWords.setTextColor(
-                        getResources().getColor(R.color.hint)
-                );
-                countWords.setText("0");
+                initPostOriginal();
                 break;
         }
     }

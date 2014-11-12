@@ -177,17 +177,13 @@ public class MentionFragment extends ProgressFragment {
         setContentEmpty(false);
         setContentShown(true);
 
-        NotificationManager notificationManager = (NotificationManager) getActivity()
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(Flag.NOTIFICATION_MENTION_ID);
-
         sharedPreferences = getActivity().getSharedPreferences(
                 getString(R.string.sp_name),
                 Context.MODE_PRIVATE
         );
         useId = sharedPreferences.getLong(
                 getString(R.string.sp_use_id),
-                -1
+                -1l
         );
         String consumerKey = sharedPreferences.getString(
                 getString(R.string.sp_consumer_key),
@@ -396,7 +392,7 @@ public class MentionFragment extends ProgressFragment {
         final Tweet tweet = tweetList.get(location);
         menuItemList.add(getString(R.string.context_menu_item_reply));
         menuItemList.add(getString(R.string.context_menu_item_quote));
-        if (tweet.getRetweetedByUserId() != -1 && tweet.getRetweetedByUserId() == useId) {
+        if (tweet.getRetweetedByUserId() != -1l && tweet.getRetweetedByUserId() == useId) {
             flag = Flag.STATUS_RETWEETED_BY_ME;
             menuItemList.add(getString(R.string.context_menu_item_retweet));
         } else {

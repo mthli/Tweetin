@@ -18,10 +18,10 @@ public class Tweet {
     private boolean favorite;
 
     public Tweet() {
-        this.statusId = -1;
-        this.replyToStatusId = -1;
-        this.userId = -1;
-        this.retweetedByUserId = -1;
+        this.statusId = -1l;
+        this.replyToStatusId = -1l;
+        this.userId = -1l;
+        this.retweetedByUserId = -1l;
         this.avatarURL = null;
         this.createdAt = null;
         this.name = null;
