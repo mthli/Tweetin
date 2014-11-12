@@ -9,7 +9,7 @@ __UNDER DEVELOPMENT!!!__
 
 ## Screenshots:
 
-![All.png](/Art/Screenshots/All.png "All.png")
+![all_in_one.png](/Art/Screenshots/all_in_one.png "All.png")
 
 ## How to use the source code?
 
