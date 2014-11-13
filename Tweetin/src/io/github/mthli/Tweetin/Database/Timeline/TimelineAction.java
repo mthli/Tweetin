@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +48,7 @@ public class TimelineAction {
             values.put(TimelineRecord.PROTECT, "false");
         }
         values.put(TimelineRecord.CHECK_IN, record.getCheckIn());
+        values.put(TimelineRecord.PHOTO_URL, record.getPhotoURL());
         values.put(TimelineRecord.TEXT, record.getText());
         if (record.isRetweet()) {
             values.put(TimelineRecord.RETWEET, "true");
@@ -139,13 +139,14 @@ public class TimelineAction {
                 cursor.getString(8).equals("true")
         );
         record.setCheckIn(cursor.getString(9));
-        record.setText(cursor.getString(10));
+        record.setPhotoURL(cursor.getString(10));
+        record.setText(cursor.getString(11));
         record.setRetweet(
-                cursor.getString(11).equals("true")
+                cursor.getString(12).equals("true")
         );
-        record.setRetweetedByUserName(cursor.getString(12));
+        record.setRetweetedByUserName(cursor.getString(13));
         record.setFavorite(
-                cursor.getString(13).equals("true")
+                cursor.getString(14).equals("true")
         );
 
         return record;
@@ -165,6 +166,7 @@ public class TimelineAction {
                         TimelineRecord.SCREEN_NAME,
                         TimelineRecord.PROTECT,
                         TimelineRecord.CHECK_IN,
+                        TimelineRecord.PHOTO_URL,
                         TimelineRecord.TEXT,
                         TimelineRecord.RETWEET,
                         TimelineRecord.RETWEETED_BY_USER_NAME,

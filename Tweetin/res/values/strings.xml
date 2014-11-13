@@ -20,6 +20,7 @@
     </string>
 
     <!-- SharePreferences -->
+    <!-- Init -->
     <string name="sp_name">SP_NAME</string>
     <string name="sp_use_id">SP_USE_ID</string>
     <string name="sp_consumer_key">SP_CONSUMER_KEY</string>
@@ -30,6 +31,10 @@
     <string name="sp_is_mention_first">SP_IS_MENTION_FIRST</string>
     <string name="sp_latest_mention_id">SP_LATEST_MENTION_ID</string>
     <string name="sp_is_favorite_first">SP_IS_FAVORITE_FIRST</string>
+    <!-- Setting -->
+    <string name="sp_is_app_theme_light">SP_IS_APP_THEME_LIGHT</string>
+    <string name="sp_is_tweet_show_with_photo">SP_IS_TWEET_SHOW_WITH_PHOTO</string>
+    <string name="sp_is_tweet_show_with_expanded_url">SP_IS_TWEET_SHOW_WITH_EXPANDED_URL</string>
 
     <!-- Tweet -->
     <string name="tweet_date_format">
@@ -198,11 +203,11 @@
     <string name="detail_intent_check_in">
         DETAIL_INTENT_CHECK_IN
     </string>
-    <string name="detail_intent_text">
-        DETAIL_INTENT_TEXT
-    </string>
     <string name="detail_intent_photo_url">
         DETAIL_INTENT_PHOTO_URL
+    </string>
+    <string name="detail_intent_text">
+        DETAIL_INTENT_TEXT
     </string>
     <string name="detail_intent_retweet">
         DETAIL_INTENT_RETWEET
@@ -298,12 +303,24 @@
     </string>
 
     <!-- Setting -->
+    <string name="setting_title_theme">Theme</string>
+    <string name="setting_title_photo">Photo</string>
+    <string name="setting_title_url">URL</string>
     <string name="setting_title_homepage">Homepage</string>
     <string name="setting_title_license">License</string>
     <string name="setting_title_version">Version</string>
     <string name="setting_title_feedback">Feedback</string>
     <string name="setting_title_author">Author</string>
     <string name="setting_title_thanks">Thanks</string>
+    <string name="setting_content_theme">
+        Use Dark theme or Light theme.
+    </string>
+    <string name="setting_content_photo">
+        Show photo in a tweet.
+    </string>
+    <string name="setting_content_url">
+        Show expanded URL in a tweet.
+    </string>
     <string name="setting_content_homepage">
         https://github.com/mthli/Tweetin
     </string>
@@ -319,7 +336,9 @@
     <string name="setting_content_thanks">
         \@chanszen
     </string>
-    <string name="setting_fragment_button">Sign out</string>
+    <string name="setting_content_sign_out">
+        Clear all user data and sign out.
+    </string>
     <string name="setting_link_42">
         http://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life.2C_the_Universe.2C_and_Everything_.2842.29
     </string>

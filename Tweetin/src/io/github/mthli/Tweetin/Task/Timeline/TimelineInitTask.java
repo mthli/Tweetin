@@ -102,6 +102,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setScreenName(record.getScreenName());
                 tweet.setProtect(record.isProtect());
                 tweet.setCheckIn(record.getCheckIn());
+                tweet.setPhotoURL(record.getPhotoURL()); //
                 tweet.setText(record.getText());
                 tweet.setRetweet(record.isRetweet());
                 tweet.setRetweetedByUserName(record.getRetweetedByUserName());
@@ -168,6 +169,8 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 } else {
                     record.setCheckIn(null);
                 }
+                /* Do something with photoURL */
+                record.setPhotoURL(null);
                 record.setText(
                         status.getRetweetedStatus().getText()
                 );
@@ -194,6 +197,8 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 } else {
                     record.setCheckIn(null);
                 }
+                /* Do something with photoURL */
+                record.setPhotoURL(null);
                 record.setText(status.getText());
                 record.setRetweet(false);
                 record.setRetweetedByUserName(null);
@@ -285,6 +290,11 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                         (String) null
                 );
             }
+            /* Do something with photoURL */
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_photo_url),
+                    (String) null
+            );
             intent.putExtra(
                     context.getString(R.string.detail_intent_text),
                     mention.getRetweetedStatus().getText()
@@ -350,6 +360,11 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                         (String) null
                 );
             }
+            /* Do something with photoURL */
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_photo_url),
+                    (String) null
+            );
             intent.putExtra(
                     context.getString(R.string.detail_intent_text),
                     mention.getText()
@@ -404,6 +419,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setScreenName(record.getScreenName());
                 tweet.setProtect(record.isProtect());
                 tweet.setCheckIn(record.getCheckIn());
+                tweet.setPhotoURL(record.getPhotoURL()); //
                 tweet.setText(record.getText());
                 tweet.setRetweet(record.isRetweet());
                 tweet.setRetweetedByUserName(record.getRetweetedByUserName());

@@ -60,7 +60,7 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
         listView = discoveryFragment.getListView();
         queryStr = editText.getText().toString();
 
-        introduction.setVisibility(View.GONE); //
+        introduction.setVisibility(View.GONE);
         listView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -131,6 +131,8 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
                     } else {
                         tweet.setCheckIn(null);
                     }
+                    /* Do something with photoURL */
+                    tweet.setPhotoURL(null);
                     tweet.setText(
                             status.getRetweetedStatus().getText()
                     );
@@ -157,6 +159,8 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
                     } else {
                         tweet.setCheckIn(null);
                     }
+                    /* Do something with photoURL */
+                    tweet.setPhotoURL(null);
                     tweet.setText(status.getText());
                     tweet.setRetweet(false);
                     tweet.setRetweetedByUserName(null);
@@ -176,7 +180,7 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
             if (tweetList.size() <= 0) {
                 tweetAdapter.notifyDataSetChanged();
                 listView.setVisibility(View.GONE);
-                introduction.setVisibility(View.VISIBLE); //
+                introduction.setVisibility(View.VISIBLE);
                 Toast.makeText(
                         context,
                         R.string.discovery_toast_nothing,
@@ -189,7 +193,7 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
         } else {
             progressBar.setVisibility(View.GONE);
             listView.setVisibility(View.GONE);
-            introduction.setVisibility(View.VISIBLE); //
+            introduction.setVisibility(View.VISIBLE);
             Toast.makeText(
                     context,
                     R.string.discovery_toast_discovery_failed,

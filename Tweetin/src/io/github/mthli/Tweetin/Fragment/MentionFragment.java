@@ -146,12 +146,12 @@ public class MentionFragment extends ProgressFragment {
                 tweet.getCheckIn()
         );
         intent.putExtra(
-                getString(R.string.detail_intent_text),
-                tweet.getText()
-        );
-        intent.putExtra(
                 getString(R.string.detail_intent_photo_url),
                 tweet.getPhotoURL()
+        );
+        intent.putExtra(
+                getString(R.string.detail_intent_text),
+                tweet.getText()
         );
         intent.putExtra(
                 getString(R.string.detail_intent_retweet),

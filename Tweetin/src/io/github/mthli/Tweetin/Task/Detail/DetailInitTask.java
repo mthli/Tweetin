@@ -143,6 +143,7 @@ public class DetailInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setCheckIn(null);
             }
 
+            /* Do something */
             urlEntities = status.getRetweetedStatus().getURLEntities();
             mediaEntities = status.getRetweetedStatus().getMediaEntities();
             String photoURL = null;
@@ -194,6 +195,7 @@ public class DetailInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setCheckIn(null);
             }
 
+            /* Do something */
             urlEntities = status.getURLEntities();
             mediaEntities = status.getMediaEntities();
             String photoURL = null;

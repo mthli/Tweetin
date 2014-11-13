@@ -115,6 +115,8 @@ public class MentionMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     } else {
                         tweet.setCheckIn(null);
                     }
+                    /* Do something with photoURL */
+                    tweet.setPhotoURL(null);
                     tweet.setText(
                             status.getRetweetedStatus().getText()
                     );
@@ -141,6 +143,8 @@ public class MentionMoreTask extends AsyncTask<Void, Integer, Boolean> {
                     } else {
                         tweet.setCheckIn(null);
                     }
+                    /* Do something with photoURL */
+                    tweet.setPhotoURL(null);
                     tweet.setText(status.getText());
                     tweet.setRetweet(false);
                     tweet.setRetweetedByUserName(null);

@@ -126,6 +126,9 @@ public class DetailActivity extends Activity {
         String checkIn = intent.getStringExtra(
                 getString(R.string.detail_intent_check_in)
         );
+        String photoURL = intent.getStringExtra(
+                getString(R.string.detail_intent_photo_url)
+        );
         String text = intent.getStringExtra(
                 getString(R.string.detail_intent_text)
         );
@@ -151,6 +154,7 @@ public class DetailActivity extends Activity {
         tweet.setScreenName(screenName);
         tweet.setProtect(protect);
         tweet.setCheckIn(checkIn);
+        tweet.setPhotoURL(photoURL);
         tweet.setText(text);
         tweet.setRetweet(retweet);
         tweet.setRetweetedByUserName(retweetedByUserName);
@@ -290,17 +294,17 @@ public class DetailActivity extends Activity {
     }
 
     private AlertDialog alertDialog;
-    private boolean deleteFromDetail = false;
-    private boolean retweetFromDetail = false;
-    private boolean favoriteFromDetail = false;
-    public void setDeleteFromDetail(boolean deleteFromDetail) {
-        this.deleteFromDetail = deleteFromDetail;
+    private boolean deleteAtDetail = false;
+    private boolean retweetAtDetail = false;
+    private boolean favoriteAtDetail = false;
+    public void setDeleteAtDetail(boolean deleteAtDetail) {
+        this.deleteAtDetail = deleteAtDetail;
     }
-    public void setRetweetFromDetail(boolean retweetFromDetail) {
-        this.retweetFromDetail = retweetFromDetail;
+    public void setRetweetAtDetail(boolean retweetAtDetail) {
+        this.retweetAtDetail = retweetAtDetail;
     }
-    public void setFavoriteFromDetail(boolean favoriteFromDetail) {
-        this.favoriteFromDetail = favoriteFromDetail;
+    public void setFavoriteAtDetail(boolean favoriteAtDetail) {
+        this.favoriteAtDetail = favoriteAtDetail;
     }
     private void quote(int location) {
         Intent intent = new Intent(this, PostActivity.class);
@@ -456,15 +460,15 @@ public class DetailActivity extends Activity {
         );
         intent.putExtra(
                 getString(R.string.detail_intent_is_delete_at_detail),
-                deleteFromDetail
+                deleteAtDetail
         );
         intent.putExtra(
                 getString(R.string.detail_intent_is_retweet_at_detail),
-                retweetFromDetail
+                retweetAtDetail
         );
         intent.putExtra(
                 getString(R.string.detail_intent_is_favorite_at_detail),
-                favoriteFromDetail
+                favoriteAtDetail
         );
         cancelAllTask();
         setResult(RESULT_OK, intent);

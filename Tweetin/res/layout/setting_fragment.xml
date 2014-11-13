@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/background">
@@ -8,7 +9,6 @@
     <ListView android:id="@+id/setting_fragment_listview"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_alignParentTop="true"
               android:layout_margin="7dp"
               android:divider="@color/transparent"
               android:dividerHeight="1dp"
@@ -18,16 +18,4 @@
               android:drawSelectorOnTop="true">
     </ListView>
 
-    <Button android:id="@+id/setting_fragment_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="7dp"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="7dp"
-            android:text="@string/setting_fragment_button"
-            android:textColor="@color/text"
-            android:background="@drawable/round_button_selector">
-    </Button>
-
-</RelativeLayout>
+</LinearLayout>

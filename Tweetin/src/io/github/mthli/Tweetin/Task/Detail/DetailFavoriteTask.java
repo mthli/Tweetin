@@ -78,7 +78,7 @@ public class DetailFavoriteTask extends AsyncTask<Void, Integer, Boolean> {
             newTweet.setScreenName(oldTweet.getScreenName());
             newTweet.setProtect(oldTweet.isProtect());
             newTweet.setCheckIn(oldTweet.getCheckIn());
-            newTweet.setPhotoURL(oldTweet.getPhotoURL());
+            newTweet.setPhotoURL(oldTweet.getPhotoURL()); //
             newTweet.setText(oldTweet.getText());
             newTweet.setRetweet(oldTweet.isRetweet());
             newTweet.setRetweetedByUserName(
@@ -88,15 +88,15 @@ public class DetailFavoriteTask extends AsyncTask<Void, Integer, Boolean> {
 
             TimelineAction action = new TimelineAction(detailActivity);
             action.openDatabase(true);
-            action.updatedByFavorite(oldTweet.getStatusId()); //
+            action.updatedByFavorite(oldTweet.getStatusId());
             action.closeDatabase();
             MentionAction mentionAction = new MentionAction(detailActivity);
             mentionAction.openDatabase(true);
-            mentionAction.updatedByFavorite(oldTweet.getStatusId()); //
+            mentionAction.updatedByFavorite(oldTweet.getStatusId());
             mentionAction.closeDatabase();
             FavoriteAction favoriteAction = new FavoriteAction(detailActivity);
             favoriteAction.openDatabase(true);
-            favoriteAction.updatedByFavorite(oldTweet.getStatusId()); //
+            favoriteAction.updatedByFavorite(oldTweet.getStatusId());
             favoriteAction.closeDatabase();
 
             builder.setSmallIcon(R.drawable.ic_tweet_notification);
@@ -151,7 +151,7 @@ public class DetailFavoriteTask extends AsyncTask<Void, Integer, Boolean> {
             tweetAdapter.notifyDataSetChanged();
 
             if (oldTweet.getStatusId() == detailActivity.getTweetFromIntent().getStatusId()) {
-                detailActivity.setFavoriteFromDetail(true);
+                detailActivity.setFavoriteAtDetail(true);
             }
         }
     }

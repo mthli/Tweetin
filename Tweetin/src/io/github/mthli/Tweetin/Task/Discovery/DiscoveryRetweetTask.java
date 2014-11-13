@@ -80,6 +80,7 @@ public class DiscoveryRetweetTask extends AsyncTask<Void, Integer, Boolean> {
             newTweet.setScreenName(oldTweet.getScreenName());
             newTweet.setProtect(oldTweet.isProtect());
             newTweet.setCheckIn(oldTweet.getCheckIn());
+            newTweet.setPhotoURL(oldTweet.getPhotoURL()); //
             newTweet.setText(oldTweet.getText());
             newTweet.setRetweet(true);
             newTweet.setRetweetedByUserName(
@@ -89,15 +90,15 @@ public class DiscoveryRetweetTask extends AsyncTask<Void, Integer, Boolean> {
 
             TimelineAction action = new TimelineAction(context);
             action.openDatabase(true);
-            action.updatedByRetweet(oldTweet.getStatusId()); //
+            action.updatedByRetweet(oldTweet.getStatusId());
             action.closeDatabase();
             MentionAction mentionAction = new MentionAction(context);
             mentionAction.openDatabase(true);
-            mentionAction.updatedByRetweet(oldTweet.getStatusId()); //
+            mentionAction.updatedByRetweet(oldTweet.getStatusId());
             mentionAction.closeDatabase();
             FavoriteAction favoriteAction = new FavoriteAction(context);
             favoriteAction.openDatabase(true);
-            favoriteAction.updatedByRetweet(oldTweet.getStatusId()); //
+            favoriteAction.updatedByRetweet(oldTweet.getStatusId());
             favoriteAction.closeDatabase();
 
             builder.setSmallIcon(R.drawable.ic_tweet_notification);

@@ -70,15 +70,15 @@ public class FavoriteDeleteTask extends AsyncTask<Void, Integer, Boolean> {
 
             TimelineAction timelineAction = new TimelineAction(context);
             timelineAction.openDatabase(true);
-            timelineAction.deleteRecord(oldTweet.getStatusId()); //
+            timelineAction.deleteRecord(oldTweet.getStatusId());
             timelineAction.closeDatabase();
             MentionAction mentionAction = new MentionAction(context);
             mentionAction.openDatabase(true);
-            mentionAction.deleteRecord(oldTweet.getStatusId()); //
+            mentionAction.deleteRecord(oldTweet.getStatusId());
             mentionAction.closeDatabase();
             FavoriteAction favoriteAction = new FavoriteAction(context);
             favoriteAction.openDatabase(true);
-            favoriteAction.deleteRecord(oldTweet.getStatusId()); //
+            favoriteAction.deleteRecord(oldTweet.getStatusId());
             favoriteAction.closeDatabase();
 
             builder.setSmallIcon(R.drawable.ic_tweet_notification);

@@ -68,15 +68,15 @@ public class DetailDeleteTask extends AsyncTask<Void, Integer, Boolean> {
 
             TimelineAction timelineAction = new TimelineAction(detailActivity);
             timelineAction.openDatabase(true);
-            timelineAction.deleteRecord(oldTweet.getStatusId()); //
+            timelineAction.deleteRecord(oldTweet.getStatusId());
             timelineAction.closeDatabase();
             MentionAction mentionAction = new MentionAction(detailActivity);
             mentionAction.openDatabase(true);
-            mentionAction.deleteRecord(oldTweet.getStatusId()); //
+            mentionAction.deleteRecord(oldTweet.getStatusId());
             mentionAction.closeDatabase();
             FavoriteAction favoriteAction = new FavoriteAction(detailActivity);
             favoriteAction.openDatabase(true);
-            favoriteAction.deleteRecord(oldTweet.getStatusId()); //
+            favoriteAction.deleteRecord(oldTweet.getStatusId());
             favoriteAction.closeDatabase();
 
             builder.setSmallIcon(R.drawable.ic_tweet_notification);
@@ -130,7 +130,7 @@ public class DetailDeleteTask extends AsyncTask<Void, Integer, Boolean> {
             tweetAdapter.notifyDataSetChanged();
 
             if (oldTweet.getStatusId() == detailActivity.getTweetFromIntent().getStatusId()) {
-                detailActivity.setDeleteFromDetail(true);
+                detailActivity.setDeleteAtDetail(true);
                 detailActivity.finishDetail();
             }
         }

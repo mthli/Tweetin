@@ -29,4 +29,6 @@
               android:ellipsize="start">
     </TextView>
 
+    <!-- Do something -->
+
 </LinearLayout>

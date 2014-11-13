@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
-import com.balysv.materialripple.MaterialRippleLayout;
 import com.devspark.progressfragment.ProgressFragment;
 import io.github.mthli.Tweetin.Activity.MainActivity;
 import io.github.mthli.Tweetin.Activity.PostActivity;
@@ -32,17 +31,6 @@ public class SettingFragment extends ProgressFragment {
         ListView listView = (ListView) view
                 .findViewById(R.id.setting_fragment_listview);
 
-        Button button = (Button) view
-                .findViewById(R.id.setting_fragment_button);
-        /* Ripple Effect */
-        MaterialRippleLayout.on(button)
-                .rippleOverlay(true)
-                .rippleColor(getResources().getColor(R.color.text))
-                .rippleAlpha(0.1f)
-                .rippleDiameterDp(10)
-                .rippleDuration(350)
-                .create();
-
         List<String> titleList = new ArrayList<String>();
         titleList.add(getString(R.string.setting_title_homepage));
         titleList.add(getString(R.string.setting_title_license));
@@ -50,6 +38,7 @@ public class SettingFragment extends ProgressFragment {
         titleList.add(getString(R.string.setting_title_feedback));
         titleList.add(getString(R.string.setting_title_author));
         titleList.add(getString(R.string.setting_title_thanks));
+        titleList.add(getString(R.string.setting_title_sign_out));
 
         List<String> contentList = new ArrayList<String>();
         contentList.add(getString(R.string.setting_content_homepage));
@@ -58,9 +47,10 @@ public class SettingFragment extends ProgressFragment {
         contentList.add(getString(R.string.setting_content_feedback));
         contentList.add(getString(R.string.setting_content_author));
         contentList.add(getString(R.string.setting_content_thanks));
+        contentList.add(getString(R.string.setting_content_sign_out));
 
         List<Map<String, String>> lists = new ArrayList<Map<String, String>>();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 7; i++) {
             Map<String, String> list = new HashMap<String, String>();
             list.put("title", titleList.get(i));
             list.put("content", contentList.get(i));
@@ -122,16 +112,12 @@ public class SettingFragment extends ProgressFragment {
                         startActivity(intentToProfile);
                         anim.rightIn(getActivity());
                         break;
+                    case 6:
+                        ((MainActivity) getActivity()).signOut();
+                        break;
                     default:
                         break;
                 }
-            }
-        });
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity) getActivity()).signOut();
             }
         });
     }

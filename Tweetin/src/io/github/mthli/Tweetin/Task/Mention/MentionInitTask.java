@@ -62,14 +62,6 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
         editor = sharedPreferences.edit();
         swipeRefreshLayout = mentionFragment.getSwipeRefreshLayout();
 
-        /*
-        if (
-                sharedPreferences.getLong(
-                        context.getString(R.string.sp_latest_mention_id),
-                        -1l
-                ) == -1l
-                ) {
-        */
         if (
                 sharedPreferences.getBoolean(
                         context.getString(R.string.sp_is_mention_first),
@@ -103,6 +95,7 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setScreenName(record.getScreenName());
                 tweet.setProtect(record.isProtect());
                 tweet.setCheckIn(record.getCheckIn());
+                tweet.setPhotoURL(record.getPhotoURL()); //
                 tweet.setText(record.getText());
                 tweet.setRetweet(record.isRetweet());
                 tweet.setRetweetedByUserName(record.getRetweetedByUserName());
@@ -167,6 +160,8 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
                 } else {
                     record.setCheckIn(null);
                 }
+                /* Do something with photoURL */
+                record.setPhotoURL(null);
                 record.setText(
                         status.getRetweetedStatus().getText()
                 );
@@ -193,6 +188,8 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
                 } else {
                     record.setCheckIn(null);
                 }
+                /* Do something with photoURL */
+                record.setPhotoURL(null);
                 record.setText(status.getText());
                 record.setRetweet(false);
                 record.setRetweetedByUserName(null);
@@ -242,6 +239,7 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
                 tweet.setScreenName(record.getScreenName());
                 tweet.setProtect(record.isProtect());
                 tweet.setCheckIn(record.getCheckIn());
+                tweet.setPhotoURL(record.getPhotoURL()); //
                 tweet.setText(record.getText());
                 tweet.setRetweet(record.isRetweet());
                 tweet.setRetweetedByUserName(record.getRetweetedByUserName());
