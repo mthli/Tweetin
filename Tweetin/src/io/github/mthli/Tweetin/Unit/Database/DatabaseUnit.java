@@ -62,4 +62,19 @@ public class DatabaseUnit {
         favoriteAction.closeDatabase();
     }
 
+    public static void deleteAll(Context context) {
+        TimelineAction timelineAction = new TimelineAction(context);
+        timelineAction.openDatabase(true);
+        timelineAction.deleteAll();
+        timelineAction.closeDatabase();
+        MentionAction mentionAction = new MentionAction(context);
+        mentionAction.openDatabase(true);
+        mentionAction.deleteAll();
+        mentionAction.closeDatabase();
+        FavoriteAction favoriteAction = new FavoriteAction(context);
+        favoriteAction.openDatabase(true);
+        favoriteAction.deleteAll();
+        favoriteAction.closeDatabase();
+    }
+
 }

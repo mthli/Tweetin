@@ -1,5 +1,6 @@
 package io.github.mthli.Tweetin.Task.Detail;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -46,7 +47,7 @@ public class DetailInitTask extends AsyncTask<Void, Integer, Boolean> {
 
         tweetAdapter = detailActivity.getTweetAdapter();
         tweetList = detailActivity.getTweetList();
-        currentTweet = detailActivity.getTweetFromIntent();
+        currentTweet = TweetUnit.getTweetFromIntent(detailActivity);
 
         swipeRefreshLayout.setRefreshing(true);
     }
@@ -113,11 +114,14 @@ public class DetailInitTask extends AsyncTask<Void, Integer, Boolean> {
                     detailActivity.getString(R.string.detail_intent_from_notification),
                     false
             )) {
-                SharedPreferences sharedPreferences = detailActivity.getSharedPreferences();
+                SharedPreferences sharedPreferences = detailActivity.getSharedPreferences(
+                        detailActivity.getString(R.string.sp_name),
+                        Context.MODE_PRIVATE
+                );
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putLong(
                         detailActivity.getString(R.string.sp_latest_mention_id),
-                        detailActivity.getTweetFromIntent().getStatusId()
+                        TweetUnit.getTweetFromIntent(detailActivity).getStatusId()
                 ).commit();
             }
 

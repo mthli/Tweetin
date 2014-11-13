@@ -12,6 +12,8 @@ import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Favorite.*;
+import io.github.mthli.Tweetin.Task.Unit.DeleteTask;
+import io.github.mthli.Tweetin.Task.Unit.RetweetTask;
 import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
 import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
@@ -63,8 +65,8 @@ public class FavoriteFragment extends ProgressFragment {
 
     private FavoriteInitTask favoriteInitTask;
     private FavoriteMoreTask favoriteMoreTask;
-    private FavoriteDeleteTask favoriteDeleteTask;
-    private FavoriteRetweetTask favoriteRetweetTask;
+    private DeleteTask deleteTask;
+    private RetweetTask retweetTask;
     private FavoriteCancelTask favoriteCancelTask;
     public boolean isSomeTaskRunning() {
         if (
@@ -83,11 +85,11 @@ public class FavoriteFragment extends ProgressFragment {
         if (favoriteMoreTask != null && favoriteMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
             favoriteMoreTask.cancel(true);
         }
-        if (favoriteDeleteTask != null && favoriteDeleteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            favoriteDeleteTask.cancel(true);
+        if (deleteTask != null && deleteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            deleteTask.cancel(true);
         }
-        if (favoriteRetweetTask != null && favoriteRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
-            favoriteRetweetTask.cancel(true);
+        if (retweetTask != null && retweetTask.getStatus() == AsyncTask.Status.RUNNING) {
+            retweetTask.cancel(true);
         }
         if (favoriteCancelTask != null && favoriteCancelTask.getStatus() == AsyncTask.Status.RUNNING) {
             favoriteCancelTask.cancel(true);
@@ -210,11 +212,14 @@ public class FavoriteFragment extends ProgressFragment {
     private void multipleAtTwo(int flag, int location) {
         switch (flag) {
             case Flag.STATUS_NONE:
-                favoriteRetweetTask = new FavoriteRetweetTask(
-                        FavoriteFragment.this,
+                retweetTask = new RetweetTask(
+                        getActivity(),
+                        twitter,
+                        tweetAdapter,
+                        tweetList,
                         location
                 );
-                favoriteRetweetTask.execute();
+                retweetTask.execute();
                 break;
             case Flag.STATUS_RETWEETED_BY_ME:
                 Toast.makeText(
@@ -224,11 +229,14 @@ public class FavoriteFragment extends ProgressFragment {
                 ).show();
                 break;
             case Flag.STATUS_SENT_BY_ME:
-                favoriteDeleteTask = new FavoriteDeleteTask(
-                        FavoriteFragment.this,
+                deleteTask = new DeleteTask(
+                        getActivity(),
+                        twitter,
+                        tweetAdapter,
+                        tweetList,
                         location
                 );
-                favoriteDeleteTask.execute();
+                deleteTask.execute();
                 break;
             default:
                 break;

@@ -15,14 +15,17 @@ import android.widget.*;
 import com.melnykov.fab.FloatingActionButton;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Detail.*;
+import io.github.mthli.Tweetin.Task.Unit.DeleteTask;
+import io.github.mthli.Tweetin.Task.Unit.FavoriteTask;
+import io.github.mthli.Tweetin.Task.Unit.RetweetTask;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
+import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
+import io.github.mthli.Tweetin.Unit.Tweet.TweetUnit;
 import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
-import twitter4j.auth.AccessToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +53,6 @@ public class DetailActivity extends Activity {
         return tweetList;
     }
 
-    private SharedPreferences sharedPreferences;
-    public SharedPreferences getSharedPreferences() {
-        return sharedPreferences;
-    }
-
     private Twitter twitter;
     private long useId;
     public Twitter getTwitter() {
@@ -65,9 +63,9 @@ public class DetailActivity extends Activity {
     }
 
     private DetailInitTask detailInitTask;
-    private DetailDeleteTask detailDeleteTask;
-    private DetailRetweetTask detailRetweetTask;
-    private DetailFavoriteTask detailFavoriteTask;
+    private DeleteTask deleteTask;
+    private RetweetTask retweetTask;
+    private FavoriteTask favoriteTask;
     public boolean isSomeTaskRunning() {
         if (detailInitTask != null && detailInitTask.getStatus() == AsyncTask.Status.RUNNING) {
             return true;
@@ -78,124 +76,24 @@ public class DetailActivity extends Activity {
         if (detailInitTask != null && detailInitTask.getStatus() == AsyncTask.Status.RUNNING) {
             detailInitTask.cancel(true);
         }
-        if (detailDeleteTask != null && detailDeleteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            detailDeleteTask.cancel(true);
+        if (deleteTask != null && deleteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            deleteTask.cancel(true);
         }
-        if (detailRetweetTask != null && detailRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
-            detailRetweetTask.cancel(true);
+        if (retweetTask != null && retweetTask.getStatus() == AsyncTask.Status.RUNNING) {
+            retweetTask.cancel(true);
         }
-        if (detailFavoriteTask != null && detailFavoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            detailFavoriteTask.cancel(true);
+        if (favoriteTask != null && favoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            favoriteTask.cancel(true);
         }
     }
 
-    public Tweet getTweetFromIntent() {
-        Intent intent = getIntent();
-        long statusId = intent.getLongExtra(
-                getString(R.string.detail_intent_status_id),
-                -1l
-        );
-        long replyToStatusId = intent.getLongExtra(
-                getString(R.string.detail_intent_reply_to_status_id),
-                -1l
-        );
-        long userId = intent.getLongExtra(
-                getString(R.string.detail_intent_user_id),
-                -1l
-        );
-        long retweetedByUserId = intent.getLongExtra(
-                getString(R.string.detail_intent_retweeted_by_user_id),
-                -1l
-        );
-        String avatarURL = intent.getStringExtra(
-                getString(R.string.detail_intent_avatar_url)
-        );
-        String createdAt = intent.getStringExtra(
-                getString(R.string.detail_intent_created_at)
-        );
-        String name = intent.getStringExtra(
-                getString(R.string.detail_intent_name)
-        );
-        String screenName = intent.getStringExtra(
-                getString(R.string.detail_intent_screen_name)
-        );
-        boolean protect = intent.getBooleanExtra(
-                getString(R.string.detail_intent_protect),
-                false
-        );
-        String checkIn = intent.getStringExtra(
-                getString(R.string.detail_intent_check_in)
-        );
-        String photoURL = intent.getStringExtra(
-                getString(R.string.detail_intent_photo_url)
-        );
-        String text = intent.getStringExtra(
-                getString(R.string.detail_intent_text)
-        );
-        boolean retweet = intent.getBooleanExtra(
-                getString(R.string.detail_intent_retweet),
-                false
-        );
-        String retweetedByUserName = intent.getStringExtra(
-                getString(R.string.detail_intent_retweeted_by_user_name)
-        );
-        boolean favorite = intent.getBooleanExtra(
-                getString(R.string.detail_intent_favorite),
-                false
-        );
-        Tweet tweet = new Tweet();
-        tweet.setStatusId(statusId);
-        tweet.setReplyToStatusId(replyToStatusId);
-        tweet.setUserId(userId);
-        tweet.setRetweetedByUserId(retweetedByUserId);
-        tweet.setAvatarURL(avatarURL);
-        tweet.setCreatedAt(createdAt);
-        tweet.setName(name);
-        tweet.setScreenName(screenName);
-        tweet.setProtect(protect);
-        tweet.setCheckIn(checkIn);
-        tweet.setPhotoURL(photoURL);
-        tweet.setText(text);
-        tweet.setRetweet(retweet);
-        tweet.setRetweetedByUserName(retweetedByUserName);
-        tweet.setFavorite(favorite);
-
-        return tweet;
-    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
 
-        sharedPreferences = getSharedPreferences(
-                getString(R.string.sp_name),
-                Context.MODE_PRIVATE
-        );
-        useId = sharedPreferences.getLong(
-                getString(R.string.sp_use_id),
-                -1l
-        );
-        String consumerKey = sharedPreferences.getString(
-                getString(R.string.sp_consumer_key),
-                null
-        );
-        String consumerSecret = sharedPreferences.getString(
-                getString(R.string.sp_consumer_secret),
-                null
-        );
-        String accessToken = sharedPreferences.getString(
-                getString(R.string.sp_access_token),
-                null
-        );
-        String accessTokenSecret = sharedPreferences.getString(
-                getString(R.string.sp_access_token_secret),
-                null
-        );
-        TwitterFactory factory = new TwitterFactory();
-        twitter = factory.getInstance();
-        twitter.setOAuthConsumer(consumerKey, consumerSecret);
-        AccessToken token = new AccessToken(accessToken, accessTokenSecret);
-        twitter.setOAuthAccessToken(token);
+        twitter = TweetUnit.getTwitterFromSharedPreferences(DetailActivity.this);
+        useId = TweetUnit.getUseIdFromeSharedPreferences(DetailActivity.this);
 
         ListView listView = (ListView) findViewById(R.id.detail_listview);
         tweetAdapter = new TweetAdapter(
@@ -206,7 +104,7 @@ public class DetailActivity extends Activity {
                 true
         );
         listView.setAdapter(tweetAdapter);
-        tweetList.add(getTweetFromIntent());
+        tweetList.add(TweetUnit.getTweetFromIntent(this));
         tweetAdapter.notifyDataSetChanged();
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.detail_swipe_container);
@@ -248,14 +146,26 @@ public class DetailActivity extends Activity {
                 );
                 intent.putExtra(
                         getString(R.string.post_intent_status_id),
-                        getTweetFromIntent().getStatusId()
+                        TweetUnit.getTweetFromIntent(DetailActivity.this).getStatusId()
                 );
                 intent.putExtra(
                         getString(R.string.post_intent_status_screen_name),
-                        getTweetFromIntent().getScreenName()
+                        TweetUnit.getTweetFromIntent(DetailActivity.this).getScreenName()
                 );
                 startActivity(intent);
                 anim.fade(DetailActivity.this);
+            }
+        });
+        floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(
+                        DetailActivity.this,
+                        R.string.detail_toast_fab_reply,
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return false;
             }
         });
 
@@ -306,47 +216,17 @@ public class DetailActivity extends Activity {
     public void setFavoriteAtDetail(boolean favoriteAtDetail) {
         this.favoriteAtDetail = favoriteAtDetail;
     }
-    private void quote(int location) {
-        Intent intent = new Intent(this, PostActivity.class);
-        ActivityAnim anim = new ActivityAnim();
-        intent.putExtra(
-                getString(R.string.post_intent_flag),
-                Flag.POST_QUOTE
-        );
-        intent.putExtra(
-                getString(R.string.post_intent_status_id),
-                tweetList.get(location).getStatusId()
-        );
-        intent.putExtra(
-                getString(R.string.post_intent_status_screen_name),
-                tweetList.get(location).getScreenName()
-        );
-        intent.putExtra(
-                getString(R.string.post_intent_status_text),
-                tweetList.get(location).getText()
-        );
-        startActivity(intent);
-        anim.fade(this);
-    }
-    private void clip(int location) {
-        ClipboardManager manager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        String text = tweetList.get(location).getText();
-        ClipData data = ClipData.newPlainText(
-                getString(R.string.tweet_copy_label),
-                text
-        );
-        manager.setPrimaryClip(data);
-        Toast.makeText(
-                this,
-                R.string.tweet_notification_copy_successful,
-                Toast.LENGTH_SHORT
-        ).show();
-    }
     private void multipleAtOne(int flag, int location) {
         switch (flag) {
             case Flag.STATUS_NONE:
-                detailRetweetTask = new DetailRetweetTask(this, location);
-                detailRetweetTask.execute();
+                retweetTask = new RetweetTask(
+                        this,
+                        twitter,
+                        tweetAdapter,
+                        tweetList,
+                        location
+                );
+                retweetTask.execute();
                 break;
             case Flag.STATUS_RETWEETED_BY_ME:
                 Toast.makeText(
@@ -356,8 +236,14 @@ public class DetailActivity extends Activity {
                 ).show();
                 break;
             case Flag.STATUS_SENT_BY_ME:
-                detailDeleteTask = new DetailDeleteTask(this, location);
-                detailDeleteTask.execute();
+                deleteTask = new DeleteTask(
+                        this,
+                        twitter,
+                        tweetAdapter,
+                        tweetList,
+                        location
+                );
+                deleteTask.execute();
                 break;
             default:
                 break;
@@ -409,7 +295,11 @@ public class DetailActivity extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        quote(location);
+                        ContextMenuUnit.quote(
+                                DetailActivity.this,
+                                tweetList,
+                                location
+                        );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
@@ -420,11 +310,14 @@ public class DetailActivity extends Activity {
                         break;
                     case 2:
                         if (!tweet.isFavorite()) {
-                            detailFavoriteTask = new DetailFavoriteTask(
+                            favoriteTask = new FavoriteTask(
                                     DetailActivity.this,
+                                    twitter,
+                                    tweetAdapter,
+                                    tweetList,
                                     location
                             );
-                            detailFavoriteTask.execute();
+                            favoriteTask.execute();
                         } else {
                             Toast.makeText(
                                     DetailActivity.this,
@@ -436,7 +329,11 @@ public class DetailActivity extends Activity {
                         alertDialog.dismiss();
                         break;
                     case 3:
-                        clip(location);
+                        ContextMenuUnit.clip(
+                                DetailActivity.this,
+                                tweetList,
+                                location
+                        );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;

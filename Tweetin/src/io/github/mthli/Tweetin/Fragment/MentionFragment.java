@@ -12,6 +12,9 @@ import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Mention.*;
+import io.github.mthli.Tweetin.Task.Unit.DeleteTask;
+import io.github.mthli.Tweetin.Task.Unit.FavoriteTask;
+import io.github.mthli.Tweetin.Task.Unit.RetweetTask;
 import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
 import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
@@ -63,9 +66,9 @@ public class MentionFragment extends ProgressFragment {
 
     private MentionInitTask mentionInitTask;
     private MentionMoreTask mentionMoreTask;
-    private MentionDeleteTask mentionDeleteTask;
-    private MentionRetweetTask mentionRetweetTask;
-    private MentionFavoriteTask mentionFavoriteTask;
+    private DeleteTask deleteTask;
+    private RetweetTask retweetTask;
+    private FavoriteTask favoriteTask;
     public boolean isSomeTaskRunning() {
         if (
                 (mentionInitTask != null && mentionInitTask.getStatus() == AsyncTask.Status.RUNNING)
@@ -82,14 +85,14 @@ public class MentionFragment extends ProgressFragment {
         if (mentionMoreTask != null && mentionMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
             mentionMoreTask.cancel(true);
         }
-        if (mentionDeleteTask != null && mentionDeleteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mentionDeleteTask.cancel(true);
+        if (deleteTask != null && deleteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            deleteTask.cancel(true);
         }
-        if (mentionRetweetTask != null && mentionRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mentionRetweetTask.cancel(true);
+        if (retweetTask != null && retweetTask.getStatus() == AsyncTask.Status.RUNNING) {
+            retweetTask.cancel(true);
         }
-        if (mentionFavoriteTask != null && mentionFavoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mentionFavoriteTask.cancel(true);
+        if (favoriteTask != null && favoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            favoriteTask.cancel(true);
         }
     }
 
@@ -209,11 +212,14 @@ public class MentionFragment extends ProgressFragment {
     private void multipleAtTwo(int flag, int location) {
         switch (flag) {
             case Flag.STATUS_NONE:
-                mentionRetweetTask = new MentionRetweetTask(
-                        MentionFragment.this,
+                retweetTask = new RetweetTask(
+                        getActivity(),
+                        twitter,
+                        tweetAdapter,
+                        tweetList,
                         location
                 );
-                mentionRetweetTask.execute();
+                retweetTask.execute();
                 break;
             case Flag.STATUS_RETWEETED_BY_ME:
                 Toast.makeText(
@@ -223,11 +229,14 @@ public class MentionFragment extends ProgressFragment {
                 ).show();
                 break;
             case Flag.STATUS_SENT_BY_ME:
-                mentionDeleteTask = new MentionDeleteTask(
-                        MentionFragment.this,
+                deleteTask = new DeleteTask(
+                        getActivity(),
+                        twitter,
+                        tweetAdapter,
+                        tweetList,
                         location
                 );
-                mentionDeleteTask.execute();
+                deleteTask.execute();
                 break;
             default:
                 break;
@@ -304,11 +313,14 @@ public class MentionFragment extends ProgressFragment {
                         break;
                     case 3:
                         if (!tweet.isFavorite()) {
-                            mentionFavoriteTask = new MentionFavoriteTask(
-                                    MentionFragment.this,
+                            favoriteTask = new FavoriteTask(
+                                    getActivity(),
+                                    twitter,
+                                    tweetAdapter,
+                                    tweetList,
                                     location
                             );
-                            mentionFavoriteTask.execute();
+                            favoriteTask.execute();
                         } else {
                             Toast.makeText(
                                     getActivity(),

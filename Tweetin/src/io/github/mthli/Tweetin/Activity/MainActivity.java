@@ -23,6 +23,7 @@ import io.github.mthli.Tweetin.Fragment.*;
 import io.github.mthli.Tweetin.Fragment.DiscoveryFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
+import io.github.mthli.Tweetin.Unit.Database.DatabaseUnit;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
@@ -455,20 +456,6 @@ public class MainActivity extends FragmentActivity {
         favoriteFragment.cancelAllTask();
         discoveryFragment.cancelAllTask();
     }
-    private void clearAllDatabase() {
-        TimelineAction timelineAction = new TimelineAction(this);
-        timelineAction.openDatabase(true);
-        timelineAction.deleteAll();
-        timelineAction.closeDatabase();
-        MentionAction mentionAction = new MentionAction(this);
-        mentionAction.openDatabase(true);
-        mentionAction.deleteAll();
-        mentionAction.closeDatabase();
-        FavoriteAction favoriteAction = new FavoriteAction(this);
-        favoriteAction.openDatabase(true);
-        favoriteAction.deleteAll();
-        favoriteAction.closeDatabase();
-    }
     private void clearSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences(
                 getString(R.string.sp_name),
@@ -515,7 +502,7 @@ public class MainActivity extends FragmentActivity {
     }
     public void signOut() {
         cancelAllFragmentTask();
-        clearAllDatabase();
+        DatabaseUnit.deleteAll(this);
         clearSharedPreferences();
 
         Intent intent = new Intent(this, SplashActivity.class);

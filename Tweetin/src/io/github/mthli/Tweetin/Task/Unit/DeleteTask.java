@@ -1,55 +1,57 @@
-package io.github.mthli.Tweetin.Task.Discovery;
+package io.github.mthli.Tweetin.Task.Unit;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.AsyncTask;
-import io.github.mthli.Tweetin.Fragment.DiscoveryFragment;
+import io.github.mthli.Tweetin.Activity.DetailActivity;
 import io.github.mthli.Tweetin.Unit.Database.DatabaseUnit;
 import io.github.mthli.Tweetin.Unit.Notification.NotificationUnit;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
+import io.github.mthli.Tweetin.Unit.Tweet.TweetUnit;
 import twitter4j.Twitter;
 
 import java.util.List;
 
-public class DiscoveryDeleteTask extends AsyncTask<Void, Integer, Boolean> {
-    private DiscoveryFragment discoveryFragment;
-    private Context context;
+public class DeleteTask extends AsyncTask<Void, Integer, Boolean> {
+
+    private Activity activity;
     private Twitter twitter;
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
-    private Tweet oldTweet;
+    private Tweet tweet;
     private int position;
 
     private NotificationUnit notificationUnit;
 
-    public DiscoveryDeleteTask(
-            DiscoveryFragment discoveryFragment,
+    public DeleteTask(
+            Activity activity,
+            Twitter twitter,
+            TweetAdapter tweetAdapter,
+            List<Tweet> tweetList,
             int position
     ) {
-        this.discoveryFragment = discoveryFragment;
+        this.activity = activity;
+        this.twitter = twitter;
+        this.tweetAdapter = tweetAdapter;
+        this.tweetList = tweetList;
         this.position = position;
     }
 
     @Override
     protected void onPreExecute() {
-        context = discoveryFragment.getContentView().getContext();
-        twitter = discoveryFragment.getTwitter();
+        tweet = tweetList.get(position);
 
-        tweetAdapter = discoveryFragment.getTweetAdapter();
-        tweetList = discoveryFragment.getTweetList();
-        oldTweet = tweetList.get(position);
-
-        notificationUnit = new NotificationUnit(context, oldTweet);
+        notificationUnit = new NotificationUnit(activity, tweet);
         notificationUnit.deleting();
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            twitter.destroyStatus(oldTweet.getStatusId());
+            twitter.destroyStatus(tweet.getStatusId());
 
-            DatabaseUnit.deleteRecord(context, oldTweet);
+            DatabaseUnit.deleteRecord(activity, tweet);
             notificationUnit.deleteSuccessful();
         } catch (Exception e) {
             notificationUnit.deleteFailed();
@@ -78,6 +80,13 @@ public class DiscoveryDeleteTask extends AsyncTask<Void, Integer, Boolean> {
         if (result) {
             tweetList.remove(position);
             tweetAdapter.notifyDataSetChanged();
+
+            if (activity instanceof DetailActivity) {
+                if (tweet.getStatusId() == TweetUnit.getTweetFromIntent(activity).getStatusId()) {
+                    ((DetailActivity) activity).setDeleteAtDetail(true);
+                    ((DetailActivity) activity).finishDetail();
+                }
+            }
         }
     }
 }

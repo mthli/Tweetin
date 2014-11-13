@@ -104,6 +104,9 @@
     <string name="splash_how_to_ok">好的</string>
 
     <!-- Timeline -->
+    <string name="timeline_toast_fab_add">
+        增加一条新的推文。
+    </string>
     <string name="timeline_error_get_timeline_failed">
         获取时间线失败。
     </string>
@@ -120,6 +123,9 @@
     </string>
 
     <!-- Detail -->
+    <string name="detail_toast_fab_reply">
+        回复当前的推文。
+    </string>
     <string name="detail_error_get_detail_failed">
         获取推文详情失败。
     </string>
@@ -187,9 +193,9 @@
     </string>
 
     <!-- Setting -->
-    <string name="setting_title_theme">Theme</string>
-    <string name="setting_title_photo">Photo</string>
-    <string name="setting_title_url">URL</string>
+    <string name="setting_title_theme">主题</string>
+    <string name="setting_title_photo">图片</string>
+    <string name="setting_title_url">链接</string>
     <string name="setting_title_homepage">主页</string>
     <string name="setting_title_license">协议</string>
     <string name="setting_title_version">版本</string>
@@ -198,7 +204,7 @@
     <string name="setting_title_thanks">感谢</string>
     <string name="setting_title_sign_out">登出</string>
     <string name="setting_content_theme">
-        使用亮色主题或者暗色主题。
+        使用暗色主题。
     </string>
     <string name="setting_content_photo">
         在推文中显示图片。

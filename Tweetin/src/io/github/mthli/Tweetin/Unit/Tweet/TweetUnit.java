@@ -65,6 +65,82 @@ public class TweetUnit {
         return useId;
     }
 
+    public static Tweet getTweetFromIntent(
+            Activity activity
+    ) {
+        Intent intent = activity.getIntent();
+        long statusId = intent.getLongExtra(
+                activity.getString(R.string.detail_intent_status_id),
+                -1l
+        );
+        long replyToStatusId = intent.getLongExtra(
+                activity.getString(R.string.detail_intent_reply_to_status_id),
+                -1l
+        );
+        long userId = intent.getLongExtra(
+                activity.getString(R.string.detail_intent_user_id),
+                -1l
+        );
+        long retweetedByUserId = intent.getLongExtra(
+                activity.getString(R.string.detail_intent_retweeted_by_user_id),
+                -1l
+        );
+        String avatarURL = intent.getStringExtra(
+                activity.getString(R.string.detail_intent_avatar_url)
+        );
+        String createdAt = intent.getStringExtra(
+                activity.getString(R.string.detail_intent_created_at)
+        );
+        String name = intent.getStringExtra(
+                activity.getString(R.string.detail_intent_name)
+        );
+        String screenName = intent.getStringExtra(
+                activity.getString(R.string.detail_intent_screen_name)
+        );
+        boolean protect = intent.getBooleanExtra(
+                activity.getString(R.string.detail_intent_protect),
+                false
+        );
+        String checkIn = intent.getStringExtra(
+                activity.getString(R.string.detail_intent_check_in)
+        );
+        String photoURL = intent.getStringExtra(
+                activity.getString(R.string.detail_intent_photo_url)
+        );
+        String text = intent.getStringExtra(
+                activity.getString(R.string.detail_intent_text)
+        );
+        boolean retweet = intent.getBooleanExtra(
+                activity.getString(R.string.detail_intent_retweet),
+                false
+        );
+        String retweetedByUserName = intent.getStringExtra(
+                activity.getString(R.string.detail_intent_retweeted_by_user_name)
+        );
+        boolean favorite = intent.getBooleanExtra(
+                activity.getString(R.string.detail_intent_favorite),
+                false
+        );
+        Tweet tweet = new Tweet();
+        tweet.setStatusId(statusId);
+        tweet.setReplyToStatusId(replyToStatusId);
+        tweet.setUserId(userId);
+        tweet.setRetweetedByUserId(retweetedByUserId);
+        tweet.setAvatarURL(avatarURL);
+        tweet.setCreatedAt(createdAt);
+        tweet.setName(name);
+        tweet.setScreenName(screenName);
+        tweet.setProtect(protect);
+        tweet.setCheckIn(checkIn);
+        tweet.setPhotoURL(photoURL);
+        tweet.setText(text);
+        tweet.setRetweet(retweet);
+        tweet.setRetweetedByUserName(retweetedByUserName);
+        tweet.setFavorite(favorite);
+
+        return tweet;
+    }
+
     public static Tweet getTweetWithDetail(
             Context context,
             twitter4j.Status status

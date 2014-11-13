@@ -14,6 +14,9 @@ import com.melnykov.fab.FloatingActionButton;
 import io.github.mthli.Tweetin.Activity.PostActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Timeline.*;
+import io.github.mthli.Tweetin.Task.Unit.DeleteTask;
+import io.github.mthli.Tweetin.Task.Unit.FavoriteTask;
+import io.github.mthli.Tweetin.Task.Unit.RetweetTask;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
 import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
@@ -67,9 +70,9 @@ public class TimelineFragment extends ProgressFragment {
 
     private TimelineInitTask timelineInitTask;
     private TimelineMoreTask timelineMoreTask;
-    private TimelineDeleteTask timelineDeleteTask;
-    private TimelineRetweetTask timelineRetweetTask;
-    private TimelineFavoriteTask timelineFavoriteTask;
+    private DeleteTask deleteTask;
+    private RetweetTask retweetTask;
+    private FavoriteTask favoriteTask;
     public boolean isSomeTaskRunning() {
         if (
                 (timelineInitTask != null && timelineInitTask.getStatus() == AsyncTask.Status.RUNNING)
@@ -86,14 +89,14 @@ public class TimelineFragment extends ProgressFragment {
         if (timelineMoreTask != null && timelineMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
             timelineMoreTask.cancel(true);
         }
-        if (timelineDeleteTask != null && timelineDeleteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            timelineDeleteTask.cancel(true);
+        if (deleteTask != null && deleteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            deleteTask.cancel(true);
         }
-        if (timelineRetweetTask != null && timelineRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
-            timelineRetweetTask.cancel(true);
+        if (retweetTask != null && retweetTask.getStatus() == AsyncTask.Status.RUNNING) {
+            retweetTask.cancel(true);
         }
-        if (timelineFavoriteTask != null && timelineFavoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            timelineFavoriteTask.cancel(true);
+        if (favoriteTask != null && favoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            favoriteTask.cancel(true);
         }
     }
 
@@ -175,6 +178,18 @@ public class TimelineFragment extends ProgressFragment {
                 anim.fade(getActivity());
             }
         });
+        floatingActionButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(
+                        getActivity(),
+                        R.string.timeline_toast_fab_add,
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return false;
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -235,11 +250,14 @@ public class TimelineFragment extends ProgressFragment {
     private void multipleAtTwo(int flag, int location) {
         switch (flag) {
             case Flag.STATUS_NONE:
-                timelineRetweetTask = new TimelineRetweetTask(
-                        TimelineFragment.this,
+                retweetTask = new RetweetTask(
+                        getActivity(),
+                        twitter,
+                        tweetAdapter,
+                        tweetList,
                         location
                 );
-                timelineRetweetTask.execute();
+                retweetTask.execute();
                 break;
             case Flag.STATUS_RETWEETED_BY_ME:
                 Toast.makeText(
@@ -249,11 +267,14 @@ public class TimelineFragment extends ProgressFragment {
                 ).show();
                 break;
             case Flag.STATUS_SENT_BY_ME:
-                timelineDeleteTask = new TimelineDeleteTask(
-                        TimelineFragment.this,
+                deleteTask = new DeleteTask(
+                        getActivity(),
+                        twitter,
+                        tweetAdapter,
+                        tweetList,
                         location
                 );
-                timelineDeleteTask.execute();
+                deleteTask.execute();
                 break;
             default:
                 break;
@@ -330,11 +351,14 @@ public class TimelineFragment extends ProgressFragment {
                         break;
                     case 3:
                         if (!tweet.isFavorite()) {
-                            timelineFavoriteTask = new TimelineFavoriteTask(
-                                    TimelineFragment.this,
+                            favoriteTask = new FavoriteTask(
+                                    getActivity(),
+                                    twitter,
+                                    tweetAdapter,
+                                    tweetList,
                                     location
                             );
-                            timelineFavoriteTask.execute();
+                            favoriteTask.execute();
                         } else {
                             Toast.makeText(
                                     getActivity(),

@@ -1,55 +1,61 @@
-package io.github.mthli.Tweetin.Task.Detail;
+package io.github.mthli.Tweetin.Task.Unit;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import io.github.mthli.Tweetin.Activity.DetailActivity;
 import io.github.mthli.Tweetin.Unit.Database.DatabaseUnit;
 import io.github.mthli.Tweetin.Unit.Notification.NotificationUnit;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
+import io.github.mthli.Tweetin.Unit.Tweet.TweetUnit;
 import twitter4j.Twitter;
 
 import java.util.List;
 
-public class DetailDeleteTask extends AsyncTask<Void, Integer, Boolean> {
-    private DetailActivity detailActivity;
+public class FavoriteTask extends AsyncTask<Void, Integer, Boolean> {
+
+    private Activity activity;
     private Twitter twitter;
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
-    private Tweet oldTweet;
+    private Tweet tweet;
     private int position;
 
     private NotificationUnit notificationUnit;
 
-    public DetailDeleteTask(
-            DetailActivity detailActivity,
+    public FavoriteTask(
+            Activity activity,
+            Twitter twitter,
+            TweetAdapter tweetAdapter,
+            List<Tweet> tweetList,
             int position
     ) {
-        this.detailActivity = detailActivity;
+        this.activity = activity;
+        this.twitter = twitter;
+        this.tweetAdapter = tweetAdapter;
+        this.tweetList = tweetList;
         this.position = position;
     }
 
     @Override
     protected void onPreExecute() {
-        twitter = detailActivity.getTwitter();
+        tweet = tweetList.get(position);
 
-        tweetAdapter = detailActivity.getTweetAdapter();
-        tweetList = detailActivity.getTweetList();
-        oldTweet = tweetList.get(position);
-
-        notificationUnit = new NotificationUnit(detailActivity, oldTweet);
-        notificationUnit.deleting();
+        notificationUnit = new NotificationUnit(activity, tweet);
+        notificationUnit.favoriting();
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            twitter.destroyStatus(oldTweet.getStatusId());
+            twitter.createFavorite(tweet.getStatusId());
+            tweet.setFavorite(true);
 
-            DatabaseUnit.deleteRecord(detailActivity, oldTweet);
-            notificationUnit.deleteSuccessful();
+            DatabaseUnit.updatedByFavorite(activity, tweet);
+            notificationUnit.favoriteSuccessful();
         } catch (Exception e) {
-            notificationUnit.deleteFailed();
+            notificationUnit.favoriteFailed();
 
             return false;
         }
@@ -73,12 +79,12 @@ public class DetailDeleteTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         if (result) {
-            tweetList.remove(position);
             tweetAdapter.notifyDataSetChanged();
 
-            if (oldTweet.getStatusId() == detailActivity.getTweetFromIntent().getStatusId()) {
-                detailActivity.setDeleteAtDetail(true);
-                detailActivity.finishDetail();
+            if (activity instanceof DetailActivity) {
+                if (tweet.getStatusId() == TweetUnit.getTweetFromIntent(activity).getStatusId()) {
+                    ((DetailActivity) activity).setFavoriteAtDetail(true);
+                }
             }
         }
     }

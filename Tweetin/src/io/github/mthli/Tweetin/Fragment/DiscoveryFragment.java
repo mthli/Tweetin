@@ -12,10 +12,10 @@ import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
 import fr.castorflex.android.circularprogressbar.CircularProgressBar;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Task.Discovery.DiscoveryDeleteTask;
-import io.github.mthli.Tweetin.Task.Discovery.DiscoveryFavoriteTask;
 import io.github.mthli.Tweetin.Task.Discovery.DiscoveryInitTask;
-import io.github.mthli.Tweetin.Task.Discovery.DiscoveryRetweetTask;
+import io.github.mthli.Tweetin.Task.Unit.DeleteTask;
+import io.github.mthli.Tweetin.Task.Unit.FavoriteTask;
+import io.github.mthli.Tweetin.Task.Unit.RetweetTask;
 import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
 import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
@@ -79,9 +79,9 @@ public class DiscoveryFragment extends ProgressFragment {
     }
 
     private DiscoveryInitTask discoveryInitTask;
-    private DiscoveryDeleteTask discoveryDeleteTask;
-    private DiscoveryRetweetTask discoveryRetweetTask;
-    private DiscoveryFavoriteTask discoveryFavoriteTask;
+    private DeleteTask deleteTask;
+    private RetweetTask retweetTask;
+    private FavoriteTask favoriteTask;
     public boolean isSomeTaskRunning() {
         if (discoveryInitTask != null && discoveryInitTask.getStatus() == AsyncTask.Status.RUNNING) {
             return true;
@@ -92,14 +92,14 @@ public class DiscoveryFragment extends ProgressFragment {
         if (discoveryInitTask != null && discoveryInitTask.getStatus() == AsyncTask.Status.RUNNING) {
             discoveryInitTask.cancel(true);
         }
-        if (discoveryDeleteTask != null && discoveryDeleteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            discoveryDeleteTask.cancel(true);
+        if (deleteTask != null && deleteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            deleteTask.cancel(true);
         }
-        if (discoveryRetweetTask != null && discoveryRetweetTask.getStatus() == AsyncTask.Status.RUNNING) {
-            discoveryRetweetTask.cancel(true);
+        if (retweetTask != null && retweetTask.getStatus() == AsyncTask.Status.RUNNING) {
+            retweetTask.cancel(true);
         }
-        if (discoveryFavoriteTask != null && discoveryFavoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            discoveryFavoriteTask.cancel(true);
+        if (favoriteTask != null && favoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
+            favoriteTask.cancel(true);
         }
     }
 
@@ -191,11 +191,14 @@ public class DiscoveryFragment extends ProgressFragment {
     private void multipleAtTwo(int flag, int location) {
         switch (flag) {
             case Flag.STATUS_NONE:
-                discoveryRetweetTask = new DiscoveryRetweetTask(
-                        DiscoveryFragment.this,
+                retweetTask = new RetweetTask(
+                        getActivity(),
+                        twitter,
+                        tweetAdapter,
+                        tweetList,
                         location
                 );
-                discoveryRetweetTask.execute();
+                retweetTask.execute();
                 break;
             case Flag.STATUS_RETWEETED_BY_ME:
                 Toast.makeText(
@@ -205,11 +208,14 @@ public class DiscoveryFragment extends ProgressFragment {
                 ).show();
                 break;
             case Flag.STATUS_SENT_BY_ME:
-                discoveryDeleteTask = new DiscoveryDeleteTask(
-                        DiscoveryFragment.this,
+                deleteTask = new DeleteTask(
+                        getActivity(),
+                        twitter,
+                        tweetAdapter,
+                        tweetList,
                         location
                 );
-                discoveryDeleteTask.execute();
+                deleteTask.execute();
                 break;
             default:
                 break;
@@ -286,11 +292,14 @@ public class DiscoveryFragment extends ProgressFragment {
                         break;
                     case 3:
                         if (!tweet.isFavorite()) {
-                            discoveryFavoriteTask = new DiscoveryFavoriteTask(
-                                    DiscoveryFragment.this,
+                            favoriteTask = new FavoriteTask(
+                                    getActivity(),
+                                    twitter,
+                                    tweetAdapter,
+                                    tweetList,
                                     location
                             );
-                            discoveryFavoriteTask.execute();
+                            favoriteTask.execute();
                         } else {
                             Toast.makeText(
                                     getActivity(),
