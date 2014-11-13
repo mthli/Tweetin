@@ -1,0 +1,154 @@
+package io.github.mthli.Tweetin.Unit.Notification;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.support.v4.app.NotificationCompat;
+import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Unit.Flag.Flag;
+import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
+
+public class NotificationUnit {
+
+    private NotificationManager notificationManager;
+    private NotificationCompat.Builder builder;
+
+    private Context context;
+    private Tweet oldTweet;
+
+    public NotificationUnit(
+            Context context,
+            Tweet oldTweet
+    ) {
+        this.context = context;
+        this.oldTweet = oldTweet;
+
+        this.notificationManager =  (NotificationManager) context
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        this.builder = new NotificationCompat.Builder(context);
+    }
+
+    public void deleting() {
+        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setTicker(
+                context.getString(R.string.tweet_notification_delete_ing)
+        );
+        builder.setContentTitle(
+                context.getString(R.string.tweet_notification_delete_ing)
+        );
+        builder.setContentText(oldTweet.getText());
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+    }
+    public void deleteSuccessful() {
+        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setTicker(
+                context.getString(R.string.tweet_notification_delete_successful)
+        );
+        builder.setContentTitle(
+                context.getString(R.string.tweet_notification_delete_successful)
+        );
+        builder.setContentText(oldTweet.getText());
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+        notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
+    }
+    public void deleteFailed() {
+        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setTicker(
+                context.getString(R.string.tweet_notification_delete_failed)
+        );
+        builder.setContentTitle(
+                context.getString(R.string.tweet_notification_delete_failed)
+        );
+        builder.setContentText(oldTweet.getText());
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+    }
+
+    public void retweeting() {
+        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setTicker(
+                context.getString(R.string.tweet_notification_rewteet_ing)
+        );
+        builder.setContentTitle(
+                context.getString(R.string.tweet_notification_rewteet_ing)
+        );
+        builder.setContentText(oldTweet.getText());
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+    }
+    public void retweetSuccessful() {
+        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setTicker(
+                context.getString(R.string.tweet_notification_retweet_successful)
+        );
+        builder.setContentTitle(
+                context.getString(R.string.tweet_notification_retweet_successful)
+        );
+        builder.setContentText(oldTweet.getText());
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+        notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
+    }
+    public void retweetFailed() {
+        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setTicker(
+                context.getString(R.string.tweet_notification_retweet_failed)
+        );
+        builder.setContentTitle(
+                context.getString(R.string.tweet_notification_retweet_failed)
+        );
+        builder.setContentText(oldTweet.getText());
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+    }
+
+    public void favoriting() {
+        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setTicker(
+                context.getString(R.string.tweet_notification_add_favorite_ing)
+        );
+        builder.setContentTitle(
+                context.getString(R.string.tweet_notification_add_favorite_ing)
+        );
+        builder.setContentText(oldTweet.getText());
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+    }
+    public void favoriteSuccessful() {
+        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setTicker(
+                context.getString(R.string.tweet_notification_add_favorite_successful)
+        );
+        builder.setContentTitle(
+                context.getString(R.string.tweet_notification_add_favorite_successful)
+        );
+        builder.setContentText(oldTweet.getText());
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+        notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
+    }
+    public void favoriteFailed() {
+        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setTicker(
+                context.getString(R.string.tweet_notification_add_favorite_failed)
+        );
+        builder.setContentTitle(
+                context.getString(R.string.tweet_notification_add_favorite_failed)
+        );
+        builder.setContentText(oldTweet.getText());
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+    }
+
+}

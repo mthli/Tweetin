@@ -10,18 +10,15 @@ import android.view.Display;
 import android.view.View;
 import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
-import io.github.mthli.Tweetin.Activity.DetailActivity;
-import io.github.mthli.Tweetin.Activity.PostActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Favorite.*;
-import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
+import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
+import io.github.mthli.Tweetin.Unit.Tweet.TweetUnit;
 import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
-import twitter4j.auth.AccessToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,18 +39,17 @@ public class FavoriteFragment extends ProgressFragment {
         return swipeRefreshLayout;
     }
 
+    private boolean tweetWithDetail;
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList = new ArrayList<Tweet>();
+    public boolean isTweetWithDetail() {
+        return tweetWithDetail;
+    }
     public TweetAdapter getTweetAdapter() {
         return tweetAdapter;
     }
     public List<Tweet> getTweetList() {
         return tweetList;
-    }
-
-    private SharedPreferences sharedPreferences;
-    public SharedPreferences getSharedPreferences() {
-        return sharedPreferences;
     }
 
     private Twitter twitter;
@@ -98,77 +94,6 @@ public class FavoriteFragment extends ProgressFragment {
         }
     }
 
-    private void tweetToDetail(int position) {
-        ActivityAnim anim = new ActivityAnim();
-        Intent intent = new Intent(getActivity(), DetailActivity.class);
-        intent.putExtra(
-                getString(R.string.detail_intent_from_position),
-                position
-        );
-        Tweet tweet = tweetList.get(position);
-        intent.putExtra(
-                getString(R.string.detail_intent_status_id),
-                tweet.getStatusId()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_reply_to_status_id),
-                tweet.getReplyToStatusId()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_user_id),
-                tweet.getUserId()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_retweeted_by_user_id),
-                tweet.getRetweetedByUserId()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_avatar_url),
-                tweet.getAvatarURL()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_created_at),
-                tweet.getCreatedAt()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_name),
-                tweet.getName()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_screen_name),
-                tweet.getScreenName()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_protect),
-                tweet.isProtect()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_check_in),
-                tweet.getCheckIn()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_photo_url),
-                tweet.getPhotoURL()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_text),
-                tweet.getText()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_retweet),
-                tweet.isRetweet()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_retweeted_by_user_name),
-                tweet.getRetweetedByUserName()
-        );
-        intent.putExtra(
-                getString(R.string.detail_intent_favorite),
-                tweet.isFavorite()
-        );
-        startActivityForResult(intent, 0);
-        anim.rightIn(getActivity());
-    }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -177,36 +102,17 @@ public class FavoriteFragment extends ProgressFragment {
         setContentEmpty(false);
         setContentShown(true);
 
-        sharedPreferences = getActivity().getSharedPreferences(
+        twitter = TweetUnit.getTwitterFromSharedPreferences(getActivity());
+        useId = TweetUnit.getUseIdFromeSharedPreferences(getActivity());
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(
                 getString(R.string.sp_name),
                 Context.MODE_PRIVATE
         );
-        useId = sharedPreferences.getLong(
-                getString(R.string.sp_use_id),
-                -1l
+        tweetWithDetail = sharedPreferences.getBoolean(
+                getString(R.string.sp_is_tweet_with_detail),
+                false
         );
-        String consumerKey = sharedPreferences.getString(
-                getString(R.string.sp_consumer_key),
-                null
-        );
-        String consumerSecret = sharedPreferences.getString(
-                getString(R.string.sp_consumer_secret),
-                null
-        );
-        String accessToken = sharedPreferences.getString(
-                getString(R.string.sp_access_token),
-                null
-        );
-        String accessTokenSecret = sharedPreferences.getString(
-                getString(R.string.sp_access_token_secret),
-                null
-        );
-        TwitterFactory factory = new TwitterFactory();
-        twitter = factory.getInstance();
-        twitter.setOAuthConsumer(consumerKey, consumerSecret);
-        AccessToken token = new AccessToken(accessToken, accessTokenSecret);
-        twitter.setOAuthAccessToken(token);
-
         ListView listView = (ListView) view
                 .findViewById(R.id.favorite_fragment_listview);
         tweetAdapter = new TweetAdapter(
@@ -214,7 +120,7 @@ public class FavoriteFragment extends ProgressFragment {
                 view.getContext(),
                 R.layout.tweet,
                 tweetList,
-                false
+                tweetWithDetail
         );
         listView.setAdapter(tweetAdapter);
         tweetAdapter.notifyDataSetChanged();
@@ -252,7 +158,11 @@ public class FavoriteFragment extends ProgressFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tweetToDetail(position);
+                TweetUnit.tweetToDetailActivity(
+                        getActivity(),
+                        tweetList,
+                        position
+                );
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -297,61 +207,6 @@ public class FavoriteFragment extends ProgressFragment {
     }
 
     private AlertDialog alertDialog;
-    private void reply(int loaction) {
-        Intent intent = new Intent(getActivity(), PostActivity.class);
-        ActivityAnim anim = new ActivityAnim();
-        intent.putExtra(
-                getString(R.string.post_intent_flag),
-                Flag.POST_REPLY
-        );
-        intent.putExtra(
-                getString(R.string.post_intent_status_id),
-                tweetList.get(loaction).getStatusId()
-        );
-        intent.putExtra(
-                getString(R.string.post_intent_status_screen_name),
-                tweetList.get(loaction).getScreenName()
-        );
-        startActivity(intent);
-        anim.fade(getActivity());
-    }
-    private void quote(int location) {
-        Intent intent = new Intent(getActivity(), PostActivity.class);
-        ActivityAnim anim = new ActivityAnim();
-        intent.putExtra(
-                getString(R.string.post_intent_flag),
-                Flag.POST_QUOTE
-        );
-        intent.putExtra(
-                getString(R.string.post_intent_status_id),
-                tweetList.get(location).getStatusId()
-        );
-        intent.putExtra(
-                getString(R.string.post_intent_status_screen_name),
-                tweetList.get(location).getScreenName()
-        );
-        intent.putExtra(
-                getString(R.string.post_intent_status_text),
-                tweetList.get(location).getText()
-        );
-        startActivity(intent);
-        anim.fade(getActivity());
-    }
-    private void clip(int location) {
-        ClipboardManager manager = (ClipboardManager) getActivity()
-                .getSystemService(Context.CLIPBOARD_SERVICE);
-        String text = tweetList.get(location).getText();
-        ClipData data = ClipData.newPlainText(
-                getString(R.string.tweet_copy_label),
-                text
-        );
-        manager.setPrimaryClip(data);
-        Toast.makeText(
-                view.getContext(),
-                R.string.tweet_notification_copy_successful,
-                Toast.LENGTH_SHORT
-        ).show();
-    }
     private void multipleAtTwo(int flag, int location) {
         switch (flag) {
             case Flag.STATUS_NONE:
@@ -426,12 +281,20 @@ public class FavoriteFragment extends ProgressFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        reply(location);
+                        ContextMenuUnit.reply(
+                                getActivity(),
+                                tweetList,
+                                location
+                        );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
                     case 1:
-                        quote(location);
+                        ContextMenuUnit.quote(
+                                getActivity(),
+                                tweetList,
+                                location
+                        );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
@@ -450,7 +313,11 @@ public class FavoriteFragment extends ProgressFragment {
                         alertDialog.dismiss();
                         break;
                     case 4:
-                        clip(location);
+                        ContextMenuUnit.clip(
+                                getActivity(),
+                                tweetList,
+                                location
+                        );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;

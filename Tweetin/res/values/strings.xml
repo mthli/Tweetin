@@ -33,8 +33,7 @@
     <string name="sp_is_favorite_first">SP_IS_FAVORITE_FIRST</string>
     <!-- Setting -->
     <string name="sp_is_app_theme_light">SP_IS_APP_THEME_LIGHT</string>
-    <string name="sp_is_tweet_show_with_photo">SP_IS_TWEET_SHOW_WITH_PHOTO</string>
-    <string name="sp_is_tweet_show_with_expanded_url">SP_IS_TWEET_SHOW_WITH_EXPANDED_URL</string>
+    <string name="sp_is_tweet_with_detail">SP_IS_TWEET_WITH_DETAIL</string>
 
     <!-- Tweet -->
     <string name="tweet_date_format">

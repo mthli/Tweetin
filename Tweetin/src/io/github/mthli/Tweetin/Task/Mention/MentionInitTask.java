@@ -12,6 +12,7 @@ import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
+import io.github.mthli.Tweetin.Unit.Tweet.TweetUnit;
 import twitter4j.Paging;
 import twitter4j.Place;
 import twitter4j.Twitter;
@@ -58,7 +59,10 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
         tweetAdapter = mentionFragment.getTweetAdapter();
         tweetList = mentionFragment.getTweetList();
 
-        SharedPreferences sharedPreferences = mentionFragment.getSharedPreferences();
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.sp_name),
+                Context.MODE_PRIVATE
+        );
         editor = sharedPreferences.edit();
         swipeRefreshLayout = mentionFragment.getSwipeRefreshLayout();
 
@@ -84,22 +88,7 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
             action.closeDatabase();
             tweetList.clear();
             for (MentionRecord record : mentionRecordList) {
-                Tweet tweet = new Tweet();
-                tweet.setStatusId(record.getStatusId());
-                tweet.setReplyToStatusId(record.getReplyToStatusId());
-                tweet.setUserId(record.getUserId());
-                tweet.setRetweetedByUserId(record.getRetweetedByUserId());
-                tweet.setAvatarURL(record.getAvatarURL());
-                tweet.setCreatedAt(record.getCreatedAt());
-                tweet.setName(record.getName());
-                tweet.setScreenName(record.getScreenName());
-                tweet.setProtect(record.isProtect());
-                tweet.setCheckIn(record.getCheckIn());
-                tweet.setPhotoURL(record.getPhotoURL()); //
-                tweet.setText(record.getText());
-                tweet.setRetweet(record.isRetweet());
-                tweet.setRetweetedByUserName(record.getRetweetedByUserName());
-                tweet.setFavorite(record.isFavorite());
+                Tweet tweet = TweetUnit.getTweetFromRecord(record);
                 tweetList.add(tweet);
             }
             tweetAdapter.notifyDataSetChanged();
@@ -228,22 +217,7 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
         if (result) {
             tweetList.clear();
             for (MentionRecord record : mentionRecordList) {
-                Tweet tweet = new Tweet();
-                tweet.setStatusId(record.getStatusId());
-                tweet.setReplyToStatusId(record.getReplyToStatusId());
-                tweet.setUserId(record.getUserId());
-                tweet.setRetweetedByUserId(record.getRetweetedByUserId());
-                tweet.setAvatarURL(record.getAvatarURL());
-                tweet.setCreatedAt(record.getCreatedAt());
-                tweet.setName(record.getName());
-                tweet.setScreenName(record.getScreenName());
-                tweet.setProtect(record.isProtect());
-                tweet.setCheckIn(record.getCheckIn());
-                tweet.setPhotoURL(record.getPhotoURL()); //
-                tweet.setText(record.getText());
-                tweet.setRetweet(record.isRetweet());
-                tweet.setRetweetedByUserName(record.getRetweetedByUserName());
-                tweet.setFavorite(record.isFavorite());
+                Tweet tweet = TweetUnit.getTweetFromRecord(record);
                 tweetList.add(tweet);
             }
 

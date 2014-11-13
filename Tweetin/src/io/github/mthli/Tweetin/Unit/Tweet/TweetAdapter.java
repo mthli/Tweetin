@@ -126,8 +126,8 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.name = (TextView) view.findViewById(R.id.tweet_name);
             holder.screenName = (TextView) view.findViewById(R.id.tweet_screen_name);
             holder.protect = (TextView) view.findViewById(R.id.tweet_protect);
-            holder.text = (TextView) view.findViewById(R.id.tweet_text);
             holder.photo = (ImageView) view.findViewById(R.id.tweet_photo);
+            holder.text = (TextView) view.findViewById(R.id.tweet_text);
             holder.checkIn = (TextView) view.findViewById(R.id.tweet_check_in);
             holder.info = (LinearLayout) view.findViewById(R.id.tweet_info);
             holder.retweetedByUserName = (TextView) view
@@ -175,6 +175,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.checkIn.setVisibility(View.GONE);
         }
 
+        /* Do something */
         if (detail) {
             if (tweet.getPhotoURL() != null) {
                 ImageRequest imageRequest = new ImageRequest(
@@ -204,7 +205,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         } else {
             holder.photo.setVisibility(View.GONE);
         }
-
         if (detail) {
             holder.text.setAutoLinkMask(Linkify.WEB_URLS);
         }
