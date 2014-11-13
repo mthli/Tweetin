@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import com.balysv.materialripple.MaterialRippleLayout;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.Activity.ProfileActivity;
@@ -98,20 +97,12 @@ public class ProfileInitTask extends AsyncTask<Void, Integer, Boolean> {
             location.setVisibility(View.VISIBLE);
         }
 
-        final Button follow = (Button) view.findViewById(R.id.profile_follow);
+        Button follow = (Button) view.findViewById(R.id.profile_follow);
         if (isFollowing) {
             follow.setText(context.getString(R.string.profile_un_follow));
         } else {
             follow.setText(context.getString(R.string.profile_follow));
         }
-        /* Ripple Effect */
-        MaterialRippleLayout.on(follow)
-                .rippleOverlay(true)
-                .rippleColor(context.getResources().getColor(R.color.text))
-                .rippleAlpha(0.1f)
-                .rippleDiameterDp(10)
-                .rippleDuration(350)
-                .create();
         follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

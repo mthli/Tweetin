@@ -8,21 +8,6 @@
               android:background="@color/white"
               android:descendantFocusability="blocksDescendants">
 
-    <!--
-    <com.balysv.materialripple.MaterialRippleLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:descendantFocusability="blocksDescendants"
-            app:rippleOverlay="true"
-            app:rippleColor="@color/text"
-            app:rippleAlpha="0.1"
-            app:rippleDimension="10dp"
-            app:rippleDuration="256">
-    -->
-
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
