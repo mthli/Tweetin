@@ -57,7 +57,6 @@
             <RelativeLayout android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                <!-- Need test when too long -->
                 <TextView android:id="@+id/tweet_check_in"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -72,7 +71,6 @@
                           android:visibility="gone">
                 </TextView>
 
-                <!-- Need test when too long -->
                 <TextView android:id="@+id/tweet_screen_name"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -84,7 +82,6 @@
                           android:ellipsize="end">
                 </TextView>
 
-                <!-- Need test when too long -->
                 <TextView android:id="@+id/tweet_protect"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -106,7 +103,7 @@
 
     </RelativeLayout>
 
-    <ImageView android:id="@+id/tweet_photo"
+    <ImageView android:id="@+id/tweet_picture"
                android:contentDescription="@null"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -128,7 +125,7 @@
               android:textColor="@color/text">
     </TextView>
 
-    <!-- Do something -->
+    <!-- Need test when too long -->
     <LinearLayout android:id="@+id/tweet_info"
                   android:orientation="horizontal"
                   android:layout_width="match_parent"
@@ -138,7 +135,21 @@
                   android:layout_marginRight="12dp"
                   android:visibility="gone">
 
-        <TextView android:id="@+id/tweet_retweeted_by_user_name"
+        <TextView android:id="@+id/tweet_info_picture"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:paddingRight="10dp"
+                  android:drawableLeft="@drawable/ic_tweet_picture"
+                  android:drawablePadding="2dp"
+                  android:text="@string/tweet_info_picture"
+                  android:textSize="12sp"
+                  android:textColor="@color/hint"
+                  android:singleLine="true"
+                  android:ellipsize="end"
+                  android:visibility="gone">
+        </TextView>
+
+        <TextView android:id="@+id/tweet_info_retweeted_by_user_name"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:paddingRight="10dp"
@@ -151,11 +162,12 @@
                   android:visibility="gone">
         </TextView>
 
-        <TextView android:id="@+id/tweet_favorite"
+        <TextView android:id="@+id/tweet_info_favorite"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:drawableLeft="@drawable/ic_tweet_favorite"
                   android:drawablePadding="2dp"
+                  android:text="@string/tweet_info_favorite"
                   android:textSize="12sp"
                   android:textColor="@color/hint"
                   android:singleLine="true"

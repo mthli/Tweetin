@@ -49,7 +49,7 @@ public class FavoriteAction {
             values.put(FavoriteRecord.PROTECT, "false");
         }
         values.put(FavoriteRecord.CHECK_IN, record.getCheckIn());
-        values.put(FavoriteRecord.PHOTO_URL, record.getPhotoURL());
+        values.put(FavoriteRecord.PICTURE_URL, record.getPictureURL());
         values.put(FavoriteRecord.TEXT, record.getText());
         if (record.isRetweet()) {
             values.put(FavoriteRecord.RETWEET, "true");
@@ -140,7 +140,7 @@ public class FavoriteAction {
                 cursor.getString(8).equals("true")
         );
         record.setCheckIn(cursor.getString(9));
-        record.setPhotoURL(cursor.getString(10));
+        record.setPictureURL(cursor.getString(10));
         record.setText(cursor.getString(11));
         record.setRetweet(
                 cursor.getString(12).equals("true")
@@ -167,7 +167,7 @@ public class FavoriteAction {
                         FavoriteRecord.SCREEN_NAME,
                         FavoriteRecord.PROTECT,
                         FavoriteRecord.CHECK_IN,
-                        FavoriteRecord.PHOTO_URL,
+                        FavoriteRecord.PICTURE_URL,
                         FavoriteRecord.TEXT,
                         FavoriteRecord.RETWEET,
                         FavoriteRecord.RETWEETED_BY_USER_NAME,

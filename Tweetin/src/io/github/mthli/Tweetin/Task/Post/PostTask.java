@@ -26,9 +26,9 @@ import java.io.File;
 public class PostTask extends AsyncTask<Void, Integer, Boolean> {
     private PostActivity postActivity;
     private boolean checkIn;
-    private boolean photo;
+    private boolean picture;
     private String text;
-    private String photoPath;
+    private String picturePath;
 
     private Twitter twitter;
     private StatusUpdate update;
@@ -43,8 +43,8 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
     public PostTask(PostActivity postActivity) {
         this.postActivity = postActivity;
         this.checkIn = false;
-        this.photo = false;
-        this.photoPath = null;
+        this.picture = false;
+        this.picturePath = null;
         this.postFlag = 0;
         this.statusId = 0;
         this.screenName = null;
@@ -54,15 +54,15 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
     protected void onPreExecute() {
         EditText postEdit = postActivity.getPostEdit();
         ToggleButton postCheckInButton = postActivity.getPostCheckInButton();
-        ToggleButton postPhotoButton = postActivity.getPostPhotoButton();
+        ToggleButton postPhotoButton = postActivity.getPostPictureButton();
         if (postCheckInButton.isChecked()) {
             checkIn = true;
         }
         if (postPhotoButton.isChecked()) {
-            photo = true;
+            picture = true;
         }
         text = postEdit.getText().toString();
-        photoPath = postActivity.getPhotoPath();
+        picturePath = postActivity.getPicturePath();
 
         twitter = postActivity.getTwitter();
 
@@ -124,8 +124,8 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
                 update.setLocation(geo);
             }
         }
-        if (photo) {
-            File file = new File(photoPath);
+        if (picture) {
+            File file = new File(picturePath);
             update.setMedia(file);
         }
         if (
@@ -191,14 +191,14 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
                         true
                 );
             }
-            if (photo) {
+            if (picture) {
                 resultIntent.putExtra(
-                        postActivity.getString(R.string.post_intent_photo),
+                        postActivity.getString(R.string.post_intent_picture),
                         true
                 );
                 resultIntent.putExtra(
-                        postActivity.getString(R.string.post_intent_photo_path),
-                        photoPath
+                        postActivity.getString(R.string.post_intent_picture_path),
+                        picturePath
                 );
             }
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(postActivity);

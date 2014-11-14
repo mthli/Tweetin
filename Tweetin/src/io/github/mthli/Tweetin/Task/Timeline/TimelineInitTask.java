@@ -20,10 +20,8 @@ import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetUnit;
 import twitter4j.Paging;
-import twitter4j.Place;
 import twitter4j.Twitter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +34,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
     private List<TimelineRecord> timelineRecordList = new ArrayList<TimelineRecord>();
+    private boolean tweetWithDetail;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -87,6 +86,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 swipeRefreshLayout.setRefreshing(true);
             }
         }
+        tweetWithDetail = timelineFragment.isTweetWithDetail();
 
         if (!pullToRefresh) {
             TimelineAction action = new TimelineAction(context);
@@ -125,7 +125,8 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
         timelineRecordList.clear();
         TweetUnit tweetUnit = new TweetUnit(context);
         for (twitter4j.Status status : statusList) {
-            TimelineRecord record = tweetUnit.getTimelineRecordFromStatus(status);
+            TimelineRecord record = tweetUnit
+                    .getTimelineRecordFromStatus(status, tweetWithDetail);
             action.addRecord(record);
             timelineRecordList.add(record);
         }
@@ -147,178 +148,6 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
         /* Do nothing */
     }
 
-    private Intent getMentionToDetailIntent() {
-        TweetUnit tweetUnit = new TweetUnit(context);
-        SimpleDateFormat format = new SimpleDateFormat(
-                context.getString(R.string.tweet_date_format)
-        );
-        Intent intent = new Intent(context, DetailActivity.class);
-        intent.putExtra(
-                context.getString(R.string.detail_intent_from_position),
-                -1
-        );
-        if (mention.isRetweet()) {
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_status_id),
-                    mention.getId()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_reply_to_status_id),
-                    mention.getRetweetedStatus().getInReplyToStatusId()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_user_id),
-                    mention.getRetweetedStatus().getUser().getId()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_retweeted_by_user_id),
-                    mention.getUser().getId()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_avatar_url),
-                    mention.getRetweetedStatus().getUser().getBiggerProfileImageURL()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_created_at),
-                    format.format(mention.getRetweetedStatus().getCreatedAt())
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_name),
-                    mention.getRetweetedStatus().getUser().getName()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_screen_name),
-                    "@" + mention.getRetweetedStatus().getUser().getScreenName()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_protect),
-                    mention.getRetweetedStatus().getUser().isProtected()
-            );
-            Place place = mention.getRetweetedStatus().getPlace();
-            if (place != null) {
-                intent.putExtra(
-                        context.getString(R.string.detail_intent_check_in),
-                        place.getFullName()
-                );
-            } else {
-                intent.putExtra(
-                        context.getString(R.string.detail_intent_check_in),
-                        (String) null
-                );
-            }
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_photo_url),
-                    tweetUnit.getPhotoURLFromStatus(mention)
-            );
-            /* Do something */
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_text),
-                    mention.getRetweetedStatus().getText()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_retweet),
-                    true
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_retweeted_by_user_name),
-                    mention.getUser().getName()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_favorite),
-                    mention.getRetweetedStatus().isFavorited()
-            );
-        } else {
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_status_id),
-                    mention.getId()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_reply_to_status_id),
-                    mention.getInReplyToStatusId()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_user_id),
-                    mention.getUser().getId()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_retweeted_by_user_id),
-                    -1l
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_avatar_url),
-                    mention.getUser().getBiggerProfileImageURL()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_created_at),
-                    format.format(mention.getCreatedAt())
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_name),
-                    mention.getUser().getName()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_screen_name),
-                    "@" + mention.getUser().getScreenName()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_protect),
-                    mention.getUser().isProtected()
-            );
-            Place place = mention.getPlace();
-            if (place != null) {
-                intent.putExtra(
-                        context.getString(R.string.detail_intent_check_in),
-                        place.getFullName()
-                );
-            } else {
-                intent.putExtra(
-                        context.getString(R.string.detail_intent_check_in),
-                        (String) null
-                );
-            }
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_photo_url),
-                    tweetUnit.getPhotoURLFromStatus(mention)
-            );
-            /* Do something */
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_text),
-                    mention.getText()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_retweet),
-                    false
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_retweeted_by_user_name),
-                    (String) null
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_favorite),
-                    mention.isFavorited()
-            );
-        }
-        if (mention.isRetweetedByMe() || mention.isRetweeted()) {
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_retweeted_by_user_id),
-                    timelineFragment.getUseId()
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_retweet),
-                    true
-            );
-            intent.putExtra(
-                    context.getString(R.string.detail_intent_retweeted_by_user_name),
-                    context.getString(R.string.tweet_info_retweeted_by_me)
-            );
-        }
-        intent.putExtra(
-                context.getString(R.string.detail_intent_from_notification),
-                true
-        );
-
-        return intent;
-    }
     @Override
     protected void onPostExecute(Boolean result) {
         if (result) {
@@ -346,31 +175,41 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                     -1l
             );
             if (mention.getId() > latestMentionId) {
-                NotificationManager manager = (NotificationManager) context
-                        .getSystemService(Context.NOTIFICATION_SERVICE);
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-                builder.setSmallIcon(R.drawable.ic_tweet_notification);
-                builder.setTicker(
-                        context.getString(R.string.mention_notification_new_mention)
-                );
-                builder.setContentTitle(
-                        context.getString(R.string.mention_notification_new_mention)
-                );
-                builder.setContentText(mention.getText());
+                long check;
+                if (mention.isRetweet()) {
+                    check = mention.getRetweetedStatus().getUser().getId();
+                } else {
+                    check = mention.getUser().getId();
+                }
+                if (check != useId) {
+                    NotificationManager manager = (NotificationManager) context
+                            .getSystemService(Context.NOTIFICATION_SERVICE);
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+                    builder.setSmallIcon(R.drawable.ic_tweet_notification);
+                    builder.setTicker(
+                            context.getString(R.string.mention_notification_new_mention)
+                    );
+                    builder.setContentTitle(
+                            context.getString(R.string.mention_notification_new_mention)
+                    );
+                    builder.setContentText(mention.getText());
 
-                Intent resultIntent = getMentionToDetailIntent();
-                TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-                stackBuilder.addParentStack(DetailActivity.class);
-                stackBuilder.addNextIntent(resultIntent);
-                PendingIntent pendingIntent = stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_ONE_SHOT
-                );
-                builder.setContentIntent(pendingIntent);
+                    TweetUnit tweetUnit = new TweetUnit(context);
+                    /* Do something */
+                    Intent resultIntent = tweetUnit.getIntentFromStatus(mention, true, false);
+                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                    stackBuilder.addParentStack(DetailActivity.class);
+                    stackBuilder.addNextIntent(resultIntent);
+                    PendingIntent pendingIntent = stackBuilder.getPendingIntent(
+                            0,
+                            PendingIntent.FLAG_ONE_SHOT
+                    );
+                    builder.setContentIntent(pendingIntent);
 
-                Notification notification = builder.build();
-                notification.flags = Notification.FLAG_AUTO_CANCEL;
-                manager.notify(Flag.NOTIFICATION_MENTION_ID, notification);
+                    Notification notification = builder.build();
+                    notification.flags = Notification.FLAG_AUTO_CANCEL;
+                    manager.notify(Flag.NOTIFICATION_MENTION_ID, notification);
+                }
             }
         } else {
             if (firstSignIn) {

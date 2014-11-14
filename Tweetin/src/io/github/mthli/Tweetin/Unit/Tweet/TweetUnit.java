@@ -68,8 +68,8 @@ public class TweetUnit {
                 tweet.getCheckIn()
         );
         intent.putExtra(
-                activity.getString(R.string.detail_intent_photo_url),
-                tweet.getPhotoURL()
+                activity.getString(R.string.detail_intent_picture_url),
+                tweet.getPictureURL()
         );
         intent.putExtra(
                 activity.getString(R.string.detail_intent_text),
@@ -170,7 +170,7 @@ public class TweetUnit {
                 activity.getString(R.string.detail_intent_check_in)
         );
         String photoURL = intent.getStringExtra(
-                activity.getString(R.string.detail_intent_photo_url)
+                activity.getString(R.string.detail_intent_picture_url)
         );
         String text = intent.getStringExtra(
                 activity.getString(R.string.detail_intent_text)
@@ -197,7 +197,7 @@ public class TweetUnit {
         tweet.setScreenName(screenName);
         tweet.setProtect(protect);
         tweet.setCheckIn(checkIn);
-        tweet.setPhotoURL(photoURL);
+        tweet.setPictureURL(photoURL);
         tweet.setText(text);
         tweet.setRetweet(retweet);
         tweet.setRetweetedByUserName(retweetedByUserName);
@@ -217,7 +217,7 @@ public class TweetUnit {
         tweet.setScreenName(record.getScreenName());
         tweet.setProtect(record.isProtect());
         tweet.setCheckIn(record.getCheckIn());
-        tweet.setPhotoURL(record.getPhotoURL());
+        tweet.setPictureURL(record.getPictureURL());
         tweet.setText(record.getText());
         tweet.setRetweet(record.isRetweet());
         tweet.setRetweetedByUserName(record.getRetweetedByUserName());
@@ -237,7 +237,7 @@ public class TweetUnit {
         tweet.setScreenName(record.getScreenName());
         tweet.setProtect(record.isProtect());
         tweet.setCheckIn(record.getCheckIn());
-        tweet.setPhotoURL(record.getPhotoURL());
+        tweet.setPictureURL(record.getPictureURL());
         tweet.setText(record.getText());
         tweet.setRetweet(record.isRetweet());
         tweet.setRetweetedByUserName(record.getRetweetedByUserName());
@@ -257,7 +257,7 @@ public class TweetUnit {
         tweet.setScreenName(record.getScreenName());
         tweet.setProtect(record.isProtect());
         tweet.setCheckIn(record.getCheckIn());
-        tweet.setPhotoURL(record.getPhotoURL());
+        tweet.setPictureURL(record.getPictureURL());
         tweet.setText(record.getText());
         tweet.setRetweet(record.isRetweet());
         tweet.setRetweetedByUserName(record.getRetweetedByUserName());
@@ -286,7 +286,7 @@ public class TweetUnit {
     }
 
     /* Get Record */
-    public TimelineRecord getTimelineRecordFromStatus(Status status) {
+    public TimelineRecord getTimelineRecordFromStatus(Status status, boolean detail) {
         TimelineRecord record = new TimelineRecord();
         if (status.isRetweet()) {
             record.setStatusId(status.getId());
@@ -318,11 +318,12 @@ public class TweetUnit {
             } else {
                 record.setCheckIn(null);
             }
-            record.setPhotoURL(getPhotoURLFromStatus(status));
-            /* Do something */
-            record.setText(
-                    status.getRetweetedStatus().getText()
-            );
+            record.setPictureURL(getPhotoURLFromStatus(status));
+            if (detail) {
+                record.setText(getDetailTextFromStatus(status));
+            } else {
+                record.setText(status.getRetweetedStatus().getText());
+            }
             record.setRetweet(true);
             record.setRetweetedByUserName(
                     status.getUser().getName()
@@ -346,9 +347,12 @@ public class TweetUnit {
             } else {
                 record.setCheckIn(null);
             }
-            record.setPhotoURL(getPhotoURLFromStatus(status));
-            /* Do something */
-            record.setText(status.getText());
+            record.setPictureURL(getPhotoURLFromStatus(status));
+            if (detail) {
+                record.setText(getDetailTextFromStatus(status));
+            } else {
+                record.setText(status.getText());
+            }
             record.setRetweet(false);
             record.setRetweetedByUserName(null);
             record.setFavorite(status.isFavorited());
@@ -363,7 +367,7 @@ public class TweetUnit {
 
         return record;
     }
-    public MentionRecord getMentionRecordFromStatus(Status status) {
+    public MentionRecord getMentionRecordFromStatus(Status status, boolean detail) {
         MentionRecord record = new MentionRecord();
         if (status.isRetweet()) {
             record.setStatusId(status.getId());
@@ -395,11 +399,12 @@ public class TweetUnit {
             } else {
                 record.setCheckIn(null);
             }
-            record.setPhotoURL(getPhotoURLFromStatus(status));
-            /* Do something */
-            record.setText(
-                    status.getRetweetedStatus().getText()
-            );
+            record.setPictureURL(getPhotoURLFromStatus(status));
+            if (detail) {
+                record.setText(getDetailTextFromStatus(status));
+            } else {
+                record.setText(status.getRetweetedStatus().getText());
+            }
             record.setRetweet(true);
             record.setRetweetedByUserName(
                     status.getUser().getName()
@@ -423,9 +428,12 @@ public class TweetUnit {
             } else {
                 record.setCheckIn(null);
             }
-            record.setPhotoURL(getPhotoURLFromStatus(status));
-            /* Do something */
-            record.setText(status.getText());
+            record.setPictureURL(getPhotoURLFromStatus(status));
+            if (detail) {
+                record.setText(getDetailTextFromStatus(status));
+            } else {
+                record.setText(status.getText());
+            }
             record.setRetweet(false);
             record.setRetweetedByUserName(null);
             record.setFavorite(status.isFavorited());
@@ -440,7 +448,7 @@ public class TweetUnit {
 
         return record;
     }
-    public FavoriteRecord getFavoriteRecordFromStatus(Status status) {
+    public FavoriteRecord getFavoriteRecordFromStatus(Status status, boolean detail) {
         FavoriteRecord record = new FavoriteRecord();
         if (status.isRetweet()) {
             record.setStatusId(status.getId());
@@ -472,11 +480,12 @@ public class TweetUnit {
             } else {
                 record.setCheckIn(null);
             }
-            record.setPhotoURL(getPhotoURLFromStatus(status));
-            /* Do something */
-            record.setText(
-                    status.getRetweetedStatus().getText()
-            );
+            record.setPictureURL(getPhotoURLFromStatus(status));
+            if (detail) {
+                record.setText(getDetailTextFromStatus(status));
+            } else {
+                record.setText(status.getRetweetedStatus().getText());
+            }
             record.setRetweet(true);
             record.setRetweetedByUserName(
                     status.getUser().getName()
@@ -500,9 +509,12 @@ public class TweetUnit {
             } else {
                 record.setCheckIn(null);
             }
-            record.setPhotoURL(getPhotoURLFromStatus(status));
-            /* Do something */
-            record.setText(status.getText());
+            record.setPictureURL(getPhotoURLFromStatus(status));
+            if (detail) {
+                record.setText(getDetailTextFromStatus(status));
+            } else {
+                record.setText(status.getText());
+            }
             record.setRetweet(false);
             record.setRetweetedByUserName(null);
             record.setFavorite(status.isFavorited());
@@ -519,8 +531,7 @@ public class TweetUnit {
     }
 
     public String getPhotoURLFromStatus(Status status) {
-        String[] prefixes = context.getResources().getStringArray(R.array.detail_photo_prefix);
-        String[] suffixes = context.getResources().getStringArray(R.array.detail_photo_suffix);
+        String[] suffixes = context.getResources().getStringArray(R.array.detail_picture_suffix);
         URLEntity[] urlEntities;
         MediaEntity[] mediaEntities;
 
@@ -533,7 +544,7 @@ public class TweetUnit {
         }
 
         for (MediaEntity mediaEntity : mediaEntities) {
-            if (mediaEntity.getType().equals(context.getString(R.string.detail_media_type_photo))) {
+            if (mediaEntity.getType().equals(context.getString(R.string.detail_media_type_picture))) {
                 return mediaEntity.getMediaURL();
             }
         }
@@ -544,11 +555,13 @@ public class TweetUnit {
                     return expandedURL;
                 }
             }
+            /*
             for (String prefix : prefixes) {
                 if (expandedURL.startsWith(prefix)) {
                     return expandedURL;
                 }
             }
+            */
         }
 
         return null;
@@ -615,7 +628,7 @@ public class TweetUnit {
             } else {
                 tweet.setCheckIn(null);
             }
-            tweet.setPhotoURL(getPhotoURLFromStatus(status));
+            tweet.setPictureURL(getPhotoURLFromStatus(status));
             if (detail) {
                 tweet.setText(getDetailTextFromStatus(status));
             } else {
@@ -645,7 +658,7 @@ public class TweetUnit {
             } else {
                 tweet.setCheckIn(null);
             }
-            tweet.setPhotoURL(getPhotoURLFromStatus(status));
+            tweet.setPictureURL(getPhotoURLFromStatus(status));
             if (detail) {
                 tweet.setText(getDetailTextFromStatus(status));
             } else {
@@ -665,6 +678,199 @@ public class TweetUnit {
         }
 
         return tweet;
+    }
+    
+    public Intent getIntentFromStatus(Status status, boolean toDetailActivity, boolean detail) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.sp_name),
+                Context.MODE_PRIVATE
+        );
+        long useId = sharedPreferences.getLong(
+                context.getString(R.string.sp_use_id),
+                -1l
+        );
+        SimpleDateFormat format = new SimpleDateFormat(
+                context.getString(R.string.tweet_date_format)
+        );
+
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra(
+                context.getString(R.string.detail_intent_from_position),
+                -1
+        );
+        if (status.isRetweet()) {
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_status_id),
+                    status.getId()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_reply_to_status_id),
+                    status.getRetweetedStatus().getInReplyToStatusId()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_user_id),
+                    status.getRetweetedStatus().getUser().getId()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_retweeted_by_user_id),
+                    status.getUser().getId()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_avatar_url),
+                    status.getRetweetedStatus().getUser().getBiggerProfileImageURL()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_created_at),
+                    format.format(status.getRetweetedStatus().getCreatedAt())
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_name),
+                    status.getRetweetedStatus().getUser().getName()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_screen_name),
+                    "@" + status.getRetweetedStatus().getUser().getScreenName()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_protect),
+                    status.getRetweetedStatus().getUser().isProtected()
+            );
+            Place place = status.getRetweetedStatus().getPlace();
+            if (place != null) {
+                intent.putExtra(
+                        context.getString(R.string.detail_intent_check_in),
+                        place.getFullName()
+                );
+            } else {
+                intent.putExtra(
+                        context.getString(R.string.detail_intent_check_in),
+                        (String) null
+                );
+            }
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_picture_url),
+                    getPhotoURLFromStatus(status)
+            );
+            if (detail) {
+                intent.putExtra(
+                        context.getString(R.string.detail_intent_text),
+                        getDetailTextFromStatus(status)
+                );
+            } else {
+                intent.putExtra(
+                        context.getString(R.string.detail_intent_text),
+                        status.getRetweetedStatus().getText()
+                );
+            }
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_retweet),
+                    true
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_retweeted_by_user_name),
+                    status.getUser().getName()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_favorite),
+                    status.getRetweetedStatus().isFavorited()
+            );
+        } else {
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_status_id),
+                    status.getId()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_reply_to_status_id),
+                    status.getInReplyToStatusId()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_user_id),
+                    status.getUser().getId()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_retweeted_by_user_id),
+                    -1l
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_avatar_url),
+                    status.getUser().getBiggerProfileImageURL()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_created_at),
+                    format.format(status.getCreatedAt())
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_name),
+                    status.getUser().getName()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_screen_name),
+                    "@" + status.getUser().getScreenName()
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_protect),
+                    status.getUser().isProtected()
+            );
+            Place place = status.getPlace();
+            if (place != null) {
+                intent.putExtra(
+                        context.getString(R.string.detail_intent_check_in),
+                        place.getFullName()
+                );
+            } else {
+                intent.putExtra(
+                        context.getString(R.string.detail_intent_check_in),
+                        (String) null
+                );
+            }
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_picture_url),
+                    getPhotoURLFromStatus(status)
+            );
+            if (detail) {
+                intent.putExtra(
+                        context.getString(R.string.detail_intent_text),
+                        getDetailTextFromStatus(status)
+                );
+            } else {
+                intent.putExtra(
+                        context.getString(R.string.detail_intent_text),
+                        status.getText()
+                );
+            }
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_retweet),
+                    false
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_retweeted_by_user_name),
+                    (String) null
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_favorite),
+                    status.isFavorited()
+            );
+        }
+        if (status.isRetweetedByMe() || status.isRetweeted()) {
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_retweeted_by_user_id),
+                    useId
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_retweet),
+                    true
+            );
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_retweeted_by_user_name),
+                    context.getString(R.string.tweet_info_retweeted_by_me)
+            );
+        }
+        intent.putExtra(
+                context.getString(R.string.detail_intent_from_notification),
+                toDetailActivity
+        );
+
+        return intent;
     }
 
 }

@@ -17,12 +17,12 @@ public class MentionMoreTask extends AsyncTask<Void, Integer, Boolean> {
     private MentionFragment mentionFragment;
     private Context context;
     private Twitter twitter;
-    private long useId;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
+    private boolean tweetWithDetail;
 
     public MentionMoreTask(MentionFragment mentionFragment) {
         this.mentionFragment = mentionFragment;
@@ -38,10 +38,10 @@ public class MentionMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
         context = mentionFragment.getContentView().getContext();
         twitter = mentionFragment.getTwitter();
-        useId = mentionFragment.getUseId();
 
         tweetAdapter = mentionFragment.getTweetAdapter();
         tweetList = mentionFragment.getTweetList();
+        tweetWithDetail = mentionFragment.isTweetWithDetail();
 
         swipeRefreshLayout = mentionFragment.getSwipeRefreshLayout();
         swipeRefreshLayout.setRefreshing(true);
@@ -80,7 +80,7 @@ public class MentionMoreTask extends AsyncTask<Void, Integer, Boolean> {
         if (result) {
             TweetUnit tweetUnit = new TweetUnit(context);
             for (twitter4j.Status status : statusList) {
-                tweetList.add(tweetUnit.getTweetFromStatus(status, false));
+                tweetList.add(tweetUnit.getTweetFromStatus(status, tweetWithDetail));
             }
             tweetAdapter.notifyDataSetChanged();
         }

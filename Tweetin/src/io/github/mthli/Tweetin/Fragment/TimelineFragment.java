@@ -119,6 +119,7 @@ public class TimelineFragment extends ProgressFragment {
                 getString(R.string.sp_is_tweet_with_detail),
                 false
         );
+
         ListView listView = (ListView) view
                 .findViewById(R.id.timeline_fragment_listview);
         tweetAdapter = new TweetAdapter(

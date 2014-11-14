@@ -17,12 +17,12 @@ public class TimelineMoreTask extends AsyncTask<Void, Integer, Boolean> {
     private TimelineFragment timelineFragment;
     private Context context;
     private Twitter twitter;
-    private long useId;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
+    private boolean tweetWithDetail;
 
     public TimelineMoreTask(TimelineFragment timelineFragment) {
         this.timelineFragment = timelineFragment;
@@ -38,10 +38,10 @@ public class TimelineMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
         context = timelineFragment.getContentView().getContext();
         twitter = timelineFragment.getTwitter();
-        useId = timelineFragment.getUseId();
 
         tweetAdapter = timelineFragment.getTweetAdapter();
         tweetList = timelineFragment.getTweetList();
+        tweetWithDetail = timelineFragment.isTweetWithDetail();
 
         swipeRefreshLayout = timelineFragment.getSwipeRefreshLayout();
         swipeRefreshLayout.setRefreshing(true);
@@ -80,7 +80,7 @@ public class TimelineMoreTask extends AsyncTask<Void, Integer, Boolean> {
         if (result) {
             TweetUnit tweetUnit = new TweetUnit(context);
             for (twitter4j.Status status : statusList) {
-                tweetList.add(tweetUnit.getTweetFromStatus(status, false));
+                tweetList.add(tweetUnit.getTweetFromStatus(status, tweetWithDetail));
             }
             tweetAdapter.notifyDataSetChanged();
         }

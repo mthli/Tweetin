@@ -12,7 +12,7 @@ public class TimelineRecord {
     public static final String SCREEN_NAME = "SCREEN_NAME";
     public static final String PROTECT = "PROTECT";
     public static final String CHECK_IN = "CHECK_IN";
-    public static final String PHOTO_URL = "PHOTO_URL";
+    public static final String PICTURE_URL = "PICTURE_URL";
     public static final String TEXT = "TEXT";
     public static final String RETWEET = "RETWEET";
     public static final String RETWEETED_BY_USER_NAME = "REWTEETED_BY_USER_NAME";
@@ -31,7 +31,7 @@ public class TimelineRecord {
             + " " + SCREEN_NAME + " text,"
             + " " + PROTECT + " text,"
             + " " + CHECK_IN + " text,"
-            + " " + PHOTO_URL + " text,"
+            + " " + PICTURE_URL + " text,"
             + " " + TEXT + " text,"
             + " " + RETWEET + " text,"
             + " " + RETWEETED_BY_USER_NAME + " text,"
@@ -48,7 +48,7 @@ public class TimelineRecord {
     private String screenName;
     private String protect;
     private String checkIn;
-    private String photoURL;
+    private String pictureURL;
     private String text;
     private String retweet;
     private String retweetedByUserName;
@@ -145,11 +145,11 @@ public class TimelineRecord {
         this.checkIn = checkIn;
     }
 
-    public String getPhotoURL() {
-        return photoURL;
+    public String getPictureURL() {
+        return pictureURL;
     }
-    public void setPhotoURL(String photoURL) {
-        this.photoURL = photoURL;
+    public void setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
     }
 
     public String getText() {

@@ -27,11 +27,11 @@
                           android:textOn="">
             </ToggleButton>
 
-            <ToggleButton android:id="@+id/post_photo_button"
+            <ToggleButton android:id="@+id/post_picture_button"
                           android:layout_width="40dp"
                           android:layout_height="40dp"
                           android:layout_toRightOf="@id/post_check_in_button"
-                          android:background="@drawable/post_photo_button_selector"
+                          android:background="@drawable/post_picture_button_selector"
                           android:text=""
                           android:textOff=""
                           android:textOn="">

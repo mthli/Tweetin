@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!-- SharePreferences -->
+    <!-- Init -->
+    <string name="sp_name">SP_NAME</string>
+    <string name="sp_use_id">SP_USE_ID</string>
+    <string name="sp_consumer_key">SP_CONSUMER_KEY</string>
+    <string name="sp_consumer_secret">SP_CONSUMER_SECRET</string>
+    <string name="sp_access_token">SP_ACCESS_TOKEN</string>
+    <string name="sp_access_token_secret">SP_ACCESS_TOKEN_SECRET</string>
+    <string name="sp_is_timeline_first">SP_IS_TIMELINE_FIRST</string>
+    <string name="sp_is_mention_first">SP_IS_MENTION_FIRST</string>
+    <string name="sp_latest_mention_id">SP_LATEST_MENTION_ID</string>
+    <string name="sp_is_favorite_first">SP_IS_FAVORITE_FIRST</string>
+    <!-- Setting -->
+    <string name="sp_is_tweet_with_detail">SP_IS_TWEET_WITH_DETAIL</string>
+
+</resources>

@@ -11,7 +11,7 @@ public class Tweet {
     private String screenName;
     private boolean protect;
     private String checkIn;
-    private String photoURL;
+    private String pictureURL;
     private String text;
     private boolean retweet;
     private String retweetedByUserName;
@@ -28,7 +28,7 @@ public class Tweet {
         this.screenName = null;
         this.protect = false;
         this.checkIn = null;
-        this.photoURL = null;
+        this.pictureURL = null;
         this.text = null;
         this.retweet = false;
         this.retweetedByUserName = null;
@@ -105,11 +105,11 @@ public class Tweet {
         this.checkIn = checkIn;
     }
 
-    public String getPhotoURL() {
-        return photoURL;
+    public String getPictureURL() {
+        return pictureURL;
     }
-    public void setPhotoURL(String photoURL) {
-        this.photoURL = photoURL;
+    public void setPictureURL(String pictureURL) {
+        this.pictureURL = pictureURL;
     }
 
     public String getText() {

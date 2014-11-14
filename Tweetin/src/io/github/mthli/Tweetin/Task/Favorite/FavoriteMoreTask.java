@@ -17,12 +17,12 @@ public class FavoriteMoreTask extends AsyncTask<Void, Integer, Boolean> {
     private FavoriteFragment favoriteFragment;
     private Context context;
     private Twitter twitter;
-    private long useId;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
+    private boolean tweetWithDetail;
 
     public FavoriteMoreTask(FavoriteFragment favoriteFragment) {
         this.favoriteFragment = favoriteFragment;
@@ -38,10 +38,10 @@ public class FavoriteMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
         context = favoriteFragment.getContentView().getContext();
         twitter = favoriteFragment.getTwitter();
-        useId = favoriteFragment.getUseId();
 
         tweetAdapter = favoriteFragment.getTweetAdapter();
         tweetList = favoriteFragment.getTweetList();
+        tweetWithDetail = favoriteFragment.isTweetWithDetail();
 
         swipeRefreshLayout = favoriteFragment.getSwipeRefreshLayout();
         swipeRefreshLayout.setRefreshing(true);
@@ -80,7 +80,7 @@ public class FavoriteMoreTask extends AsyncTask<Void, Integer, Boolean> {
         if (result) {
             TweetUnit tweetUnit = new TweetUnit(context);
             for (twitter4j.Status status : statusList) {
-                tweetList.add(tweetUnit.getTweetFromStatus(status, false));
+                tweetList.add(tweetUnit.getTweetFromStatus(status, tweetWithDetail));
             }
             tweetAdapter.notifyDataSetChanged();
         }

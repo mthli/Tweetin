@@ -99,7 +99,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/jsoup-1.7.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/systembartint-1.0.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

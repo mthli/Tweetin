@@ -32,7 +32,6 @@ public class SplashActivity extends Activity {
     private static final int GET_ACCESS_TOKEN_FAILED = 0x201;
     private Handler handler;
 
-    private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
     private AlertDialog signInDialog;
@@ -198,12 +197,12 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
-        preferences = getSharedPreferences(
+        SharedPreferences sharedPreferences = getSharedPreferences(
                 getString(R.string.sp_name),
                 MODE_PRIVATE
         );
-        editor = preferences.edit();
-        long useId = preferences.getLong(getString(R.string.sp_use_id), 0l);
+        editor = sharedPreferences.edit();
+        long useId = sharedPreferences.getLong(getString(R.string.sp_use_id), 0l);
         if (useId > 0l) {
             editor.putBoolean(
                     getString(R.string.sp_is_timeline_first),

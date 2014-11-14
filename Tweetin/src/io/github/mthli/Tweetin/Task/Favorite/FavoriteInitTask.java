@@ -22,11 +22,11 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
     private FavoriteFragment favoriteFragment;
     private Context context;
     private Twitter twitter;
-    private long useId;
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
     private List<FavoriteRecord> favoriteRecordList = new ArrayList<FavoriteRecord>();
+    private boolean tweetWithDetail;
 
     private SharedPreferences.Editor editor;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -51,10 +51,10 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
 
         context = favoriteFragment.getContentView().getContext();
         twitter = favoriteFragment.getTwitter();
-        useId = favoriteFragment.getUseId();
 
         tweetAdapter = favoriteFragment.getTweetAdapter();
         tweetList = favoriteFragment.getTweetList();
+        tweetWithDetail = favoriteFragment.isTweetWithDetail();
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.sp_name),
@@ -111,7 +111,7 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
         favoriteRecordList.clear();
         TweetUnit tweetUnit = new TweetUnit(context);
         for (twitter4j.Status status : statusList) {
-            FavoriteRecord record = tweetUnit.getFavoriteRecordFromStatus(status);
+            FavoriteRecord record = tweetUnit.getFavoriteRecordFromStatus(status, tweetWithDetail);
             action.addRecord(record);
             favoriteRecordList.add(record);
         }

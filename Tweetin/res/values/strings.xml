@@ -1,44 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- App info -->
-    <string name="app_name">Tweetin</string>
-    <string name="app_homepage">
-        https://github.com/mthli/Tweetin
-    </string>
-    <string name="app_license">
-        http://www.apache.org/licenses/LICENSE-2.0.html
-    </string>
-    <string name="app_version">
-        0.9.5
-    </string>
-    <string name="app_author_id">
-        1328721930
-    </string>
-    <string name="app_thanks_id">
-        102052300
-    </string>
-
-    <!-- SharePreferences -->
-    <!-- Init -->
-    <string name="sp_name">SP_NAME</string>
-    <string name="sp_use_id">SP_USE_ID</string>
-    <string name="sp_consumer_key">SP_CONSUMER_KEY</string>
-    <string name="sp_consumer_secret">SP_CONSUMER_SECRET</string>
-    <string name="sp_access_token">SP_ACCESS_TOKEN</string>
-    <string name="sp_access_token_secret">SP_ACCESS_TOKEN_SECRET</string>
-    <string name="sp_is_timeline_first">SP_IS_TIMELINE_FIRST</string>
-    <string name="sp_is_mention_first">SP_IS_MENTION_FIRST</string>
-    <string name="sp_latest_mention_id">SP_LATEST_MENTION_ID</string>
-    <string name="sp_is_favorite_first">SP_IS_FAVORITE_FIRST</string>
-    <!-- Setting -->
-    <string name="sp_is_app_theme_light">SP_IS_APP_THEME_LIGHT</string>
-    <string name="sp_is_tweet_with_detail">SP_IS_TWEET_WITH_DETAIL</string>
-
     <!-- Tweet -->
     <string name="tweet_date_format">
         HH:mm MM.dd
     </string>
+    <string name="tweet_info_picture">Picture</string>
     <string name="tweet_info_retweeted_by_me">Me</string>
     <string name="tweet_info_favorite">Favorite</string>
     <!-- Delete -->
@@ -169,79 +136,12 @@
     </string>
 
     <!-- Detail -->
-    <string name="detail_intent_from_position">
-        DETAIL_INTENT_FROM_POSITION
-    </string>
-    <string name="detail_intent_from_notification">
-        DETAIL_INTENT_FROM_NOTIFICATION
-    </string>
-    <string name="detail_intent_status_id">
-        DETAIL_INTENT_STATUS_ID
-    </string>
-    <string name="detail_intent_reply_to_status_id">
-        DETAIL_INTENT_REPLY_TO_STATUS_ID
-    </string>
-    <string name="detail_intent_user_id">
-        DETAIL_INTENT_USER_ID
-    </string>
-    <string name="detail_intent_retweeted_by_user_id">
-        DETAIL_INTENT_RETWEETED_BY_USER_ID
-    </string>
-    <string name="detail_intent_avatar_url">
-        DETAIL_INTENT_AVATAR_URL
-    </string>
-    <string name="detail_intent_created_at">
-        DETAIL_INTENT_CREATED_AT
-    </string>
-    <string name="detail_intent_name">
-        DETAIL_INTENT_NAME
-    </string>
-    <string name="detail_intent_screen_name">
-        DETAIL_INTENT_SCREEN_NAME
-    </string>
-    <string name="detail_intent_protect">
-        DETAIL_INTENT_PROTECT
-    </string>
-    <string name="detail_intent_check_in">
-        DETAIL_INTENT_CHECK_IN
-    </string>
-    <string name="detail_intent_photo_url">
-        DETAIL_INTENT_PHOTO_URL
-    </string>
-    <string name="detail_intent_text">
-        DETAIL_INTENT_TEXT
-    </string>
-    <string name="detail_intent_retweet">
-        DETAIL_INTENT_RETWEET
-    </string>
-    <string name="detail_intent_retweeted_by_user_name">
-        DETAIL_INTENT_RETWEETED_BY_USER_NAME
-    </string>
-    <string name="detail_intent_favorite">
-        DETAIL_INTENT_FAVORITE
-    </string>
-    <string name="detail_intent_is_delete_at_detail">
-        DETAIL_INTENT_IS_DELETE_AT_DETAIL
-    </string>
-    <string name="detail_intent_is_retweet_at_detail">
-        DETAIL_INTENT_IS_RETWEET_AT_DETAIL
-    </string>
-    <string name="detail_intent_is_favorite_at_detail">
-        DETAIL_INTENT_IS_FAVORITE_AT_DETAIL
-    </string>
-
-    <!-- photo link support -->
-    <string name="detail_media_type_photo">photo</string>
-    <string-array name="detail_photo_prefix">
-        <item>http://instagram.com/p/</item>
-        <item>https://path.com/p/</item>
-    </string-array>
-    <string-array name="detail_photo_suffix">
+    <string name="detail_media_type_picture">photo</string>
+    <string-array name="detail_picture_suffix">
         <item>.bmp</item>
         <item>.jpg</item>
         <item>.png</item>
     </string-array>
-    
     <string name="detail_toast_fab_reply">
         Reply current tweet.
     </string>
@@ -249,15 +149,6 @@
         Get detail failed.
     </string>
 
-    <!-- Post -->
-    <string name="post_intent_flag">POST_INTENT_FLAG</string>
-    <string name="post_intent_status_id">POST_INTENT_STATUS_ID</string>
-    <string name="post_intent_status_screen_name">POST_INTENT_STATUS_SCREEN_NAME</string>
-    <string name="post_intent_status_text">POST_INTENT_STATUS_TEXT</string>
-    <string name="post_intent_resend_flag">POST_INTENT_RESEND_FALG</string>
-    <string name="post_intent_check_in">POST_INTENT_CHECK_IN</string>
-    <string name="post_intent_photo">POST_INTENT_PHOTO</string>
-    <string name="post_intent_photo_path">POST_INTENT_PHOTO_PATH</string>
     <string name="post_hint">
         What\'s on your mind?
     </string>
@@ -273,8 +164,8 @@
     <string name="post_toast_check_in">
         Check in.
     </string>
-    <string name="post_toast_photo">
-        Choose a photo.
+    <string name="post_toast_picture">
+        Choose a picture.
     </string>
     <string name="post_toast_send">
         Send this tweet.
@@ -287,7 +178,6 @@
     </string>
 
     <!-- Profile -->
-    <string name="profile_intent_user_id">PROFILE_INTENT_USER_ID</string>
     <string name="profile_error_get_user_profile_failed">
         Get user profile failed.
     </string>
@@ -330,23 +220,15 @@
     </string>
 
     <!-- Setting -->
-    <string name="setting_title_theme">Theme</string>
-    <string name="setting_title_photo">Photo</string>
-    <string name="setting_title_url">URL</string>
+    <string name="setting_title_detail">Detail</string>
     <string name="setting_title_homepage">Homepage</string>
     <string name="setting_title_license">License</string>
     <string name="setting_title_version">Version</string>
     <string name="setting_title_feedback">Feedback</string>
     <string name="setting_title_author">Author</string>
     <string name="setting_title_thanks">Thanks</string>
-    <string name="setting_content_theme">
-        Use Dark theme or Light theme.
-    </string>
-    <string name="setting_content_photo">
-        Show photo in a tweet.
-    </string>
-    <string name="setting_content_url">
-        Show expanded URL in a tweet.
+    <string name="setting_content_detail">
+        Show tweet with detail, need reopen app.
     </string>
     <string name="setting_title_sign_out">Sign out</string>
     <string name="setting_content_homepage">

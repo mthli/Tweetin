@@ -49,24 +49,23 @@ public class PostActivity extends Activity {
         return screenName;
     }
 
-    private ImageView postPhoto;
+    private ImageView postPicture;
     private EditText postEdit;
     private ToggleButton postCheckInButton;
-    private ToggleButton postPhotoButton;
-    private Button postSendButton;
+    private ToggleButton postPictureButton;
     private TextView countWords;
-    private String photoPath = null;
+    private String picturePath = null;
     public EditText getPostEdit() {
         return postEdit;
     }
     public ToggleButton getPostCheckInButton() {
         return postCheckInButton;
     }
-    public ToggleButton getPostPhotoButton() {
-        return postPhotoButton;
+    public ToggleButton getPostPictureButton() {
+        return postPictureButton;
     }
-    public String getPhotoPath() {
-        return photoPath;
+    public String getPicturePath() {
+        return picturePath;
     }
 
     private void initPostOriginal() {
@@ -168,12 +167,12 @@ public class PostActivity extends Activity {
         countWords.setText(String.valueOf(resendText.length()));
 
         if (getIntent().getBooleanExtra(
-                getString(R.string.post_intent_photo), false
+                getString(R.string.post_intent_picture), false
         )) {
-            photoPath = getIntent().getStringExtra(
-                    getString(R.string.post_intent_photo_path)
+            picturePath = getIntent().getStringExtra(
+                    getString(R.string.post_intent_picture_path)
             );
-            Bitmap bitmap = BitmapFactory.decodeFile(photoPath);
+            Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
             WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
             DisplayMetrics metrics = new DisplayMetrics();
             manager.getDefaultDisplay().getMetrics(metrics);
@@ -186,9 +185,9 @@ public class PostActivity extends Activity {
                 Matrix matrix = new Matrix();
                 matrix.postScale(percent, percent);
                 bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
-                postPhoto.setImageBitmap(bitmap);
-                postPhoto.setVisibility(View.VISIBLE);
-                postPhotoButton.setChecked(true);
+                postPicture.setImageBitmap(bitmap);
+                postPicture.setVisibility(View.VISIBLE);
+                postPictureButton.setChecked(true);
                 postFlag = getIntent().getIntExtra(
                         getString(R.string.post_intent_resend_flag),
                         Flag.POST_SHARE
@@ -200,18 +199,17 @@ public class PostActivity extends Activity {
                 Matrix matrix = new Matrix();
                 matrix.postScale(percent, percent);
                 bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
-                postPhoto.setImageBitmap(bitmap);
-                postPhoto.setVisibility(View.VISIBLE);
-                postPhotoButton.setChecked(true);
+                postPicture.setImageBitmap(bitmap);
+                postPicture.setVisibility(View.VISIBLE);
+                postPictureButton.setChecked(true);
                 postFlag = getIntent().getIntExtra(
                         getString(R.string.post_intent_resend_flag),
                         Flag.POST_SHARE
                 );
-                return;
             }
         } else {
-            postPhoto.setVisibility(View.GONE);
-            postPhotoButton.setChecked(false);
+            postPicture.setVisibility(View.GONE);
+            postPictureButton.setChecked(false);
             postFlag = getIntent().getIntExtra(
                     getString(R.string.post_intent_resend_flag),
                     Flag.POST_SHARE
@@ -286,12 +284,12 @@ public class PostActivity extends Activity {
         AccessToken token = new AccessToken(accessToken, accessTokenSecret);
         twitter.setOAuthAccessToken(token);
 
-        postPhoto = (ImageView) findViewById(R.id.post_photo);
+        postPicture = (ImageView) findViewById(R.id.post_photo);
         postEdit = (EditText) findViewById(R.id.post_text);
         postCheckInButton = (ToggleButton) findViewById(R.id.post_check_in_button);
-        postPhotoButton = (ToggleButton) findViewById(R.id.post_photo_button);
+        postPictureButton = (ToggleButton) findViewById(R.id.post_picture_button);
         countWords = (TextView) findViewById(R.id.post_count_words);
-        postSendButton = (Button) findViewById(R.id.post_send_button);
+        Button postSendButton = (Button) findViewById(R.id.post_send_button);
 
         postCheckInButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -306,7 +304,7 @@ public class PostActivity extends Activity {
             }
         });
 
-        postPhotoButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        postPictureButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -320,16 +318,16 @@ public class PostActivity extends Activity {
                         );
                     }
                 } else {
-                    postPhoto.setVisibility(View.GONE);
+                    postPicture.setVisibility(View.GONE);
                 }
             }
         });
-        postPhotoButton.setOnLongClickListener(new View.OnLongClickListener() {
+        postPictureButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 Toast.makeText(
                         PostActivity.this,
-                        R.string.post_toast_photo,
+                        R.string.post_toast_picture,
                         Toast.LENGTH_SHORT
                 ).show();
 
@@ -441,10 +439,10 @@ public class PostActivity extends Activity {
         Cursor cursor = loader.loadInBackground();
         int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
-        photoPath = cursor.getString(index);
+        picturePath = cursor.getString(index);
         cursor.close();
 
-        Bitmap bitmap = BitmapFactory.decodeFile(photoPath);
+        Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
         WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(metrics);
@@ -457,8 +455,8 @@ public class PostActivity extends Activity {
             Matrix matrix = new Matrix();
             matrix.postScale(percent, percent);
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
-            postPhoto.setImageBitmap(bitmap);
-            postPhoto.setVisibility(View.VISIBLE);
+            postPicture.setImageBitmap(bitmap);
+            postPicture.setVisibility(View.VISIBLE);
             return;
         }
         if (bitmapHeight > screenHeight) {
@@ -466,19 +464,19 @@ public class PostActivity extends Activity {
             Matrix matrix = new Matrix();
             matrix.postScale(percent, percent);
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
-            postPhoto.setImageBitmap(bitmap);
-            postPhoto.setVisibility(View.VISIBLE);
+            postPicture.setImageBitmap(bitmap);
+            postPicture.setVisibility(View.VISIBLE);
             return;
         }
-        postPhoto.setImageBitmap(bitmap);
-        postPhoto.setVisibility(View.VISIBLE);
+        postPicture.setImageBitmap(bitmap);
+        postPicture.setVisibility(View.VISIBLE);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != Activity.RESULT_OK) {
-            postPhoto.setVisibility(View.GONE);
-            postPhotoButton.setChecked(false);
+            postPicture.setVisibility(View.GONE);
+            postPictureButton.setChecked(false);
             return;
         }
         if (requestCode == Flag.POST_PHOTO) { //

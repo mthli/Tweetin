@@ -19,7 +19,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -32,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 
 public class TweetAdapter extends ArrayAdapter<Tweet> {
+
     private Activity activity;
     private Context context;
     private int layoutResId;
@@ -70,8 +70,9 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         TextView text;
         TextView checkIn;
         LinearLayout info;
-        TextView retweetedByUserName;
-        TextView favorite;
+        TextView infoPicture;
+        TextView infoRetweetedByUserName;
+        TextView infoFavorite;
     }
 
     private String getShortCreatedAt(String createdAt) {
@@ -127,13 +128,14 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.name = (TextView) view.findViewById(R.id.tweet_name);
             holder.screenName = (TextView) view.findViewById(R.id.tweet_screen_name);
             holder.protect = (TextView) view.findViewById(R.id.tweet_protect);
-            holder.photo = (ImageView) view.findViewById(R.id.tweet_photo);
+            holder.photo = (ImageView) view.findViewById(R.id.tweet_picture);
             holder.text = (TextView) view.findViewById(R.id.tweet_text);
             holder.checkIn = (TextView) view.findViewById(R.id.tweet_check_in);
             holder.info = (LinearLayout) view.findViewById(R.id.tweet_info);
-            holder.retweetedByUserName = (TextView) view
-                    .findViewById(R.id.tweet_retweeted_by_user_name);
-            holder.favorite = (TextView) view.findViewById(R.id.tweet_favorite);
+            holder.infoPicture = (TextView) view.findViewById(R.id.tweet_info_picture);
+            holder.infoRetweetedByUserName = (TextView) view
+                    .findViewById(R.id.tweet_info_retweeted_by_user_name);
+            holder.infoFavorite = (TextView) view.findViewById(R.id.tweet_info_favorite);
             view.setTag(holder);
         } else {
             holder = (Holder) view.getTag();
@@ -177,10 +179,10 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         }
 
         if (detail) {
-            if (tweet.getPhotoURL() != null) {
+            if (tweet.getPictureURL() != null) {
                 /* Do something */
                 ImageRequest imageRequest = new ImageRequest(
-                        tweet.getPhotoURL(), //
+                        tweet.getPictureURL(), //
                         new Response.Listener<Bitmap>() {
                             @Override
                             public void onResponse(Bitmap bitmap) {
@@ -211,35 +213,35 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         }
         holder.text.setText(tweet.getText());
 
-        if (tweet.isRetweet() || tweet.isFavorite()) {
+        if (tweet.isRetweet() || tweet.isFavorite() || tweet.getPictureURL() != null) {
             if (tweet.isRetweet()) {
-                holder.retweetedByUserName.setText(
+                holder.infoRetweetedByUserName.setText(
                         tweet.getRetweetedByUserName()
                 );
-                holder.retweetedByUserName.setVisibility(View.VISIBLE);
+                holder.infoRetweetedByUserName.setVisibility(View.VISIBLE);
             } else {
-                holder.retweetedByUserName.setVisibility(View.GONE);
+                holder.infoRetweetedByUserName.setVisibility(View.GONE);
             }
+
             if (tweet.isFavorite()) {
-                holder.favorite.setText(
-                        context.getString(R.string.tweet_info_favorite)
-                );
-                holder.favorite.setVisibility(View.VISIBLE);
+                holder.infoFavorite.setVisibility(View.VISIBLE);
             } else {
-                holder.favorite.setVisibility(View.GONE);
+                holder.infoFavorite.setVisibility(View.GONE);
             }
+
+            if (tweet.getPictureURL() != null) {
+                holder.infoPicture.setVisibility(View.VISIBLE);
+            } else {
+                holder.infoPicture.setVisibility(View.GONE);
+            }
+
             holder.info.setVisibility(View.VISIBLE);
         } else {
-            holder.retweetedByUserName.setVisibility(View.GONE);
-            holder.favorite.setVisibility(View.GONE);
+            holder.infoRetweetedByUserName.setVisibility(View.GONE);
+            holder.infoFavorite.setVisibility(View.GONE);
             holder.info.setVisibility(View.GONE);
         }
 
         return view;
-    }
-
-    private void setPhoto(ImageView imageView, String originalPhotoURL) {
-        String[] preffixes = context.getResources().getStringArray(R.array.detail_photo_prefix);
-        /* Do something */
     }
 }

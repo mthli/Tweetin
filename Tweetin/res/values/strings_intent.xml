@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Detail -->
+    <string name="detail_intent_from_position">
+        DETAIL_INTENT_FROM_POSITION
+    </string>
+    <string name="detail_intent_from_notification">
+        DETAIL_INTENT_FROM_NOTIFICATION
+    </string>
+    <string name="detail_intent_status_id">
+        DETAIL_INTENT_STATUS_ID
+    </string>
+    <string name="detail_intent_reply_to_status_id">
+        DETAIL_INTENT_REPLY_TO_STATUS_ID
+    </string>
+    <string name="detail_intent_user_id">
+        DETAIL_INTENT_USER_ID
+    </string>
+    <string name="detail_intent_retweeted_by_user_id">
+        DETAIL_INTENT_RETWEETED_BY_USER_ID
+    </string>
+    <string name="detail_intent_avatar_url">
+        DETAIL_INTENT_AVATAR_URL
+    </string>
+    <string name="detail_intent_created_at">
+        DETAIL_INTENT_CREATED_AT
+    </string>
+    <string name="detail_intent_name">
+        DETAIL_INTENT_NAME
+    </string>
+    <string name="detail_intent_screen_name">
+        DETAIL_INTENT_SCREEN_NAME
+    </string>
+    <string name="detail_intent_protect">
+        DETAIL_INTENT_PROTECT
+    </string>
+    <string name="detail_intent_check_in">
+        DETAIL_INTENT_CHECK_IN
+    </string>
+    <string name="detail_intent_picture_url">
+        DETAIL_INTENT_PICTURE_URL
+    </string>
+    <string name="detail_intent_text">
+        DETAIL_INTENT_TEXT
+    </string>
+    <string name="detail_intent_retweet">
+        DETAIL_INTENT_RETWEET
+    </string>
+    <string name="detail_intent_retweeted_by_user_name">
+        DETAIL_INTENT_RETWEETED_BY_USER_NAME
+    </string>
+    <string name="detail_intent_favorite">
+        DETAIL_INTENT_FAVORITE
+    </string>
+    <string name="detail_intent_is_delete_at_detail">
+        DETAIL_INTENT_IS_DELETE_AT_DETAIL
+    </string>
+    <string name="detail_intent_is_retweet_at_detail">
+        DETAIL_INTENT_IS_RETWEET_AT_DETAIL
+    </string>
+    <string name="detail_intent_is_favorite_at_detail">
+        DETAIL_INTENT_IS_FAVORITE_AT_DETAIL
+    </string>
+
+    <!-- Post -->
+    <string name="post_intent_flag">POST_INTENT_FLAG</string>
+    <string name="post_intent_status_id">POST_INTENT_STATUS_ID</string>
+    <string name="post_intent_status_screen_name">POST_INTENT_STATUS_SCREEN_NAME</string>
+    <string name="post_intent_status_text">POST_INTENT_STATUS_TEXT</string>
+    <string name="post_intent_resend_flag">POST_INTENT_RESEND_FALG</string>
+    <string name="post_intent_check_in">POST_INTENT_CHECK_IN</string>
+    <string name="post_intent_picture">POST_INTENT_PHOTO</string>
+    <string name="post_intent_picture_path">POST_INTENT_PHOTO_PATH</string>
+
+    <!-- Profile -->
+    <string name="profile_intent_user_id">PROFILE_INTENT_USER_ID</string>
+
+</resources>

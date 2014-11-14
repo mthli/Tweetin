@@ -2,8 +2,9 @@
 <resources>
 
     <!-- Tweet -->
+    <string name="tweet_info_picture">图片</string>
     <string name="tweet_info_retweeted_by_me">我</string>
-    <string name="tweet_info_favorite">已收藏</string>
+    <string name="tweet_info_favorite">收藏</string>
     <!-- Delete -->
     <string name="tweet_notification_delete_ing">
         正在删除&#8230;
@@ -146,8 +147,8 @@
     <string name="post_toast_check_in">
         定位。
     </string>
-    <string name="post_toast_photo">
-        选择一张照片。
+    <string name="post_toast_picture">
+        选择一张图片。
     </string>
     <string name="post_toast_send">
         发送这条推文。
@@ -203,8 +204,7 @@
 
     <!-- Setting -->
     <string name="setting_title_theme">主题</string>
-    <string name="setting_title_photo">图片</string>
-    <string name="setting_title_url">链接</string>
+    <string name="setting_title_detail">详情</string>
     <string name="setting_title_homepage">主页</string>
     <string name="setting_title_license">协议</string>
     <string name="setting_title_version">版本</string>
@@ -212,14 +212,8 @@
     <string name="setting_title_author">作者</string>
     <string name="setting_title_thanks">感谢</string>
     <string name="setting_title_sign_out">登出</string>
-    <string name="setting_content_theme">
-        使用暗色主题。
-    </string>
-    <string name="setting_content_photo">
-        在推文中显示图片。
-    </string>
-    <string name="setting_content_url">
-        在推文中显示长链接。
+    <string name="setting_content_detail">
+        在推文中显示详细内容，重启应用生效。
     </string>
     <string name="setting_content_feedback">
         给作者提些意见或建议。

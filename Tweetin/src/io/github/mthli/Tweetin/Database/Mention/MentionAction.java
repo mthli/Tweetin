@@ -48,7 +48,7 @@ public class MentionAction {
             values.put(MentionRecord.PROTECT, "false");
         }
         values.put(MentionRecord.CHECK_IN, record.getCheckIn());
-        values.put(MentionRecord.PHOTO_URL, record.getPhotoURL());
+        values.put(MentionRecord.PICTURE_URL, record.getPictureURL());
         values.put(MentionRecord.TEXT, record.getText());
         if (record.isRetweet()) {
             values.put(MentionRecord.RETWEET, "true");
@@ -139,7 +139,7 @@ public class MentionAction {
                 cursor.getString(8).equals("true")
         );
         record.setCheckIn(cursor.getString(9));
-        record.setPhotoURL(cursor.getString(10));
+        record.setPictureURL(cursor.getString(10));
         record.setText(cursor.getString(11));
         record.setRetweet(
                 cursor.getString(12).equals("true")
@@ -166,7 +166,7 @@ public class MentionAction {
                         MentionRecord.SCREEN_NAME,
                         MentionRecord.PROTECT,
                         MentionRecord.CHECK_IN,
-                        MentionRecord.PHOTO_URL,
+                        MentionRecord.PICTURE_URL,
                         MentionRecord.TEXT,
                         MentionRecord.RETWEET,
                         MentionRecord.RETWEETED_BY_USER_NAME,

@@ -48,7 +48,7 @@ public class TimelineAction {
             values.put(TimelineRecord.PROTECT, "false");
         }
         values.put(TimelineRecord.CHECK_IN, record.getCheckIn());
-        values.put(TimelineRecord.PHOTO_URL, record.getPhotoURL());
+        values.put(TimelineRecord.PICTURE_URL, record.getPictureURL());
         values.put(TimelineRecord.TEXT, record.getText());
         if (record.isRetweet()) {
             values.put(TimelineRecord.RETWEET, "true");
@@ -139,7 +139,7 @@ public class TimelineAction {
                 cursor.getString(8).equals("true")
         );
         record.setCheckIn(cursor.getString(9));
-        record.setPhotoURL(cursor.getString(10));
+        record.setPictureURL(cursor.getString(10));
         record.setText(cursor.getString(11));
         record.setRetweet(
                 cursor.getString(12).equals("true")
@@ -166,7 +166,7 @@ public class TimelineAction {
                         TimelineRecord.SCREEN_NAME,
                         TimelineRecord.PROTECT,
                         TimelineRecord.CHECK_IN,
-                        TimelineRecord.PHOTO_URL,
+                        TimelineRecord.PICTURE_URL,
                         TimelineRecord.TEXT,
                         TimelineRecord.RETWEET,
                         TimelineRecord.RETWEETED_BY_USER_NAME,
