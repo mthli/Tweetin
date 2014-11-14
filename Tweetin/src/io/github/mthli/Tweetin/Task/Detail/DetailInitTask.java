@@ -125,12 +125,13 @@ public class DetailInitTask extends AsyncTask<Void, Integer, Boolean> {
                 ).commit();
             }
 
-            currentTweet = TweetUnit.getTweetWithDetail(detailActivity, currentStatus);
+            TweetUnit tweetUnit = new TweetUnit(detailActivity);
+            currentTweet = tweetUnit.getTweetFromStatus(currentStatus, true);
             tweetList.clear();
             if (replyToStatusList.size() > 0) {
                 for (twitter4j.Status status : replyToStatusList) {
                     tweetList.add(
-                            TweetUnit.getTweetWithDetail(detailActivity, status)
+                            tweetUnit.getTweetFromStatus(status, true)
                     );
                 }
             }

@@ -229,6 +229,19 @@
     <string name="detail_intent_is_favorite_at_detail">
         DETAIL_INTENT_IS_FAVORITE_AT_DETAIL
     </string>
+
+    <!-- photo link support -->
+    <string name="detail_media_type_photo">photo</string>
+    <string-array name="detail_photo_prefix">
+        <item>http://instagram.com/p/</item>
+        <item>https://path.com/p/</item>
+    </string-array>
+    <string-array name="detail_photo_suffix">
+        <item>.bmp</item>
+        <item>.jpg</item>
+        <item>.png</item>
+    </string-array>
+    
     <string name="detail_toast_fab_reply">
         Reply current tweet.
     </string>
@@ -256,6 +269,15 @@
     </string>
     <string name="post_notification_post_failed">
         Post failed.
+    </string>
+    <string name="post_toast_check_in">
+        Check in.
+    </string>
+    <string name="post_toast_photo">
+        Choose a photo.
+    </string>
+    <string name="post_toast_send">
+        Send this tweet.
     </string>
     <string name="post_toast_have_not_input_anything">
         You haven\'t input anything.

@@ -19,6 +19,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -175,11 +176,11 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.checkIn.setVisibility(View.GONE);
         }
 
-        /* Do something */
         if (detail) {
             if (tweet.getPhotoURL() != null) {
+                /* Do something */
                 ImageRequest imageRequest = new ImageRequest(
-                        tweet.getPhotoURL(),
+                        tweet.getPhotoURL(), //
                         new Response.Listener<Bitmap>() {
                             @Override
                             public void onResponse(Bitmap bitmap) {
@@ -194,7 +195,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
-                                /* Do nothing */
+                                holder.photo.setVisibility(View.GONE);
                             }
                         }
                 );
@@ -235,5 +236,10 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         }
 
         return view;
+    }
+
+    private void setPhoto(ImageView imageView, String originalPhotoURL) {
+        String[] preffixes = context.getResources().getStringArray(R.array.detail_photo_prefix);
+        /* Do something */
     }
 }

@@ -123,83 +123,9 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
         action.openDatabase(true);
         action.deleteAll();
         timelineRecordList.clear();
-        SimpleDateFormat format = new SimpleDateFormat(
-                context.getString(R.string.tweet_date_format)
-        );
+        TweetUnit tweetUnit = new TweetUnit(context);
         for (twitter4j.Status status : statusList) {
-            TimelineRecord record = new TimelineRecord();
-            if (status.isRetweet()) {
-                record.setStatusId(status.getId());
-                record.setReplyToStatusId(
-                        status.getRetweetedStatus().getInReplyToStatusId()
-                );
-                record.setUserId(
-                        status.getRetweetedStatus().getUser().getId()
-                );
-                record.setRetweetedByUserId(status.getUser().getId());
-                record.setAvatarURL(
-                        status.getRetweetedStatus().getUser().getBiggerProfileImageURL()
-                );
-                record.setCreatedAt(
-                        format.format(status.getRetweetedStatus().getCreatedAt())
-                );
-                record.setName(
-                        status.getRetweetedStatus().getUser().getName()
-                );
-                record.setScreenName(
-                        "@" + status.getRetweetedStatus().getUser().getScreenName()
-                );
-                record.setProtect(
-                        status.getRetweetedStatus().getUser().isProtected()
-                );
-                Place place = status.getRetweetedStatus().getPlace();
-                if (place != null) {
-                    record.setCheckIn(place.getFullName());
-                } else {
-                    record.setCheckIn(null);
-                }
-                /* Do something with photoURL */
-                record.setPhotoURL(null);
-                record.setText(
-                        status.getRetweetedStatus().getText()
-                );
-                record.setRetweet(true);
-                record.setRetweetedByUserName(
-                        status.getUser().getName()
-                );
-                record.setFavorite(status.getRetweetedStatus().isFavorited());
-            } else {
-                record.setStatusId(status.getId());
-                record.setReplyToStatusId(status.getInReplyToStatusId());
-                record.setUserId(status.getUser().getId());
-                record.setRetweetedByUserId(-1l);
-                record.setAvatarURL(status.getUser().getBiggerProfileImageURL());
-                record.setCreatedAt(
-                        format.format(status.getCreatedAt())
-                );
-                record.setName(status.getUser().getName());
-                record.setScreenName("@" + status.getUser().getScreenName());
-                record.setProtect(status.getUser().isProtected());
-                Place place = status.getPlace();
-                if (place != null) {
-                    record.setCheckIn(place.getFullName());
-                } else {
-                    record.setCheckIn(null);
-                }
-                /* Do something with photoURL */
-                record.setPhotoURL(null);
-                record.setText(status.getText());
-                record.setRetweet(false);
-                record.setRetweetedByUserName(null);
-                record.setFavorite(status.isFavorited());
-            }
-            if (status.isRetweetedByMe() || status.isRetweeted()) {
-                record.setRetweetedByUserId(useId);
-                record.setRetweet(true);
-                record.setRetweetedByUserName(
-                        context.getString(R.string.tweet_info_retweeted_by_me)
-                );
-            }
+            TimelineRecord record = tweetUnit.getTimelineRecordFromStatus(status);
             action.addRecord(record);
             timelineRecordList.add(record);
         }
@@ -222,6 +148,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
     }
 
     private Intent getMentionToDetailIntent() {
+        TweetUnit tweetUnit = new TweetUnit(context);
         SimpleDateFormat format = new SimpleDateFormat(
                 context.getString(R.string.tweet_date_format)
         );
@@ -279,11 +206,11 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                         (String) null
                 );
             }
-            /* Do something with photoURL */
             intent.putExtra(
                     context.getString(R.string.detail_intent_photo_url),
-                    (String) null
+                    tweetUnit.getPhotoURLFromStatus(mention)
             );
+            /* Do something */
             intent.putExtra(
                     context.getString(R.string.detail_intent_text),
                     mention.getRetweetedStatus().getText()
@@ -349,11 +276,11 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                         (String) null
                 );
             }
-            /* Do something with photoURL */
             intent.putExtra(
                     context.getString(R.string.detail_intent_photo_url),
-                    (String) null
+                    tweetUnit.getPhotoURLFromStatus(mention)
             );
+            /* Do something */
             intent.putExtra(
                     context.getString(R.string.detail_intent_text),
                     mention.getText()

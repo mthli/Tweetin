@@ -92,8 +92,8 @@ public class DetailActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
 
-        twitter = TweetUnit.getTwitterFromSharedPreferences(DetailActivity.this);
-        useId = TweetUnit.getUseIdFromeSharedPreferences(DetailActivity.this);
+        twitter = TweetUnit.getTwitterFromSharedPreferences(this);
+        useId = TweetUnit.getUseIdFromeSharedPreferences(this);
 
         ListView listView = (ListView) findViewById(R.id.detail_listview);
         tweetAdapter = new TweetAdapter(
@@ -165,7 +165,7 @@ public class DetailActivity extends Activity {
                         Toast.LENGTH_SHORT
                 ).show();
 
-                return false;
+                return true;
             }
         });
 

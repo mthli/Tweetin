@@ -143,6 +143,15 @@
     <string name="post_notification_post_failed">
         发送失败。
     </string>
+    <string name="post_toast_check_in">
+        定位。
+    </string>
+    <string name="post_toast_photo">
+        选择一张照片。
+    </string>
+    <string name="post_toast_send">
+        发送这条推文。
+    </string>
     <string name="post_toast_have_not_input_anything">
         你还没有输入任何内容。
     </string>

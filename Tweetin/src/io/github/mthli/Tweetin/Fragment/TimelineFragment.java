@@ -187,7 +187,7 @@ public class TimelineFragment extends ProgressFragment {
                         Toast.LENGTH_SHORT
                 ).show();
 
-                return false;
+                return true;
             }
         });
 

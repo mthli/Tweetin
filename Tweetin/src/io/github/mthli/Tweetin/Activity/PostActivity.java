@@ -252,7 +252,7 @@ public class PostActivity extends Activity {
                 }
                 countWords.setText(String.valueOf(shareText.length()));
             }
-                    /* Do something with image/* */
+            /* Do something with image/* */
         }
     }
     @Override
@@ -293,6 +293,19 @@ public class PostActivity extends Activity {
         countWords = (TextView) findViewById(R.id.post_count_words);
         postSendButton = (Button) findViewById(R.id.post_send_button);
 
+        postCheckInButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(
+                        PostActivity.this,
+                        R.string.post_toast_check_in,
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return true;
+            }
+        });
+
         postPhotoButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -309,6 +322,18 @@ public class PostActivity extends Activity {
                 } else {
                     postPhoto.setVisibility(View.GONE);
                 }
+            }
+        });
+        postPhotoButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(
+                        PostActivity.this,
+                        R.string.post_toast_photo,
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return true;
             }
         });
 
@@ -365,6 +390,18 @@ public class PostActivity extends Activity {
                     finish();
                     anim.fade(PostActivity.this);
                 }
+            }
+        });
+        postSendButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(
+                        PostActivity.this,
+                        R.string.post_toast_send,
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return true;
             }
         });
 
