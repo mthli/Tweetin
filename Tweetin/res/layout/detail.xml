@@ -10,7 +10,6 @@
             android:id="@+id/detail_swipe_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
             android:layout_margin="7dp">
 
         <ListView android:id="@+id/detail_listview"

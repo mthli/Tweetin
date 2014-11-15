@@ -5,7 +5,6 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <!-- Do something with background -->
     <ListView android:id="@+id/context_menu_listview"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
