@@ -10,6 +10,7 @@
             android:id="@+id/detail_swipe_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
             android:layout_margin="7dp">
 
         <ListView android:id="@+id/detail_listview"
@@ -18,6 +19,7 @@
                   android:divider="@color/transparent"
                   android:dividerHeight="1dp"
                   android:scrollbars="none"
+                  android:descendantFocusability="blocksDescendants"
                   android:scrollingCache="true"
                   android:choiceMode="singleChoice"
                   android:drawSelectorOnTop="true">

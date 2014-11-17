@@ -14,14 +14,14 @@ public class NotificationUnit {
     private NotificationCompat.Builder builder;
 
     private Context context;
-    private Tweet oldTweet;
+    private Tweet tweet;
 
     public NotificationUnit(
             Context context,
-            Tweet oldTweet
+            Tweet tweet
     ) {
         this.context = context;
-        this.oldTweet = oldTweet;
+        this.tweet = tweet;
 
         this.notificationManager =  (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -36,7 +36,7 @@ public class NotificationUnit {
         builder.setContentTitle(
                 context.getString(R.string.tweet_notification_delete_ing)
         );
-        builder.setContentText(oldTweet.getText());
+        builder.setContentText(tweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
@@ -49,7 +49,7 @@ public class NotificationUnit {
         builder.setContentTitle(
                 context.getString(R.string.tweet_notification_delete_successful)
         );
-        builder.setContentText(oldTweet.getText());
+        builder.setContentText(tweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
@@ -63,7 +63,7 @@ public class NotificationUnit {
         builder.setContentTitle(
                 context.getString(R.string.tweet_notification_delete_failed)
         );
-        builder.setContentText(oldTweet.getText());
+        builder.setContentText(tweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
@@ -77,7 +77,7 @@ public class NotificationUnit {
         builder.setContentTitle(
                 context.getString(R.string.tweet_notification_rewteet_ing)
         );
-        builder.setContentText(oldTweet.getText());
+        builder.setContentText(tweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
@@ -90,7 +90,7 @@ public class NotificationUnit {
         builder.setContentTitle(
                 context.getString(R.string.tweet_notification_retweet_successful)
         );
-        builder.setContentText(oldTweet.getText());
+        builder.setContentText(tweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
@@ -104,7 +104,7 @@ public class NotificationUnit {
         builder.setContentTitle(
                 context.getString(R.string.tweet_notification_retweet_failed)
         );
-        builder.setContentText(oldTweet.getText());
+        builder.setContentText(tweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
@@ -118,7 +118,7 @@ public class NotificationUnit {
         builder.setContentTitle(
                 context.getString(R.string.tweet_notification_add_favorite_ing)
         );
-        builder.setContentText(oldTweet.getText());
+        builder.setContentText(tweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
@@ -131,7 +131,7 @@ public class NotificationUnit {
         builder.setContentTitle(
                 context.getString(R.string.tweet_notification_add_favorite_successful)
         );
-        builder.setContentText(oldTweet.getText());
+        builder.setContentText(tweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
@@ -145,7 +145,7 @@ public class NotificationUnit {
         builder.setContentTitle(
                 context.getString(R.string.tweet_notification_add_favorite_failed)
         );
-        builder.setContentText(oldTweet.getText());
+        builder.setContentText(tweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
@@ -158,7 +158,7 @@ public class NotificationUnit {
         builder.setContentTitle(
                 context.getString(R.string.tweet_notification_un_favorite_ing)
         );
-        builder.setContentText(oldTweet.getText());
+        builder.setContentText(tweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
@@ -171,7 +171,7 @@ public class NotificationUnit {
         builder.setContentTitle(
                 context.getString(R.string.tweet_notification_un_favorite_successful)
         );
-        builder.setContentText(oldTweet.getText());
+        builder.setContentText(tweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
@@ -185,7 +185,7 @@ public class NotificationUnit {
         builder.setContentTitle(
                 context.getString(R.string.tweet_notification_un_favorite_failed)
         );
-        builder.setContentText(oldTweet.getText());
+        builder.setContentText(tweet.getText());
         Notification notification = builder.build();
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);

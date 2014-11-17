@@ -160,7 +160,6 @@ public class DiscoveryFragment extends ProgressFragment {
         );
         tweetAdapter = new TweetAdapter(
                 getActivity(),
-                view.getContext(),
                 R.layout.tweet,
                 tweetList,
                 tweetWithDetail

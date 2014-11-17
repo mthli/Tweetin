@@ -33,7 +33,6 @@ import java.util.List;
 public class TweetAdapter extends ArrayAdapter<Tweet> {
 
     private Activity activity;
-    private Context context;
     private int layoutResId;
     private List<Tweet> tweetList;
     private boolean detail;
@@ -42,15 +41,13 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 
     public TweetAdapter(
             Activity activity,
-            Context context,
             int layoutResId,
             List<Tweet> tweetList,
             boolean detail
     ) {
-        super(context, layoutResId, tweetList);
+        super(activity, layoutResId, tweetList);
 
         this.activity = activity;
-        this.context = context;
         this.layoutResId = layoutResId;
         this.tweetList = tweetList;
         this.detail = detail;
@@ -66,7 +63,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         TextView name;
         TextView screenName;
         TextView protect;
-        ImageView photo;
+        ImageView picture;
         TextView text;
         TextView checkIn;
         LinearLayout info;
@@ -77,7 +74,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 
     private String getShortCreatedAt(String createdAt) {
         SimpleDateFormat format = new SimpleDateFormat(
-                context.getString(R.string.tweet_date_format)
+                activity.getString(R.string.tweet_date_format)
         );
         Date date = new Date();
         String str = format.format(date);
@@ -119,7 +116,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         View view = convertView;
 
         if (view == null) {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            LayoutInflater inflater = activity.getLayoutInflater();
             view = inflater.inflate(layoutResId, viewGroup, false);
 
             holder = new Holder();
@@ -128,7 +125,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.name = (TextView) view.findViewById(R.id.tweet_name);
             holder.screenName = (TextView) view.findViewById(R.id.tweet_screen_name);
             holder.protect = (TextView) view.findViewById(R.id.tweet_protect);
-            holder.photo = (ImageView) view.findViewById(R.id.tweet_picture);
+            holder.picture = (ImageView) view.findViewById(R.id.tweet_picture);
             holder.text = (TextView) view.findViewById(R.id.tweet_text);
             holder.checkIn = (TextView) view.findViewById(R.id.tweet_check_in);
             holder.info = (LinearLayout) view.findViewById(R.id.tweet_info);
@@ -143,20 +140,20 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 
         final Tweet tweet = tweetList.get(position);
 
-        Glide.with(context)
+        Glide.with(activity)
                 .load(tweet.getAvatarURL())
                 .crossFade()
                 .into(holder.avatar);
         holder.avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ProfileActivity.class);
+                Intent intent = new Intent(activity, ProfileActivity.class);
                 intent.putExtra(
-                        context.getString(R.string.profile_intent_user_id),
+                        activity.getString(R.string.profile_intent_user_id),
                         tweet.getUserId()
                 );
                 ActivityAnim anim = new ActivityAnim();
-                context.startActivity(intent);
+                activity.startActivity(intent);
                 anim.rightIn(activity);
             }
         });
@@ -180,15 +177,14 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 
         if (detail) {
             if (tweet.getPictureURL() != null) {
-                /* Do something */
                 ImageRequest imageRequest = new ImageRequest(
-                        tweet.getPictureURL(), //
+                        tweet.getPictureURL(),
                         new Response.Listener<Bitmap>() {
                             @Override
                             public void onResponse(Bitmap bitmap) {
                                 bitmap = fixBitmap(bitmap);
-                                holder.photo.setImageBitmap(bitmap);
-                                holder.photo.setVisibility(View.VISIBLE);
+                                holder.picture.setImageBitmap(bitmap);
+                                holder.picture.setVisibility(View.VISIBLE);
                             }
                         },
                         0,
@@ -197,17 +193,18 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
-                                holder.photo.setVisibility(View.GONE);
+                                holder.picture.setVisibility(View.GONE);
                             }
                         }
                 );
                 requestQueue.add(imageRequest);
             } else {
-                holder.photo.setVisibility(View.GONE);
+                holder.picture.setVisibility(View.GONE);
             }
         } else {
-            holder.photo.setVisibility(View.GONE);
+            holder.picture.setVisibility(View.GONE);
         }
+
         if (detail) {
             holder.text.setAutoLinkMask(Linkify.WEB_URLS);
         }

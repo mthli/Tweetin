@@ -62,6 +62,12 @@
     <string name="detail_intent_is_favorite_at_detail">
         DETAIL_INTENT_IS_FAVORITE_AT_DETAIL
     </string>
+    <string name="detail_intent_original_byte">
+        DETAIL_INTENT_ORIGINAL_BYTE
+    </string>
+    <string name="detail_intent_fix_byte">
+        DETAIL_INTENT_FIX_BYTE
+    </string>
 
     <!-- Post -->
     <string name="post_intent_flag">POST_INTENT_FLAG</string>

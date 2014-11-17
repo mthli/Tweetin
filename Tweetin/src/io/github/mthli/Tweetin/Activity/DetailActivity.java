@@ -98,7 +98,6 @@ public class DetailActivity extends Activity {
         ListView listView = (ListView) findViewById(R.id.detail_listview);
         tweetAdapter = new TweetAdapter(
                 this,
-                this,
                 R.layout.tweet,
                 tweetList,
                 true

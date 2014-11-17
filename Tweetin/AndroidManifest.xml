@@ -51,6 +51,12 @@
 
         </activity>
 
+        <!-- PictureActivity -->
+        <activity android:name=".Activity.PictureActivity"
+                  android:theme="@style/PictureActivityTheme"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
+        </activity>
+
         <!-- PostActivity -->
         <activity android:name=".Activity.PostActivity"
                   android:parentActivityName=".Activity.MainActivity"

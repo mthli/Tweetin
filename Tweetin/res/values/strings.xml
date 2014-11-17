@@ -138,7 +138,6 @@
     <!-- Detail -->
     <string name="detail_media_type_picture">photo</string>
     <string-array name="detail_picture_suffix">
-        <item>.bmp</item>
         <item>.jpg</item>
         <item>.png</item>
     </string-array>

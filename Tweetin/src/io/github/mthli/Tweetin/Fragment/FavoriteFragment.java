@@ -119,7 +119,6 @@ public class FavoriteFragment extends ProgressFragment {
                 .findViewById(R.id.favorite_fragment_listview);
         tweetAdapter = new TweetAdapter(
                 getActivity(),
-                view.getContext(),
                 R.layout.tweet,
                 tweetList,
                 tweetWithDetail
