@@ -4,21 +4,21 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import com.devspark.progressfragment.ProgressFragment;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Task.Profile.ProfileFollowTask;
+import io.github.mthli.Tweetin.Task.Profile.ProfileUpdateTask;
 import io.github.mthli.Tweetin.Task.Profile.ProfileInitTask;
 
 public class ProfileFragment extends ProgressFragment {
     private ProfileInitTask profileInitTask;
-    private ProfileFollowTask profileFollowTask;
-    public void setProfileFollowTask(ProfileFollowTask profileFollowTask) {
-        this.profileFollowTask = profileFollowTask;
+    private ProfileUpdateTask profileUpdateTask;
+    public void setProfileUpdateTask(ProfileUpdateTask profileUpdateTask) {
+        this.profileUpdateTask = profileUpdateTask;
     }
     public void cancelAllTask() {
         if (profileInitTask != null && profileInitTask.getStatus() == AsyncTask.Status.RUNNING) {
             profileInitTask.cancel(true);
         }
-        if (profileFollowTask != null && profileFollowTask.getStatus() == AsyncTask.Status.RUNNING) {
-            profileFollowTask.cancel(true);
+        if (profileUpdateTask != null && profileUpdateTask.getStatus() == AsyncTask.Status.RUNNING) {
+            profileUpdateTask.cancel(true);
         }
     }
 

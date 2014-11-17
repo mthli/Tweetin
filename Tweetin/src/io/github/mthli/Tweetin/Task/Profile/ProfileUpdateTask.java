@@ -13,7 +13,7 @@ import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import twitter4j.Twitter;
 import twitter4j.User;
 
-public class ProfileFollowTask extends AsyncTask<Void, Integer, Boolean> {
+public class ProfileUpdateTask extends AsyncTask<Void, Integer, Boolean> {
     private ProfileFragment profileFragment;
     private Context context;
 
@@ -24,7 +24,7 @@ public class ProfileFollowTask extends AsyncTask<Void, Integer, Boolean> {
     private NotificationManager notificationManager;
     private NotificationCompat.Builder builder;
 
-    public ProfileFollowTask(
+    public ProfileUpdateTask(
             ProfileFragment profileFragment,
             boolean isFollowing,
             User user
@@ -43,7 +43,7 @@ public class ProfileFollowTask extends AsyncTask<Void, Integer, Boolean> {
         notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         builder = new NotificationCompat.Builder(context);
-        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setSmallIcon(R.drawable.ic_notification_profile);
         if (isFollowing) {
             builder.setTicker(context.getString(R.string.profile_notification_un_follow_ing));
             builder.setContentTitle(context.getString(R.string.profile_notification_un_follow_ing));
@@ -63,7 +63,7 @@ public class ProfileFollowTask extends AsyncTask<Void, Integer, Boolean> {
             try {
                 twitter.destroyFriendship(user.getId());
 
-                builder.setSmallIcon(R.drawable.ic_tweet_notification);
+                builder.setSmallIcon(R.drawable.ic_notification_profile);
                 builder.setTicker(context.getString(R.string.profile_notification_un_follow_successful));
                 builder.setContentTitle(context.getString(R.string.profile_notification_un_follow_successful));
                 builder.setContentText(user.getName() + " @" + user.getScreenName());
@@ -72,7 +72,7 @@ public class ProfileFollowTask extends AsyncTask<Void, Integer, Boolean> {
                 notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
                 notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
             } catch (Exception e) {
-                builder.setSmallIcon(R.drawable.ic_tweet_notification);
+                builder.setSmallIcon(R.drawable.ic_notification_profile);
                 builder.setTicker(context.getString(R.string.profile_notification_un_follow_failed));
                 builder.setContentTitle(context.getString(R.string.profile_notification_un_follow_failed));
                 builder.setContentText(user.getName() + " @" + user.getScreenName());
@@ -86,7 +86,7 @@ public class ProfileFollowTask extends AsyncTask<Void, Integer, Boolean> {
             try {
                 twitter.createFriendship(user.getId());
 
-                builder.setSmallIcon(R.drawable.ic_tweet_notification);
+                builder.setSmallIcon(R.drawable.ic_notification_profile);
                 builder.setTicker(context.getString(R.string.profile_notification_follow_successful));
                 builder.setContentTitle(context.getString(R.string.profile_notification_follow_successful));
                 builder.setContentText(user.getName() + " @" + user.getScreenName());
@@ -95,7 +95,7 @@ public class ProfileFollowTask extends AsyncTask<Void, Integer, Boolean> {
                 notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
                 notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
             } catch (Exception e) {
-                builder.setSmallIcon(R.drawable.ic_tweet_notification);
+                builder.setSmallIcon(R.drawable.ic_notification_profile);
                 builder.setTicker(context.getString(R.string.profile_notification_follow_failed));
                 builder.setContentTitle(context.getString(R.string.profile_notification_follow_failed));
                 builder.setContentText(user.getName() + " @" + user.getScreenName());

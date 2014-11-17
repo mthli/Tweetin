@@ -29,7 +29,7 @@ public class NotificationUnit {
     }
 
     public void deleting() {
-        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setSmallIcon(R.drawable.ic_notification_delete);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_delete_ing)
         );
@@ -42,7 +42,7 @@ public class NotificationUnit {
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
     }
     public void deleteSuccessful() {
-        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setSmallIcon(R.drawable.ic_notification_delete);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_delete_successful)
         );
@@ -56,7 +56,7 @@ public class NotificationUnit {
         notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
     }
     public void deleteFailed() {
-        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setSmallIcon(R.drawable.ic_notification_delete);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_delete_failed)
         );
@@ -70,7 +70,7 @@ public class NotificationUnit {
     }
 
     public void retweeting() {
-        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setSmallIcon(R.drawable.ic_notification_retweet);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_rewteet_ing)
         );
@@ -83,7 +83,7 @@ public class NotificationUnit {
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
     }
     public void retweetSuccessful() {
-        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setSmallIcon(R.drawable.ic_notification_retweet);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_retweet_successful)
         );
@@ -97,7 +97,7 @@ public class NotificationUnit {
         notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
     }
     public void retweetFailed() {
-        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setSmallIcon(R.drawable.ic_notification_retweet);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_retweet_failed)
         );
@@ -110,8 +110,8 @@ public class NotificationUnit {
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
     }
 
-    public void favoriting() {
-        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+    public void addFavoriting() {
+        builder.setSmallIcon(R.drawable.ic_notification_favorite);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_add_favorite_ing)
         );
@@ -123,8 +123,8 @@ public class NotificationUnit {
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
     }
-    public void favoriteSuccessful() {
-        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+    public void addFavoriteSuccessful() {
+        builder.setSmallIcon(R.drawable.ic_notification_favorite);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_add_favorite_successful)
         );
@@ -137,8 +137,8 @@ public class NotificationUnit {
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
         notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
     }
-    public void favoriteFailed() {
-        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+    public void addFavoriteFailed() {
+        builder.setSmallIcon(R.drawable.ic_notification_favorite);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_add_favorite_failed)
         );
@@ -150,5 +150,44 @@ public class NotificationUnit {
         notification.flags = Notification.FLAG_AUTO_CANCEL;
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
     }
-
+    public void cancelFavoriting() {
+        builder.setSmallIcon(R.drawable.ic_notification_favorite);
+        builder.setTicker(
+                context.getString(R.string.tweet_notification_un_favorite_ing)
+        );
+        builder.setContentTitle(
+                context.getString(R.string.tweet_notification_un_favorite_ing)
+        );
+        builder.setContentText(oldTweet.getText());
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+    }
+    public void cancelFavoriteSuccessful() {
+        builder.setSmallIcon(R.drawable.ic_notification_favorite);
+        builder.setTicker(
+                context.getString(R.string.tweet_notification_un_favorite_successful)
+        );
+        builder.setContentTitle(
+                context.getString(R.string.tweet_notification_un_favorite_successful)
+        );
+        builder.setContentText(oldTweet.getText());
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+        notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
+    }
+    public void cancelFavoriteFailed() {
+        builder.setSmallIcon(R.drawable.ic_notification_favorite);
+        builder.setTicker(
+                context.getString(R.string.tweet_notification_un_favorite_failed)
+        );
+        builder.setContentTitle(
+                context.getString(R.string.tweet_notification_un_favorite_failed)
+        );
+        builder.setContentText(oldTweet.getText());
+        Notification notification = builder.build();
+        notification.flags = Notification.FLAG_AUTO_CANCEL;
+        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+    }
 }

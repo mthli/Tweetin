@@ -16,9 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
-import io.github.mthli.Tweetin.Database.Favorite.FavoriteAction;
-import io.github.mthli.Tweetin.Database.Mention.MentionAction;
-import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
 import io.github.mthli.Tweetin.Fragment.*;
 import io.github.mthli.Tweetin.Fragment.DiscoveryFragment;
 import io.github.mthli.Tweetin.R;
@@ -124,7 +121,7 @@ public class MainActivity extends FragmentActivity {
                         getResources().getDrawable(R.drawable.ic_action_timeline_active)
                 );
                 textView.setTextColor(
-                        getResources().getColor(R.color.blue)
+                        getResources().getColor(R.color.blue_bright)
                 );
                 break;
             case Flag.IN_MENTION_FRAGMENT:
@@ -136,7 +133,7 @@ public class MainActivity extends FragmentActivity {
                         getResources().getDrawable(R.drawable.ic_action_mention_active)
                 );
                 textView.setTextColor(
-                        getResources().getColor(R.color.blue)
+                        getResources().getColor(R.color.blue_bright)
                 );
                 break;
             case Flag.IN_FAVORITE_FRAGMENT:
@@ -148,7 +145,7 @@ public class MainActivity extends FragmentActivity {
                         getResources().getDrawable(R.drawable.ic_action_favorite_active)
                 );
                 textView.setTextColor(
-                        getResources().getColor(R.color.blue)
+                        getResources().getColor(R.color.blue_bright)
                 );
                 break;
             case Flag.IN_DISCOVERY_FRAGMENT:
@@ -160,7 +157,7 @@ public class MainActivity extends FragmentActivity {
                         getResources().getDrawable(R.drawable.ic_action_discovery_active)
                 );
                 textView.setTextColor(
-                        getResources().getColor(R.color.blue)
+                        getResources().getColor(R.color.blue_bright)
                 );
                 break;
             case Flag.IN_SETTING_FRAGMENT:
@@ -172,7 +169,7 @@ public class MainActivity extends FragmentActivity {
                         getResources().getDrawable(R.drawable.ic_action_setting_active)
                 );
                 textView.setTextColor(
-                        getResources().getColor(R.color.blue)
+                        getResources().getColor(R.color.blue_bright)
                 );
                 break;
             default:
@@ -219,7 +216,7 @@ public class MainActivity extends FragmentActivity {
         TextView textView = (TextView) timelineItem
                 .findViewById(R.id.tv_title);
         textView.setTextColor(
-                getResources().getColor(R.color.blue)
+                getResources().getColor(R.color.blue_bright)
         );
         mentionItem = new ResideMenuItem(
                 this,

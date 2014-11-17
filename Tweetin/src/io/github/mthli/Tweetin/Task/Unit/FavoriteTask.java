@@ -43,7 +43,7 @@ public class FavoriteTask extends AsyncTask<Void, Integer, Boolean> {
         tweet = tweetList.get(position);
 
         notificationUnit = new NotificationUnit(activity, tweet);
-        notificationUnit.favoriting();
+        notificationUnit.addFavoriting();
     }
 
     @Override
@@ -53,9 +53,9 @@ public class FavoriteTask extends AsyncTask<Void, Integer, Boolean> {
             tweet.setFavorite(true);
 
             DatabaseUnit.updatedByFavorite(activity, tweet);
-            notificationUnit.favoriteSuccessful();
+            notificationUnit.addFavoriteSuccessful();
         } catch (Exception e) {
-            notificationUnit.favoriteFailed();
+            notificationUnit.addFavoriteFailed();
 
             return false;
         }

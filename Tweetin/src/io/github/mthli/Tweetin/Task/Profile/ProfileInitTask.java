@@ -106,13 +106,13 @@ public class ProfileInitTask extends AsyncTask<Void, Integer, Boolean> {
         follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProfileFollowTask profileFollowTask = new ProfileFollowTask(
+                ProfileUpdateTask profileUpdateTask = new ProfileUpdateTask(
                         profileFragment,
                         isFollowing,
                         user
                 );
-                profileFragment.setProfileFollowTask(profileFollowTask);
-                profileFollowTask.execute();
+                profileFragment.setProfileUpdateTask(profileUpdateTask);
+                profileUpdateTask.execute();
             }
         });
     }

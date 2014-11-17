@@ -1,16 +1,10 @@
 package io.github.mthli.Tweetin.Task.Favorite;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v4.app.NotificationCompat;
-import io.github.mthli.Tweetin.Database.Favorite.FavoriteAction;
-import io.github.mthli.Tweetin.Database.Mention.MentionAction;
-import io.github.mthli.Tweetin.Database.Timeline.TimelineAction;
 import io.github.mthli.Tweetin.Fragment.FavoriteFragment;
-import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Unit.Flag.Flag;
+import io.github.mthli.Tweetin.Unit.Database.DatabaseUnit;
+import io.github.mthli.Tweetin.Unit.Notification.NotificationUnit;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
 import twitter4j.Twitter;
@@ -24,11 +18,10 @@ public class FavoriteCancelTask extends AsyncTask<Void, Integer, Boolean> {
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
-    private Tweet oldTweet;
+    private Tweet tweet;
     private int position;
 
-    private NotificationManager notificationManager;
-    private NotificationCompat.Builder builder;
+    private NotificationUnit notificationUnit;
 
     public FavoriteCancelTask(
             FavoriteFragment favoriteFragment,
@@ -45,66 +38,21 @@ public class FavoriteCancelTask extends AsyncTask<Void, Integer, Boolean> {
 
         tweetAdapter = favoriteFragment.getTweetAdapter();
         tweetList = favoriteFragment.getTweetList();
-        oldTweet = tweetList.get(position);
+        tweet = tweetList.get(position);
 
-        notificationManager = (NotificationManager) context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
-        builder = new NotificationCompat.Builder(context);
-        builder.setSmallIcon(R.drawable.ic_tweet_notification);
-        builder.setTicker(
-                context.getString(R.string.tweet_notification_un_favorite_ing)
-        );
-        builder.setContentTitle(
-                context.getString(R.string.tweet_notification_un_favorite_ing)
-        );
-        builder.setContentText(oldTweet.getText());
-        Notification notification = builder.build();
-        notification.flags = Notification.FLAG_AUTO_CANCEL;
-        notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+        notificationUnit = new NotificationUnit(context, tweet);
+        notificationUnit.cancelFavoriting();
     }
 
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            twitter.destroyFavorite(oldTweet.getStatusId());
+            twitter.destroyFavorite(tweet.getStatusId());
 
-            TimelineAction timelineAction = new TimelineAction(context);
-            timelineAction.openDatabase(true);
-            timelineAction.deleteRecord(oldTweet.getStatusId());
-            timelineAction.closeDatabase();
-            MentionAction mentionAction = new MentionAction(context);
-            mentionAction.openDatabase(true);
-            mentionAction.deleteRecord(oldTweet.getStatusId());
-            mentionAction.closeDatabase();
-            FavoriteAction favoriteAction = new FavoriteAction(context);
-            favoriteAction.openDatabase(true);
-            favoriteAction.deleteRecord(oldTweet.getStatusId());
-            favoriteAction.closeDatabase();
-
-            builder.setSmallIcon(R.drawable.ic_tweet_notification);
-            builder.setTicker(
-                    context.getString(R.string.tweet_notification_un_favorite_successful)
-            );
-            builder.setContentTitle(
-                    context.getString(R.string.tweet_notification_un_favorite_successful)
-            );
-            builder.setContentText(oldTweet.getText());
-            Notification notification = builder.build();
-            notification.flags = Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
-            notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
+            DatabaseUnit.deleteRecord(context, tweet);
+            notificationUnit.cancelFavoriteSuccessful();
         } catch (Exception e) {
-            builder.setSmallIcon(R.drawable.ic_tweet_notification);
-            builder.setTicker(
-                    context.getString(R.string.tweet_notification_un_favorite_failed)
-            );
-            builder.setContentTitle(
-                    context.getString(R.string.tweet_notification_un_favorite_failed)
-            );
-            builder.setContentText(oldTweet.getText());
-            Notification notification = builder.build();
-            notification.flags = Notification.FLAG_AUTO_CANCEL;
-            notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
+            notificationUnit.cancelFavoriteFailed();
 
             return false;
         }

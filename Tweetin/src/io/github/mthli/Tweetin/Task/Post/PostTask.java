@@ -75,7 +75,7 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
         LocationManager locationManager = (LocationManager) postActivity
                 .getSystemService(Context.LOCATION_SERVICE);
         builder = new NotificationCompat.Builder(postActivity);
-        builder.setSmallIcon(R.drawable.ic_tweet_notification);
+        builder.setSmallIcon(R.drawable.ic_notification_send);
         builder.setTicker(
                 postActivity.getString(R.string.post_notification_post_ing)
         );
@@ -142,7 +142,7 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
         try {
             twitter.updateStatus(update);
 
-            builder.setSmallIcon(R.drawable.ic_tweet_notification);
+            builder.setSmallIcon(R.drawable.ic_notification_send);
             builder.setTicker(
                     postActivity.getString(R.string.post_notification_post_successful)
             );
@@ -155,7 +155,7 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
             notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
             notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
         } catch (Exception e) {
-            builder.setSmallIcon(R.drawable.ic_tweet_notification);
+            builder.setSmallIcon(R.drawable.ic_notification_send);
             builder.setTicker(
                     postActivity.getString(R.string.post_notification_post_failed)
             );

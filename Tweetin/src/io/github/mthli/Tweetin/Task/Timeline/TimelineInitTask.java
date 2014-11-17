@@ -185,7 +185,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                     NotificationManager manager = (NotificationManager) context
                             .getSystemService(Context.NOTIFICATION_SERVICE);
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-                    builder.setSmallIcon(R.drawable.ic_tweet_notification);
+                    builder.setSmallIcon(R.drawable.ic_notification_mention);
                     builder.setTicker(
                             context.getString(R.string.mention_notification_new_mention)
                     );
