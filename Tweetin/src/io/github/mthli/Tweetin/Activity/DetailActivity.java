@@ -230,7 +230,7 @@ public class DetailActivity extends Activity {
             case Flag.STATUS_RETWEETED_BY_ME:
                 Toast.makeText(
                         this,
-                        R.string.context_toast_already_retweet,
+                        R.string.context_menu_toast_already_retweet,
                         Toast.LENGTH_SHORT
                 ).show();
                 break;
@@ -320,7 +320,7 @@ public class DetailActivity extends Activity {
                         } else {
                             Toast.makeText(
                                     DetailActivity.this,
-                                    R.string.context_toast_already_favorite,
+                                    R.string.context_menu_toast_already_favorite,
                                     Toast.LENGTH_SHORT
                             ).show();
                         }

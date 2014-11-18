@@ -8,6 +8,9 @@
     <string name="tweet_info_picture">Picture</string>
     <string name="tweet_info_retweeted_by_me">Me</string>
     <string name="tweet_info_favorite">Favorite</string>
+    <string name="tweet_toast_can_not_open_this_picture">
+        Can not open this picture.
+    </string>
     <!-- Delete -->
     <string name="tweet_notification_delete_ing">
         Deleting&#8230;
@@ -68,11 +71,18 @@
     <string name="context_menu_item_favorite">Favorite</string>
     <string name="context_menu_item_un_favorite">UnFavorite</string>
     <string name="context_menu_item_copy">Copy</string>
-    <string name="context_toast_already_retweet">
+    <string name="context_menu_item_save">Save</string>
+    <string name="context_menu_toast_already_retweet">
         Already retweet.
     </string>
-    <string name="context_toast_already_favorite">
+    <string name="context_menu_toast_already_favorite">
         Already favorite.
+    </string>
+    <string name="context_menu_toast_save_successful">
+        Save successful.
+    </string>
+    <string name="cotext_menu_toast_save_failed">
+        Save failed.
     </string>
 
     <!-- Splash -->

@@ -1,46 +1,76 @@
 package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.KeyEvent;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.*;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
+import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
+import io.github.mthli.Tweetin.Unit.Picture.PictureUnit;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PictureActivity extends Activity {
 
-    private Bitmap originalBitmap;
+    private Bitmap bitmap;
+    private String filename;
 
-    private Bitmap fixBitmap(Bitmap bitmap) {
-        WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics metrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(metrics);
-        int screenWidth = metrics.widthPixels;
-        int screenHeight = metrics.heightPixels;
-        int bitmapWidth = bitmap.getWidth();
-        int bitmapHeight = bitmap.getHeight();
-        if (bitmapWidth < screenWidth) {
-            float percent = ((float) screenWidth) / ((float) bitmapWidth);
-            if (bitmapHeight * percent <= 2048) {
-                Matrix matrix = new Matrix();
-                matrix.postScale(percent, percent);
-                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
+    private AlertDialog alertDialog;
+    private void showPictureLongClickDialog() {
+        LinearLayout linearLayout = (LinearLayout) getLayoutInflater()
+                .inflate(
+                        R.layout.context_menu,
+                        null
+                );
+        ListView menu = (ListView) linearLayout.findViewById(R.id.context_menu_listview);
+        List<String> menuItemList = new ArrayList<String>();
+
+        menuItemList.add(
+                getString(R.string.context_menu_item_save)
+        );
+
+        ContextMenuAdapter contextMenuAdapter = new ContextMenuAdapter(
+                this,
+                R.layout.context_menu_item,
+                menuItemList
+        );
+        menu.setAdapter(contextMenuAdapter);
+        contextMenuAdapter.notifyDataSetChanged();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(linearLayout);
+        builder.setCancelable(true);
+        alertDialog = builder.create();
+        alertDialog.show();
+
+        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        PictureUnit.save(
+                                PictureActivity.this,
+                                bitmap,
+                                filename
+                        );
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
-
-        return bitmap;
+        });
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,19 +78,26 @@ public class PictureActivity extends Activity {
         setContentView(R.layout.picture);
 
         Intent intent = getIntent();
-        String originalFilename = intent.getStringExtra(
+        filename = intent.getStringExtra(
                 getString(R.string.detail_intent_original_bitmap_filename)
         );
 
+        ImageView picture = (ImageView) findViewById(R.id.picture_view);
         try {
-            FileInputStream originalStream = this.openFileInput(originalFilename);
-            originalBitmap = BitmapFactory.decodeStream(originalStream);
+            FileInputStream originalStream = openFileInput(filename);
+            bitmap = BitmapFactory.decodeStream(originalStream);
+            originalStream.close();
 
-            ImageView picture = (ImageView) findViewById(R.id.picture_view);
-            picture.setImageBitmap(fixBitmap(originalBitmap));
-
+            picture.setImageBitmap(PictureUnit.fixBitmap(this, bitmap));
             PhotoViewAttacher attacher = new PhotoViewAttacher(picture);
             attacher.setZoomable(true);
+            attacher.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    showPictureLongClickDialog();
+                    return true;
+                }
+            });
             attacher.update();
         } catch (Exception e) {
             Toast.makeText(
@@ -74,6 +111,8 @@ public class PictureActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            deleteFile(filename);
+
             ActivityAnim anim = new ActivityAnim();
             finish();
             anim.fade(PictureActivity.this);

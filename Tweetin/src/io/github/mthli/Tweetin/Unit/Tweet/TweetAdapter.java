@@ -1,16 +1,14 @@
 package io.github.mthli.Tweetin.Unit.Tweet;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.text.util.Linkify;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.*;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,9 +21,12 @@ import io.github.mthli.Tweetin.Activity.PictureActivity;
 import io.github.mthli.Tweetin.Activity.ProfileActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
+import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
+import io.github.mthli.Tweetin.Unit.Picture.PictureUnit;
 
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         TextView infoRetweetedByUserName;
         TextView infoFavorite;
 
-        Bitmap originalBitmap;
+        Bitmap bitmap;
     }
 
     private String getShortCreatedAt(String createdAt) {
@@ -86,26 +87,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         } else {
             return createdAt;
         }
-    }
-    private Bitmap fixBitmap(Bitmap bitmap) {
-        WindowManager manager = (WindowManager) activity
-                .getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics metrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(metrics);
-        int screenWidth = metrics.widthPixels;
-        int screenHeight = metrics.heightPixels;
-        int bitmapWidth = bitmap.getWidth();
-        int bitmapHeight = bitmap.getHeight();
-        if (bitmapWidth < screenWidth) {
-            float percent = ((float) screenWidth) / ((float) bitmapWidth);
-            if (bitmapHeight * percent <= 2048) {
-                Matrix matrix = new Matrix();
-                matrix.postScale(percent, percent);
-                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
-            }
-        }
-
-        return bitmap;
     }
     @Override
     public View getView(
@@ -183,8 +164,8 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                         new Response.Listener<Bitmap>() {
                             @Override
                             public void onResponse(Bitmap bitmap) {
-                                holder.originalBitmap = bitmap;
-                                bitmap = fixBitmap(bitmap);
+                                holder.bitmap = bitmap;
+                                bitmap = PictureUnit.fixBitmap(activity, bitmap);
                                 holder.picture.setImageBitmap(bitmap);
                                 holder.picture.setVisibility(View.VISIBLE);
                             }
@@ -211,17 +192,17 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             public void onClick(View view) {
                 try {
                     String[] array = tweet.getPictureURL().split("/");
-                    String originalFilename = array[array.length - 1];
+                    String filename = array[array.length - 1];
                     FileOutputStream originalStream = activity
-                            .openFileOutput(originalFilename, Context.MODE_PRIVATE);
+                            .openFileOutput(filename, Context.MODE_PRIVATE);
 
                     String[] suffixes = activity.getResources().getStringArray(
                             R.array.detail_picture_suffix
                     );
                     if (tweet.getPictureURL().endsWith(suffixes[0])) {
-                        holder.originalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, originalStream);
+                        holder.bitmap.compress(Bitmap.CompressFormat.JPEG, 100, originalStream);
                     } else {
-                        holder.originalBitmap.compress(Bitmap.CompressFormat.PNG, 100, originalStream);
+                        holder.bitmap.compress(Bitmap.CompressFormat.PNG, 100, originalStream);
                     }
                     originalStream.close();
 
@@ -229,17 +210,26 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                     Intent intent = new Intent(activity, PictureActivity.class);
                     intent.putExtra(
                             activity.getString(R.string.detail_intent_original_bitmap_filename),
-                            array[array.length - 1]
+                            filename
                     );
                     activity.startActivity(intent);
                     anim.fade(activity);
                 } catch (Exception e) {
                     Toast.makeText(
                             activity,
-                            R.string.detail_toast_can_not_open_this_picture,
+                            R.string.tweet_toast_can_not_open_this_picture,
                             Toast.LENGTH_SHORT
                     ).show();
                 }
+            }
+        });
+        holder.picture.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                String[] array = tweet.getPictureURL().split("/");
+                String filename = array[array.length - 1];
+                showPictureLongClickDialog(holder.bitmap, filename);
+                return true;
             }
         });
 
@@ -278,5 +268,53 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         }
 
         return view;
+    }
+
+    private AlertDialog alertDialog;
+    private void showPictureLongClickDialog(final Bitmap bitmap, final String filename) {
+        LinearLayout linearLayout = (LinearLayout) activity
+                .getLayoutInflater().inflate(
+                        R.layout.context_menu,
+                        null
+                );
+        ListView menu = (ListView) linearLayout.findViewById(R.id.context_menu_listview);
+        List<String> menuItemList = new ArrayList<String>();
+
+        menuItemList.add(
+                activity.getString(R.string.context_menu_item_save)
+        );
+
+        final ContextMenuAdapter contextMenuAdapter = new ContextMenuAdapter(
+                activity,
+                R.layout.context_menu_item,
+                menuItemList
+        );
+        menu.setAdapter(contextMenuAdapter);
+        contextMenuAdapter.notifyDataSetChanged();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setView(linearLayout);
+        builder.setCancelable(true);
+        alertDialog = builder.create();
+        alertDialog.show();
+
+        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        PictureUnit.save(
+                                activity,
+                                bitmap,
+                                filename
+                        );
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 }

@@ -5,6 +5,9 @@
     <string name="tweet_info_picture">图片</string>
     <string name="tweet_info_retweeted_by_me">我</string>
     <string name="tweet_info_favorite">收藏</string>
+    <string name="tweet_toast_can_not_open_this_picture">
+        无法打开这张图片。
+    </string>
     <!-- Delete -->
     <string name="tweet_notification_delete_ing">
         正在删除&#8230;
@@ -64,11 +67,18 @@
     <string name="context_menu_item_favorite">收藏</string>
     <string name="context_menu_item_un_favorite">取消收藏</string>
     <string name="context_menu_item_copy">拷贝</string>
-    <string name="context_toast_already_retweet">
+    <string name="context_menu_item_save">保存</string>
+    <string name="context_menu_toast_already_retweet">
         已经转推过了。
     </string>
-    <string name="context_toast_already_favorite">
+    <string name="context_menu_toast_already_favorite">
         已经收藏过了。
+    </string>
+    <string name="context_menu_toast_save_successful">
+        保存成功。
+    </string>
+    <string name="cotext_menu_toast_save_failed">
+        保存失败。
     </string>
 
     <!-- Splash -->
@@ -206,7 +216,6 @@
     </string>
 
     <!-- Setting -->
-    <string name="setting_title_theme">主题</string>
     <string name="setting_title_detail">详情</string>
     <string name="setting_title_homepage">主页</string>
     <string name="setting_title_license">协议</string>

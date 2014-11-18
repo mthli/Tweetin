@@ -223,7 +223,7 @@ public class FavoriteFragment extends ProgressFragment {
             case Flag.STATUS_RETWEETED_BY_ME:
                 Toast.makeText(
                         getActivity(),
-                        R.string.context_toast_already_retweet,
+                        R.string.context_menu_toast_already_retweet,
                         Toast.LENGTH_SHORT
                 ).show();
                 break;
