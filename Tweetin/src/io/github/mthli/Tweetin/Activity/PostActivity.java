@@ -2,17 +2,13 @@ package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -25,6 +21,7 @@ import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Post.PostTask;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
+import io.github.mthli.Tweetin.Unit.Picture.PictureUnit;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
@@ -250,7 +247,8 @@ public class PostActivity extends Activity {
                 }
                 countWords.setText(String.valueOf(shareText.length()));
             }
-            /* Do something with image/* */
+
+            /* maybe do something with image/ */
         }
     }
     @Override
@@ -432,15 +430,11 @@ public class PostActivity extends Activity {
         }
     }
 
-    private void intentWithPhoto(Intent data) {
-        Uri uri = data.getData();
-        String[] proj = {MediaStore.Images.Media.DATA};
-        CursorLoader loader = new CursorLoader(this, uri, proj, null, null, null); //
-        Cursor cursor = loader.loadInBackground();
-        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        picturePath = cursor.getString(index);
-        cursor.close();
+    private void intentWithPicture(Intent data) {
+        picturePath = PictureUnit.getPicturePathFromIntent(
+                this,
+                data
+        );
 
         Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
         WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -480,7 +474,7 @@ public class PostActivity extends Activity {
             return;
         }
         if (requestCode == Flag.POST_PHOTO) { //
-            intentWithPhoto(data);
+            intentWithPicture(data);
         }
     }
 

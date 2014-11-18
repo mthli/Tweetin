@@ -1,7 +1,9 @@
 package io.github.mthli.Tweetin.Unit.Picture;
 
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
@@ -17,6 +19,19 @@ import java.io.FileOutputStream;
 
 public class PictureUnit {
 
+    public static String getPicturePathFromIntent(Context context, Intent intent) {
+        Uri uri = intent.getData();
+        String[] proj = {MediaStore.Images.Media.DATA};
+        CursorLoader loader = new CursorLoader(context, uri, proj, null, null, null); //
+        Cursor cursor = loader.loadInBackground();
+        int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String picturePath = cursor.getString(index);
+        cursor.close();
+
+        return picturePath;
+    }
+
     public static Bitmap fixBitmap(Context context, Bitmap bitmap) {
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
@@ -25,6 +40,7 @@ public class PictureUnit {
         int screenHeight = metrics.heightPixels;
         int bitmapWidth = bitmap.getWidth();
         int bitmapHeight = bitmap.getHeight();
+
         if (bitmapWidth < screenWidth) {
             float percent = ((float) screenWidth) / ((float) bitmapWidth);
             if (bitmapHeight * percent <= 2048) {
@@ -91,4 +107,5 @@ public class PictureUnit {
                 Toast.LENGTH_SHORT
         ).show();
     }
+
 }

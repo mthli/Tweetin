@@ -112,6 +112,7 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
                 ).show();
             } else {
                 tweetAdapter.notifyDataSetChanged();
+                listView.setSelection(0);
                 listView.setVisibility(View.VISIBLE);
             }
         } else {
