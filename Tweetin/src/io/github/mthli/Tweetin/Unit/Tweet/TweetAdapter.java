@@ -11,10 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,10 +19,12 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.mthli.Tweetin.Activity.PictureActivity;
 import io.github.mthli.Tweetin.Activity.ProfileActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -70,6 +69,8 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         TextView infoPicture;
         TextView infoRetweetedByUserName;
         TextView infoFavorite;
+
+        Bitmap originalBitmap;
     }
 
     private String getShortCreatedAt(String createdAt) {
@@ -182,6 +183,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                         new Response.Listener<Bitmap>() {
                             @Override
                             public void onResponse(Bitmap bitmap) {
+                                holder.originalBitmap = bitmap;
                                 bitmap = fixBitmap(bitmap);
                                 holder.picture.setImageBitmap(bitmap);
                                 holder.picture.setVisibility(View.VISIBLE);
@@ -204,6 +206,42 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         } else {
             holder.picture.setVisibility(View.GONE);
         }
+        holder.picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    String[] array = tweet.getPictureURL().split("/");
+                    String originalFilename = array[array.length - 1];
+                    FileOutputStream originalStream = activity
+                            .openFileOutput(originalFilename, Context.MODE_PRIVATE);
+
+                    String[] suffixes = activity.getResources().getStringArray(
+                            R.array.detail_picture_suffix
+                    );
+                    if (tweet.getPictureURL().endsWith(suffixes[0])) {
+                        holder.originalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, originalStream);
+                    } else {
+                        holder.originalBitmap.compress(Bitmap.CompressFormat.PNG, 100, originalStream);
+                    }
+                    originalStream.close();
+
+                    ActivityAnim anim = new ActivityAnim();
+                    Intent intent = new Intent(activity, PictureActivity.class);
+                    intent.putExtra(
+                            activity.getString(R.string.detail_intent_original_bitmap_filename),
+                            array[array.length - 1]
+                    );
+                    activity.startActivity(intent);
+                    anim.fade(activity);
+                } catch (Exception e) {
+                    Toast.makeText(
+                            activity,
+                            R.string.detail_toast_can_not_open_this_picture,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+        });
 
         if (detail) {
             holder.text.setAutoLinkMask(Linkify.WEB_URLS);

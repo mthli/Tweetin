@@ -127,6 +127,9 @@
     <string name="detail_toast_fab_reply">
         回复当前的推文。
     </string>
+    <string name="detail_toast_can_not_open_this_picture">
+        无法打开这张图片。
+    </string>
     <string name="detail_error_get_detail_failed">
         获取推文详情失败。
     </string>

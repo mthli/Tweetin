@@ -144,6 +144,9 @@
     <string name="detail_toast_fab_reply">
         Reply current tweet.
     </string>
+    <string name="detail_toast_can_not_open_this_picture">
+        Can not open this picture.
+    </string>
     <string name="detail_error_get_detail_failed">
         Get detail failed.
     </string>
