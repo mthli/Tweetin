@@ -367,7 +367,7 @@ public class PostActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Vibrator vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
-                vibrator.vibrate(128);
+                vibrator.vibrate(64);
 
                 String text = postEdit.getText().toString();
                 if (text.length() <= 0) {
