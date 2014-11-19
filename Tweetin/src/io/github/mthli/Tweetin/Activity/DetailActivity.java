@@ -194,7 +194,7 @@ public class DetailActivity extends Activity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 showItemLongClickDialog(position);
-                return true;
+                return false;
             }
         });
 

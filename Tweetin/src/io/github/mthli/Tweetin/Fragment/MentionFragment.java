@@ -170,7 +170,7 @@ public class MentionFragment extends ProgressFragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 showItemLongClickDialog(position);
-                return true;
+                return false;
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {

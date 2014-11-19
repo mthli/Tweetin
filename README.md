@@ -35,6 +35,8 @@ Just import the `Tweetin` folder with your __IntelliJ IDEA__.
 
  - [Glide](https://github.com/bumptech/glide "Glide")
 
+ - [material-ripple](https://github.com/balysv/material-ripple "material-ripple")
+
  - [PhotoView](https://github.com/chrisbanes/PhotoView "PhotoView")
 
  - [SmoothProgressBar](https://github.com/castorflex/SmoothProgressBar "SmoothProgressBar")
