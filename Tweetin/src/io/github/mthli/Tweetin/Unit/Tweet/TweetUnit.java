@@ -298,7 +298,7 @@ public class TweetUnit {
             );
             record.setRetweetedByUserId(status.getUser().getId());
             record.setAvatarURL(
-                    status.getRetweetedStatus().getUser().getBiggerProfileImageURL()
+                    status.getRetweetedStatus().getUser().getOriginalProfileImageURL() //
             );
             record.setCreatedAt(
                     format.format(status.getRetweetedStatus().getCreatedAt())
@@ -334,7 +334,7 @@ public class TweetUnit {
             record.setReplyToStatusId(status.getInReplyToStatusId());
             record.setUserId(status.getUser().getId());
             record.setRetweetedByUserId(-1l);
-            record.setAvatarURL(status.getUser().getBiggerProfileImageURL());
+            record.setAvatarURL(status.getUser().getOriginalProfileImageURL()); //
             record.setCreatedAt(
                     format.format(status.getCreatedAt())
             );
@@ -379,7 +379,7 @@ public class TweetUnit {
             );
             record.setRetweetedByUserId(status.getUser().getId());
             record.setAvatarURL(
-                    status.getRetweetedStatus().getUser().getBiggerProfileImageURL()
+                    status.getRetweetedStatus().getUser().getOriginalProfileImageURL() //
             );
             record.setCreatedAt(
                     format.format(status.getRetweetedStatus().getCreatedAt())
@@ -415,7 +415,7 @@ public class TweetUnit {
             record.setReplyToStatusId(status.getInReplyToStatusId());
             record.setUserId(status.getUser().getId());
             record.setRetweetedByUserId(-1l);
-            record.setAvatarURL(status.getUser().getBiggerProfileImageURL());
+            record.setAvatarURL(status.getUser().getOriginalProfileImageURL()); //
             record.setCreatedAt(
                     format.format(status.getCreatedAt())
             );
@@ -460,7 +460,7 @@ public class TweetUnit {
             );
             record.setRetweetedByUserId(status.getUser().getId());
             record.setAvatarURL(
-                    status.getRetweetedStatus().getUser().getBiggerProfileImageURL()
+                    status.getRetweetedStatus().getUser().getOriginalProfileImageURL() //
             );
             record.setCreatedAt(
                     format.format(status.getRetweetedStatus().getCreatedAt())
@@ -496,7 +496,7 @@ public class TweetUnit {
             record.setReplyToStatusId(status.getInReplyToStatusId());
             record.setUserId(status.getUser().getId());
             record.setRetweetedByUserId(-1l);
-            record.setAvatarURL(status.getUser().getBiggerProfileImageURL());
+            record.setAvatarURL(status.getUser().getOriginalProfileImageURL()); //
             record.setCreatedAt(
                     format.format(status.getCreatedAt())
             );
@@ -608,7 +608,7 @@ public class TweetUnit {
             );
             tweet.setRetweetedByUserId(status.getUser().getId());
             tweet.setAvatarURL(
-                    status.getRetweetedStatus().getUser().getBiggerProfileImageURL()
+                    status.getRetweetedStatus().getUser().getOriginalProfileImageURL() //
             );
             tweet.setCreatedAt(
                     format.format(status.getRetweetedStatus().getCreatedAt())
@@ -645,7 +645,7 @@ public class TweetUnit {
             tweet.setReplyToStatusId(status.getInReplyToStatusId());
             tweet.setUserId(status.getUser().getId());
             tweet.setRetweetedByUserId(-1l);
-            tweet.setAvatarURL(status.getUser().getBiggerProfileImageURL());
+            tweet.setAvatarURL(status.getUser().getOriginalProfileImageURL()); //
             tweet.setCreatedAt(
                     format.format(status.getCreatedAt())
             );
@@ -717,7 +717,7 @@ public class TweetUnit {
             );
             intent.putExtra(
                     context.getString(R.string.detail_intent_avatar_url),
-                    status.getRetweetedStatus().getUser().getBiggerProfileImageURL()
+                    status.getRetweetedStatus().getUser().getOriginalProfileImageURL() //
             );
             intent.putExtra(
                     context.getString(R.string.detail_intent_created_at),
@@ -793,7 +793,7 @@ public class TweetUnit {
             );
             intent.putExtra(
                     context.getString(R.string.detail_intent_avatar_url),
-                    status.getUser().getBiggerProfileImageURL()
+                    status.getUser().getOriginalProfileImageURL() //
             );
             intent.putExtra(
                     context.getString(R.string.detail_intent_created_at),

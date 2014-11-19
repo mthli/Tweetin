@@ -84,7 +84,7 @@ public class ProfileInitTask extends AsyncTask<Void, Integer, Boolean> {
 
         CircleImageView avatar = (CircleImageView) view
                 .findViewById(R.id.profile_avatar);
-        String avatarURL = user.getBiggerProfileImageURL();
+        String avatarURL = user.getOriginalProfileImageURL();
         Glide.with(context).load(avatarURL).crossFade().into(avatar);
 
         TextView name = (TextView) view.findViewById(R.id.profile_name);

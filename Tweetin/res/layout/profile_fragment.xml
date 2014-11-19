@@ -15,7 +15,7 @@
         <ImageView android:id="@+id/profile_background"
                    android:contentDescription="@null"
                    android:layout_width="match_parent"
-                   android:layout_height="150dp"
+                   android:layout_height="170dp"
                    android:layout_alignParentTop="true"
                    android:adjustViewBounds="true"
                    android:background="@color/white">
@@ -33,8 +33,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_avatar"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_gravity="center"
                     app:border_width="2dp"
                     app:border_color="@color/white">
