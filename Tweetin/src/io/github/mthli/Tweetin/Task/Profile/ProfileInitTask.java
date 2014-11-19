@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.Activity.ProfileActivity;
@@ -69,6 +71,17 @@ public class ProfileInitTask extends AsyncTask<Void, Integer, Boolean> {
 
 
     private void profileFragmentAdapter() {
+        ImageView background = (ImageView) view
+                .findViewById(R.id.profile_background);
+        if (user.getProfileBackgroundImageURL() != null) {
+            Glide.with(context)
+                    .load(user.getProfileBackgroundImageURL())
+                    .centerCrop()
+                    .into(background);
+        } else {
+            background.setVisibility(View.GONE);
+        }
+
         CircleImageView avatar = (CircleImageView) view
                 .findViewById(R.id.profile_avatar);
         String avatarURL = user.getBiggerProfileImageURL();
@@ -98,6 +111,14 @@ public class ProfileInitTask extends AsyncTask<Void, Integer, Boolean> {
         }
 
         Button follow = (Button) view.findViewById(R.id.profile_follow);
+        /* RippleEffect */
+        MaterialRippleLayout.on(follow)
+                .rippleOverlay(true)
+                .rippleColor(context.getResources().getColor(R.color.text))
+                .rippleAlpha(0.1f)
+                .rippleDiameterDp(10)
+                .rippleDuration(350)
+                .create();
         if (isFollowing) {
             follow.setText(context.getString(R.string.profile_un_follow));
         } else {

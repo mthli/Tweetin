@@ -16,6 +16,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.*;
+import com.balysv.materialripple.MaterialRippleLayout;
 import io.github.mthli.Tweetin.R;
 import org.apache.commons.io.IOUtils;
 import twitter4j.Twitter;
@@ -217,6 +218,14 @@ public class SplashActivity extends Activity {
         final EditText conSecretEdit = (EditText) findViewById(R.id.splash_consumer_secret);
 
         Button signIn = (Button) findViewById(R.id.splash_sign_in);
+        /* RippleEffect */
+        MaterialRippleLayout.on(signIn)
+                .rippleOverlay(true)
+                .rippleColor(getResources().getColor(R.color.text))
+                .rippleAlpha(0.1f)
+                .rippleDiameterDp(10)
+                .rippleDuration(350)
+                .create();
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -305,7 +314,7 @@ public class SplashActivity extends Activity {
 
     private void showHowToDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
-        builder.setCancelable(false);
+        builder.setCancelable(true);
 
         String lang;
         if (getResources().getConfiguration().locale.getLanguage().equals("zh")) {
@@ -331,15 +340,6 @@ public class SplashActivity extends Activity {
         );
         builder.setView(webView);
 
-        builder.setPositiveButton(
-                getString(R.string.splash_how_to_ok),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        /* Do nothing */
-                    }
-                }
-        );
         builder.create().show();
     }
 }
