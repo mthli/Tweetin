@@ -181,7 +181,7 @@ public class DiscoveryFragment extends ProgressFragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
                 showItemLongClickDialog(position);
-                return false;
+                return true;
             }
         });
     }

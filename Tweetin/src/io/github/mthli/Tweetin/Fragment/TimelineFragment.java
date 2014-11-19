@@ -205,7 +205,7 @@ public class TimelineFragment extends ProgressFragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 showItemLongClickDialog(position);
-                return false;
+                return true;
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {

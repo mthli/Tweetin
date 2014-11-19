@@ -1,6 +1,7 @@
 package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -364,6 +366,9 @@ public class PostActivity extends Activity {
         postSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Vibrator vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
+                vibrator.vibrate(128);
+
                 String text = postEdit.getText().toString();
                 if (text.length() <= 0) {
                     Toast.makeText(
