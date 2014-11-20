@@ -15,6 +15,9 @@ __UNDER DEVELOPMENT!!!__
 
 Just import the `Tweetin` folder with your __IntelliJ IDEA__.
 
+## License:
+[Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0 "Apache License, Version 2.0")
+
 ## Thanks:
 
  - [Android-ProgressFragment](https://github.com/johnkil/Android-ProgressFragment "Android-ProgressFragment")
