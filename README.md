@@ -5,6 +5,10 @@ Yet another Twitter unofficial client.
 
 For Android 4.X and Lollipop.
 
+## Google Play:
+
+https://play.google.com/store/apps/details?id=io.github.mthli.Tweetin
+
 __UNDER DEVELOPMENT!!!__
 
 ## Screenshots:
