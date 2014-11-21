@@ -13,7 +13,9 @@ __UNDER DEVELOPMENT!!!__
 
 ## Screenshots:
 
-![all_in_one.png](/Art/Screenshots/all_in_one.png "All.png")
+![PartFirst.png](/Art/Screenshots/PartFirst.png "PartFirst.png")
+
+![PartSecond.png](/Art/Screenshots/PartSecond.png "PartSecond.png")
 
 ## How to use the source code?
 
