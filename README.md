@@ -54,7 +54,7 @@ Just import the `Tweetin` folder with your __IntelliJ IDEA__.
 
  - [Twitter4J](https://github.com/yusuke/twitter4j "Twitter4J")
 
-### Websites:;
+### Websites:
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Tweetin-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/1154)
 
