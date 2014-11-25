@@ -26,6 +26,8 @@ Just import the `Tweetin` folder with your __IntelliJ IDEA__.
 
 ## Thanks:
 
+### Open source projects:
+
  - [Android-ProgressFragment](https://github.com/johnkil/Android-ProgressFragment "Android-ProgressFragment")
 
  - [AndroidResideMenu](https://github.com/SpecialCyCi/AndroidResideMenu "AndroidResideMenu")
@@ -51,5 +53,9 @@ Just import the `Tweetin` folder with your __IntelliJ IDEA__.
  - [SmoothProgressBar](https://github.com/castorflex/SmoothProgressBar "SmoothProgressBar")
 
  - [Twitter4J](https://github.com/yusuke/twitter4j "Twitter4J")
+
+### Websites:;
+
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Tweetin-brightgreen.svg?style=flat)](https://android-arsenal.com/details/3/1154)
 
 And thanks all supporter :)
