@@ -41,15 +41,15 @@ public class PictureUnit {
         int bitmapWidth = bitmap.getWidth();
         int bitmapHeight = bitmap.getHeight();
 
-        if (bitmapWidth < screenWidth) {
-            float percent = ((float) screenWidth) / ((float) bitmapWidth);
-            if (bitmapHeight * percent <= 2048) {
-                Matrix matrix = new Matrix();
-                matrix.postScale(percent, percent);
-                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
-            }
-        }
+        if (bitmapWidth > screenWidth || bitmapHeight > screenHeight) {
+            float percentW = ((float) screenWidth) / ((float) bitmapWidth);
+            float percentH = ((float) screenHeight) / ((float) bitmapHeight);
+            float percent = percentW < percentH ? percentW : percentH;
+            Matrix matrix = new Matrix();
+            matrix.postScale(percent, percent);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
 
+        }
         return bitmap;
     }
 

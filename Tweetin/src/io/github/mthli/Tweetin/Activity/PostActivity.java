@@ -440,34 +440,12 @@ public class PostActivity extends Activity {
                 this,
                 data
         );
-
-        Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
-        WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics metrics = new DisplayMetrics();
-        manager.getDefaultDisplay().getMetrics(metrics);
-        int screenWidth = metrics.widthPixels;
-        int screenHeight = metrics.heightPixels;
-        int bitmapWidth = bitmap.getWidth();
-        int bitmapHeight = bitmap.getHeight();
-        if (bitmapWidth > screenWidth) {
-            float percent = ((float) screenWidth) / ((float) bitmapWidth);
-            Matrix matrix = new Matrix();
-            matrix.postScale(percent, percent);
-            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
-            postPicture.setImageBitmap(bitmap);
-            postPicture.setVisibility(View.VISIBLE);
-            return;
-        }
-        if (bitmapHeight > screenHeight) {
-            float percent = ((float) screenHeight) / ((float) bitmapHeight);
-            Matrix matrix = new Matrix();
-            matrix.postScale(percent, percent);
-            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapHeight, matrix, true);
-            postPicture.setImageBitmap(bitmap);
-            postPicture.setVisibility(View.VISIBLE);
-            return;
-        }
-        postPicture.setImageBitmap(bitmap);
+        postPicture.setImageBitmap(
+                PictureUnit.fixBitmap(
+                        this,
+                        BitmapFactory.decodeFile(picturePath)
+                )
+        );
         postPicture.setVisibility(View.VISIBLE);
     }
     @Override
@@ -478,7 +456,7 @@ public class PostActivity extends Activity {
             postPictureButton.setChecked(false);
             return;
         }
-        if (requestCode == Flag.POST_PHOTO) { //
+        if (requestCode == Flag.POST_PHOTO) {
             intentWithPicture(data);
         }
     }

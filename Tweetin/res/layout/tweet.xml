@@ -111,6 +111,7 @@
                android:layout_marginBottom="2dp"
                android:adjustViewBounds="true"
                android:background="@color/white"
+               android:scaleType="centerCrop"
                android:visibility="gone">
     </ImageView>
 

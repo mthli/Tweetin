@@ -5,7 +5,8 @@
              android:layout_height="match_parent"
              android:background="@color/background">
 
-    <RelativeLayout android:layout_width="match_parent"
+    <RelativeLayout android:id="@+id/post_view"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="7dp"
                     android:background="@color/white">
