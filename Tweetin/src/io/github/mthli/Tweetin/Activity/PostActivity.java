@@ -216,7 +216,7 @@ public class PostActivity extends Activity {
         }
     }
     private void initPostFeedback() {
-        String feedbackStr = getString(R.string.setting_feedback_str) + " ";
+        String feedbackStr = getString(R.string.setting_advice_str) + " ";
         postEdit.setText(feedbackStr);
         postEdit.setSelection(feedbackStr.length());
         if (feedbackStr.length() > 140) {
@@ -423,7 +423,7 @@ public class PostActivity extends Activity {
             case Flag.POST_RESEND:
                 initPostResend();
                 break;
-            case Flag.POST_FEEDBACK:
+            case Flag.POST_ADVICE:
                 initPostFeedback();
                 break;
             case Flag.POST_SHARE:

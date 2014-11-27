@@ -16,18 +16,18 @@ import java.util.List;
 
 public class SettingAdapter extends ArrayAdapter<SettingItem> {
 
-    private Context context;
+    private Activity activity;
     private int layoutResId;
     private List<SettingItem> settingItemList;
 
     public SettingAdapter(
-            Context context,
+            Activity activity,
             int layoutResId,
             List<SettingItem> settingItemList
     ) {
-        super(context, layoutResId, settingItemList);
+        super(activity, layoutResId, settingItemList);
 
-        this.context = context;
+        this.activity = activity;
         this.layoutResId = layoutResId;
         this.settingItemList = settingItemList;
     }
@@ -48,7 +48,7 @@ public class SettingAdapter extends ArrayAdapter<SettingItem> {
         View view = convertView;
 
         if (view == null) {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            LayoutInflater inflater = activity.getLayoutInflater();
             view = inflater.inflate(layoutResId, viewGroup, false);
 
             holder = new Holder();
@@ -71,25 +71,26 @@ public class SettingAdapter extends ArrayAdapter<SettingItem> {
             holder.checkBox.setVisibility(View.GONE);
         }
 
+        /* Do something */
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                SharedPreferences sharedPreferences = context.getSharedPreferences(
-                        context.getString(R.string.sp_name),
+                SharedPreferences sharedPreferences = activity.getSharedPreferences(
+                        activity.getString(R.string.sp_name),
                         Context.MODE_PRIVATE
                 );
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 if (b) {
-                    if (item.getTitle().equals(context.getString(R.string.setting_title_detail))) {
+                    if (item.getTitle().equals(activity.getString(R.string.setting_title_detail))) {
                         editor.putBoolean(
-                                context.getString(R.string.sp_is_tweet_with_detail),
+                                activity.getString(R.string.sp_is_tweet_with_detail),
                                 true
                         ).commit();
                     }
                 } else {
-                    if (item.getTitle().equals(context.getString(R.string.setting_title_detail))) {
+                    if (item.getTitle().equals(activity.getString(R.string.setting_title_detail))) {
                         editor.putBoolean(
-                                context.getString(R.string.sp_is_tweet_with_detail),
+                                activity.getString(R.string.sp_is_tweet_with_detail),
                                 false
                         ).commit();
                     }

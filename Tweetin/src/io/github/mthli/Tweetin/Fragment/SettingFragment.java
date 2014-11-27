@@ -38,7 +38,8 @@ public class SettingFragment extends ProgressFragment {
         titleList.add(getString(R.string.setting_title_homepage));
         titleList.add(getString(R.string.setting_title_license));
         titleList.add(getString(R.string.setting_title_version));
-        titleList.add(getString(R.string.setting_title_feedback));
+        titleList.add(getString(R.string.setting_title_rate));
+        titleList.add(getString(R.string.setting_title_advice));
         titleList.add(getString(R.string.setting_title_author));
         titleList.add(getString(R.string.setting_title_thanks));
         titleList.add(getString(R.string.setting_title_sign_out));
@@ -48,13 +49,14 @@ public class SettingFragment extends ProgressFragment {
         contentList.add(getString(R.string.setting_content_homepage));
         contentList.add(getString(R.string.setting_content_license));
         contentList.add(getString(R.string.app_version));
-        contentList.add(getString(R.string.setting_content_feedback));
+        contentList.add(getString(R.string.setting_content_rate));
+        contentList.add(getString(R.string.setting_content_advice));
         contentList.add(getString(R.string.setting_content_author));
         contentList.add(getString(R.string.setting_content_thanks));
         contentList.add(getString(R.string.setting_content_sign_out));
 
         List<SettingItem> settingItemList = new ArrayList<SettingItem>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
             SettingItem item = new SettingItem();
             item.setTitle(titleList.get(i));
             item.setContent(contentList.get(i));
@@ -102,20 +104,25 @@ public class SettingFragment extends ProgressFragment {
                         startActivity(intentToLicense);
                         break;
                     case 3:
-                        Uri link = Uri.parse(getString(R.string.setting_link_42));
-                        Intent intentTo42 = new Intent(Intent.ACTION_VIEW, link);
+                        Uri linkTo42 = Uri.parse(getString(R.string.setting_link_to_42));
+                        Intent intentTo42 = new Intent(Intent.ACTION_VIEW, linkTo42);
                         startActivity(intentTo42);
                         break;
                     case 4:
-                        Intent intentToFeedback = new Intent(getActivity(), PostActivity.class);
-                        intentToFeedback.putExtra(
-                                getString(R.string.post_intent_flag),
-                                Flag.POST_FEEDBACK
-                        );
-                        startActivity(intentToFeedback);
-                        anim.fade(getActivity());
+                        Uri linkToGooglePlay = Uri.parse(getString(R.string.setting_link_to_google_play));
+                        Intent intentToGooglePlay = new Intent(Intent.ACTION_VIEW, linkToGooglePlay);
+                        startActivity(intentToGooglePlay);
                         break;
                     case 5:
+                        Intent intentToAdvice = new Intent(getActivity(), PostActivity.class);
+                        intentToAdvice.putExtra(
+                                getString(R.string.post_intent_flag),
+                                Flag.POST_ADVICE
+                        );
+                        startActivity(intentToAdvice);
+                        anim.fade(getActivity());
+                        break;
+                    case 6:
                         intentToProfile.putExtra(
                                 getString(R.string.profile_intent_user_id),
                                 Long.valueOf(getString(R.string.app_author_id))
@@ -123,7 +130,7 @@ public class SettingFragment extends ProgressFragment {
                         startActivity(intentToProfile);
                         anim.rightIn(getActivity());
                         break;
-                    case 6:
+                    case 7:
                         intentToProfile.putExtra(
                                 getString(R.string.profile_intent_user_id),
                                 Long.valueOf(getString(R.string.app_thanks_id))
@@ -131,7 +138,7 @@ public class SettingFragment extends ProgressFragment {
                         startActivity(intentToProfile);
                         anim.rightIn(getActivity());
                         break;
-                    case 7:
+                    case 8:
                         ((MainActivity) getActivity()).signOut();
                         break;
                     default:

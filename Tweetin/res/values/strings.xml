@@ -236,7 +236,8 @@
     <string name="setting_title_homepage">Homepage</string>
     <string name="setting_title_license">License</string>
     <string name="setting_title_version">Version</string>
-    <string name="setting_title_feedback">Feedback</string>
+    <string name="setting_title_rate">Rate</string>
+    <string name="setting_title_advice">Advice</string>
     <string name="setting_title_author">Author</string>
     <string name="setting_title_thanks">Thanks</string>
     <string name="setting_content_detail">
@@ -249,7 +250,10 @@
     <string name="setting_content_license">
         Apache License, Version 2.0
     </string>
-    <string name="setting_content_feedback">
+    <string name="setting_content_rate">
+        Rate this app at Google Play.
+    </string>
+    <string name="setting_content_advice">
         Send some suggestion to author.
     </string>
     <string name="setting_content_author">
@@ -261,10 +265,13 @@
     <string name="setting_content_sign_out">
         Clear all user data and sign out.
     </string>
-    <string name="setting_link_42">
+    <string name="setting_link_to_42">
         http://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life.2C_the_Universe.2C_and_Everything_.2842.29
     </string>
-    <string name="setting_feedback_str">
+    <string name="setting_link_to_google_play">
+        https://play.google.com/store/apps/details?id=io.github.mthli.Tweetin
+    </string>
+    <string name="setting_advice_str">
         \@mth_li #Tweetin
     </string>
 

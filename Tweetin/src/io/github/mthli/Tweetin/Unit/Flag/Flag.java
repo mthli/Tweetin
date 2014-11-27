@@ -30,6 +30,6 @@ public class Flag {
     public static final int POST_QUOTE = 0x502;
     public static final int POST_PHOTO = 0x503;
     public static final int POST_RESEND = 0x504;
-    public static final int POST_FEEDBACK = 0x505;
+    public static final int POST_ADVICE = 0x505;
     public static final int POST_SHARE = 0x506;
 }
