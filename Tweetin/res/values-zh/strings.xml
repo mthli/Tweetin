@@ -52,6 +52,13 @@
     <string name="tweet_notification_copy_successful">
         已复制到剪贴板。
     </string>
+    <!-- Save picture -->
+    <string name="tweet_toast_save_successful">
+        保存成功。
+    </string>
+    <string name="tweet_toast_save_failed">
+        保存失败。
+    </string>
 
     <!-- ResideMenu -->
     <string name="reside_menu_item_timeline">时间线</string>
@@ -73,12 +80,6 @@
     </string>
     <string name="context_menu_toast_already_favorite">
         已经收藏过了。
-    </string>
-    <string name="context_menu_toast_save_successful">
-        保存成功。
-    </string>
-    <string name="cotext_menu_toast_save_failed">
-        保存失败。
     </string>
 
     <!-- Splash -->

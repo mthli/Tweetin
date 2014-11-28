@@ -1,7 +1,6 @@
 package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.*;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
-import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
 import io.github.mthli.Tweetin.Unit.Picture.PictureUnit;
 import uk.co.senab.photoview.PhotoViewAttacher;
 

@@ -16,18 +16,10 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.github.mthli.Tweetin.Activity.DetailActivity;
-import io.github.mthli.Tweetin.Activity.MainActivity;
 import io.github.mthli.Tweetin.Activity.PictureActivity;
 import io.github.mthli.Tweetin.Activity.ProfileActivity;
-import io.github.mthli.Tweetin.Fragment.DiscoveryFragment;
-import io.github.mthli.Tweetin.Fragment.FavoriteFragment;
-import io.github.mthli.Tweetin.Fragment.MentionFragment;
-import io.github.mthli.Tweetin.Fragment.TimelineFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
-import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
-import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Picture.PictureUnit;
 
 import java.io.FileOutputStream;

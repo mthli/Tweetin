@@ -56,6 +56,13 @@
     <string name="tweet_notification_copy_successful">
         Copy successful.
     </string>
+    <!-- Save picture -->
+    <string name="tweet_toast_save_successful">
+        Save successful.
+    </string>
+    <string name="tweet_toast_save_failed">
+        Save failed.
+    </string>
 
     <!-- ResideMenu -->
     <string name="reside_menu_item_timeline">Timeline</string>
@@ -77,12 +84,6 @@
     </string>
     <string name="context_menu_toast_already_favorite">
         Already favorite.
-    </string>
-    <string name="context_menu_toast_save_successful">
-        Save successful.
-    </string>
-    <string name="cotext_menu_toast_save_failed">
-        Save failed.
     </string>
 
     <!-- Splash -->

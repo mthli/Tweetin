@@ -15,7 +15,6 @@ import io.github.mthli.Tweetin.Task.Unit.CancelTask;
 import io.github.mthli.Tweetin.Task.Unit.DeleteTask;
 import io.github.mthli.Tweetin.Task.Unit.FavoriteTask;
 import io.github.mthli.Tweetin.Task.Unit.RetweetTask;
-import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MentionFragment extends ProgressFragment {
-    private View view;
 
     private int refreshFlag = Flag.MENTION_TASK_IDLE;
     private boolean moveToBottom = false;
@@ -127,7 +125,7 @@ public class MentionFragment extends ProgressFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setContentView(R.layout.mention_fragment);
-        view = getContentView();
+        View view = getContentView();
         setContentEmpty(false);
         setContentShown(true);
 
@@ -191,20 +189,6 @@ public class MentionFragment extends ProgressFragment {
                         tweetList,
                         position
                 );
-            }
-        });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                ContextMenuUnit.showItemLongClickDialog(
-                        getActivity(),
-                        twitter,
-                        useId,
-                        tweetAdapter,
-                        tweetList,
-                        position
-                );
-                return true;
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {

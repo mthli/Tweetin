@@ -359,16 +359,6 @@ public class ContextMenuUnit {
                     )
             );
         }
-        /* Save picture */
-        if (tweet.getBitmap() != null) {
-            contextMenuItemList.add(
-                    new ContextMenuItem(
-                            activity.getString(R.string.context_menu_item_save_picture),
-                            Flag.CONTEXT_MENU_ITEM_SAVE_PICTURE,
-                            true
-                    )
-            );
-        }
         /* Copy */
         contextMenuItemList.add(
                 new ContextMenuItem(
@@ -432,13 +422,6 @@ public class ContextMenuUnit {
                         break;
                     case Flag.CONTEXT_MENU_ITEM_CANCEL_FAVORITE:
                         cancel(activity, twitter, tweetAdapter, tweetList, location);
-                        alertDialog.hide();
-                        alertDialog.dismiss();
-                        break;
-                    case Flag.CONTEXT_MENU_ITEM_SAVE_PICTURE:
-                        String[] array = tweet.getPictureURL().split("/");
-                        String filename = array[array.length - 1];
-                        PictureUnit.save(activity, tweet.getBitmap(), filename);
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;

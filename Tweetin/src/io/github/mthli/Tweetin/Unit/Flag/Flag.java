@@ -39,6 +39,5 @@ public class Flag {
     public static final int CONTEXT_MENU_ITEM_QUOTE = 0x603;
     public static final int CONTEXT_MENU_ITEM_FAVORITE = 0x604;
     public static final int CONTEXT_MENU_ITEM_CANCEL_FAVORITE = 0x605;
-    public static final int CONTEXT_MENU_ITEM_SAVE_PICTURE = 0x607;
     public static final int CONTEXT_MENU_ITEM_COPY = 0x606;
 }

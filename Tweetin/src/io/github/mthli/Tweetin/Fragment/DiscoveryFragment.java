@@ -1,6 +1,5 @@
 package io.github.mthli.Tweetin.Fragment;
 
-import android.app.AlertDialog;
 import android.content.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,8 +16,6 @@ import io.github.mthli.Tweetin.Task.Unit.CancelTask;
 import io.github.mthli.Tweetin.Task.Unit.DeleteTask;
 import io.github.mthli.Tweetin.Task.Unit.FavoriteTask;
 import io.github.mthli.Tweetin.Task.Unit.RetweetTask;
-import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
-import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
@@ -29,8 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DiscoveryFragment extends ProgressFragment {
-
-    private View view;
 
     private int refreshFlag = Flag.DISCOVERY_TASK_IDLE;
     public int getRefreshFlag() {
@@ -136,7 +131,7 @@ public class DiscoveryFragment extends ProgressFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setContentView(R.layout.discovery_fragment);
-        view = getContentView();
+        final View view = getContentView();
         setContentEmpty(false);
         setContentShown(true);
 
@@ -204,20 +199,6 @@ public class DiscoveryFragment extends ProgressFragment {
                         tweetList,
                         position
                 );
-            }
-        });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                ContextMenuUnit.showItemLongClickDialog(
-                        getActivity(),
-                        twitter,
-                        useId,
-                        tweetAdapter,
-                        tweetList,
-                        position
-                );
-                return true;
             }
         });
     }

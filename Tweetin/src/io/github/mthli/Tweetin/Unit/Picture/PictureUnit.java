@@ -78,7 +78,7 @@ public class PictureUnit {
         } catch (Exception e) {
             Toast.makeText(
                     context,
-                    R.string.cotext_menu_toast_save_failed,
+                    R.string.tweet_toast_save_failed,
                     Toast.LENGTH_SHORT
             ).show();
             return;
@@ -103,7 +103,7 @@ public class PictureUnit {
 
         Toast.makeText(
                 context,
-                R.string.context_menu_toast_save_successful,
+                R.string.tweet_toast_save_successful,
                 Toast.LENGTH_SHORT
         ).show();
     }
