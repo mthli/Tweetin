@@ -34,7 +34,22 @@ public class MainActivity extends FragmentActivity {
     private FavoriteFragment favoriteFragment;
     private DiscoveryFragment discoveryFragment;
     private SettingFragment settingFragment;
-    private int fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
+    public int fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
+    public TimelineFragment getTimelineFragment() {
+        return timelineFragment;
+    }
+    public MentionFragment getMentionFragment() {
+        return mentionFragment;
+    }
+    public FavoriteFragment getFavoriteFragment() {
+        return favoriteFragment;
+    }
+    public DiscoveryFragment getDiscoveryFragment() {
+        return discoveryFragment;
+    }
+    public SettingFragment getSettingFragment() {
+        return settingFragment;
+    }
 
     private ResideMenu resideMenu;
     private ResideMenuItem timelineItem;
@@ -436,8 +451,9 @@ public class MainActivity extends FragmentActivity {
                             getString(R.string.tweet_info_retweeted_by_me)
                     );
                 }
-                if (favoriteFromDetail) {
-                    tweet.setFavorite(true);
+                tweet.setFavorite(favoriteFromDetail);
+                if (fragmentFlag == Flag.IN_FAVORITE_FRAGMENT && !favoriteFromDetail) { //
+                    tweetList.remove(position);
                 }
                 if (deleteFromDetail) {
                     tweetList.remove(position);

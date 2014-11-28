@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,7 @@ public class FavoriteAction {
         database.insert(FavoriteRecord.TABLE, null, values);
     }
 
-    public void updatedByRetweet(long statusId) {
+    public void updatedByRetweet(Tweet oldTweet) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.sp_name),
                 Context.MODE_PRIVATE
@@ -93,31 +94,39 @@ public class FavoriteAction {
                 FavoriteRecord.TABLE,
                 values,
                 FavoriteRecord.STATUS_ID + "=?",
-                new String[] {String.valueOf(statusId)}
+                new String[] {String.valueOf(oldTweet.getStatusId())}
         );
     }
 
-    public void updatedByFavorite(long statusId) {
+    /* Do something */
+    public void updatedByFavorite(Tweet oldTweet) {
         ContentValues values = new ContentValues();
-        values.put(
-                FavoriteRecord.FAVORITE,
-                "true"
-        );
+        if (oldTweet.isFavorite()) {
+            values.put(
+                    FavoriteRecord.FAVORITE,
+                    "true"
+            );
+        } else {
+            values.put(
+                    FavoriteRecord.FAVORITE,
+                    "false"
+            );
+        }
         database.update(
                 FavoriteRecord.TABLE,
                 values,
                 FavoriteRecord.STATUS_ID + "=?",
-                new String[] {String.valueOf(statusId)}
+                new String[] {String.valueOf(oldTweet.getStatusId())}
         );
     }
 
-    public void deleteRecord(long statusId) {
+    public void deleteRecord(Tweet oldTweet) {
         database.execSQL("DELETE FROM "
                         + FavoriteRecord.TABLE
                         + " WHERE "
                         + FavoriteRecord.STATUS_ID
                         + " like \""
-                        + String.valueOf(statusId)
+                        + String.valueOf(oldTweet.getStatusId())
                         + "\""
         );
     }

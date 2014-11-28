@@ -61,13 +61,13 @@
     <string name="reside_menu_item_setting">设置</string>
     <!-- ContextMenu -->
     <string name="context_menu_item_reply">回复</string>
-    <string name="context_menu_item_delete">删除</string>
+    <string name="context_menu_item_delete">删除推文</string>
     <string name="context_menu_item_retweet">转推</string>
     <string name="context_menu_item_quote">引用</string>
     <string name="context_menu_item_favorite">收藏</string>
-    <string name="context_menu_item_un_favorite">取消收藏</string>
+    <string name="context_menu_item_cancel_favorite">取消收藏</string>
+    <string name="context_menu_item_save_picture">保存图片</string>
     <string name="context_menu_item_copy">拷贝</string>
-    <string name="context_menu_item_save">保存</string>
     <string name="context_menu_toast_already_retweet">
         已经转推过了。
     </string>

@@ -1,5 +1,7 @@
 package io.github.mthli.Tweetin.Unit.Tweet;
 
+import android.graphics.Bitmap;
+
 public class Tweet {
     private long statusId;
     private long replyToStatusId;
@@ -12,6 +14,7 @@ public class Tweet {
     private boolean protect;
     private String checkIn;
     private String pictureURL;
+    private Bitmap bitmap;
     private String text;
     private boolean retweet;
     private String retweetedByUserName;
@@ -29,6 +32,7 @@ public class Tweet {
         this.protect = false;
         this.checkIn = null;
         this.pictureURL = null;
+        this.bitmap = null;
         this.text = null;
         this.retweet = false;
         this.retweetedByUserName = null;
@@ -110,6 +114,13 @@ public class Tweet {
     }
     public void setPictureURL(String pictureURL) {
         this.pictureURL = pictureURL;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 
     public String getText() {

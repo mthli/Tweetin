@@ -1,7 +1,6 @@
 package io.github.mthli.Tweetin.Unit.Tweet;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,16 +16,22 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.mthli.Tweetin.Activity.DetailActivity;
+import io.github.mthli.Tweetin.Activity.MainActivity;
 import io.github.mthli.Tweetin.Activity.PictureActivity;
 import io.github.mthli.Tweetin.Activity.ProfileActivity;
+import io.github.mthli.Tweetin.Fragment.DiscoveryFragment;
+import io.github.mthli.Tweetin.Fragment.FavoriteFragment;
+import io.github.mthli.Tweetin.Fragment.MentionFragment;
+import io.github.mthli.Tweetin.Fragment.TimelineFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
-import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuAdapter;
+import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
+import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Picture.PictureUnit;
 
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -164,6 +169,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                         new Response.Listener<Bitmap>() {
                             @Override
                             public void onResponse(Bitmap bitmap) {
+                                tweet.setBitmap(bitmap);
                                 holder.bitmap = bitmap;
                                 bitmap = PictureUnit.fixBitmap(activity, bitmap);
                                 holder.picture.setImageBitmap(bitmap);
@@ -226,9 +232,11 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         holder.picture.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                String[] array = tweet.getPictureURL().split("/");
-                String filename = array[array.length - 1];
-                showPictureLongClickDialog(holder.bitmap, filename);
+                if (tweet.getBitmap() != null) {
+                    String[] array = tweet.getPictureURL().split("/");
+                    String filename = array[array.length - 1];
+                    PictureUnit.save(activity, tweet.getBitmap(), filename);
+                }
                 return true;
             }
         });
@@ -268,53 +276,5 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         }
 
         return view;
-    }
-
-    private AlertDialog alertDialog;
-    private void showPictureLongClickDialog(final Bitmap bitmap, final String filename) {
-        LinearLayout linearLayout = (LinearLayout) activity
-                .getLayoutInflater().inflate(
-                        R.layout.context_menu,
-                        null
-                );
-        ListView menu = (ListView) linearLayout.findViewById(R.id.context_menu_listview);
-        List<String> menuItemList = new ArrayList<String>();
-
-        menuItemList.add(
-                activity.getString(R.string.context_menu_item_save)
-        );
-
-        final ContextMenuAdapter contextMenuAdapter = new ContextMenuAdapter(
-                activity,
-                R.layout.context_menu_item,
-                menuItemList
-        );
-        menu.setAdapter(contextMenuAdapter);
-        contextMenuAdapter.notifyDataSetChanged();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setView(linearLayout);
-        builder.setCancelable(true);
-        alertDialog = builder.create();
-        alertDialog.show();
-
-        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        PictureUnit.save(
-                                activity,
-                                bitmap,
-                                filename
-                        );
-                        alertDialog.hide();
-                        alertDialog.dismiss();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
     }
 }

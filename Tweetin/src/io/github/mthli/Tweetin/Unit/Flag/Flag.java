@@ -32,4 +32,13 @@ public class Flag {
     public static final int POST_RESEND = 0x504;
     public static final int POST_ADVICE = 0x505;
     public static final int POST_SHARE = 0x506;
+
+    public static final int CONTEXT_MENU_ITEM_REPLY = 0x600;
+    public static final int CONTEXT_MENU_ITEM_DELETE = 0x601;
+    public static final int CONTEXT_MENU_ITEM_RETWEET = 0x602;
+    public static final int CONTEXT_MENU_ITEM_QUOTE = 0x603;
+    public static final int CONTEXT_MENU_ITEM_FAVORITE = 0x604;
+    public static final int CONTEXT_MENU_ITEM_CANCEL_FAVORITE = 0x605;
+    public static final int CONTEXT_MENU_ITEM_SAVE_PICTURE = 0x607;
+    public static final int CONTEXT_MENU_ITEM_COPY = 0x606;
 }

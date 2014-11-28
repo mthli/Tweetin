@@ -17,61 +17,12 @@ import io.github.mthli.Tweetin.Unit.Picture.PictureUnit;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PictureActivity extends Activity {
 
     private Bitmap bitmap;
     private String filename;
 
-    private AlertDialog alertDialog;
-    private void showPictureLongClickDialog() {
-        LinearLayout linearLayout = (LinearLayout) getLayoutInflater()
-                .inflate(
-                        R.layout.context_menu,
-                        null
-                );
-        ListView menu = (ListView) linearLayout.findViewById(R.id.context_menu_listview);
-        List<String> menuItemList = new ArrayList<String>();
-
-        menuItemList.add(
-                getString(R.string.context_menu_item_save)
-        );
-
-        ContextMenuAdapter contextMenuAdapter = new ContextMenuAdapter(
-                this,
-                R.layout.context_menu_item,
-                menuItemList
-        );
-        menu.setAdapter(contextMenuAdapter);
-        contextMenuAdapter.notifyDataSetChanged();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(linearLayout);
-        builder.setCancelable(true);
-        alertDialog = builder.create();
-        alertDialog.show();
-
-        menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        PictureUnit.save(
-                                PictureActivity.this,
-                                bitmap,
-                                filename
-                        );
-                        alertDialog.hide();
-                        alertDialog.dismiss();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +45,11 @@ public class PictureActivity extends Activity {
             attacher.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    showPictureLongClickDialog();
+                    PictureUnit.save(
+                            PictureActivity.this,
+                            bitmap,
+                            filename
+                    );
                     return true;
                 }
             });

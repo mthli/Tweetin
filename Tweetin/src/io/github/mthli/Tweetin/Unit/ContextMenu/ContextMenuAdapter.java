@@ -11,15 +11,15 @@ import io.github.mthli.Tweetin.R;
 
 import java.util.List;
 
-public class ContextMenuAdapter extends ArrayAdapter<String> {
+public class ContextMenuAdapter extends ArrayAdapter<ContextMenuItem> {
     private Context context;
     private int layoutResId;
-    private List<String> list;
+    private List<ContextMenuItem> list;
 
     public ContextMenuAdapter(
             Context context,
             int layoutResId,
-            List<String> list
+            List<ContextMenuItem> list
     ) {
         super(context, layoutResId, list);
 
@@ -52,8 +52,8 @@ public class ContextMenuAdapter extends ArrayAdapter<String> {
             holder = (Holder) view.getTag();
         }
 
-        String str = list.get(position);
-        holder.menuItem.setText(str);
+        ContextMenuItem item = list.get(position);
+        holder.menuItem.setText(item.getTitle());
 
         return view;
     }

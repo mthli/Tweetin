@@ -1,17 +1,32 @@
 package io.github.mthli.Tweetin.Unit.ContextMenu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
+import io.github.mthli.Tweetin.Activity.DetailActivity;
+import io.github.mthli.Tweetin.Activity.MainActivity;
 import io.github.mthli.Tweetin.Activity.PostActivity;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Task.Unit.CancelTask;
+import io.github.mthli.Tweetin.Task.Unit.DeleteTask;
+import io.github.mthli.Tweetin.Task.Unit.FavoriteTask;
+import io.github.mthli.Tweetin.Task.Unit.RetweetTask;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
+import io.github.mthli.Tweetin.Unit.Picture.PictureUnit;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
+import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
+import twitter4j.Twitter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContextMenuUnit {
@@ -86,4 +101,358 @@ public class ContextMenuUnit {
         ).show();
     }
 
+    public static void detele(
+            Activity activity,
+            Twitter twitter,
+            TweetAdapter tweetAdapter,
+            List<Tweet> tweetList,
+            int position
+    ) {
+        DeleteTask deleteTask = new DeleteTask(
+                activity,
+                twitter,
+                tweetAdapter,
+                tweetList,
+                position
+        );
+        if (activity instanceof MainActivity) {
+            int flag = ((MainActivity) activity).fragmentFlag;
+            switch (flag) {
+                case Flag.IN_TIMELINE_FRAGMENT:
+                    ((MainActivity) activity).getTimelineFragment()
+                            .setDeleteTask(deleteTask);
+                    deleteTask.execute();
+                    break;
+                case Flag.IN_MENTION_FRAGMENT:
+                    ((MainActivity) activity).getMentionFragment()
+                            .setDeleteTask(deleteTask);
+                    deleteTask.execute();
+                    break;
+                case Flag.IN_FAVORITE_FRAGMENT:
+                    ((MainActivity) activity).getFavoriteFragment()
+                            .setDeleteTask(deleteTask);
+                    deleteTask.execute();
+                    break;
+                case Flag.IN_DISCOVERY_FRAGMENT:
+                    ((MainActivity) activity).getDiscoveryFragment()
+                            .setDeleteTask(deleteTask);
+                    deleteTask.execute();
+                    break;
+                default:
+                    break;
+            }
+        } else if (activity instanceof DetailActivity) {
+            ((DetailActivity) activity).setDeleteTask(deleteTask);
+            deleteTask.execute();
+        }
+    }
+    
+    public static void retweet(
+            Activity activity,
+            Twitter twitter,
+            TweetAdapter tweetAdapter,
+            List<Tweet> tweetList,
+            int position
+    ) {
+        RetweetTask retweetTask = new RetweetTask(
+                activity,
+                twitter,
+                tweetAdapter,
+                tweetList,
+                position
+        );
+        if (activity instanceof MainActivity) {
+            int flag = ((MainActivity) activity).fragmentFlag;
+            switch (flag) {
+                case Flag.IN_TIMELINE_FRAGMENT:
+                    ((MainActivity) activity).getTimelineFragment()
+                            .setRetweetTask(retweetTask);
+                    retweetTask.execute();
+                    break;
+                case Flag.IN_MENTION_FRAGMENT:
+                    ((MainActivity) activity).getMentionFragment()
+                            .setRetweetTask(retweetTask);
+                    retweetTask.execute();
+                    break;
+                case Flag.IN_FAVORITE_FRAGMENT:
+                    ((MainActivity) activity).getFavoriteFragment()
+                            .setRetweetTask(retweetTask);
+                    retweetTask.execute();
+                    break;
+                case Flag.IN_DISCOVERY_FRAGMENT:
+                    ((MainActivity) activity).getDiscoveryFragment()
+                            .setRetweetTask(retweetTask);
+                    retweetTask.execute();
+                    break;
+                default:
+                    break;
+            }
+        } else if (activity instanceof DetailActivity) {
+            ((DetailActivity) activity).setRetweetTask(retweetTask);
+            retweetTask.execute();
+        }
+    }
+    
+    public static void favorite(
+            Activity activity,
+            Twitter twitter,
+            TweetAdapter tweetAdapter,
+            List<Tweet> tweetList,
+            int position
+    ) {
+        FavoriteTask favoriteTask = new FavoriteTask(
+                activity,
+                twitter,
+                tweetAdapter,
+                tweetList,
+                position
+        );
+        if (activity instanceof MainActivity) {
+            int flag = ((MainActivity) activity).fragmentFlag;
+            switch (flag) {
+                case Flag.IN_TIMELINE_FRAGMENT:
+                    ((MainActivity) activity).getTimelineFragment()
+                            .setFavoriteTask(favoriteTask);
+                    favoriteTask.execute();
+                    break;
+                case Flag.IN_MENTION_FRAGMENT:
+                    ((MainActivity) activity).getMentionFragment()
+                            .setFavoriteTask(favoriteTask);
+                    favoriteTask.execute();
+                    break;
+                case Flag.IN_DISCOVERY_FRAGMENT:
+                    ((MainActivity) activity).getDiscoveryFragment()
+                            .setFavoriteTask(favoriteTask);
+                    favoriteTask.execute();
+                    break;
+                default:
+                    break;
+            }
+        } else if (activity instanceof DetailActivity) {
+            ((DetailActivity) activity).setFavoriteTask(favoriteTask);
+            favoriteTask.execute();
+        }
+    }
+    
+    public static void cancel(
+            Activity activity,
+            Twitter twitter,
+            TweetAdapter tweetAdapter,
+            List<Tweet> tweetList,
+            int position
+    ) {
+        CancelTask cancelTask = new CancelTask(
+                activity,
+                twitter,
+                tweetAdapter,
+                tweetList,
+                position
+        );
+        if (activity instanceof MainActivity) {
+            int flag = ((MainActivity) activity).fragmentFlag;
+            switch (flag) {
+                case Flag.IN_TIMELINE_FRAGMENT:
+                    ((MainActivity) activity).getTimelineFragment()
+                            .setCancelTask(cancelTask);
+                    cancelTask.execute();
+                    break;
+                case Flag.IN_MENTION_FRAGMENT:
+                    ((MainActivity) activity).getMentionFragment()
+                            .setCancelTask(cancelTask);
+                    cancelTask.execute();
+                    break;
+                case Flag.IN_FAVORITE_FRAGMENT:
+                    ((MainActivity) activity).getFavoriteFragment()
+                            .setCancelTask(cancelTask);
+                    cancelTask.execute();
+                    break;
+                case Flag.IN_DISCOVERY_FRAGMENT:
+                    ((MainActivity) activity).getDiscoveryFragment()
+                            .setCancelTask(cancelTask);
+                    cancelTask.execute();
+                    break;
+                default:
+                    break;
+            }
+        } else if (activity instanceof DetailActivity) {
+            ((DetailActivity) activity).setCancelTask(cancelTask);
+            cancelTask.execute();
+        }
+    }
+
+    public static void showItemLongClickDialog(
+            final Activity activity,
+            final Twitter twitter,
+            long useId,
+            final TweetAdapter tweetAdapter,
+            final List<Tweet> tweetList,
+            final int location
+    ) {
+        LinearLayout linearLayout = (LinearLayout) activity
+                .getLayoutInflater().inflate(
+                        R.layout.context_menu,
+                        null
+                );
+        ListView contextMenu = (ListView) linearLayout.findViewById(R.id.context_menu_listview);
+
+        final List<ContextMenuItem> contextMenuItemList = new ArrayList<ContextMenuItem>();
+        final Tweet tweet = tweetList.get(location);
+        /* Reply */
+        contextMenuItemList.add(
+                new ContextMenuItem(
+                        activity.getString(R.string.context_menu_item_reply),
+                        Flag.CONTEXT_MENU_ITEM_REPLY,
+                        true
+                )
+        );
+        /* Quote */
+        contextMenuItemList.add(
+                new ContextMenuItem(
+                        activity.getString(R.string.context_menu_item_quote),
+                        Flag.CONTEXT_MENU_ITEM_QUOTE,
+                        true
+                )
+        );
+        /* Retweet and delete */
+        if (tweet.getRetweetedByUserId() != -1l && tweet.getRetweetedByUserId() == useId) {
+            contextMenuItemList.add(
+                    new ContextMenuItem(
+                            activity.getString(R.string.context_menu_item_retweet),
+                            Flag.CONTEXT_MENU_ITEM_RETWEET,
+                            false
+                    )
+            );
+        } else {
+            if (tweet.getUserId() != useId) {
+                contextMenuItemList.add(
+                        new ContextMenuItem(
+                                activity.getString(R.string.context_menu_item_retweet),
+                                Flag.CONTEXT_MENU_ITEM_RETWEET,
+                                true
+                        )
+                );
+            } else {
+                contextMenuItemList.add(
+                        new ContextMenuItem(
+                                activity.getString(R.string.context_menu_item_delete),
+                                Flag.CONTEXT_MENU_ITEM_DELETE,
+                                true
+                        )
+                );
+            }
+        }
+        /* Favorite and cancel favorite */
+        if (!tweet.isFavorite()) {
+            contextMenuItemList.add(
+                    new ContextMenuItem(
+                            activity.getString(R.string.context_menu_item_favorite),
+                            Flag.CONTEXT_MENU_ITEM_FAVORITE,
+                            true
+                    )
+            );
+        } else {
+            contextMenuItemList.add(
+                    new ContextMenuItem(
+                            activity.getString(R.string.context_menu_item_cancel_favorite),
+                            Flag.CONTEXT_MENU_ITEM_CANCEL_FAVORITE,
+                            true
+                    )
+            );
+        }
+        /* Save picture */
+        if (tweet.getBitmap() != null) {
+            contextMenuItemList.add(
+                    new ContextMenuItem(
+                            activity.getString(R.string.context_menu_item_save_picture),
+                            Flag.CONTEXT_MENU_ITEM_SAVE_PICTURE,
+                            true
+                    )
+            );
+        }
+        /* Copy */
+        contextMenuItemList.add(
+                new ContextMenuItem(
+                        activity.getString(R.string.context_menu_item_copy),
+                        Flag.CONTEXT_MENU_ITEM_COPY,
+                        true
+                )
+        );
+
+        ContextMenuAdapter contextMenuAdapter = new ContextMenuAdapter(
+                activity,
+                R.layout.context_menu_item,
+                contextMenuItemList
+        );
+        contextMenu.setAdapter(contextMenuAdapter);
+        contextMenuAdapter.notifyDataSetChanged();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setView(linearLayout);
+        builder.setCancelable(true);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        contextMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                ContextMenuItem contextMenuItem = contextMenuItemList.get(position);
+                switch (contextMenuItem.getFlag()) {
+                    case Flag.CONTEXT_MENU_ITEM_REPLY:
+                        reply(activity, tweetList, location);
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    case Flag.CONTEXT_MENU_ITEM_DELETE:
+                        detele(activity, twitter, tweetAdapter, tweetList, location);
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    case Flag.CONTEXT_MENU_ITEM_RETWEET:
+                        if (contextMenuItem.isActive()) {
+                            retweet(activity, twitter, tweetAdapter, tweetList, location);
+                        } else {
+                            Toast.makeText(
+                                    activity,
+                                    R.string.context_menu_toast_already_retweet,
+                                    Toast.LENGTH_SHORT
+                            ).show();
+                        }
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    case Flag.CONTEXT_MENU_ITEM_QUOTE:
+                        quote(activity, tweetList, location);
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    case Flag.CONTEXT_MENU_ITEM_FAVORITE:
+                        favorite(activity, twitter, tweetAdapter, tweetList, location);
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    case Flag.CONTEXT_MENU_ITEM_CANCEL_FAVORITE:
+                        cancel(activity, twitter, tweetAdapter, tweetList, location);
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    case Flag.CONTEXT_MENU_ITEM_SAVE_PICTURE:
+                        String[] array = tweet.getPictureURL().split("/");
+                        String filename = array[array.length - 1];
+                        PictureUnit.save(activity, tweet.getBitmap(), filename);
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    case Flag.CONTEXT_MENU_ITEM_COPY:
+                        clip(activity, tweetList, location);
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    default:
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                }
+            }
+        });
+    }
 }

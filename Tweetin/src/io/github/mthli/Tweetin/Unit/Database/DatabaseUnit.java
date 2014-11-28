@@ -14,15 +14,15 @@ public class DatabaseUnit {
     ) {
         TimelineAction action = new TimelineAction(context);
         action.openDatabase(true);
-        action.updatedByRetweet(oldTweet.getStatusId());
+        action.updatedByRetweet(oldTweet);
         action.closeDatabase();
         MentionAction mentionAction = new MentionAction(context);
         mentionAction.openDatabase(true);
-        mentionAction.updatedByRetweet(oldTweet.getStatusId());
+        mentionAction.updatedByRetweet(oldTweet);
         mentionAction.closeDatabase();
         FavoriteAction favoriteAction = new FavoriteAction(context);
         favoriteAction.openDatabase(true);
-        favoriteAction.updatedByRetweet(oldTweet.getStatusId());
+        favoriteAction.updatedByRetweet(oldTweet);
         favoriteAction.closeDatabase();
     }
 
@@ -32,15 +32,15 @@ public class DatabaseUnit {
     ) {
         TimelineAction action = new TimelineAction(context);
         action.openDatabase(true);
-        action.updatedByFavorite(oldTweet.getStatusId());
+        action.updatedByFavorite(oldTweet);
         action.closeDatabase();
         MentionAction mentionAction = new MentionAction(context);
         mentionAction.openDatabase(true);
-        mentionAction.updatedByFavorite(oldTweet.getStatusId());
+        mentionAction.updatedByFavorite(oldTweet);
         mentionAction.closeDatabase();
         FavoriteAction favoriteAction = new FavoriteAction(context);
         favoriteAction.openDatabase(true);
-        favoriteAction.updatedByFavorite(oldTweet.getStatusId());
+        favoriteAction.updatedByFavorite(oldTweet);
         favoriteAction.closeDatabase();
     }
 
@@ -50,15 +50,15 @@ public class DatabaseUnit {
     ) {
         TimelineAction timelineAction = new TimelineAction(context);
         timelineAction.openDatabase(true);
-        timelineAction.deleteRecord(oldTweet.getStatusId());
+        timelineAction.deleteRecord(oldTweet);
         timelineAction.closeDatabase();
         MentionAction mentionAction = new MentionAction(context);
         mentionAction.openDatabase(true);
-        mentionAction.deleteRecord(oldTweet.getStatusId());
+        mentionAction.deleteRecord(oldTweet);
         mentionAction.closeDatabase();
         FavoriteAction favoriteAction = new FavoriteAction(context);
         favoriteAction.openDatabase(true);
-        favoriteAction.deleteRecord(oldTweet.getStatusId());
+        favoriteAction.deleteRecord(oldTweet);
         favoriteAction.closeDatabase();
     }
 
