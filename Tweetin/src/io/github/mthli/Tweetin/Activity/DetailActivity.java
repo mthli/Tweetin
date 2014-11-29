@@ -19,6 +19,7 @@ import io.github.mthli.Tweetin.Task.Unit.DeleteTask;
 import io.github.mthli.Tweetin.Task.Unit.FavoriteTask;
 import io.github.mthli.Tweetin.Task.Unit.RetweetTask;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
+import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
@@ -214,6 +215,20 @@ public class DetailActivity extends Activity {
                 );
                 startActivity(intent);
                 anim.fade(DetailActivity.this);
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                ContextMenuUnit.showItemLongClickDialog(
+                        DetailActivity.this,
+                        twitter,
+                        useId,
+                        tweetAdapter,
+                        tweetList,
+                        position
+                );
+                return true;
             }
         });
 

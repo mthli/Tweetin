@@ -20,8 +20,6 @@
                 app:border_width="0dp">
         </de.hdodenhof.circleimageview.CircleImageView>
 
-        <!-- Do something -->
-
         <LinearLayout android:orientation="vertical"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"

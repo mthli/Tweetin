@@ -15,6 +15,7 @@ import io.github.mthli.Tweetin.Task.Unit.CancelTask;
 import io.github.mthli.Tweetin.Task.Unit.DeleteTask;
 import io.github.mthli.Tweetin.Task.Unit.FavoriteTask;
 import io.github.mthli.Tweetin.Task.Unit.RetweetTask;
+import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
@@ -189,6 +190,20 @@ public class MentionFragment extends ProgressFragment {
                         tweetList,
                         position
                 );
+            }
+        });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                ContextMenuUnit.showItemLongClickDialog(
+                        getActivity(),
+                        twitter,
+                        useId,
+                        tweetAdapter,
+                        tweetList,
+                        position
+                );
+                return true;
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
