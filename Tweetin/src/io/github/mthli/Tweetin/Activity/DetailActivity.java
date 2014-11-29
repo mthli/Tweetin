@@ -194,33 +194,10 @@ public class DetailActivity extends Activity {
                 return true;
             }
         });
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Tweet tweet = tweetList.get(position);
-                Intent intent = new Intent(DetailActivity.this, PostActivity.class);
-                ActivityAnim anim = new ActivityAnim();
-                intent.putExtra(
-                        getString(R.string.post_intent_flag),
-                        Flag.POST_REPLY
-                );
-                intent.putExtra(
-                        getString(R.string.post_intent_status_id),
-                        tweet.getStatusId()
-                );
-                intent.putExtra(
-                        getString(R.string.post_intent_status_screen_name),
-                        tweet.getScreenName()
-                );
-                startActivity(intent);
-                anim.fade(DetailActivity.this);
-            }
-        });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                ContextMenuUnit.showItemLongClickDialog(
+                ContextMenuUnit.show(
                         DetailActivity.this,
                         twitter,
                         useId,
@@ -228,7 +205,6 @@ public class DetailActivity extends Activity {
                         tweetList,
                         position
                 );
-                return true;
             }
         });
 

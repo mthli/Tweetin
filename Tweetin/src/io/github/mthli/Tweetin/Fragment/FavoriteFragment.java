@@ -175,17 +175,7 @@ public class FavoriteFragment extends ProgressFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TweetUnit.tweetToDetailActivity(
-                        getActivity(),
-                        tweetList,
-                        position
-                );
-            }
-        });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                ContextMenuUnit.showItemLongClickDialog(
+                ContextMenuUnit.show(
                         getActivity(),
                         twitter,
                         useId,
@@ -193,7 +183,6 @@ public class FavoriteFragment extends ProgressFragment {
                         tweetList,
                         position
                 );
-                return true;
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {

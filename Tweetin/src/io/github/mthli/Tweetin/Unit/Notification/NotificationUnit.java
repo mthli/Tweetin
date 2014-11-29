@@ -151,7 +151,7 @@ public class NotificationUnit {
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
     }
     public void cancelFavoriting() {
-        builder.setSmallIcon(R.drawable.ic_notification_favorite);
+        builder.setSmallIcon(R.drawable.ic_notification_cancel);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_un_favorite_ing)
         );
@@ -164,7 +164,7 @@ public class NotificationUnit {
         notificationManager.notify(Flag.NOTIFICATION_PROGRESS_ID, notification);
     }
     public void cancelFavoriteSuccessful() {
-        builder.setSmallIcon(R.drawable.ic_notification_favorite);
+        builder.setSmallIcon(R.drawable.ic_notification_cancel);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_un_favorite_successful)
         );
@@ -178,7 +178,7 @@ public class NotificationUnit {
         notificationManager.cancel(Flag.NOTIFICATION_PROGRESS_ID);
     }
     public void cancelFavoriteFailed() {
-        builder.setSmallIcon(R.drawable.ic_notification_favorite);
+        builder.setSmallIcon(R.drawable.ic_notification_cancel);
         builder.setTicker(
                 context.getString(R.string.tweet_notification_un_favorite_failed)
         );

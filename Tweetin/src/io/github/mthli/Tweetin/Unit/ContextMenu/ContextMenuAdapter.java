@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import io.github.mthli.Tweetin.R;
 
@@ -29,7 +30,8 @@ public class ContextMenuAdapter extends ArrayAdapter<ContextMenuItem> {
     }
 
     private class Holder {
-        TextView menuItem;
+        ImageView icon;
+        TextView title;
     }
 
     @Override
@@ -46,14 +48,16 @@ public class ContextMenuAdapter extends ArrayAdapter<ContextMenuItem> {
             view = inflater.inflate(layoutResId, viewGroup, false);
 
             holder = new Holder();
-            holder.menuItem = (TextView) view.findViewById(R.id.context_menu_item);
+            holder.icon = (ImageView) view.findViewById(R.id.context_menu_item_icon);
+            holder.title = (TextView) view.findViewById(R.id.context_menu_item_title);
             view.setTag(holder);
         } else {
             holder = (Holder) view.getTag();
         }
 
         ContextMenuItem item = list.get(position);
-        holder.menuItem.setText(item.getTitle());
+        holder.icon.setImageDrawable(item.getIcon());
+        holder.title.setText(item.getTitle());
 
         return view;
     }

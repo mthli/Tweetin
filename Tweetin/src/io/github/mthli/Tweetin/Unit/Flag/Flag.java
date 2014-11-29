@@ -18,10 +18,6 @@ public class Flag {
     public static final int DETAIL_TASK_RUNNING = 0x208;
     public static final int DETAIL_TASK_IDLE = 0x209;
 
-    public static final int STATUS_NONE = 0x300;
-    public static final int STATUS_RETWEETED_BY_ME = 0x301;
-    public static final int STATUS_SENT_BY_ME = 0x302;
-
     public static final int NOTIFICATION_PROGRESS_ID = 0x400;
     public static final int NOTIFICATION_MENTION_ID = 0x401;
 
@@ -38,6 +34,7 @@ public class Flag {
     public static final int CONTEXT_MENU_ITEM_RETWEET = 0x602;
     public static final int CONTEXT_MENU_ITEM_QUOTE = 0x603;
     public static final int CONTEXT_MENU_ITEM_FAVORITE = 0x604;
-    public static final int CONTEXT_MENU_ITEM_CANCEL_FAVORITE = 0x605;
-    public static final int CONTEXT_MENU_ITEM_COPY = 0x606;
+    public static final int CONTEXT_MENU_ITEM_CANCEL = 0x605;
+    public static final int CONTEXT_MENU_ITEM_DETAIL = 0x606;
+    public static final int CONTEXT_MENU_ITEM_COPY = 0x607;
 }

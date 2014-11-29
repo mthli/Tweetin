@@ -21,9 +21,9 @@ import io.github.mthli.Tweetin.Task.Unit.FavoriteTask;
 import io.github.mthli.Tweetin.Task.Unit.RetweetTask;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
-import io.github.mthli.Tweetin.Unit.Picture.PictureUnit;
 import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
 import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
+import io.github.mthli.Tweetin.Unit.Tweet.TweetUnit;
 import twitter4j.Twitter;
 
 import java.util.ArrayList;
@@ -280,7 +280,7 @@ public class ContextMenuUnit {
         }
     }
 
-    public static void showItemLongClickDialog(
+    public static void show(
             final Activity activity,
             final Twitter twitter,
             long useId,
@@ -300,6 +300,7 @@ public class ContextMenuUnit {
         /* Reply */
         contextMenuItemList.add(
                 new ContextMenuItem(
+                        activity.getResources().getDrawable(R.drawable.ic_context_menu_item_reply),
                         activity.getString(R.string.context_menu_item_reply),
                         Flag.CONTEXT_MENU_ITEM_REPLY,
                         true
@@ -308,6 +309,7 @@ public class ContextMenuUnit {
         /* Quote */
         contextMenuItemList.add(
                 new ContextMenuItem(
+                        activity.getResources().getDrawable(R.drawable.ic_context_menu_item_quote),
                         activity.getString(R.string.context_menu_item_quote),
                         Flag.CONTEXT_MENU_ITEM_QUOTE,
                         true
@@ -317,6 +319,7 @@ public class ContextMenuUnit {
         if (tweet.getRetweetedByUserId() != -1l && tweet.getRetweetedByUserId() == useId) {
             contextMenuItemList.add(
                     new ContextMenuItem(
+                            activity.getResources().getDrawable(R.drawable.ic_context_menu_item_retweet),
                             activity.getString(R.string.context_menu_item_retweet),
                             Flag.CONTEXT_MENU_ITEM_RETWEET,
                             false
@@ -326,6 +329,7 @@ public class ContextMenuUnit {
             if (tweet.getUserId() != useId) {
                 contextMenuItemList.add(
                         new ContextMenuItem(
+                                activity.getResources().getDrawable(R.drawable.ic_context_menu_item_retweet),
                                 activity.getString(R.string.context_menu_item_retweet),
                                 Flag.CONTEXT_MENU_ITEM_RETWEET,
                                 true
@@ -334,6 +338,7 @@ public class ContextMenuUnit {
             } else {
                 contextMenuItemList.add(
                         new ContextMenuItem(
+                                activity.getResources().getDrawable(R.drawable.ic_context_menu_item_delete),
                                 activity.getString(R.string.context_menu_item_delete),
                                 Flag.CONTEXT_MENU_ITEM_DELETE,
                                 true
@@ -345,6 +350,7 @@ public class ContextMenuUnit {
         if (!tweet.isFavorite()) {
             contextMenuItemList.add(
                     new ContextMenuItem(
+                            activity.getResources().getDrawable(R.drawable.ic_context_menu_item_favorite),
                             activity.getString(R.string.context_menu_item_favorite),
                             Flag.CONTEXT_MENU_ITEM_FAVORITE,
                             true
@@ -353,8 +359,20 @@ public class ContextMenuUnit {
         } else {
             contextMenuItemList.add(
                     new ContextMenuItem(
-                            activity.getString(R.string.context_menu_item_cancel_favorite),
-                            Flag.CONTEXT_MENU_ITEM_CANCEL_FAVORITE,
+                            activity.getResources().getDrawable(R.drawable.ic_context_menu_item_cancel),
+                            activity.getString(R.string.context_menu_item_cancel),
+                            Flag.CONTEXT_MENU_ITEM_CANCEL,
+                            true
+                    )
+            );
+        }
+        /* Detail */
+        if (!(activity instanceof DetailActivity)) {
+            contextMenuItemList.add(
+                    new ContextMenuItem(
+                            activity.getResources().getDrawable(R.drawable.ic_context_menu_item_detail),
+                            activity.getString(R.string.context_menu_item_detail),
+                            Flag.CONTEXT_MENU_ITEM_DETAIL,
                             true
                     )
             );
@@ -362,6 +380,7 @@ public class ContextMenuUnit {
         /* Copy */
         contextMenuItemList.add(
                 new ContextMenuItem(
+                        activity.getResources().getDrawable(R.drawable.ic_context_menu_item_copy),
                         activity.getString(R.string.context_menu_item_copy),
                         Flag.CONTEXT_MENU_ITEM_COPY,
                         true
@@ -420,8 +439,17 @@ public class ContextMenuUnit {
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
-                    case Flag.CONTEXT_MENU_ITEM_CANCEL_FAVORITE:
+                    case Flag.CONTEXT_MENU_ITEM_CANCEL:
                         cancel(activity, twitter, tweetAdapter, tweetList, location);
+                        alertDialog.hide();
+                        alertDialog.dismiss();
+                        break;
+                    case Flag.CONTEXT_MENU_ITEM_DETAIL:
+                        TweetUnit.tweetToDetailActivity(
+                                activity,
+                                tweetList,
+                                position
+                        );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
