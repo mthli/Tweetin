@@ -90,13 +90,13 @@ public class ContextMenuUnit {
                 .getSystemService(Context.CLIPBOARD_SERVICE);
         String text = tweetList.get(location).getText();
         ClipData data = ClipData.newPlainText(
-                activity.getString(R.string.tweet_copy_label),
+                activity.getString(R.string.context_menu_item_copy_label),
                 text
         );
         manager.setPrimaryClip(data);
         Toast.makeText(
                 activity,
-                R.string.tweet_notification_copy_successful,
+                R.string.context_menu_toast_copy_successful,
                 Toast.LENGTH_SHORT
         ).show();
     }
@@ -280,12 +280,81 @@ public class ContextMenuUnit {
         }
     }
 
+    /* Do something */
+    private static Twitter getTwitter(Activity activity) {
+        if (activity instanceof MainActivity) {
+            int flag = ((MainActivity) activity).fragmentFlag;
+            switch (flag) {
+                case Flag.IN_TIMELINE_FRAGMENT:
+                    return ((MainActivity) activity).getTimelineFragment().getTwitter();
+                case Flag.IN_MENTION_FRAGMENT:
+                    return ((MainActivity) activity).getMentionFragment().getTwitter();
+                case Flag.IN_FAVORITE_FRAGMENT:
+                    return ((MainActivity) activity).getFavoriteFragment().getTwitter();
+                case Flag.IN_DISCOVERY_FRAGMENT:
+                    return ((MainActivity) activity).getDiscoveryFragment().getTwitter();
+                default:
+                    break;
+            }
+        }
+        return ((DetailActivity) activity).getTwitter();
+    }
+    private static long getUseId(Activity activity) {
+        if (activity instanceof MainActivity) {
+            int flag = ((MainActivity) activity).fragmentFlag;
+            switch (flag) {
+                case Flag.IN_TIMELINE_FRAGMENT:
+                    return ((MainActivity) activity).getTimelineFragment().getUseId();
+                case Flag.IN_MENTION_FRAGMENT:
+                    return ((MainActivity) activity).getMentionFragment().getUseId();
+                case Flag.IN_FAVORITE_FRAGMENT:
+                    return ((MainActivity) activity).getFavoriteFragment().getUseId();
+                case Flag.IN_DISCOVERY_FRAGMENT:
+                    return ((MainActivity) activity).getDiscoveryFragment().getUseId();
+                default:
+                    break;
+            }
+        }
+        return ((DetailActivity) activity).getUseId();
+    }
+    private static TweetAdapter getTweetAdapter(Activity activity) {
+        if (activity instanceof MainActivity) {
+            int flag = ((MainActivity) activity).fragmentFlag;
+            switch (flag) {
+                case Flag.IN_TIMELINE_FRAGMENT:
+                    return ((MainActivity) activity).getTimelineFragment().getTweetAdapter();
+                case Flag.IN_MENTION_FRAGMENT:
+                    return ((MainActivity) activity).getMentionFragment().getTweetAdapter();
+                case Flag.IN_FAVORITE_FRAGMENT:
+                    return ((MainActivity) activity).getFavoriteFragment().getTweetAdapter();
+                case Flag.IN_DISCOVERY_FRAGMENT:
+                    return ((MainActivity) activity).getDiscoveryFragment().getTweetAdapter();
+                default:
+                    break;
+            }
+        }
+        return ((DetailActivity) activity).getTweetAdapter();
+    }
+    private static List<Tweet> getTweetList(Activity activity) {
+        if (activity instanceof MainActivity) {
+            int flag = ((MainActivity) activity).fragmentFlag;
+            switch (flag) {
+                case Flag.IN_TIMELINE_FRAGMENT:
+                    return ((MainActivity) activity).getTimelineFragment().getTweetList();
+                case Flag.IN_MENTION_FRAGMENT:
+                    return ((MainActivity) activity).getMentionFragment().getTweetList();
+                case Flag.IN_FAVORITE_FRAGMENT:
+                    return ((MainActivity) activity).getFavoriteFragment().getTweetList();
+                case Flag.IN_DISCOVERY_FRAGMENT:
+                    return ((MainActivity) activity).getDiscoveryFragment().getTweetList();
+                default:
+                    break;
+            }
+        }
+        return ((DetailActivity) activity).getTweetList();
+    }
     public static void show(
             final Activity activity,
-            final Twitter twitter,
-            long useId,
-            final TweetAdapter tweetAdapter,
-            final List<Tweet> tweetList,
             final int location
     ) {
         LinearLayout linearLayout = (LinearLayout) activity
@@ -296,7 +365,7 @@ public class ContextMenuUnit {
         ListView contextMenu = (ListView) linearLayout.findViewById(R.id.context_menu_listview);
 
         final List<ContextMenuItem> contextMenuItemList = new ArrayList<ContextMenuItem>();
-        final Tweet tweet = tweetList.get(location);
+        final Tweet tweet = getTweetList(activity).get(location);
         /* Reply */
         contextMenuItemList.add(
                 new ContextMenuItem(
@@ -316,7 +385,7 @@ public class ContextMenuUnit {
                 )
         );
         /* Retweet and delete */
-        if (tweet.getRetweetedByUserId() != -1l && tweet.getRetweetedByUserId() == useId) {
+        if (tweet.getRetweetedByUserId() != -1l && tweet.getRetweetedByUserId() == getUseId(activity)) {
             contextMenuItemList.add(
                     new ContextMenuItem(
                             activity.getResources().getDrawable(R.drawable.ic_context_menu_item_retweet),
@@ -326,7 +395,7 @@ public class ContextMenuUnit {
                     )
             );
         } else {
-            if (tweet.getUserId() != useId) {
+            if (tweet.getUserId() != getUseId(activity)) {
                 contextMenuItemList.add(
                         new ContextMenuItem(
                                 activity.getResources().getDrawable(R.drawable.ic_context_menu_item_retweet),
@@ -407,18 +476,34 @@ public class ContextMenuUnit {
                 ContextMenuItem contextMenuItem = contextMenuItemList.get(position);
                 switch (contextMenuItem.getFlag()) {
                     case Flag.CONTEXT_MENU_ITEM_REPLY:
-                        reply(activity, tweetList, location);
+                        reply(
+                                activity,
+                                getTweetList(activity),
+                                location
+                        );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
                     case Flag.CONTEXT_MENU_ITEM_DELETE:
-                        detele(activity, twitter, tweetAdapter, tweetList, location);
+                        detele(
+                                activity,
+                                getTwitter(activity),
+                                getTweetAdapter(activity),
+                                getTweetList(activity),
+                                location
+                        );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
                     case Flag.CONTEXT_MENU_ITEM_RETWEET:
                         if (contextMenuItem.isActive()) {
-                            retweet(activity, twitter, tweetAdapter, tweetList, location);
+                            retweet(
+                                    activity,
+                                    getTwitter(activity),
+                                    getTweetAdapter(activity),
+                                    getTweetList(activity),
+                                    location
+                            );
                         } else {
                             Toast.makeText(
                                     activity,
@@ -430,31 +515,51 @@ public class ContextMenuUnit {
                         alertDialog.dismiss();
                         break;
                     case Flag.CONTEXT_MENU_ITEM_QUOTE:
-                        quote(activity, tweetList, location);
+                        quote(
+                                activity,
+                                getTweetList(activity),
+                                location
+                        );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
                     case Flag.CONTEXT_MENU_ITEM_FAVORITE:
-                        favorite(activity, twitter, tweetAdapter, tweetList, location);
+                        favorite(
+                                activity,
+                                getTwitter(activity),
+                                getTweetAdapter(activity),
+                                getTweetList(activity),
+                                location
+                        );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
                     case Flag.CONTEXT_MENU_ITEM_CANCEL:
-                        cancel(activity, twitter, tweetAdapter, tweetList, location);
+                        cancel(
+                                activity,
+                                getTwitter(activity),
+                                getTweetAdapter(activity),
+                                getTweetList(activity),
+                                location
+                        );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
                     case Flag.CONTEXT_MENU_ITEM_DETAIL:
                         TweetUnit.tweetToDetailActivity(
                                 activity,
-                                tweetList,
-                                position
+                                getTweetList(activity),
+                                location
                         );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
                     case Flag.CONTEXT_MENU_ITEM_COPY:
-                        clip(activity, tweetList, location);
+                        clip(
+                                activity,
+                                getTweetList(activity),
+                                location
+                        );
                         alertDialog.hide();
                         alertDialog.dismiss();
                         break;
@@ -466,4 +571,5 @@ public class ContextMenuUnit {
             }
         });
     }
+
 }

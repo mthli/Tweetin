@@ -80,7 +80,7 @@ public class MentionMoreTask extends AsyncTask<Void, Integer, Boolean> {
         if (result) {
             TweetUnit tweetUnit = new TweetUnit(context);
             for (twitter4j.Status status : statusList) {
-                tweetList.add(tweetUnit.getTweetFromStatus(status, tweetWithDetail));
+                tweetList.add(tweetUnit.getTweetFromStatus(status));
             }
             tweetAdapter.notifyDataSetChanged();
         }

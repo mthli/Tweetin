@@ -177,10 +177,6 @@ public class FavoriteFragment extends ProgressFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ContextMenuUnit.show(
                         getActivity(),
-                        twitter,
-                        useId,
-                        tweetAdapter,
-                        tweetList,
                         position
                 );
             }

@@ -4,7 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.text.util.Linkify;
+import android.graphics.Typeface;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.text.style.URLSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +21,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.twitter.Extractor;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.Activity.PictureActivity;
 import io.github.mthli.Tweetin.Activity.ProfileActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
+import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
 import io.github.mthli.Tweetin.Unit.Picture.PictureUnit;
 
 import java.io.FileOutputStream;
@@ -51,6 +59,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 
         if (detail) {
             this.requestQueue = Volley.newRequestQueue(activity);
+
         }
     }
 
@@ -67,7 +76,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         TextView infoPicture;
         TextView infoRetweetedByUserName;
         TextView infoFavorite;
-
         Bitmap bitmap;
     }
 
@@ -233,11 +241,41 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             }
         });
 
-        if (detail) {
-            holder.text.setAutoLinkMask(Linkify.WEB_URLS);
-            /* Do something */
+        String text = tweet.getText();
+        SpannableString span = new SpannableString(text);
+        Extractor extractor = new Extractor();
+        List<String> urlList = extractor.extractURLs(text);
+        for (String url : urlList) {
+            int urlStart = text.indexOf(url);
+            int urlEnd = urlStart + url.length();
+            /* Do something with custom */
+            span.setSpan(
+                    new URLSpan(url),
+                    urlStart,
+                    urlEnd,
+                    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            span.setSpan(
+                    new ForegroundColorSpan(activity.getResources().getColor(R.color.secondary_text)),
+                    urlStart,
+                    urlEnd,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+            span.setSpan(
+                    new StyleSpan(Typeface.ITALIC),
+                    urlStart,
+                    urlEnd,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
         }
-        holder.text.setText(tweet.getText());
+        holder.text.setText(span);
+        holder.text.setMovementMethod(LinkMovementMethod.getInstance());
+        holder.text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ContextMenuUnit.show(activity, position);
+            }
+        });
 
         if (tweet.isRetweet() || tweet.isFavorite() || tweet.getPictureURL() != null) {
             if (tweet.isRetweet()) {

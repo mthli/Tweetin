@@ -126,7 +126,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
         TweetUnit tweetUnit = new TweetUnit(context);
         for (twitter4j.Status status : statusList) {
             TimelineRecord record = tweetUnit
-                    .getTimelineRecordFromStatus(status, tweetWithDetail);
+                    .getTimelineRecordFromStatus(status);
             action.addRecord(record);
             timelineRecordList.add(record);
         }
@@ -196,7 +196,7 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
 
                     TweetUnit tweetUnit = new TweetUnit(context);
                     /* Do something */
-                    Intent resultIntent = tweetUnit.getIntentFromStatus(mention, true, false);
+                    Intent resultIntent = tweetUnit.getIntentFromStatus(mention, true);
                     TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
                     stackBuilder.addParentStack(DetailActivity.class);
                     stackBuilder.addNextIntent(resultIntent);

@@ -115,7 +115,7 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
         TweetUnit tweetUnit = new TweetUnit(context);
         for (twitter4j.Status status : statusList) {
             MentionRecord record = tweetUnit
-                    .getMentionRecordFromStatus(status, tweetWithDetail);
+                    .getMentionRecordFromStatus(status);
             action.addRecord(record);
             mentionRecordList.add(record);
         }

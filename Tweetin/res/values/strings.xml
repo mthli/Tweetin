@@ -51,11 +51,6 @@
     <string name="tweet_notification_un_favorite_failed">
         UnFavorite failed.
     </string>
-    <!-- Copy -->
-    <string name="tweet_copy_label">TWEET_COPY_LABEL</string>
-    <string name="tweet_notification_copy_successful">
-        Copy successful.
-    </string>
     <!-- Save picture -->
     <string name="tweet_toast_save_successful">
         Save successful.
@@ -81,6 +76,12 @@
     <string name="context_menu_item_copy">Copy</string>
     <string name="context_menu_toast_already_retweet">
         Already retweet.
+    </string>
+    <string name="context_menu_item_copy_label">
+        CONTEXT_MENU_ITEM_COPY_LABEL
+    </string>
+    <string name="context_menu_toast_copy_successful">
+        Copy successful.
     </string>
 
     <!-- Splash -->

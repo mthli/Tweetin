@@ -48,10 +48,6 @@
     <string name="tweet_notification_un_favorite_failed">
         取消收藏失败。
     </string>
-    <!-- Copy -->
-    <string name="tweet_notification_copy_successful">
-        已复制到剪贴板。
-    </string>
     <!-- Save picture -->
     <string name="tweet_toast_save_successful">
         保存成功。
@@ -77,6 +73,9 @@
     <string name="context_menu_item_copy">拷贝</string>
     <string name="context_menu_toast_already_retweet">
         已经转推过了。
+    </string>
+    <string name="context_menu_toast_copy_successful">
+        已拷贝到剪贴板。
     </string>
 
     <!-- Splash -->

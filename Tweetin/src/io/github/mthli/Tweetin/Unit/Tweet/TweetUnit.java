@@ -286,7 +286,7 @@ public class TweetUnit {
     }
 
     /* Get Record */
-    public TimelineRecord getTimelineRecordFromStatus(Status status, boolean detail) {
+    public TimelineRecord getTimelineRecordFromStatus(Status status) {
         TimelineRecord record = new TimelineRecord();
         if (status.isRetweet()) {
             record.setStatusId(status.getId());
@@ -298,7 +298,7 @@ public class TweetUnit {
             );
             record.setRetweetedByUserId(status.getUser().getId());
             record.setAvatarURL(
-                    status.getRetweetedStatus().getUser().getOriginalProfileImageURL() //
+                    status.getRetweetedStatus().getUser().getOriginalProfileImageURL()
             );
             record.setCreatedAt(
                     format.format(status.getRetweetedStatus().getCreatedAt())
@@ -319,11 +319,7 @@ public class TweetUnit {
                 record.setCheckIn(null);
             }
             record.setPictureURL(getPhotoURLFromStatus(status));
-            if (detail) {
-                record.setText(getDetailTextFromStatus(status));
-            } else {
-                record.setText(status.getRetweetedStatus().getText());
-            }
+            record.setText(getDetailTextFromStatus(status));
             record.setRetweet(true);
             record.setRetweetedByUserName(
                     status.getUser().getName()
@@ -348,11 +344,7 @@ public class TweetUnit {
                 record.setCheckIn(null);
             }
             record.setPictureURL(getPhotoURLFromStatus(status));
-            if (detail) {
-                record.setText(getDetailTextFromStatus(status));
-            } else {
-                record.setText(status.getText());
-            }
+            record.setText(getDetailTextFromStatus(status));
             record.setRetweet(false);
             record.setRetweetedByUserName(null);
             record.setFavorite(status.isFavorited());
@@ -367,7 +359,7 @@ public class TweetUnit {
 
         return record;
     }
-    public MentionRecord getMentionRecordFromStatus(Status status, boolean detail) {
+    public MentionRecord getMentionRecordFromStatus(Status status) {
         MentionRecord record = new MentionRecord();
         if (status.isRetweet()) {
             record.setStatusId(status.getId());
@@ -379,7 +371,7 @@ public class TweetUnit {
             );
             record.setRetweetedByUserId(status.getUser().getId());
             record.setAvatarURL(
-                    status.getRetweetedStatus().getUser().getOriginalProfileImageURL() //
+                    status.getRetweetedStatus().getUser().getOriginalProfileImageURL()
             );
             record.setCreatedAt(
                     format.format(status.getRetweetedStatus().getCreatedAt())
@@ -400,11 +392,7 @@ public class TweetUnit {
                 record.setCheckIn(null);
             }
             record.setPictureURL(getPhotoURLFromStatus(status));
-            if (detail) {
-                record.setText(getDetailTextFromStatus(status));
-            } else {
-                record.setText(status.getRetweetedStatus().getText());
-            }
+            record.setText(getDetailTextFromStatus(status));
             record.setRetweet(true);
             record.setRetweetedByUserName(
                     status.getUser().getName()
@@ -429,11 +417,7 @@ public class TweetUnit {
                 record.setCheckIn(null);
             }
             record.setPictureURL(getPhotoURLFromStatus(status));
-            if (detail) {
-                record.setText(getDetailTextFromStatus(status));
-            } else {
-                record.setText(status.getText());
-            }
+            record.setText(getDetailTextFromStatus(status));
             record.setRetweet(false);
             record.setRetweetedByUserName(null);
             record.setFavorite(status.isFavorited());
@@ -448,7 +432,7 @@ public class TweetUnit {
 
         return record;
     }
-    public FavoriteRecord getFavoriteRecordFromStatus(Status status, boolean detail) {
+    public FavoriteRecord getFavoriteRecordFromStatus(Status status) {
         FavoriteRecord record = new FavoriteRecord();
         if (status.isRetweet()) {
             record.setStatusId(status.getId());
@@ -481,11 +465,7 @@ public class TweetUnit {
                 record.setCheckIn(null);
             }
             record.setPictureURL(getPhotoURLFromStatus(status));
-            if (detail) {
-                record.setText(getDetailTextFromStatus(status));
-            } else {
-                record.setText(status.getRetweetedStatus().getText());
-            }
+            record.setText(getDetailTextFromStatus(status));
             record.setRetweet(true);
             record.setRetweetedByUserName(
                     status.getUser().getName()
@@ -510,11 +490,7 @@ public class TweetUnit {
                 record.setCheckIn(null);
             }
             record.setPictureURL(getPhotoURLFromStatus(status));
-            if (detail) {
-                record.setText(getDetailTextFromStatus(status));
-            } else {
-                record.setText(status.getText());
-            }
+            record.setText(getDetailTextFromStatus(status));
             record.setRetweet(false);
             record.setRetweetedByUserName(null);
             record.setFavorite(status.isFavorited());
@@ -555,13 +531,6 @@ public class TweetUnit {
                     return expandedURL;
                 }
             }
-            /*
-            for (String prefix : prefixes) {
-                if (expandedURL.startsWith(prefix)) {
-                    return expandedURL;
-                }
-            }
-            */
         }
 
         return null;
@@ -596,7 +565,7 @@ public class TweetUnit {
 
         return text;
     }
-    public Tweet getTweetFromStatus(Status status, boolean detail) {
+    public Tweet getTweetFromStatus(Status status) {
         Tweet tweet = new Tweet();
         if (status.isRetweet()) {
             tweet.setStatusId(status.getId());
@@ -608,7 +577,7 @@ public class TweetUnit {
             );
             tweet.setRetweetedByUserId(status.getUser().getId());
             tweet.setAvatarURL(
-                    status.getRetweetedStatus().getUser().getOriginalProfileImageURL() //
+                    status.getRetweetedStatus().getUser().getOriginalProfileImageURL()
             );
             tweet.setCreatedAt(
                     format.format(status.getRetweetedStatus().getCreatedAt())
@@ -629,11 +598,7 @@ public class TweetUnit {
                 tweet.setCheckIn(null);
             }
             tweet.setPictureURL(getPhotoURLFromStatus(status));
-            if (detail) {
                 tweet.setText(getDetailTextFromStatus(status));
-            } else {
-                tweet.setText(status.getRetweetedStatus().getText());
-            }
 
             tweet.setRetweet(true);
             tweet.setRetweetedByUserName(
@@ -659,11 +624,7 @@ public class TweetUnit {
                 tweet.setCheckIn(null);
             }
             tweet.setPictureURL(getPhotoURLFromStatus(status));
-            if (detail) {
-                tweet.setText(getDetailTextFromStatus(status));
-            } else {
-                tweet.setText(status.getText());
-            }
+            tweet.setText(getDetailTextFromStatus(status));
 
             tweet.setRetweet(false);
             tweet.setRetweetedByUserName(null);
@@ -680,7 +641,7 @@ public class TweetUnit {
         return tweet;
     }
     
-    public Intent getIntentFromStatus(Status status, boolean toDetailActivity, boolean detail) {
+    public Intent getIntentFromStatus(Status status, boolean toDetailActivity) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.sp_name),
                 Context.MODE_PRIVATE
@@ -751,17 +712,10 @@ public class TweetUnit {
                     context.getString(R.string.detail_intent_picture_url),
                     getPhotoURLFromStatus(status)
             );
-            if (detail) {
-                intent.putExtra(
-                        context.getString(R.string.detail_intent_text),
-                        getDetailTextFromStatus(status)
-                );
-            } else {
-                intent.putExtra(
-                        context.getString(R.string.detail_intent_text),
-                        status.getRetweetedStatus().getText()
-                );
-            }
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_text),
+                    getDetailTextFromStatus(status)
+            );
             intent.putExtra(
                     context.getString(R.string.detail_intent_retweet),
                     true
@@ -827,17 +781,10 @@ public class TweetUnit {
                     context.getString(R.string.detail_intent_picture_url),
                     getPhotoURLFromStatus(status)
             );
-            if (detail) {
-                intent.putExtra(
-                        context.getString(R.string.detail_intent_text),
-                        getDetailTextFromStatus(status)
-                );
-            } else {
-                intent.putExtra(
-                        context.getString(R.string.detail_intent_text),
-                        status.getText()
-                );
-            }
+            intent.putExtra(
+                    context.getString(R.string.detail_intent_text),
+                    getDetailTextFromStatus(status)
+            );
             intent.putExtra(
                     context.getString(R.string.detail_intent_retweet),
                     false

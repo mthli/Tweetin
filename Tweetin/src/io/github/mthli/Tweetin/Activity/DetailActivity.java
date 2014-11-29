@@ -199,10 +199,6 @@ public class DetailActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ContextMenuUnit.show(
                         DetailActivity.this,
-                        twitter,
-                        useId,
-                        tweetAdapter,
-                        tweetList,
                         position
                 );
             }

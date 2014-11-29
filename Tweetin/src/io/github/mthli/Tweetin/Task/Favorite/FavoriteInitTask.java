@@ -111,7 +111,7 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
         favoriteRecordList.clear();
         TweetUnit tweetUnit = new TweetUnit(context);
         for (twitter4j.Status status : statusList) {
-            FavoriteRecord record = tweetUnit.getFavoriteRecordFromStatus(status, tweetWithDetail);
+            FavoriteRecord record = tweetUnit.getFavoriteRecordFromStatus(status);
             action.addRecord(record);
             favoriteRecordList.add(record);
         }

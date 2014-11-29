@@ -97,7 +97,7 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
             TweetUnit tweetUnit = new TweetUnit(context);
             tweetList.clear();
             for (twitter4j.Status status : statusList) {
-                tweetList.add(tweetUnit.getTweetFromStatus(status, tweetWithDetail));
+                tweetList.add(tweetUnit.getTweetFromStatus(status));
             }
 
             progressBar.setVisibility(View.GONE);
