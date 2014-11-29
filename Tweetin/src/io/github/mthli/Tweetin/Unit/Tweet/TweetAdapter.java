@@ -235,6 +235,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 
         if (detail) {
             holder.text.setAutoLinkMask(Linkify.WEB_URLS);
+            /* Do something */
         }
         holder.text.setText(tweet.getText());
 
