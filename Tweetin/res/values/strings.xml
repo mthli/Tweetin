@@ -231,7 +231,6 @@
     </string>
 
     <!-- Setting -->
-    <string name="setting_title_detail">Detail</string>
     <string name="setting_title_homepage">Homepage</string>
     <string name="setting_title_license">License</string>
     <string name="setting_title_version">Version</string>
@@ -239,9 +238,6 @@
     <string name="setting_title_advice">Advice</string>
     <string name="setting_title_author">Author</string>
     <string name="setting_title_thanks">Thanks</string>
-    <string name="setting_content_detail">
-        Show tweet with detail, need reopen app.
-    </string>
     <string name="setting_title_sign_out">Sign out</string>
     <string name="setting_content_homepage">
         https://github.com/mthli/Tweetin

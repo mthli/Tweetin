@@ -23,7 +23,7 @@ public class ProfileInitTask extends AsyncTask<Void, Integer, Boolean> {
 
     private Twitter twitter;
     private long useId;
-    private long userId;
+    private long userId; // Change to user name
     private User user;
     private boolean isFollowing;
 
@@ -32,6 +32,7 @@ public class ProfileInitTask extends AsyncTask<Void, Integer, Boolean> {
         this.isFollowing = false;
     }
 
+    /* Do something */
     @Override
     protected void onPreExecute() {
         context = profileFragment.getContentView().getContext();

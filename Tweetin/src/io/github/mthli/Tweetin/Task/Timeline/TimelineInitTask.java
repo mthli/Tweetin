@@ -34,7 +34,6 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
     private List<TimelineRecord> timelineRecordList = new ArrayList<TimelineRecord>();
-    private boolean tweetWithDetail;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -86,7 +85,6 @@ public class TimelineInitTask extends AsyncTask<Void, Integer, Boolean> {
                 swipeRefreshLayout.setRefreshing(true);
             }
         }
-        tweetWithDetail = timelineFragment.isTweetWithDetail();
 
         if (!pullToRefresh) {
             TimelineAction action = new TimelineAction(context);

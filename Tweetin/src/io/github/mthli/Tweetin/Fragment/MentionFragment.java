@@ -1,6 +1,5 @@
 package io.github.mthli.Tweetin.Fragment;
 
-import android.content.*;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,12 +39,8 @@ public class MentionFragment extends ProgressFragment {
         return swipeRefreshLayout;
     }
 
-    private boolean tweetWithDetail;
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList = new ArrayList<Tweet>();
-    public boolean isTweetWithDetail() {
-        return tweetWithDetail;
-    }
     public TweetAdapter getTweetAdapter() {
         return tweetAdapter;
     }
@@ -133,21 +128,13 @@ public class MentionFragment extends ProgressFragment {
         twitter = TweetUnit.getTwitterFromSharedPreferences(getActivity());
         useId = TweetUnit.getUseIdFromeSharedPreferences(getActivity());
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(
-                getString(R.string.sp_name),
-                Context.MODE_PRIVATE
-        );
-        tweetWithDetail = sharedPreferences.getBoolean(
-                getString(R.string.sp_is_tweet_with_detail),
-                false
-        );
         ListView listView = (ListView) view
                 .findViewById(R.id.mention_fragment_listview);
         tweetAdapter = new TweetAdapter(
                 getActivity(),
                 R.layout.tweet,
                 tweetList,
-                tweetWithDetail
+                false
         );
         listView.setAdapter(tweetAdapter);
         tweetAdapter.notifyDataSetChanged();

@@ -44,12 +44,8 @@ public class TimelineFragment extends ProgressFragment {
         return swipeRefreshLayout;
     }
 
-    private boolean tweetWithDetail;
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList = new ArrayList<Tweet>();
-    public boolean isTweetWithDetail() {
-        return tweetWithDetail;
-    }
     public TweetAdapter getTweetAdapter() {
         return tweetAdapter;
     }
@@ -137,22 +133,13 @@ public class TimelineFragment extends ProgressFragment {
         twitter = TweetUnit.getTwitterFromSharedPreferences(getActivity());
         useId = TweetUnit.getUseIdFromeSharedPreferences(getActivity());
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(
-                getString(R.string.sp_name),
-                Context.MODE_PRIVATE
-        );
-        tweetWithDetail = sharedPreferences.getBoolean(
-                getString(R.string.sp_is_tweet_with_detail),
-                false
-        );
-
         ListView listView = (ListView) view
                 .findViewById(R.id.timeline_fragment_listview);
         tweetAdapter = new TweetAdapter(
                 getActivity(),
                 R.layout.tweet,
                 tweetList,
-                tweetWithDetail
+                false
         );
         listView.setAdapter(tweetAdapter);
         tweetAdapter.notifyDataSetChanged();

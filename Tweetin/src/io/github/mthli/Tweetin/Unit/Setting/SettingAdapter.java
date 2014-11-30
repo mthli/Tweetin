@@ -71,33 +71,6 @@ public class SettingAdapter extends ArrayAdapter<SettingItem> {
             holder.checkBox.setVisibility(View.GONE);
         }
 
-        /* Do something */
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                SharedPreferences sharedPreferences = activity.getSharedPreferences(
-                        activity.getString(R.string.sp_name),
-                        Context.MODE_PRIVATE
-                );
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                if (b) {
-                    if (item.getTitle().equals(activity.getString(R.string.setting_title_detail))) {
-                        editor.putBoolean(
-                                activity.getString(R.string.sp_is_tweet_with_detail),
-                                true
-                        ).commit();
-                    }
-                } else {
-                    if (item.getTitle().equals(activity.getString(R.string.setting_title_detail))) {
-                        editor.putBoolean(
-                                activity.getString(R.string.sp_is_tweet_with_detail),
-                                false
-                        ).commit();
-                    }
-                }
-            }
-        });
-
         return view;
     }
 }

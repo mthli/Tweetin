@@ -26,7 +26,6 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
     private List<FavoriteRecord> favoriteRecordList = new ArrayList<FavoriteRecord>();
-    private boolean tweetWithDetail;
 
     private SharedPreferences.Editor editor;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -54,7 +53,6 @@ public class FavoriteInitTask extends AsyncTask<Void, Integer, Boolean> {
 
         tweetAdapter = favoriteFragment.getTweetAdapter();
         tweetList = favoriteFragment.getTweetList();
-        tweetWithDetail = favoriteFragment.isTweetWithDetail();
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.sp_name),

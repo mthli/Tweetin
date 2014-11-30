@@ -27,7 +27,6 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
     private List<MentionRecord> mentionRecordList = new ArrayList<MentionRecord>();
-    private boolean tweetWithDetail;
 
     private SharedPreferences.Editor editor;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -77,7 +76,6 @@ public class MentionInitTask extends AsyncTask<Void, Integer, Boolean> {
                 swipeRefreshLayout.setRefreshing(true);
             }
         }
-        tweetWithDetail = mentionFragment.isTweetWithDetail();
 
         if (!pullToRefresh) {
             MentionAction action = new MentionAction(context);

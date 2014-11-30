@@ -26,7 +26,6 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
-    private boolean tweetWithDetail;
 
     private EditText editText;
     private TextView introduction;
@@ -51,7 +50,6 @@ public class DiscoveryInitTask extends AsyncTask<Void, Integer, Boolean> {
 
         tweetAdapter = discoveryFragment.getTweetAdapter();
         tweetList = discoveryFragment.getTweetList();
-        tweetWithDetail = discoveryFragment.isTweetWithDetail();
 
         editText = discoveryFragment.getSearchBox();
         introduction = discoveryFragment.getIntroduction();

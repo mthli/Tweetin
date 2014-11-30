@@ -22,7 +22,6 @@ public class TimelineMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
-    private boolean tweetWithDetail;
 
     public TimelineMoreTask(TimelineFragment timelineFragment) {
         this.timelineFragment = timelineFragment;
@@ -41,7 +40,6 @@ public class TimelineMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
         tweetAdapter = timelineFragment.getTweetAdapter();
         tweetList = timelineFragment.getTweetList();
-        tweetWithDetail = timelineFragment.isTweetWithDetail();
 
         swipeRefreshLayout = timelineFragment.getSwipeRefreshLayout();
         swipeRefreshLayout.setRefreshing(true);

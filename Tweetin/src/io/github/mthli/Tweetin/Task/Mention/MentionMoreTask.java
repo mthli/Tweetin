@@ -22,7 +22,6 @@ public class MentionMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
-    private boolean tweetWithDetail;
 
     public MentionMoreTask(MentionFragment mentionFragment) {
         this.mentionFragment = mentionFragment;
@@ -41,7 +40,6 @@ public class MentionMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
         tweetAdapter = mentionFragment.getTweetAdapter();
         tweetList = mentionFragment.getTweetList();
-        tweetWithDetail = mentionFragment.isTweetWithDetail();
 
         swipeRefreshLayout = mentionFragment.getSwipeRefreshLayout();
         swipeRefreshLayout.setRefreshing(true);

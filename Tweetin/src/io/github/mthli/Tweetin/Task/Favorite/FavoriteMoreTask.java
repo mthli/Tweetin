@@ -22,7 +22,6 @@ public class FavoriteMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
-    private boolean tweetWithDetail;
 
     public FavoriteMoreTask(FavoriteFragment favoriteFragment) {
         this.favoriteFragment = favoriteFragment;
@@ -41,7 +40,6 @@ public class FavoriteMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
         tweetAdapter = favoriteFragment.getTweetAdapter();
         tweetList = favoriteFragment.getTweetList();
-        tweetWithDetail = favoriteFragment.isTweetWithDetail();
 
         swipeRefreshLayout = favoriteFragment.getSwipeRefreshLayout();
         swipeRefreshLayout.setRefreshing(true);

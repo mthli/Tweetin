@@ -34,7 +34,6 @@ public class SettingFragment extends ProgressFragment {
                 .findViewById(R.id.setting_fragment_listview);
 
         List<String> titleList = new ArrayList<String>();
-        titleList.add(getString(R.string.setting_title_detail));
         titleList.add(getString(R.string.setting_title_homepage));
         titleList.add(getString(R.string.setting_title_license));
         titleList.add(getString(R.string.setting_title_version));
@@ -45,7 +44,6 @@ public class SettingFragment extends ProgressFragment {
         titleList.add(getString(R.string.setting_title_sign_out));
 
         List<String> contentList = new ArrayList<String>();
-        contentList.add(getString(R.string.setting_content_detail));
         contentList.add(getString(R.string.setting_content_homepage));
         contentList.add(getString(R.string.setting_content_license));
         contentList.add(getString(R.string.app_version));
@@ -56,7 +54,7 @@ public class SettingFragment extends ProgressFragment {
         contentList.add(getString(R.string.setting_content_sign_out));
 
         List<SettingItem> settingItemList = new ArrayList<SettingItem>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 8; i++) {
             SettingItem item = new SettingItem();
             item.setTitle(titleList.get(i));
             item.setContent(contentList.get(i));
@@ -64,17 +62,6 @@ public class SettingFragment extends ProgressFragment {
             item.setChecked(false);
             settingItemList.add(item);
         }
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(
-                getString(R.string.sp_name),
-                Context.MODE_PRIVATE
-        );
-        settingItemList.get(0).setChecked(
-                sharedPreferences.getBoolean(
-                        getString(R.string.sp_is_tweet_with_detail),
-                        false
-                )
-        );
-        settingItemList.get(0).setShowCheckBox(true);
 
         SettingAdapter settingAdapter = new SettingAdapter(
                 getActivity(),
@@ -91,29 +78,26 @@ public class SettingFragment extends ProgressFragment {
                 ActivityAnim anim = new ActivityAnim();
                 switch (position) {
                     case 0:
-                        /* Do nothing */
-                        break;
-                    case 1:
                         Uri homepage = Uri.parse(getString(R.string.app_homepage_link));
                         Intent intentToHomepage = new Intent(Intent.ACTION_VIEW, homepage);
                         startActivity(intentToHomepage);
                         break;
-                    case 2:
+                    case 1:
                         Uri license = Uri.parse(getString(R.string.app_license_link));
                         Intent intentToLicense = new Intent(Intent.ACTION_VIEW, license);
                         startActivity(intentToLicense);
                         break;
-                    case 3:
+                    case 2:
                         Uri linkTo42 = Uri.parse(getString(R.string.setting_link_to_42));
                         Intent intentTo42 = new Intent(Intent.ACTION_VIEW, linkTo42);
                         startActivity(intentTo42);
                         break;
-                    case 4:
+                    case 3:
                         Uri linkToGooglePlay = Uri.parse(getString(R.string.setting_link_to_google_play));
                         Intent intentToGooglePlay = new Intent(Intent.ACTION_VIEW, linkToGooglePlay);
                         startActivity(intentToGooglePlay);
                         break;
-                    case 5:
+                    case 4:
                         Intent intentToAdvice = new Intent(getActivity(), PostActivity.class);
                         intentToAdvice.putExtra(
                                 getString(R.string.post_intent_flag),
@@ -122,7 +106,7 @@ public class SettingFragment extends ProgressFragment {
                         startActivity(intentToAdvice);
                         anim.fade(getActivity());
                         break;
-                    case 6:
+                    case 5:
                         intentToProfile.putExtra(
                                 getString(R.string.profile_intent_user_id),
                                 Long.valueOf(getString(R.string.app_author_id))
@@ -130,7 +114,7 @@ public class SettingFragment extends ProgressFragment {
                         startActivity(intentToProfile);
                         anim.rightIn(getActivity());
                         break;
-                    case 7:
+                    case 6:
                         intentToProfile.putExtra(
                                 getString(R.string.profile_intent_user_id),
                                 Long.valueOf(getString(R.string.app_thanks_id))
@@ -138,7 +122,7 @@ public class SettingFragment extends ProgressFragment {
                         startActivity(intentToProfile);
                         anim.rightIn(getActivity());
                         break;
-                    case 8:
+                    case 7:
                         ((MainActivity) getActivity()).signOut();
                         break;
                     default:

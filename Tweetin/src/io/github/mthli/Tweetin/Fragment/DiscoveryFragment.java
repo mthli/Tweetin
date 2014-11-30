@@ -45,12 +45,8 @@ public class DiscoveryFragment extends ProgressFragment {
         return useId;
     }
 
-    private boolean tweetWithDetail;
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList = new ArrayList<Tweet>();
-    public boolean isTweetWithDetail() {
-        return tweetWithDetail;
-    }
     public TweetAdapter getTweetAdapter() {
         return tweetAdapter;
     }
@@ -175,19 +171,11 @@ public class DiscoveryFragment extends ProgressFragment {
             }
         });
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(
-                getString(R.string.sp_name),
-                Context.MODE_PRIVATE
-        );
-        tweetWithDetail = sharedPreferences.getBoolean(
-                getString(R.string.sp_is_tweet_with_detail),
-                false
-        );
         tweetAdapter = new TweetAdapter(
                 getActivity(),
                 R.layout.tweet,
                 tweetList,
-                tweetWithDetail
+                false
         );
         listView.setAdapter(tweetAdapter);
         tweetAdapter.notifyDataSetChanged();
