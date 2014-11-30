@@ -1,18 +1,22 @@
 package io.github.mthli.Tweetin.Unit.Tweet;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import io.github.mthli.Tweetin.Activity.PictureActivity;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 
 public class TweetURLSpan extends ClickableSpan {
-    private Context context;
+    private Activity activity;
     private String url;
 
-    public TweetURLSpan(Context context, String url) {
-        this.context = context;
+    public TweetURLSpan(Activity activity, String url) {
+        this.activity = activity;
         this.url = url;
     }
 
@@ -21,7 +25,7 @@ public class TweetURLSpan extends ClickableSpan {
         super.updateDrawState(textPaint);
         textPaint.setUnderlineText(false);
         textPaint.setColor(
-                context
+                activity
                         .getResources()
                         .getColor(R.color.secondary_text)
         );
@@ -35,15 +39,24 @@ public class TweetURLSpan extends ClickableSpan {
 
     @Override
     public void onClick(View view) {
-        String[] suffixes = context
+        String[] suffixes = activity
                 .getResources()
                 .getStringArray(R.array.detail_picture_suffix);
         for (String suffix : suffixes) {
             if (url.endsWith(suffix)) {
-                /* Do something */
+                ActivityAnim anim = new ActivityAnim();
+                Intent intent = new Intent(activity, PictureActivity.class);
+                intent.putExtra(
+                        activity.getString(R.string.detail_intent_picture_url),
+                        url
+                );
+                activity.startActivity(intent);
+                anim.fade(activity);
                 return;
             }
         }
-        /* Do something */
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        activity.startActivity(intent);
     }
 }

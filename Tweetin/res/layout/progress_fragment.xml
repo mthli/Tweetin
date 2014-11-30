@@ -31,20 +31,12 @@
                   android:background="@color/background"
                   android:visibility="gone">
 
-        <!--
-        <ProgressBar style="?android:attr/progressBarStyleInverse"
-                     android:id="@android:id/progress"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content">
-        </ProgressBar>
-        -->
-
         <fr.castorflex.android.circularprogressbar.CircularProgressBar
                 android:id="@android:id/progress"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:indeterminate="true"
-                app:cpb_colors="@array/circular_progress_bar_colors"
+                app:cpb_colors="@array/circular_progress_bar_colors_dark"
                 app:cpb_rotation_speed="1.0"
                 app:cpb_sweep_speed="1.0"
                 app:cpb_stroke_width="2.5dp"

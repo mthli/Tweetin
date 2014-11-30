@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/black">
+
+    <fr.castorflex.android.circularprogressbar.CircularProgressBar
+            android:id="@android:id/progress"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:cpb_colors="@array/circular_progress_bar_colors_light"
+            app:cpb_rotation_speed="1.0"
+            app:cpb_sweep_speed="1.0"
+            app:cpb_stroke_width="2.5dp"
+            app:cpb_min_sweep_angle="24"
+            app:cpb_max_sweep_angle="300">
+    </fr.castorflex.android.circularprogressbar.CircularProgressBar>
 
     <ImageView android:id="@+id/picture_view"
                android:contentDescription="@null"
                android:layout_centerInParent="true"
                android:layout_width="match_parent"
                android:layout_height="match_parent"
-               android:adjustViewBounds="true">
+               android:adjustViewBounds="true"
+               android:visibility="gone">
     </ImageView>
 
 </RelativeLayout>

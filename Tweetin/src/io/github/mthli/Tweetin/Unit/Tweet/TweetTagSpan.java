@@ -1,6 +1,6 @@
 package io.github.mthli.Tweetin.Unit.Tweet;
 
-import android.content.Context;
+import android.app.Activity;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
@@ -8,11 +8,11 @@ import android.view.View;
 import io.github.mthli.Tweetin.R;
 
 public class TweetTagSpan extends ClickableSpan {
-    private Context context;
+    private Activity activity;
     private String tag;
 
-    public TweetTagSpan(Context context, String user) {
-        this.context = context;
+    public TweetTagSpan(Activity activity, String user) {
+        this.activity = activity;
         this.tag = tag;
     }
 
@@ -21,7 +21,7 @@ public class TweetTagSpan extends ClickableSpan {
         super.updateDrawState(textPaint);
         textPaint.setUnderlineText(false);
         textPaint.setColor(
-                context
+                activity
                         .getResources()
                         .getColor(R.color.secondary_text)
         );

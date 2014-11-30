@@ -48,7 +48,7 @@
                 android:layout_centerInParent="true"
                 android:indeterminate="true"
                 android:visibility="gone"
-                app:cpb_colors="@array/circular_progress_bar_colors"
+                app:cpb_colors="@array/circular_progress_bar_colors_dark"
                 app:cpb_rotation_speed="1.0"
                 app:cpb_sweep_speed="1.0"
                 app:cpb_stroke_width="2.5dp"
@@ -64,6 +64,7 @@
                   android:scrollbars="none"
                   android:scrollingCache="true"
                   android:choiceMode="singleChoice"
+                  android:drawSelectorOnTop="true"
                   android:visibility="gone">
         </ListView>
 

@@ -17,9 +17,13 @@
     <color name="hint">#B8B8B8</color>
     <color name="dividers">#DADADA</color>
 
-    <integer-array name="circular_progress_bar_colors">
+    <integer-array name="circular_progress_bar_colors_dark">
         <item>@color/text</item>
         <item>@color/secondary_text</item>
+    </integer-array>
+    <integer-array name="circular_progress_bar_colors_light">
+        <item>@color/dividers</item>
+        <item>@color/white</item>
     </integer-array>
 
 </resources>

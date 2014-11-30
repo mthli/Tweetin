@@ -826,7 +826,7 @@ public class TweetUnit {
         return intent;
     }
 
-    public static SpannableString getTweetSpan(Context context, String text) {
+    public static SpannableString getTweetSpan(Activity activity, String text) {
         Extractor extractor = new Extractor();
         List<String> urlList = extractor.extractURLs(text);
         List<String> userList = extractor.extractMentionedScreennames(text);
@@ -837,7 +837,7 @@ public class TweetUnit {
             int start = text.indexOf(url);
             int end = start + url.length();
             span.setSpan(
-                    new TweetURLSpan(context, url),
+                    new TweetURLSpan(activity, url),
                     start,
                     end,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -847,7 +847,7 @@ public class TweetUnit {
             int start = text.indexOf(user);
             int end = start + user.length();
             span.setSpan(
-                    new TweetUserSpan(context, user),
+                    new TweetUserSpan(activity, user),
                     start,
                     end,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -857,7 +857,7 @@ public class TweetUnit {
             int start = text.indexOf(tag);
             int end = start + tag.length();
             span.setSpan(
-                    new TweetTagSpan(context, tag),
+                    new TweetTagSpan(activity, tag),
                     start,
                     end,
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
