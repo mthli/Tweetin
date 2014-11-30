@@ -4,13 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
-import android.text.style.URLSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +15,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.twitter.Extractor;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.Activity.PictureActivity;
 import io.github.mthli.Tweetin.Activity.ProfileActivity;
@@ -241,34 +234,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             }
         });
 
-        String text = tweet.getText();
-        SpannableString span = new SpannableString(text);
-        Extractor extractor = new Extractor();
-        List<String> urlList = extractor.extractURLs(text);
-        for (String url : urlList) {
-            int urlStart = text.indexOf(url);
-            int urlEnd = urlStart + url.length();
-            /* Do something with custom */
-            span.setSpan(
-                    new URLSpan(url),
-                    urlStart,
-                    urlEnd,
-                    SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
-            );
-            span.setSpan(
-                    new ForegroundColorSpan(activity.getResources().getColor(R.color.secondary_text)),
-                    urlStart,
-                    urlEnd,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            );
-            span.setSpan(
-                    new StyleSpan(Typeface.ITALIC),
-                    urlStart,
-                    urlEnd,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            );
-        }
-        holder.text.setText(span);
+        holder.text.setText(TweetUnit.getTweetSpan(activity, tweet.getText()));
         holder.text.setMovementMethod(LinkMovementMethod.getInstance());
         holder.text.setOnClickListener(new View.OnClickListener() {
             @Override

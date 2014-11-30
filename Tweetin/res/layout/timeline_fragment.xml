@@ -19,8 +19,7 @@
                   android:dividerHeight="1dp"
                   android:scrollbars="none"
                   android:scrollingCache="true"
-                  android:choiceMode="singleChoice"
-                  android:drawSelectorOnTop="true">
+                  android:choiceMode="singleChoice">
         </ListView>
 
     </android.support.v4.widget.SwipeRefreshLayout>

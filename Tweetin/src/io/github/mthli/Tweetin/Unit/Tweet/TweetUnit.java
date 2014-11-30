@@ -4,12 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import com.twitter.Extractor;
 import io.github.mthli.Tweetin.Activity.DetailActivity;
 import io.github.mthli.Tweetin.Database.Favorite.FavoriteRecord;
 import io.github.mthli.Tweetin.Database.Mention.MentionRecord;
 import io.github.mthli.Tweetin.Database.Timeline.TimelineRecord;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
+import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuItem;
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
 
@@ -125,11 +132,10 @@ public class TweetUnit {
                 context.getString(R.string.sp_name),
                 Context.MODE_PRIVATE
         );
-        long useId = sharedPreferences.getLong(
+        return sharedPreferences.getLong(
                 context.getString(R.string.sp_use_id),
                 -1l
         );
-        return useId;
     }
     /* Get Tweet */
     public static Tweet getTweetFromIntent(Activity activity) {
@@ -820,4 +826,44 @@ public class TweetUnit {
         return intent;
     }
 
+    public static SpannableString getTweetSpan(Context context, String text) {
+        Extractor extractor = new Extractor();
+        List<String> urlList = extractor.extractURLs(text);
+        List<String> userList = extractor.extractMentionedScreennames(text);
+        List<String> tagList = extractor.extractHashtags(text);
+
+        SpannableString span = new SpannableString(text);
+        for (String url : urlList) {
+            int start = text.indexOf(url);
+            int end = start + url.length();
+            span.setSpan(
+                    new TweetURLSpan(context, url),
+                    start,
+                    end,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        }
+        for (String user : userList) {
+            int start = text.indexOf(user);
+            int end = start + user.length();
+            span.setSpan(
+                    new TweetUserSpan(context, user),
+                    start,
+                    end,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        }
+        for (String tag : tagList) {
+            int start = text.indexOf(tag);
+            int end = start + tag.length();
+            span.setSpan(
+                    new TweetTagSpan(context, tag),
+                    start,
+                    end,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        }
+
+        return span;
+    }
 }

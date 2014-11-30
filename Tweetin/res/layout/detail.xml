@@ -21,8 +21,7 @@
                   android:scrollbars="none"
                   android:descendantFocusability="blocksDescendants"
                   android:scrollingCache="true"
-                  android:choiceMode="singleChoice"
-                  android:drawSelectorOnTop="true">
+                  android:choiceMode="singleChoice">
         </ListView>
 
     </android.support.v4.widget.SwipeRefreshLayout>

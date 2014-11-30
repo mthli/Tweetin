@@ -64,7 +64,6 @@
                   android:scrollbars="none"
                   android:scrollingCache="true"
                   android:choiceMode="singleChoice"
-                  android:drawSelectorOnTop="true"
                   android:visibility="gone">
         </ListView>
 
