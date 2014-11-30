@@ -11,7 +11,7 @@ public class TweetTagSpan extends ClickableSpan {
     private Activity activity;
     private String tag;
 
-    public TweetTagSpan(Activity activity, String user) {
+    public TweetTagSpan(Activity activity, String tag) {
         this.activity = activity;
         this.tag = tag;
     }

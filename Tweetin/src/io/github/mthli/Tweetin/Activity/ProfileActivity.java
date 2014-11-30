@@ -15,8 +15,10 @@ import twitter4j.auth.AccessToken;
 
 public class ProfileActivity extends FragmentActivity {
     private Twitter twitter;
-    private long useId;
-    private long userId;
+    private long useId = 0l;
+    private long userId = 0l;
+    private String useScreenName = null;
+    private String userScreenName = null;
     public Twitter getTwitter() {
         return twitter;
     }
@@ -25,6 +27,12 @@ public class ProfileActivity extends FragmentActivity {
     }
     public long getUserId() {
         return userId;
+    }
+    public String getUseScreenName() {
+        return useScreenName;
+    }
+    public String getUserScreenName() {
+        return userScreenName;
     }
 
     private ProfileFragment profileFragment;
@@ -39,6 +47,10 @@ public class ProfileActivity extends FragmentActivity {
                 MODE_PRIVATE
         );
         useId = preferences.getLong(getString(R.string.sp_use_id), 0);
+        useScreenName = preferences.getString(
+                getString(R.string.sp_use_screen_name),
+                null
+        );
         String conKey = preferences.getString(getString(R.string.sp_consumer_key), null);
         String conSecret = preferences.getString(getString(R.string.sp_consumer_secret), null);
         String accToken = preferences.getString(getString(R.string.sp_access_token), null);
@@ -53,6 +65,9 @@ public class ProfileActivity extends FragmentActivity {
         userId = intent.getLongExtra(
                 getString(R.string.profile_intent_user_id),
                 0
+        );
+        userScreenName = intent.getStringExtra(
+                getString(R.string.profile_intent_user_screen_name)
         );
 
         profileFragment = (ProfileFragment) getSupportFragmentManager()

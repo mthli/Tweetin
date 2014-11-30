@@ -10,7 +10,7 @@
 
     <color name="red">#F44336</color>
     <color name="blue_bright">@android:color/holo_blue_bright</color>
-    <color name="blue_dark">@android:color/holo_blue_dark</color>
+    <color name="blue_dark">#3F83AA</color>
 
     <color name="text">#212121</color>
     <color name="secondary_text">#727272</color>

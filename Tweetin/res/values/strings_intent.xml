@@ -68,16 +68,37 @@
     </string>
 
     <!-- Post -->
-    <string name="post_intent_flag">POST_INTENT_FLAG</string>
-    <string name="post_intent_status_id">POST_INTENT_STATUS_ID</string>
-    <string name="post_intent_status_screen_name">POST_INTENT_STATUS_SCREEN_NAME</string>
-    <string name="post_intent_status_text">POST_INTENT_STATUS_TEXT</string>
-    <string name="post_intent_resend_flag">POST_INTENT_RESEND_FALG</string>
-    <string name="post_intent_check_in">POST_INTENT_CHECK_IN</string>
-    <string name="post_intent_picture">POST_INTENT_PHOTO</string>
-    <string name="post_intent_picture_path">POST_INTENT_PHOTO_PATH</string>
+    <string name="post_intent_flag">
+        POST_INTENT_FLAG
+    </string>
+    <string name="post_intent_status_id">
+        POST_INTENT_STATUS_ID
+    </string>
+    <string name="post_intent_status_screen_name">
+        POST_INTENT_STATUS_SCREEN_NAME
+    </string>
+    <string name="post_intent_status_text">
+        POST_INTENT_STATUS_TEXT
+    </string>
+    <string name="post_intent_resend_flag">
+        POST_INTENT_RESEND_FLAG
+    </string>
+    <string name="post_intent_check_in">
+        POST_INTENT_CHECK_IN
+    </string>
+    <string name="post_intent_picture">
+        POST_INTENT_PHOTO
+    </string>
+    <string name="post_intent_picture_path">
+        POST_INTENT_PHOTO_PATH
+    </string>
 
     <!-- Profile -->
-    <string name="profile_intent_user_id">PROFILE_INTENT_USER_ID</string>
+    <string name="profile_intent_user_id">
+        PROFILE_INTENT_USER_ID
+    </string>
+    <string name="profile_intent_user_screen_name">
+        PROFILE_INTENT_USER_SCREEN_NAME
+    </string>
 
 </resources>

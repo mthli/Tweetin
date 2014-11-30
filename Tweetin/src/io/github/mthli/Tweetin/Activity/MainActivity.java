@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -19,6 +20,7 @@ import com.special.ResideMenu.ResideMenuItem;
 import io.github.mthli.Tweetin.Fragment.*;
 import io.github.mthli.Tweetin.Fragment.DiscoveryFragment;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Task.Main.MainBackgroundInitTask;
 import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
 import io.github.mthli.Tweetin.Unit.Database.DatabaseUnit;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
@@ -57,6 +59,17 @@ public class MainActivity extends FragmentActivity {
     private ResideMenuItem favoriteItem;
     private ResideMenuItem discoveryItem;
     private ResideMenuItem settingItem;
+    public ResideMenu getResideMenu() {
+        return resideMenu;
+    }
+
+    private MainBackgroundInitTask mainBackgroundInitTask;
+    public boolean isSomeTaskRunning() {
+        if (mainBackgroundInitTask != null && mainBackgroundInitTask.getStatus() == AsyncTask.Status.RUNNING) {
+            return true;
+        }
+        return false;
+    }
 
     private void selectResideMenuItem(int targetFragmentFlag) {
         ImageView imageView;
@@ -218,9 +231,6 @@ public class MainActivity extends FragmentActivity {
         resideMenu = new ResideMenu(this);
         resideMenu.setShadowVisible(false);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
-        resideMenu.setBackgroundColor(
-                getResources().getColor(R.color.black)
-        );
         resideMenu.attachToActivity(this);
         final List<ResideMenuItem> resideMenuItemList = new ArrayList<ResideMenuItem>();
         timelineItem = new ResideMenuItem(
@@ -377,6 +387,11 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         });
+
+        /*
+        mainBackgroundInitTask = new MainBackgroundInitTask(MainActivity.this);
+        mainBackgroundInitTask.execute();
+        */
     }
 
     @Override
@@ -463,11 +478,14 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    private void cancelAllFragmentTask() {
+    private void cancelAllTask() {
         timelineFragment.cancelAllTask();
         mentionFragment.cancelAllTask();
         favoriteFragment.cancelAllTask();
         discoveryFragment.cancelAllTask();
+        if (mainBackgroundInitTask != null && mainBackgroundInitTask.getStatus() == AsyncTask.Status.RUNNING) {
+            mainBackgroundInitTask.cancel(true);
+        }
     }
     private void clearSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences(
@@ -514,7 +532,7 @@ public class MainActivity extends FragmentActivity {
         editor.commit();
     }
     public void signOut() {
-        cancelAllFragmentTask();
+        cancelAllTask();
         DatabaseUnit.deleteAll(this);
         clearSharedPreferences();
 
@@ -527,7 +545,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            cancelAllFragmentTask();
+            cancelAllTask();
             finish();
         }
 
@@ -535,7 +553,7 @@ public class MainActivity extends FragmentActivity {
     }
     @Override
     public void onDestroy() {
-        cancelAllFragmentTask();
+        cancelAllTask();
         super.onDestroy();
     }
 

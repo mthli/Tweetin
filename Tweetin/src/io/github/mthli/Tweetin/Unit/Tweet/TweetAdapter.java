@@ -194,7 +194,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                     String filename = array[array.length - 1];
                     FileOutputStream originalStream = activity
                             .openFileOutput(filename, Context.MODE_PRIVATE);
-
                     String[] suffixes = activity.getResources().getStringArray(
                             R.array.detail_picture_suffix
                     );

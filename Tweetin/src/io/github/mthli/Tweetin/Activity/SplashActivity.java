@@ -133,11 +133,15 @@ public class SplashActivity extends Activity {
             new Thread(getAccessTokenThread).start();
         }
     }
-    private void saveSignInData(long useId, AccessToken accessToken) {
+    private void saveSignInData(long useId, String useScreenName, AccessToken accessToken) {
         editor.putLong(
                 getString(R.string.sp_use_id),
                 useId
         ).commit();
+        editor.putString(
+                getString(R.string.sp_use_screen_name),
+                useScreenName
+        ).commit(); //
         editor.putString(
                 getString(R.string.sp_consumer_key),
                 conKey
@@ -163,7 +167,11 @@ public class SplashActivity extends Activity {
                         requestToken,
                         pin
                 );
-                saveSignInData(twitter.verifyCredentials().getId(), accessToken);
+                saveSignInData(
+                        twitter.verifyCredentials().getId(),
+                        twitter.verifyCredentials().getScreenName(), //
+                        accessToken
+                );
                 Message message = new Message();
                 message.what = GET_ACCESS_TOKEN_SUCCESSFUL;
                 handler.sendMessage(message);

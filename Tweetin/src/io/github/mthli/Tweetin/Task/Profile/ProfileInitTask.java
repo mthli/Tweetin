@@ -23,7 +23,9 @@ public class ProfileInitTask extends AsyncTask<Void, Integer, Boolean> {
 
     private Twitter twitter;
     private long useId;
-    private long userId; // Change to user name
+    private long userId;
+    private String useScreenName;
+    private String userScreenName;
     private User user;
     private boolean isFollowing;
 
@@ -32,7 +34,6 @@ public class ProfileInitTask extends AsyncTask<Void, Integer, Boolean> {
         this.isFollowing = false;
     }
 
-    /* Do something */
     @Override
     protected void onPreExecute() {
         context = profileFragment.getContentView().getContext();
@@ -40,6 +41,8 @@ public class ProfileInitTask extends AsyncTask<Void, Integer, Boolean> {
         twitter = ((ProfileActivity) profileFragment.getActivity()).getTwitter();
         useId = ((ProfileActivity) profileFragment.getActivity()).getUseId();
         userId = ((ProfileActivity) profileFragment.getActivity()).getUserId();
+        useScreenName = ((ProfileActivity) profileFragment.getActivity()).getUseScreenName();
+        userScreenName = ((ProfileActivity) profileFragment.getActivity()).getUserScreenName();
 
         profileFragment.setContentShown(false);
     }
@@ -47,9 +50,15 @@ public class ProfileInitTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            user = twitter.showUser(userId);
-            Relationship relationship = twitter.friendsFollowers().showFriendship(useId, userId);
-            isFollowing = relationship.isSourceFollowingTarget();
+            if (userScreenName == null) {
+                user = twitter.showUser(userId);
+                Relationship relationship = twitter.friendsFollowers().showFriendship(useId, userId);
+                isFollowing = relationship.isSourceFollowingTarget();
+            } else {
+                user = twitter.showUser(userScreenName);
+                Relationship relationship = twitter.friendsFollowers().showFriendship(useScreenName, userScreenName);
+                isFollowing = relationship.isSourceFollowingTarget();
+            }
         } catch (Exception e) {
             return false;
         }
