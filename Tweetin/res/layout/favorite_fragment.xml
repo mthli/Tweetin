@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/background">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background">
 
     <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/favorite_swipe_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="7dp">
+            android:layout_height="match_parent">
 
         <ListView android:id="@+id/favorite_fragment_listview"
                   android:layout_width="match_parent"
@@ -24,4 +24,4 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</FrameLayout>
+</LinearLayout>

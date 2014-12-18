@@ -4,19 +4,21 @@
 
     <!-- SharePreferences -->
     <string name="sp_name">
-        SP_NAME
+        SP_TWEETIN
     </string>
+
+    <!-- Use info -->
     <string name="sp_use_id">
         SP_USE_ID
     </string>
     <string name="sp_use_screen_name">
         SP_USE_SCREEN_NAME
     </string>
-    <string name="sp_consumer_key">
-        SP_CONSUMER_KEY
+    <string name="sp_request_token">
+        SP_REQUEST_TOKEN
     </string>
-    <string name="sp_consumer_secret">
-        SP_CONSUMER_SECRET
+    <string name="sp_request_token_secret">
+        SP_REQUEST_TOKEN_SECRET
     </string>
     <string name="sp_access_token">
         SP_ACCESS_TOKEN
@@ -24,6 +26,8 @@
     <string name="sp_access_token_secret">
         SP_ACCESS_TOKEN_SECRET
     </string>
+
+    <!-- Init massage -->
     <string name="sp_is_timeline_first">
         SP_IS_TIMELINE_FIRST
     </string>
@@ -36,8 +40,15 @@
     <string name="sp_is_favorite_first">
         SP_IS_FAVORITE_FIRST
     </string>
-    <string name="sp_background_filename">
-        SP_BACKGROUND_PICTURE_FILENAME
+
+    <!-- CustomTheme -->
+    <string name="sp_color">
+        SP_COLOR
     </string>
+    <integer name="sp_color_blue">0</integer>
+    <integer name="sp_color_orange">1</integer>
+    <integer name="sp_color_pink">2</integer>
+    <integer name="sp_color_purple">3</integer>
+    <integer name="sp_color_teal">4</integer>
 
 </resources>

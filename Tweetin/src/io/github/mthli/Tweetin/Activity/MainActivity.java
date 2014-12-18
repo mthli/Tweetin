@@ -1,210 +1,51 @@
 package io.github.mthli.Tweetin.Activity;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.os.AsyncTask;
+import android.content.res.ColorStateList;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.view.KeyEvent;
-import android.view.View;
+import android.support.v4.view.ViewPager;
+import android.view.*;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import com.special.ResideMenu.ResideMenu;
-import com.special.ResideMenu.ResideMenuItem;
-import io.github.mthli.Tweetin.Fragment.*;
-import io.github.mthli.Tweetin.Fragment.DiscoveryFragment;
+import android.widget.*;
+import io.github.mthli.Tweetin.Fragment.FavoriteFragment;
+import io.github.mthli.Tweetin.Fragment.MentionFragment;
+import io.github.mthli.Tweetin.Fragment.TimelineFragment;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Task.Main.MainBackgroundInitTask;
-import io.github.mthli.Tweetin.Unit.Anim.ActivityAnim;
-import io.github.mthli.Tweetin.Unit.Database.DatabaseUnit;
+import io.github.mthli.Tweetin.Task.Initialize.GetAccessTokenTask;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
-import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
-import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends FragmentActivity {
+
+    private int fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
+    public int getFragmentFlag() {
+        return fragmentFlag;
+    }
+    public void setFragmentFlag(int fragmentFlag) {
+        this.fragmentFlag = fragmentFlag;
+    }
+
     private TimelineFragment timelineFragment;
-    private MentionFragment mentionFragment;
-    private FavoriteFragment favoriteFragment;
-    private DiscoveryFragment discoveryFragment;
-    private SettingFragment settingFragment;
-    public int fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
     public TimelineFragment getTimelineFragment() {
         return timelineFragment;
     }
+
+    private MentionFragment mentionFragment;
     public MentionFragment getMentionFragment() {
         return mentionFragment;
     }
+
+    private FavoriteFragment favoriteFragment;
     public FavoriteFragment getFavoriteFragment() {
         return favoriteFragment;
     }
-    public DiscoveryFragment getDiscoveryFragment() {
-        return discoveryFragment;
-    }
-    public SettingFragment getSettingFragment() {
-        return settingFragment;
-    }
 
-    private ResideMenu resideMenu;
-    private ResideMenuItem timelineItem;
-    private ResideMenuItem mentionItem;
-    private ResideMenuItem favoriteItem;
-    private ResideMenuItem discoveryItem;
-    private ResideMenuItem settingItem;
-    public ResideMenu getResideMenu() {
-        return resideMenu;
-    }
-
-    private MainBackgroundInitTask mainBackgroundInitTask;
-    public boolean isSomeTaskRunning() {
-        if (mainBackgroundInitTask != null && mainBackgroundInitTask.getStatus() == AsyncTask.Status.RUNNING) {
-            return true;
-        }
-        return false;
-    }
-
-    private void selectResideMenuItem(int targetFragmentFlag) {
-        ImageView imageView;
-        TextView textView;
-        switch (fragmentFlag) {
-            case Flag.IN_TIMELINE_FRAGMENT:
-                imageView = (ImageView) timelineItem
-                        .findViewById(R.id.iv_icon);
-                textView = (TextView) timelineItem
-                        .findViewById(R.id.tv_title);
-                imageView.setImageDrawable(
-                        getResources().getDrawable(R.drawable.ic_action_timeline_default)
-                );
-                textView.setTextColor(
-                        getResources().getColor(R.color.white)
-                );
-                break;
-            case Flag.IN_MENTION_FRAGMENT:
-                imageView = (ImageView) mentionItem
-                        .findViewById(R.id.iv_icon);
-                textView = (TextView) mentionItem
-                        .findViewById(R.id.tv_title);
-                imageView.setImageDrawable(
-                        getResources().getDrawable(R.drawable.ic_action_mention_default)
-                );
-                textView.setTextColor(
-                        getResources().getColor(R.color.white)
-                );
-                break;
-            case Flag.IN_FAVORITE_FRAGMENT:
-                imageView = (ImageView) favoriteItem
-                        .findViewById(R.id.iv_icon);
-                textView = (TextView) favoriteItem
-                        .findViewById(R.id.tv_title);
-                imageView.setImageDrawable(
-                        getResources().getDrawable(R.drawable.ic_action_favorite_default)
-                );
-                textView.setTextColor(
-                        getResources().getColor(R.color.white)
-                );
-                break;
-            case Flag.IN_DISCOVERY_FRAGMENT:
-                imageView = (ImageView) discoveryItem
-                        .findViewById(R.id.iv_icon);
-                textView = (TextView) discoveryItem
-                        .findViewById(R.id.tv_title);
-                imageView.setImageDrawable(
-                        getResources().getDrawable(R.drawable.ic_action_discovery_default)
-                );
-                textView.setTextColor(
-                        getResources().getColor(R.color.white)
-                );
-                break;
-            case Flag.IN_SETTING_FRAGMENT:
-                imageView = (ImageView) settingItem
-                        .findViewById(R.id.iv_icon);
-                textView = (TextView) settingItem
-                        .findViewById(R.id.tv_title);
-                imageView.setImageDrawable(
-                        getResources().getDrawable(R.drawable.ic_action_setting_default)
-                );
-                textView.setTextColor(
-                        getResources().getColor(R.color.white)
-                );
-                break;
-            default:
-                break;
-        }
-
-        switch (targetFragmentFlag) {
-            case Flag.IN_TIMELINE_FRAGMENT:
-                imageView = (ImageView) timelineItem
-                        .findViewById(R.id.iv_icon);
-                textView = (TextView) timelineItem
-                        .findViewById(R.id.tv_title);
-                imageView.setImageDrawable(
-                        getResources().getDrawable(R.drawable.ic_action_timeline_active)
-                );
-                textView.setTextColor(
-                        getResources().getColor(R.color.blue_bright)
-                );
-                break;
-            case Flag.IN_MENTION_FRAGMENT:
-                imageView = (ImageView) mentionItem
-                        .findViewById(R.id.iv_icon);
-                textView = (TextView) mentionItem
-                        .findViewById(R.id.tv_title);
-                imageView.setImageDrawable(
-                        getResources().getDrawable(R.drawable.ic_action_mention_active)
-                );
-                textView.setTextColor(
-                        getResources().getColor(R.color.blue_bright)
-                );
-                break;
-            case Flag.IN_FAVORITE_FRAGMENT:
-                imageView = (ImageView) favoriteItem
-                        .findViewById(R.id.iv_icon);
-                textView = (TextView) favoriteItem
-                        .findViewById(R.id.tv_title);
-                imageView.setImageDrawable(
-                        getResources().getDrawable(R.drawable.ic_action_favorite_active)
-                );
-                textView.setTextColor(
-                        getResources().getColor(R.color.blue_bright)
-                );
-                break;
-            case Flag.IN_DISCOVERY_FRAGMENT:
-                imageView = (ImageView) discoveryItem
-                        .findViewById(R.id.iv_icon);
-                textView = (TextView) discoveryItem
-                        .findViewById(R.id.tv_title);
-                imageView.setImageDrawable(
-                        getResources().getDrawable(R.drawable.ic_action_discovery_active)
-                );
-                textView.setTextColor(
-                        getResources().getColor(R.color.blue_bright)
-                );
-                break;
-            case Flag.IN_SETTING_FRAGMENT:
-                imageView = (ImageView) settingItem
-                        .findViewById(R.id.iv_icon);
-                textView = (TextView) settingItem
-                        .findViewById(R.id.tv_title);
-                imageView.setImageDrawable(
-                        getResources().getDrawable(R.drawable.ic_action_setting_active)
-                );
-                textView.setTextColor(
-                        getResources().getColor(R.color.blue_bright)
-                );
-                break;
-            default:
-                break;
-        }
-    }
-    private Fragment getCurrentFragment() {
+    public Fragment getCurrentFragment() {
         switch (fragmentFlag) {
             case Flag.IN_TIMELINE_FRAGMENT:
                 return timelineFragment;
@@ -212,359 +53,362 @@ public class MainActivity extends FragmentActivity {
                 return mentionFragment;
             case Flag.IN_FAVORITE_FRAGMENT:
                 return favoriteFragment;
-            case Flag.IN_DISCOVERY_FRAGMENT:
-                EditText editText = discoveryFragment.getSearchBox();
-                editText.clearFocus();
-                ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                        .hideSoftInputFromWindow(
-                                editText.getWindowToken(),
-                                0
-                        );
-                return discoveryFragment;
-            case Flag.IN_SETTING_FRAGMENT:
-                return settingFragment;
             default:
                 return timelineFragment;
         }
     }
-    private void initResideMenu() {
-        resideMenu = new ResideMenu(this);
-        resideMenu.setShadowVisible(false);
-        resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
-        resideMenu.attachToActivity(this);
-        final List<ResideMenuItem> resideMenuItemList = new ArrayList<ResideMenuItem>();
-        timelineItem = new ResideMenuItem(
-                this,
-                R.drawable.ic_action_timeline_active,
-                R.string.reside_menu_item_timeline
-        );
-        TextView textView = (TextView) timelineItem
-                .findViewById(R.id.tv_title);
-        textView.setTextColor(
-                getResources().getColor(R.color.blue_bright)
-        );
-        mentionItem = new ResideMenuItem(
-                this,
-                R.drawable.ic_action_mention,
-                R.string.reside_menu_item_mention
-        );
-        favoriteItem = new ResideMenuItem(
-                this,
-                R.drawable.ic_action_favorite_default,
-                R.string.reside_menu_item_favorite
-        );
-        discoveryItem = new ResideMenuItem(
-                this,
-                R.drawable.ic_action_discovery_default,
-                R.string.reside_menu_item_discovery
-        );
-        settingItem = new ResideMenuItem(
-                this,
-                R.drawable.ic_action_setting_default,
-                R.string.reside_menu_item_setting
-        );
-        resideMenuItemList.add(timelineItem);
-        resideMenuItemList.add(mentionItem);
-        resideMenuItemList.add(favoriteItem);
-        resideMenuItemList.add(discoveryItem);
-        resideMenuItemList.add(settingItem);
-        resideMenu.setMenuItems(
-                resideMenuItemList,
-                ResideMenu.DIRECTION_LEFT
-        );
 
-        timelineItem.setOnClickListener(new View.OnClickListener() {
+    public Fragment getFragmentFromPosition(int position) {
+        switch (position) {
+            case Flag.IN_TIMELINE_FRAGMENT:
+                return timelineFragment;
+            case Flag.IN_MENTION_FRAGMENT:
+                return mentionFragment;
+            case Flag.IN_FAVORITE_FRAGMENT:
+                return favoriteFragment;
+            default:
+                return timelineFragment;
+        }
+    }
+
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
+    private Toolbar toolbar;
+
+    private RelativeLayout searchView;
+    private EditText searchViewEditText;
+
+    private ViewPager viewPager;
+    private TabHost tabHost;
+    private TabWidget tabWidget;
+    private View tabIndicator;
+
+    private float elevation = 0f;
+
+    private void initUserInterface() {
+        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        toolbar.setElevation(2 * elevation);
+        setActionBar(toolbar);
+
+        searchView = (RelativeLayout) findViewById(R.id.search_view);
+        searchViewEditText = (EditText) findViewById(R.id.search_view_edittext);
+        ImageButton searchViewClear = (ImageButton) findViewById(R.id.search_view_clear);
+        searchView.setElevation(0);
+
+        searchViewClear.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (fragmentFlag != Flag.IN_TIMELINE_FRAGMENT) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                            .beginTransaction();
-                    fragmentTransaction.hide(
-                            getCurrentFragment()
-                    ).show(timelineFragment);
-                    selectResideMenuItem(Flag.IN_TIMELINE_FRAGMENT);
-                    fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
-                    fragmentTransaction.commit();
-                    resideMenu.closeMenu();
-                } else {
-                    resideMenu.closeMenu();
-                }
-            }
-        });
-        mentionItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (fragmentFlag != Flag.IN_MENTION_FRAGMENT) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                            .beginTransaction();
-                    if (mentionFragment.isAdded()) {
-                        fragmentTransaction.hide(
-                                getCurrentFragment()
-                        ).show(mentionFragment);
-                    } else {
-                        fragmentTransaction.hide(
-                                getCurrentFragment()
-                        ).add(android.R.id.content, mentionFragment);
-                    }
-                    selectResideMenuItem(Flag.IN_MENTION_FRAGMENT);
-                    fragmentFlag = Flag.IN_MENTION_FRAGMENT;
-                    fragmentTransaction.commit();
-                    resideMenu.closeMenu();
-                } else {
-                    resideMenu.closeMenu();
-                }
-            }
-        });
-        favoriteItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(fragmentFlag != Flag.IN_FAVORITE_FRAGMENT) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                            .beginTransaction();
-                    if (favoriteFragment.isAdded()) {
-                        fragmentTransaction.hide(
-                                getCurrentFragment()
-                        ).show(favoriteFragment);
-                    } else {
-                        fragmentTransaction.hide(
-                                getCurrentFragment()
-                        ).add(android.R.id.content, favoriteFragment);
-                    }
-                    selectResideMenuItem(Flag.IN_FAVORITE_FRAGMENT);
-                    fragmentFlag = Flag.IN_FAVORITE_FRAGMENT;
-                    fragmentTransaction.commit();
-                    resideMenu.closeMenu();
-                } else {
-                    resideMenu.closeMenu();
-                }
-            }
-        });
-        discoveryItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(fragmentFlag != Flag.IN_DISCOVERY_FRAGMENT) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                            .beginTransaction();
-                    if (discoveryFragment.isAdded()) {
-                        fragmentTransaction.hide(
-                                getCurrentFragment()
-                        ).show(discoveryFragment);
-                    } else {
-                        fragmentTransaction.hide(
-                                getCurrentFragment()
-                        ).add(android.R.id.content, discoveryFragment);
-                    }
-                    selectResideMenuItem(Flag.IN_DISCOVERY_FRAGMENT);
-                    fragmentFlag = Flag.IN_DISCOVERY_FRAGMENT;
-                    fragmentTransaction.commit();
-                    resideMenu.closeMenu();
-                } else {
-                    resideMenu.closeMenu();
-                }
-            }
-        });
-        settingItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (fragmentFlag != Flag.IN_SETTING_FRAGMENT) {
-                    FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                            .beginTransaction();
-                    if (settingFragment.isAdded()) {
-                        fragmentTransaction.hide(
-                                getCurrentFragment()
-                        ).show(settingFragment);
-                    } else {
-                        fragmentTransaction.hide(
-                                getCurrentFragment()
-                        ).add(android.R.id.content, settingFragment);
-                    }
-                    selectResideMenuItem(Flag.IN_SETTING_FRAGMENT);
-                    fragmentFlag = Flag.IN_SETTING_FRAGMENT;
-                    fragmentTransaction.commit();
-                    resideMenu.closeMenu();
-                } else {
-                    resideMenu.closeMenu();
-                }
+            public void onClick(View view) {
+                searchViewEditText.setText(null);
             }
         });
 
-        /*
-        mainBackgroundInitTask = new MainBackgroundInitTask(MainActivity.this);
-        mainBackgroundInitTask.execute();
-        */
+        viewPager = (ViewPager) findViewById(R.id.main_viewpager);
+        viewPager.setOffscreenPageLimit(5);
+        viewPager.setAdapter(new MainPagerAdapter(this));
+
+        tabHost = (TabHost) findViewById(android.R.id.tabhost);
+        tabHost.setup();
+        tabHost.setElevation(2 * elevation);
+
+        tabWidget = (TabWidget) findViewById(android.R.id.tabs);
+        tabWidget.setStripEnabled(false);
+        tabWidget.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
+
+        tabIndicator = findViewById(R.id.tab_indicator);
+
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        String[] tabs = getResources().getStringArray(R.array.tabs);
+        for (int i = 0; i < 3; i++) {
+            TextView textView = (TextView) layoutInflater.inflate(
+                    R.layout.tab_widget,
+                    tabWidget,
+                    false
+            );
+            textView.setText(tabs[i]);
+            tabHost.addTab(
+                    tabHost.newTabSpec(String.valueOf(i))
+                            .setIndicator(textView)
+                            .setContent(android.R.id.tabcontent)
+            );
+        }
+
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                fragmentFlag = Integer.valueOf(tabId);
+                viewPager.setCurrentItem(fragmentFlag);
+            }
+        });
+
+        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            private int scrollingState = ViewPager.SCROLL_STATE_IDLE;
+
+            private void updateIndicatorPosition(int position, float positionOffset) {
+                View tabView = tabWidget.getChildTabViewAt(position);
+                int indicatorWidth = tabView.getWidth();
+                int indicatorLeft = (int) ((position + positionOffset) * indicatorWidth);
+
+                final FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) tabIndicator.getLayoutParams();
+                layoutParams.width = indicatorWidth;
+                layoutParams.setMargins(indicatorLeft, 0, 0, 0);
+                tabIndicator.setLayoutParams(layoutParams);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (scrollingState == ViewPager.SCROLL_STATE_IDLE) {
+                    updateIndicatorPosition(position, 0);
+                }
+                fragmentFlag = position;
+                tabHost.setCurrentTab(fragmentFlag);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                scrollingState = state;
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                updateIndicatorPosition(position, positionOffset);
+            }
+        });
+    }
+
+    private void setCustomThemeFirst() {
+
+        int spColorValue = sharedPreferences.getInt(
+                getString(R.string.sp_color),
+                0
+        );
+
+        switch (spColorValue) {
+            case Flag.COLOR_BLUE:
+                setTheme(R.style.BaseAppTheme_Blue);
+                break;
+            case Flag.COLOR_ORANGE:
+                setTheme(R.style.BaseAppTheme_Orange);
+                break;
+            case Flag.COLOR_PINK:
+                setTheme(R.style.BaseAppTheme_Pink);
+                break;
+            case Flag.COLOR_PURPLE:
+                setTheme(R.style.BaseAppTheme_Purple);
+                break;
+            case Flag.COLOR_TEAL:
+                setTheme(R.style.BaseAppTheme_Teal);
+                break;
+            default:
+                setTheme(R.style.BaseAppTheme_Blue);
+                break;
+        }
+    }
+
+    private void setCustomThemeSecond() {
+        ColorStateList colorStateList;
+
+        int spColorValue = sharedPreferences.getInt(
+                getString(R.string.sp_color),
+                0
+        );
+
+        switch (spColorValue) {
+            case Flag.COLOR_BLUE:
+                tabHost.setBackgroundColor(getResources().getColor(R.color.blue_500));
+                colorStateList = getResources().getColorStateList(R.color.tab_widget_selector_blue);
+                break;
+            case Flag.COLOR_ORANGE:
+                tabHost.setBackgroundColor(getResources().getColor(R.color.orange_500));
+                colorStateList = getResources().getColorStateList(R.color.tab_widget_selector_orange);
+                break;
+            case Flag.COLOR_PINK:
+                tabHost.setBackgroundColor(getResources().getColor(R.color.pink_500));
+                colorStateList = getResources().getColorStateList(R.color.tab_widget_selector_pink);
+                break;
+            case Flag.COLOR_PURPLE:
+                tabHost.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                colorStateList = getResources().getColorStateList(R.color.tab_widget_selector_purple);
+                break;
+            case Flag.COLOR_TEAL:
+                tabHost.setBackgroundColor(getResources().getColor(R.color.teal_500));
+                colorStateList = getResources().getColorStateList(R.color.tab_widget_selector_teal);
+                break;
+            default:
+                tabHost.setBackgroundColor(getResources().getColor(R.color.blue_500));
+                colorStateList = getResources().getColorStateList(R.color.tab_widget_selector_blue);
+                break;
+        }
+
+        for (int i = 0; i < 3; i++) {
+            TextView textView = (TextView) tabHost.getTabWidget().getChildTabViewAt(i);
+            textView.setTextColor(colorStateList);
+        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
 
-        initResideMenu();
-        timelineFragment = new TimelineFragment();
-        mentionFragment = new MentionFragment();
-        favoriteFragment = new FavoriteFragment();
-        discoveryFragment = new DiscoveryFragment();
-        settingFragment = new SettingFragment();
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                .beginTransaction();
-        fragmentTransaction.add(android.R.id.content, timelineFragment);
-        fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
-        fragmentTransaction.commit();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            int position = data.getIntExtra(
-                    getString(R.string.detail_intent_from_position),
-                    -1
-            );
-            boolean deleteFromDetail = data.getBooleanExtra(
-                    getString(R.string.detail_intent_is_delete_at_detail),
-                    false
-            );
-            boolean retweetFromDetail = data.getBooleanExtra(
-                    getString(R.string.detail_intent_is_retweet_at_detail),
-                    false
-            );
-            boolean favoriteFromDetail = data.getBooleanExtra(
-                    getString(R.string.detail_intent_is_favorite_at_detail),
-                    false
-            );
-            TweetAdapter tweetAdapter;
-            List<Tweet> tweetList;
-            switch (fragmentFlag) {
-                case Flag.IN_TIMELINE_FRAGMENT:
-                    tweetAdapter = timelineFragment.getTweetAdapter();
-                    tweetList = timelineFragment.getTweetList();
-                    break;
-                case Flag.IN_MENTION_FRAGMENT:
-                    tweetAdapter = mentionFragment.getTweetAdapter();
-                    tweetList = mentionFragment.getTweetList();
-                    break;
-                case Flag.IN_FAVORITE_FRAGMENT:
-                    tweetAdapter = favoriteFragment.getTweetAdapter();
-                    tweetList = favoriteFragment.getTweetList();
-                    break;
-                case Flag.IN_DISCOVERY_FRAGMENT:
-                    tweetAdapter = discoveryFragment.getTweetAdapter();
-                    tweetList = discoveryFragment.getTweetList();
-                    break;
-                default:
-                    tweetAdapter = timelineFragment.getTweetAdapter();
-                    tweetList = timelineFragment.getTweetList();
-                    break;
-            }
-            if (position >= 0) {
-                Tweet tweet = tweetList.get(position);
-                if (retweetFromDetail) {
-                    tweet.setRetweet(true);
-                    tweet.setRetweetedByUserId(timelineFragment.getUseId());
-                    tweet.setRetweetedByUserName(
-                            getString(R.string.tweet_info_retweeted_by_me)
-                    );
-                }
-                tweet.setFavorite(favoriteFromDetail);
-                if (fragmentFlag == Flag.IN_FAVORITE_FRAGMENT && !favoriteFromDetail) { //
-                    tweetList.remove(position);
-                }
-                if (deleteFromDetail) {
-                    tweetList.remove(position);
-                }
-                tweetAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-    private void cancelAllTask() {
-        timelineFragment.cancelAllTask();
-        mentionFragment.cancelAllTask();
-        favoriteFragment.cancelAllTask();
-        discoveryFragment.cancelAllTask();
-        if (mainBackgroundInitTask != null && mainBackgroundInitTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mainBackgroundInitTask.cancel(true);
-        }
-    }
-    private void clearSharedPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences(
+        sharedPreferences = getSharedPreferences(
                 getString(R.string.sp_name),
                 MODE_PRIVATE
         );
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong(
-                getString(R.string.sp_use_id),
-                -1l
-        );
-        editor.putString(
-                getString(R.string.sp_consumer_key),
-                null
-        );
-        editor.putString(
-                getString(R.string.splash_consumer_secret),
-                null
-        );
-        editor.putString(
-                getString(R.string.sp_access_token),
-                null
-        );
-        editor.putString(
-                getString(R.string.sp_access_token_secret),
-                null
-        );
-        editor.putBoolean(
-                getString(R.string.sp_is_timeline_first),
-                true
-        );
-        editor.putBoolean(
-                getString(R.string.sp_is_mention_first),
-                true
-        );
-        editor.putLong(
-                getString(R.string.sp_latest_mention_id),
-                -1l
-        );
-        editor.putBoolean(
-                getString(R.string.sp_is_favorite_first),
-                true
-        );
-        editor.commit();
-    }
-    public void signOut() {
-        cancelAllTask();
-        DatabaseUnit.deleteAll(this);
-        clearSharedPreferences();
+        editor = sharedPreferences.edit();
 
-        Intent intent = new Intent(this, SplashActivity.class);
-        ActivityAnim anim = new ActivityAnim();
-        startActivity(intent);
-        anim.rightOut(this);
-        finish();
+        setCustomThemeFirst();
+        setContentView(R.layout.main);
+
+        Uri uri = getIntent().getData();
+        if (uri != null && uri.toString().startsWith(getString(R.string.app_callback_url))) {
+            String oAuthVerifier = uri.getQueryParameter(
+                    getString(R.string.app_oauth_verifier)
+            );
+
+            GetAccessTokenTask getAccessTokenTask = new GetAccessTokenTask(
+                    this,
+                    oAuthVerifier
+            );
+            getAccessTokenTask.execute();
+        }
+
+        timelineFragment = new TimelineFragment();
+        mentionFragment = new MentionFragment();
+        favoriteFragment = new FavoriteFragment();
+
+        elevation = getResources().getDisplayMetrics().density;
+
+        initUserInterface();
+        setCustomThemeSecond();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = MainActivity.this.getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void showSearchView(boolean show) {
+        View view = findViewById(R.id.main_menu_search);
+
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(
+                Context.INPUT_METHOD_SERVICE
+        );
+
+        int[] location = new int[2];
+        view.getLocationOnScreen(location);
+        int cx = (int) (location[0] + view.getPivotX() / 1.5);
+        int cy = (int) (location[1] - view.getPivotY() / 4);
+
+        if (show) {
+            Animator anim = ViewAnimationUtils.createCircularReveal(
+                    searchView,
+                    cx,
+                    cy,
+                    0,
+                    searchView.getWidth()
+            );
+
+            searchView.setElevation(4 * elevation);
+            searchView.setVisibility(View.VISIBLE);
+            anim.start();
+
+            if (searchView.requestFocus()) {
+                inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        } else {
+            Animator anim = ViewAnimationUtils.createCircularReveal(
+                    searchView,
+                    cx,
+                    cy,
+                    searchView.getWidth(),
+                    0
+            );
+
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+
+                    searchViewEditText.setText(null);
+                    searchView.setElevation(0);
+                    searchView.setVisibility(View.INVISIBLE);
+                }
+            });
+
+            anim.start();
+
+            inputMethodManager.hideSoftInputFromWindow(
+                    getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS
+            );
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.main_menu_search:
+                showSearchView(true);
+                break;
+            case R.id.main_menu_post:
+                /* Do something */
+                break;
+            case R.id.main_menu_setting:
+                /* Do something */
+                break;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    private boolean shouldHideSearchView(View view, MotionEvent motionEvent) {
+        if (view != null && (view instanceof EditText)) {
+            int[] location = new int[2];
+            searchView.getLocationOnScreen(location);
+
+            int left = location[0];
+            int right = left + searchView.getWidth();
+            int top = location[1];
+            int bottom = top + searchView.getHeight();
+
+            if (left <= motionEvent.getRawX() && motionEvent.getRawX() <= right && top <= motionEvent.getRawY() && motionEvent.getRawY() <= bottom) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent motionEvent) {
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+            View view = getCurrentFocus();
+
+            if (shouldHideSearchView(view, motionEvent)) {
+                showSearchView(false);
+            }
+        }
+
+        return super.dispatchTouchEvent(motionEvent);
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            cancelAllTask();
-            finish();
+            if (searchView.isShown()) {
+                showSearchView(false);
+            } else {
+                finish();
+            }
         }
 
-        return true;
-    }
-    @Override
-    public void onDestroy() {
-        cancelAllTask();
-        super.onDestroy();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE) {
-            /* Do nothing */
-        }
-        else{
-            /* Do nothing */
-        }
+        return false;
     }
 }

@@ -103,7 +103,6 @@
 
     </RelativeLayout>
 
-    <!-- More Picture support -->
     <ImageView android:id="@+id/tweet_picture"
                android:contentDescription="@null"
                android:layout_width="match_parent"
@@ -127,7 +126,7 @@
               android:textColor="@color/text">
     </TextView>
 
-    <!-- Need test when too long -->
+    <!-- Need test when too long, change to RelativeLayout -->
     <LinearLayout android:id="@+id/tweet_info"
                   android:orientation="horizontal"
                   android:layout_width="match_parent"
@@ -136,20 +135,6 @@
                   android:layout_marginLeft="12dp"
                   android:layout_marginRight="12dp"
                   android:visibility="gone">
-
-        <TextView android:id="@+id/tweet_info_picture"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:paddingRight="10dp"
-                  android:drawableLeft="@drawable/ic_tweet_picture"
-                  android:drawablePadding="2dp"
-                  android:text="@string/tweet_info_picture"
-                  android:textSize="12sp"
-                  android:textColor="@color/hint"
-                  android:singleLine="true"
-                  android:ellipsize="end"
-                  android:visibility="gone">
-        </TextView>
 
         <TextView android:id="@+id/tweet_info_retweeted_by_user_name"
                   android:layout_width="wrap_content"

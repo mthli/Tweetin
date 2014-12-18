@@ -1,214 +1,116 @@
 package io.github.mthli.Tweetin.Fragment;
 
-import android.graphics.Point;
-import android.os.AsyncTask;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.Display;
 import android.view.View;
-import android.widget.*;
+import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Task.Mention.*;
-import io.github.mthli.Tweetin.Task.Unit.CancelTask;
-import io.github.mthli.Tweetin.Task.Unit.DeleteTask;
-import io.github.mthli.Tweetin.Task.Unit.FavoriteTask;
-import io.github.mthli.Tweetin.Task.Unit.RetweetTask;
-import io.github.mthli.Tweetin.Unit.ContextMenu.ContextMenuUnit;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
-import io.github.mthli.Tweetin.Unit.Tweet.Tweet;
-import io.github.mthli.Tweetin.Unit.Tweet.TweetAdapter;
-import io.github.mthli.Tweetin.Unit.Tweet.TweetUnit;
-import twitter4j.Twitter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MentionFragment extends ProgressFragment {
 
-    private int refreshFlag = Flag.MENTION_TASK_IDLE;
-    private boolean moveToBottom = false;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
+    private View contentView;
+
     private SwipeRefreshLayout swipeRefreshLayout;
-    public int getRefreshFlag() {
-        return refreshFlag;
-    }
-    public void setRefreshFlag(int refreshFlag) {
-        this.refreshFlag = refreshFlag;
-    }
     public SwipeRefreshLayout getSwipeRefreshLayout() {
         return swipeRefreshLayout;
     }
 
-    private TweetAdapter tweetAdapter;
-    private List<Tweet> tweetList = new ArrayList<Tweet>();
-    public TweetAdapter getTweetAdapter() {
-        return tweetAdapter;
-    }
-    public List<Tweet> getTweetList() {
-        return tweetList;
-    }
-
-    private Twitter twitter;
-    private long useId;
-    public Twitter getTwitter() {
-        return twitter;
-    }
-    public long getUseId() {
-        return useId;
-    }
-
-    private MentionInitTask mentionInitTask;
-    private MentionMoreTask mentionMoreTask;
-    private DeleteTask deleteTask;
-    private RetweetTask retweetTask;
-    private FavoriteTask favoriteTask;
-    private CancelTask cancelTask;
-    public void setDeleteTask(DeleteTask deleteTask) {
-        if (this.deleteTask != null && this.deleteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            this.deleteTask.cancel(true);
-        }
-        this.deleteTask = deleteTask;
-    }
-    public void setRetweetTask(RetweetTask retweetTask) {
-        if (this.retweetTask != null && this.retweetTask.getStatus() == AsyncTask.Status.RUNNING) {
-            this.retweetTask.cancel(true);
-        }
-        this.retweetTask = retweetTask;
-    }
-    public void setFavoriteTask(FavoriteTask favoriteTask) {
-        if (this.favoriteTask != null && this.favoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            this.favoriteTask.cancel(true);
-        }
-        this.favoriteTask = favoriteTask;
-    }
-    public void setCancelTask(CancelTask cancelTask) {
-        if (this.cancelTask != null && this.cancelTask.getStatus() == AsyncTask.Status.RUNNING) {
-            this.cancelTask.cancel(true);
-        }
-        this.cancelTask = cancelTask;
-    }
-    public boolean isSomeTaskRunning() {
-        if (
-                (mentionInitTask != null && mentionInitTask.getStatus() == AsyncTask.Status.RUNNING)
-                || (mentionMoreTask != null && mentionMoreTask.getStatus() == AsyncTask.Status.RUNNING)
-        ) {
-            return true;
-        }
-        return false;
-    }
-    public void cancelAllTask() {
-        if (mentionInitTask != null && mentionInitTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mentionInitTask.cancel(true);
-        }
-        if (mentionMoreTask != null && mentionMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mentionMoreTask.cancel(true);
-        }
-        if (deleteTask != null && deleteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            deleteTask.cancel(true);
-        }
-        if (retweetTask != null && retweetTask.getStatus() == AsyncTask.Status.RUNNING) {
-            retweetTask.cancel(true);
-        }
-        if (favoriteTask != null && favoriteTask.getStatus() == AsyncTask.Status.RUNNING) {
-            favoriteTask.cancel(true);
-        }
-        if (cancelTask != null && cancelTask.getStatus() == AsyncTask.Status.RUNNING) {
-            cancelTask.cancel(true);
-        }
-    }
+    private ListView listView;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        sharedPreferences = getActivity().getSharedPreferences(
+                getString(R.string.sp_name),
+                Context.MODE_PRIVATE
+        );
+        editor = sharedPreferences.edit();
+
         super.onActivityCreated(savedInstanceState);
         setContentView(R.layout.mention_fragment);
-        View view = getContentView();
+        contentView = getContentView();
         setContentEmpty(false);
         setContentShown(true);
 
-        twitter = TweetUnit.getTwitterFromSharedPreferences(getActivity());
-        useId = TweetUnit.getUseIdFromeSharedPreferences(getActivity());
+        initUserInterface();
+        setCustomTheme();
+    }
 
-        ListView listView = (ListView) view
-                .findViewById(R.id.mention_fragment_listview);
-        tweetAdapter = new TweetAdapter(
-                getActivity(),
-                R.layout.tweet,
-                tweetList,
-                false
-        );
-        listView.setAdapter(tweetAdapter);
-        tweetAdapter.notifyDataSetChanged();
-
-        swipeRefreshLayout = (SwipeRefreshLayout) view
+    private void initUserInterface() {
+        swipeRefreshLayout = (SwipeRefreshLayout) contentView
                 .findViewById(R.id.mention_swipe_container);
-        swipeRefreshLayout.setColorSchemeResources(
-                R.color.text,
-                R.color.secondary_text,
-                R.color.text,
-                R.color.secondary_text
-        );
-        Display display = getActivity()
-                .getWindowManager()
-                .getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int height = size.y;
-        swipeRefreshLayout.setProgressViewOffset(
-                false,
-                0,
-                height / 10
-        );
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+        swipeRefreshLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
-                mentionInitTask = new MentionInitTask(
-                        MentionFragment.this,
-                        true
+            public void onClick(View view) {
+                /* Do something */
+            }
+        });
+
+        listView = (ListView) contentView.findViewById(R.id.mention_fragment_listview);
+    }
+
+    private void setCustomTheme() {
+        int spColorValue = sharedPreferences.getInt(
+                getString(R.string.sp_color),
+                0
+        );
+
+        switch (spColorValue) {
+            case Flag.COLOR_BLUE:
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.blue_700,
+                        R.color.blue_500,
+                        R.color.blue_700,
+                        R.color.blue_500
                 );
-                mentionInitTask.execute();
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ContextMenuUnit.show(
-                        getActivity(),
-                        position
+                break;
+            case Flag.COLOR_ORANGE:
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.orange_700,
+                        R.color.orange_500,
+                        R.color.orange_700,
+                        R.color.orange_500
                 );
-            }
-        });
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            private int previous = 0;
-
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                /* Do nothing */
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (previous < firstVisibleItem) {
-                    moveToBottom = true;
-                }
-                if (previous > firstVisibleItem) {
-                    moveToBottom = false;
-                }
-                previous = firstVisibleItem;
-
-                if (totalItemCount == firstVisibleItem + visibleItemCount) {
-                    if (!isSomeTaskRunning() && moveToBottom) {
-                        mentionMoreTask = new MentionMoreTask(MentionFragment.this);
-                        mentionMoreTask.execute();
-                    }
-                }
-            }
-        });
-
-        mentionInitTask = new MentionInitTask(
-                MentionFragment.this,
-                false
-        );
-        mentionInitTask.execute();
+                break;
+            case Flag.COLOR_PINK:
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.pink_700,
+                        R.color.pink_500,
+                        R.color.pink_700,
+                        R.color.pink_500
+                );
+                break;
+            case Flag.COLOR_PURPLE:
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.purple_700,
+                        R.color.purple_500,
+                        R.color.purple_700,
+                        R.color.purple_500
+                );
+                break;
+            case Flag.COLOR_TEAL:
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.teal_700,
+                        R.color.teal_500,
+                        R.color.teal_700,
+                        R.color.teal_500
+                );
+                break;
+            default:
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.blue_700,
+                        R.color.blue_500,
+                        R.color.blue_700,
+                        R.color.blue_500
+                );
+                break;
+        }
     }
 }

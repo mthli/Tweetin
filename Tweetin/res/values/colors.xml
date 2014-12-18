@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
 
-    <color name="white">@android:color/white</color>
-    <color name="grey">#F5F5F5</color>
-    <color name="background">#F3F3F3</color>
-    <color name="black">@android:color/black</color>
-    <color name="transparent">@android:color/transparent</color>
+    <color name="blue_700">#1976D2</color>
+    <color name="blue_500">#2196F3</color>
+    <color name="blue_300">#64B5F6</color>
+    <color name="blue_100">#BBDEFB</color>
 
-    <color name="red">#F44336</color>
-    <color name="blue_bright">@android:color/holo_blue_bright</color>
-    <color name="blue_dark">#3F83AA</color>
+    <color name="orange_700">#F57C00</color>
+    <color name="orange_500">#FF9800</color>
+    <color name="orange_300">#FFB74D</color>
+    <color name="orange_100">#FFE0B2</color>
+
+    <color name="pink_700">#C2185B</color>
+    <color name="pink_500">#E91E63</color>
+    <color name="pink_300">#F06292</color>
+    <color name="pink_100">#F8BBD0</color>
+
+    <color name="purple_700">#7B1FA2</color>
+    <color name="purple_500">#9C27B0</color>
+    <color name="purple_300">#BA68C8</color>
+    <color name="purple_100">#E1BEE7</color>
+
+    <color name="teal_700">#00796B</color>
+    <color name="teal_500">#009688</color>
+    <color name="teal_300">#4DB6AC</color>
+    <color name="teal_100">#B2DFDB</color>
+
+    <color name="black">#000000</color>
+    <color name="background">#F3F3F3</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">@android:color/transparent</color>
 
     <color name="text">#212121</color>
     <color name="secondary_text">#727272</color>
     <color name="hint">#B8B8B8</color>
     <color name="dividers">#DADADA</color>
 
-    <integer-array name="circular_progress_bar_colors_dark">
-        <item>@color/text</item>
-        <item>@color/secondary_text</item>
-    </integer-array>
-    <integer-array name="circular_progress_bar_colors_light">
-        <item>@color/dividers</item>
-        <item>@color/white</item>
+    <integer-array name="circular_progress_bar_colors">
+        <item>@color/blue_500</item>
+        <item>@color/blue_300</item>
     </integer-array>
 
 </resources>

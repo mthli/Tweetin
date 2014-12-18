@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
 
     <!-- CircleImageView -->
     <declare-styleable name="CircleImageView">
         <attr name="border_width" format="dimension" />
         <attr name="border_color" format="color" />
-    </declare-styleable>
-
-    <!-- FloatingActionButton -->
-    <declare-styleable name="FloatingActionButton">
-        <attr name="fab_colorPressed" format="color" />
-        <attr name="fab_colorNormal" format="color" />
-        <attr name="fab_shadow" format="boolean" />
-        <attr name="fab_type" format="enum">
-            <enum name="normal" value="0" />
-            <enum name="mini" value="1" />
-        </attr>
     </declare-styleable>
 
     <!-- CircularProgressBar -->
@@ -29,21 +17,6 @@
         <attr name="cpb_max_sweep_angle" format="integer"/>
         <attr name="cpb_sweep_speed" format="float"/>
         <attr name="cpb_rotation_speed" format="float"/>
-    </declare-styleable>
-
-    <!-- MaterialRipple -->
-    <declare-styleable name="MaterialRippleLayout">
-        <attr name="rippleColor" format="color" localization="suggested" />
-        <attr name="rippleDimension" format="dimension" localization="suggested" />
-        <attr name="rippleOverlay" format="boolean" localization="suggested" />
-        <attr name="rippleAlpha" format="float" localization="suggested" />
-        <attr name="rippleDuration" format="integer" localization="suggested" />
-        <attr name="rippleFadeDuration" format="integer" localization="suggested" />
-        <attr name="rippleHover" format="boolean" localization="suggested" />
-        <attr name="rippleBackground" format="color" localization="suggested" />
-        <attr name="rippleDelayClick" format="boolean" localization="suggested" />
-        <attr name="ripplePersistent" format="boolean" localization="suggested" />
-        <attr name="rippleInAdapter" format="boolean" localization="suggested" />
     </declare-styleable>
 
 </resources>

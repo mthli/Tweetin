@@ -1,273 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Tweet -->
-    <string name="tweet_date_format">
-        HH:mm MM.dd
+    <!-- Main -->
+    <string name="main_pd_get_access_token">
+        Get access token&#8230;
     </string>
-    <string name="tweet_info_picture">Picture</string>
-    <string name="tweet_info_retweeted_by_me">Me</string>
-    <string name="tweet_info_favorite">Favorite</string>
-    <string name="tweet_toast_can_not_open_this_picture">
-        Can not open this picture.
+    <string name="main_toast_initializing">
+        Initializing&#8230;
     </string>
-    <!-- Delete -->
-    <string name="tweet_notification_delete_ing">
-        Deleting&#8230;
-    </string>
-    <string name="tweet_notification_delete_successful">
-        Delete successful.
-    </string>
-    <string name="tweet_notification_delete_failed">
-        Delete failed.
-    </string>
-    <!-- Retweet -->
-    <string name="tweet_notification_rewteet_ing">
-        Retweeting&#8230;
-    </string>
-    <string name="tweet_notification_retweet_successful">
-        Retweet successful.
-    </string>
-    <string name="tweet_notification_retweet_failed">
-        Retweet failed.
-    </string>
-    <!-- Add favorite -->
-    <string name="tweet_notification_add_favorite_ing">
-        Adding favorite&#8230;
-    </string>
-    <string name="tweet_notification_add_favorite_successful">
-        Add favorite successful.
-    </string>
-    <string name="tweet_notification_add_favorite_failed">
-        Add favorite failed.
-    </string>
-    <!-- UnFavorite -->
-    <string name="tweet_notification_un_favorite_ing">
-        UnFavoriting&#8230;
-    </string>
-    <string name="tweet_notification_un_favorite_successful">
-        UnFavorite successful.
-    </string>
-    <string name="tweet_notification_un_favorite_failed">
-        UnFavorite failed.
-    </string>
-    <!-- Save picture -->
-    <string name="tweet_toast_save_successful">
-        Save successful.
-    </string>
-    <string name="tweet_toast_save_failed">
-        Save failed.
+    <string name="main_toast_get_access_token_failed">
+        Get access token failed.
     </string>
 
-    <!-- ResideMenu -->
-    <string name="reside_menu_item_timeline">Timeline</string>
-    <string name="reside_menu_item_mention">Mention</string>
-    <string name="reside_menu_item_favorite">Favorite</string>
-    <string name="reside_menu_item_discovery">Discovery</string>
-    <string name="reside_menu_item_setting">Setting</string>
-    <!-- ContextMenu -->
-    <string name="context_menu_item_reply">Reply</string>
-    <string name="context_menu_item_delete">Delete</string>
-    <string name="context_menu_item_retweet">Retweet</string>
-    <string name="context_menu_item_quote">Quote</string>
-    <string name="context_menu_item_favorite">Favorite</string>
-    <string name="context_menu_item_cancel">Cancel</string>
-    <string name="context_menu_item_detail">Detail</string>
-    <string name="context_menu_item_copy">Copy</string>
-    <string name="context_menu_toast_already_retweet">
-        Already retweet.
-    </string>
-    <string name="context_menu_item_copy_label">
-        CONTEXT_MENU_ITEM_COPY_LABEL
-    </string>
-    <string name="context_menu_toast_copy_successful">
-        Copy successful.
-    </string>
+    <!-- Menu -->
+    <string name="main_menu_search">Search</string>
+    <string name="main_menu_post">Post</string>
+    <string name="main_menu_setting">Setting</string>
+
+    <!-- Search -->
+    <string name="search_hint">Search</string>
+
+    <!-- Setting -->
+    <string name="setting_label">Setting</string>
 
     <!-- Splash -->
     <string name="splash_description">
         Yet another Twitter unofficial client.
     </string>
-    <string name="splash_consumer_key">Key</string>
-    <string name="splash_consumer_secret">Secret</string>
-    <string name="splash_sign_in">Sign in</string>
+    <string name="splash_sign_in">
+        Sign in
+    </string>
     <string name="splash_how_to">
         How to get Key and Secret?
     </string>
+    <string name="splash_how_to_en">
+        HowTo_en.html
+    </string>
+    <string name="splash_how_to_zh">
+        HowTo_zh.html
+    </string>
+    <string name="splash_how_to_base_url">
+        file:///android_asset/
+    </string>
     <string name="splash_pd_start_authorization">
-        Start Authorization&#8230;
+        Start authorization&#8230;
     </string>
-    <string name="splash_webview_dialog_next">Next</string>
-    <string name="splash_pin_dialog_pin">Pin</string>
-    <string name="splash_pin_dialog_accept">Accept</string>
-    <string name="splash_pd_get_access_token">
-        Get AccessToken&#8230;
-    </string>
-    <string name="splash_toast_wait">
-        Please wait a moment, a webpage will be shown in this dialog.
-    </string>
-    <string name="splash_toast_miss_api_info">
-        Please complete your OAuth info.
-    </string>
-    <string name="splash_toast_miss_pin">
-        Miss Pin value.
+    <string name="splash_toast_miss_oauth_information">
+        Please complete your OAuth information.
     </string>
     <string name="splash_toast_authorization_failed">
         Authorization failed.
     </string>
-    <string name="splash_toast_get_access_token_failed">
-        Get AccessToken failed.
-    </string>
-    <string name="splash_how_to_en">HowTo_en.html</string>
-    <string name="splash_how_to_zh">HowTo_zh.html</string>
-    <string name="splash_how_to_base_url">
-        file:///android_asset/
-    </string>
-    <string name="splash_how_to_ok">OK</string>
 
-    <!-- Timeline -->
-    <string name="timeline_toast_fab_add">
-        Add a new tweet.
-    </string>
-    <string name="timeline_error_get_timeline_failed">
-        Get timeline failed.
-    </string>
-    <!-- Mention -->
-    <string name="mention_error_get_mention_failed">
-        Get mention list failed.
-    </string>
-    <string name="mention_notification_new_mention">
-        New mention!
-    </string>
-    <!-- Favorite -->
-    <string name="favorite_error_get_favorite_failed">
-        Get favorite list failed.
-    </string>
-
-    <!-- Detail -->
-    <string name="detail_media_type_picture">photo</string>
-    <string-array name="detail_picture_suffix">
-        <item>.jpg</item>
-        <item>.png</item>
+    <!-- Tabs -->
+    <string-array name="tabs">
+        <item>Timeline</item>
+        <item>Mention</item>
+        <item>Favorite</item>
     </string-array>
-    <string name="detail_toast_fab_reply">
-        Reply current tweet.
-    </string>
-    <string name="detail_toast_can_not_open_this_picture">
-        Can not open this picture.
-    </string>
-    <string name="detail_error_get_detail_failed">
-        Get detail failed.
-    </string>
 
-    <string name="post_hint">
-        What\'s on your mind?
-    </string>
-    <string name="post_notification_post_ing">
-        Posting&#8230;
-    </string>
-    <string name="post_notification_post_successful">
-        Post successful.
-    </string>
-    <string name="post_notification_post_failed">
-        Post failed.
-    </string>
-    <string name="post_toast_check_in">
-        Check in.
-    </string>
-    <string name="post_toast_picture">
-        Choose a picture.
-    </string>
-    <string name="post_toast_send">
-        Send this tweet.
-    </string>
-    <string name="post_toast_have_not_input_anything">
-        You haven\'t input anything.
-    </string>
-    <string name="post_toast_tweet_too_long">
-        A tweet must less than 140 chars.
-    </string>
-
-    <!-- Profile -->
-    <string name="profile_error_get_user_profile_failed">
-        Get user profile failed.
-    </string>
-    <string name="profile_follow">Follow</string>
-    <string name="profile_un_follow">UnFollow</string>
-    <string name="profile_notification_follow_ing">
-        Following&#8230;
-    </string>
-    <string name="profile_notification_follow_successful">
-        Follow successful.
-    </string>
-    <string name="profile_notification_follow_failed">
-        Follow failed.
-    </string>
-    <string name="profile_notification_un_follow_ing">
-        UnFollowing&#8230;
-    </string>
-    <string name="profile_notification_un_follow_successful">
-        UnFollow successful.
-    </string>
-    <string name="profile_notification_un_follow_failed">
-        UnFollow failed.
-    </string>
-
-    <!-- Discovery -->
-    <string name="discovery_fragment_search_box_hint">
-        Discovery
-    </string>
-    <string name="discovery_fragment_introduction">
-        Input casually and find some interesting tweets.
-    </string>
-    <string name="discovery_toast_please_input_something">
-        Please input something.
-    </string>
-    <string name="discovery_toast_nothing">
-        There is nothing to show&#8230;
-    </string>
-    <string name="discovery_toast_discovery_failed">
-        Discovery failed.
-    </string>
-
-    <!-- Setting -->
-    <string name="setting_title_homepage">Homepage</string>
-    <string name="setting_title_license">License</string>
-    <string name="setting_title_version">Version</string>
-    <string name="setting_title_rate">Rate</string>
-    <string name="setting_title_advice">Advice</string>
-    <string name="setting_title_author">Author</string>
-    <string name="setting_title_thanks">Thanks</string>
-    <string name="setting_title_sign_out">Sign out</string>
-    <string name="setting_content_homepage">
-        https://github.com/mthli/Tweetin
-    </string>
-    <string name="setting_content_license">
-        Apache License, Version 2.0
-    </string>
-    <string name="setting_content_rate">
-        Rate this app at Google Play.
-    </string>
-    <string name="setting_content_advice">
-        Send some suggestion to author.
-    </string>
-    <string name="setting_content_author">
-        \@mth_li
-    </string>
-    <string name="setting_content_thanks">
-        \@chanszen
-    </string>
-    <string name="setting_content_sign_out">
-        Clear all user data and sign out.
-    </string>
-    <string name="setting_link_to_42">
-        http://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life.2C_the_Universe.2C_and_Everything_.2842.29
-    </string>
-    <string name="setting_link_to_google_play">
-        https://play.google.com/store/apps/details?id=io.github.mthli.Tweetin
-    </string>
-    <string name="setting_advice_str">
-        \@mth_li #Tweetin
-    </string>
+    <!-- Tweet -->
+    <string name="tweet_info_retweeted_by_me">Me</string>
+    <string name="tweet_info_favorite">Favorite</string>
 
 </resources>
