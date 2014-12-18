@@ -3,7 +3,7 @@ Tweetin
 
 Yet another Twitter unofficial client.
 
-Just design for Lollipop now!
+Just design for __Lollipop__ now!!!
 
 __UNDER DEVELOPMENT!!!__
 
