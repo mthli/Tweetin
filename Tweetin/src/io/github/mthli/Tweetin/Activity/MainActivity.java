@@ -19,6 +19,7 @@ import io.github.mthli.Tweetin.Fragment.TimelineFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Initialize.GetAccessTokenTask;
 import io.github.mthli.Tweetin.Unit.Flag.Flag;
+import io.github.mthli.Tweetin.Unit.Interface.BadgeView;
 
 public class MainActivity extends FragmentActivity {
 
@@ -88,7 +89,7 @@ public class MainActivity extends FragmentActivity {
 
     private void initUserInterface() {
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        toolbar.setElevation(2 * elevation);
+        toolbar.setElevation(elevation * 2);
         setActionBar(toolbar);
 
         searchView = (RelativeLayout) findViewById(R.id.search_view);
@@ -109,7 +110,7 @@ public class MainActivity extends FragmentActivity {
 
         tabHost = (TabHost) findViewById(android.R.id.tabhost);
         tabHost.setup();
-        tabHost.setElevation(2 * elevation);
+        tabHost.setElevation(elevation * 2);
 
         tabWidget = (TabWidget) findViewById(android.R.id.tabs);
         tabWidget.setStripEnabled(false);
@@ -117,18 +118,14 @@ public class MainActivity extends FragmentActivity {
 
         tabIndicator = findViewById(R.id.tab_indicator);
 
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
         String[] tabs = getResources().getStringArray(R.array.tabs);
         for (int i = 0; i < 3; i++) {
-            TextView textView = (TextView) layoutInflater.inflate(
-                    R.layout.tab_widget,
-                    tabWidget,
-                    false
-            );
-            textView.setText(tabs[i]);
+            BadgeView badgeView = new BadgeView(this);
+            badgeView.setText(tabs[i]);
+
             tabHost.addTab(
                     tabHost.newTabSpec(String.valueOf(i))
-                            .setIndicator(textView)
+                            .setIndicator(badgeView)
                             .setContent(android.R.id.tabcontent)
             );
         }
@@ -241,8 +238,8 @@ public class MainActivity extends FragmentActivity {
         }
 
         for (int i = 0; i < 3; i++) {
-            TextView textView = (TextView) tabHost.getTabWidget().getChildTabViewAt(i);
-            textView.setTextColor(colorStateList);
+            BadgeView badgeView = (BadgeView) tabHost.getTabWidget().getChildTabViewAt(i);
+            badgeView.setCustomTheme(colorStateList);
         }
     }
 
@@ -311,7 +308,7 @@ public class MainActivity extends FragmentActivity {
                     searchView.getWidth()
             );
 
-            searchView.setElevation(4 * elevation);
+            searchView.setElevation(elevation * 4);
             searchView.setVisibility(View.VISIBLE);
             anim.start();
 

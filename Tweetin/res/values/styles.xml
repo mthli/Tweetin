@@ -13,6 +13,7 @@
         <item name="android:colorAccent">@color/blue_700</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColorHighlight">@color/blue_300</item>
         <item name="android:actionModeBackground">@color/blue_500</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="android:itemTextAppearance">@style/BaseAppTheme.TextAppearance</item>
@@ -32,30 +33,35 @@
         <item name="android:colorPrimaryDark">@color/blue_700</item>
         <item name="android:colorPrimary">@color/blue_500</item>
         <item name="android:colorAccent">@color/blue_700</item>
+        <item name="android:textColorHighlight">@color/blue_300</item>
         <item name="android:actionModeBackground">@color/blue_500</item>
     </style>
     <style name="BaseAppTheme.Orange" parent="BaseAppTheme">
         <item name="android:colorPrimaryDark">@color/orange_700</item>
         <item name="android:colorPrimary">@color/orange_500</item>
         <item name="android:colorAccent">@color/orange_700</item>
+        <item name="android:textColorHighlight">@color/orange_300</item>
         <item name="android:actionModeBackground">@color/orange_500</item>
     </style>
     <style name="BaseAppTheme.Pink" parent="BaseAppTheme">
         <item name="android:colorPrimaryDark">@color/pink_700</item>
         <item name="android:colorPrimary">@color/pink_500</item>
         <item name="android:colorAccent">@color/pink_700</item>
+        <item name="android:textColorHighlight">@color/pink_300</item>
         <item name="android:actionModeBackground">@color/pink_500</item>
     </style>
     <style name="BaseAppTheme.Purple" parent="BaseAppTheme">
         <item name="android:colorPrimaryDark">@color/purple_700</item>
         <item name="android:colorPrimary">@color/purple_500</item>
         <item name="android:colorAccent">@color/purple_700</item>
+        <item name="android:textColorHighlight">@color/purple_300</item>
         <item name="android:actionModeBackground">@color/purple_500</item>
     </style>
     <style name="BaseAppTheme.Teal" parent="BaseAppTheme">
         <item name="android:colorPrimaryDark">@color/teal_700</item>
         <item name="android:colorPrimary">@color/teal_500</item>
         <item name="android:colorAccent">@color/teal_700</item>
+        <item name="android:textColorHighlight">@color/teal_300</item>
         <item name="android:actionModeBackground">@color/teal_500</item>
     </style>
 
