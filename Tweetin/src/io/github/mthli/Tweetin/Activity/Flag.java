@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Unit.Flag;
+package io.github.mthli.Tweetin.Activity;
 
 public class Flag {
 

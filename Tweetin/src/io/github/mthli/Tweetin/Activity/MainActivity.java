@@ -18,8 +18,7 @@ import io.github.mthli.Tweetin.Fragment.MentionFragment;
 import io.github.mthli.Tweetin.Fragment.TimelineFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Initialize.GetAccessTokenTask;
-import io.github.mthli.Tweetin.Unit.Flag.Flag;
-import io.github.mthli.Tweetin.Unit.Interface.BadgeView;
+import io.github.mthli.Tweetin.Custom.BadgeView;
 
 public class MainActivity extends FragmentActivity {
 

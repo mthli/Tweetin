@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Unit.Twitter;
+package io.github.mthli.Tweetin.Twitter;
 
 public class Tweet {
 

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Unit.Flag.Flag;
+import io.github.mthli.Tweetin.Activity.Flag;
 
 public class TimelineFragment extends ProgressFragment {
 
