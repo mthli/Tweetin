@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Task.Initialize;
+package io.github.mthli.Tweetin.Task;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,8 +7,8 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 import io.github.mthli.Tweetin.Activity.MainActivity;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
@@ -21,7 +21,6 @@ public class GetAccessTokenTask extends AsyncTask<Void, Integer, Boolean> {
     private SharedPreferences.Editor editor;
 
     private AccessToken accessToken;
-    private long useId;
     private String useScreenName;
 
     private ProgressDialog progressDialog;
@@ -33,7 +32,6 @@ public class GetAccessTokenTask extends AsyncTask<Void, Integer, Boolean> {
         this.mainActivity = mainActivity;
         this.oAuthVerifier = oAuthVerifier;
 
-        this.useId = -1l;
         this.useScreenName = null;
     }
 
@@ -47,7 +45,7 @@ public class GetAccessTokenTask extends AsyncTask<Void, Integer, Boolean> {
         progressDialog.show();
 
         sharedPreferences = mainActivity.getSharedPreferences(
-                mainActivity.getString(R.string.sp_name),
+                mainActivity.getString(R.string.sp_tweetin),
                 Context.MODE_PRIVATE
         );
         editor = sharedPreferences.edit();
@@ -58,8 +56,7 @@ public class GetAccessTokenTask extends AsyncTask<Void, Integer, Boolean> {
         String consumerKey = mainActivity.getString(R.string.app_consumer_key);
         String consumerSecret = mainActivity.getString(R.string.app_consumer_secret);
 
-        TwitterFactory factory = new TwitterFactory();
-        Twitter twitter = factory.getInstance();
+        Twitter twitter = TwitterUnit.getTwitterFromInstance();
         twitter.setOAuthConsumer(consumerKey, consumerSecret);
 
         try {
@@ -78,7 +75,6 @@ public class GetAccessTokenTask extends AsyncTask<Void, Integer, Boolean> {
                     oAuthVerifier
             );
 
-            useId = twitter.verifyCredentials().getId();
             useScreenName = twitter.verifyCredentials().getScreenName();
         } catch (Exception e) {
             return false;
@@ -103,10 +99,6 @@ public class GetAccessTokenTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         if (result) {
-            editor.putLong(
-                    mainActivity.getString(R.string.sp_use_id),
-                    useId
-            );
             editor.putString(
                     mainActivity.getString(R.string.sp_use_screen_name),
                     useScreenName
@@ -120,6 +112,8 @@ public class GetAccessTokenTask extends AsyncTask<Void, Integer, Boolean> {
                     accessToken.getTokenSecret()
             );
             editor.commit();
+
+            mainActivity.initUI();
 
             progressDialog.hide();
             progressDialog.dismiss();

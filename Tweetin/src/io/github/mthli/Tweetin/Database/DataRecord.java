@@ -5,31 +5,33 @@ public class DataRecord {
     private String avatarURL;
     private String name;
     private String screenName;
-    private String createdAt;
+    private long createdAt;
     private String checkIn;
     private String protect;
     private String pictureURL;
     private String text;
-    private String retweetedBy;
+    private String retweetedByName;
     private String favorite;
 
     private long statusId;
     private long inReplyToStatusId;
+    private String retweetedByScreenName;
 
     public DataRecord() {
         this.avatarURL = null;
         this.name = null;
         this.screenName = null;
-        this.createdAt = null;
+        this.createdAt = -1l;
         this.checkIn = null;
         this.protect = "false";
         this.pictureURL = null;
         this.text = null;
-        this.retweetedBy = null;
+        this.retweetedByName = null;
         this.favorite = "false";
 
         this.statusId = -1l;
         this.inReplyToStatusId = -1l;
+        this.retweetedByScreenName = null;
     }
 
     public String getAvatarURL() {
@@ -53,10 +55,10 @@ public class DataRecord {
         this.screenName = screenName;
     }
 
-    public String getCreatedAt() {
+    public long getCreatedAt() {
         return createdAt;
     }
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -88,11 +90,11 @@ public class DataRecord {
         this.text = text;
     }
 
-    public String getRetweetedBy() {
-        return retweetedBy;
+    public String getRetweetedByName() {
+        return retweetedByName;
     }
-    public void setRetweetedBy(String retweetedBy) {
-        this.retweetedBy = retweetedBy;
+    public void setRetweetedByName(String retweetedByName) {
+        this.retweetedByName = retweetedByName;
     }
 
     public boolean isFavorite() {
@@ -114,5 +116,12 @@ public class DataRecord {
     }
     public void setInReplyToStatusId(long inReplyToStatusId) {
         this.inReplyToStatusId = inReplyToStatusId;
+    }
+
+    public String getRetweetedByScreenName() {
+        return retweetedByScreenName;
+    }
+    public void setRetweetedByScreenName(String retweetedByScreenName) {
+        this.retweetedByScreenName = retweetedByScreenName;
     }
 }

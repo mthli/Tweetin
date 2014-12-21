@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Activity;
+package io.github.mthli.Tweetin.Flag;
 
 public class Flag {
 
@@ -11,5 +11,8 @@ public class Flag {
     public static final int COLOR_PINK = 2;
     public static final int COLOR_PURPLE = 3;
     public static final int COLOR_TEAL = 4;
+
+    public static final int TASK_IDLE = 0x100;
+    public static final int TASK_RUNNING = 0x101;
 
 }

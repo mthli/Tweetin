@@ -7,45 +7,27 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
-import io.github.mthli.Tweetin.Fragment.FavoriteFragment;
-import io.github.mthli.Tweetin.Fragment.MentionFragment;
-import io.github.mthli.Tweetin.Fragment.TimelineFragment;
+import io.github.mthli.Tweetin.Custom.ViewUnit;
+import io.github.mthli.Tweetin.Flag.Flag;
+import io.github.mthli.Tweetin.Fragment.BaseFragment;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Task.Initialize.GetAccessTokenTask;
+import io.github.mthli.Tweetin.Task.GetAccessTokenTask;
 import io.github.mthli.Tweetin.Custom.BadgeView;
 
 public class MainActivity extends FragmentActivity {
 
     private int fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
-    public int getFragmentFlag() {
-        return fragmentFlag;
-    }
-    public void setFragmentFlag(int fragmentFlag) {
-        this.fragmentFlag = fragmentFlag;
-    }
 
-    private TimelineFragment timelineFragment;
-    public TimelineFragment getTimelineFragment() {
-        return timelineFragment;
-    }
+    private BaseFragment timelineFragment;
+    private BaseFragment mentionFragment;
+    private BaseFragment favoriteFragment;
 
-    private MentionFragment mentionFragment;
-    public MentionFragment getMentionFragment() {
-        return mentionFragment;
-    }
-
-    private FavoriteFragment favoriteFragment;
-    public FavoriteFragment getFavoriteFragment() {
-        return favoriteFragment;
-    }
-
-    public Fragment getCurrentFragment() {
+    public BaseFragment getCurrentFragment() {
         switch (fragmentFlag) {
             case Flag.IN_TIMELINE_FRAGMENT:
                 return timelineFragment;
@@ -58,7 +40,7 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    public Fragment getFragmentFromPosition(int position) {
+    public BaseFragment getFragmentFromPosition(int position) {
         switch (position) {
             case Flag.IN_TIMELINE_FRAGMENT:
                 return timelineFragment;
@@ -74,106 +56,36 @@ public class MainActivity extends FragmentActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    private Toolbar toolbar;
-
     private RelativeLayout searchView;
     private EditText searchViewEditText;
 
+    private Toolbar toolbar;
+
     private ViewPager viewPager;
+
     private TabHost tabHost;
     private TabWidget tabWidget;
     private View tabIndicator;
 
-    private float elevation = 0f;
+    public void initFragment() {
+        timelineFragment = new BaseFragment();
+        Bundle timelineBundle = new Bundle();
+        timelineBundle.putInt(getString(R.string.bundle_fragment_flag), Flag.IN_TIMELINE_FRAGMENT);
+        timelineFragment.setArguments(timelineBundle);
 
-    private void initUserInterface() {
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        toolbar.setElevation(elevation * 2);
-        setActionBar(toolbar);
+        mentionFragment = new BaseFragment();
+        Bundle mentionBundle = new Bundle();
+        mentionBundle.putInt(getString(R.string.bundle_fragment_flag), Flag.IN_MENTION_FRAGMENT);
+        mentionFragment.setArguments(mentionBundle);
 
-        searchView = (RelativeLayout) findViewById(R.id.search_view);
-        searchViewEditText = (EditText) findViewById(R.id.search_view_edittext);
-        ImageButton searchViewClear = (ImageButton) findViewById(R.id.search_view_clear);
-        searchView.setElevation(0);
-
-        searchViewClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                searchViewEditText.setText(null);
-            }
-        });
-
-        viewPager = (ViewPager) findViewById(R.id.main_viewpager);
-        viewPager.setOffscreenPageLimit(5);
-        viewPager.setAdapter(new MainPagerAdapter(this));
-
-        tabHost = (TabHost) findViewById(android.R.id.tabhost);
-        tabHost.setup();
-        tabHost.setElevation(elevation * 2);
-
-        tabWidget = (TabWidget) findViewById(android.R.id.tabs);
-        tabWidget.setStripEnabled(false);
-        tabWidget.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
-
-        tabIndicator = findViewById(R.id.tab_indicator);
-
-        String[] tabs = getResources().getStringArray(R.array.tabs);
-        for (int i = 0; i < 3; i++) {
-            BadgeView badgeView = new BadgeView(this);
-            badgeView.setText(tabs[i]);
-
-            tabHost.addTab(
-                    tabHost.newTabSpec(String.valueOf(i))
-                            .setIndicator(badgeView)
-                            .setContent(android.R.id.tabcontent)
-            );
-        }
-
-        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-            @Override
-            public void onTabChanged(String tabId) {
-                fragmentFlag = Integer.valueOf(tabId);
-                viewPager.setCurrentItem(fragmentFlag);
-            }
-        });
-
-        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            private int scrollingState = ViewPager.SCROLL_STATE_IDLE;
-
-            private void updateIndicatorPosition(int position, float positionOffset) {
-                View tabView = tabWidget.getChildTabViewAt(position);
-                int indicatorWidth = tabView.getWidth();
-                int indicatorLeft = (int) ((position + positionOffset) * indicatorWidth);
-
-                final FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) tabIndicator.getLayoutParams();
-                layoutParams.width = indicatorWidth;
-                layoutParams.setMargins(indicatorLeft, 0, 0, 0);
-                tabIndicator.setLayoutParams(layoutParams);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (scrollingState == ViewPager.SCROLL_STATE_IDLE) {
-                    updateIndicatorPosition(position, 0);
-                }
-                fragmentFlag = position;
-                tabHost.setCurrentTab(fragmentFlag);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                scrollingState = state;
-            }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                updateIndicatorPosition(position, positionOffset);
-            }
-        });
+        favoriteFragment = new BaseFragment();
+        Bundle favoriteBundle = new Bundle();
+        favoriteBundle.putInt(getString(R.string.bundle_fragment_flag), Flag.IN_FAVORITE_FRAGMENT);
+        favoriteFragment.setArguments(favoriteBundle);
     }
 
-    private void setCustomThemeFirst() {
 
+    public void setCustomThemeFirst() {
         int spColorValue = sharedPreferences.getInt(
                 getString(R.string.sp_color),
                 0
@@ -201,7 +113,7 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    private void setCustomThemeSecond() {
+    public void setCustomThemeSecond() {
         ColorStateList colorStateList;
 
         int spColorValue = sharedPreferences.getInt(
@@ -242,12 +154,103 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    public void initUI() {
+        initFragment();
+
+        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        ViewUnit.setElevation(this, toolbar, 2);
+        setActionBar(toolbar);
+
+        searchView = (RelativeLayout) findViewById(R.id.search_view);
+        searchViewEditText = (EditText) findViewById(R.id.search_view_edittext);
+        ImageButton searchViewClear = (ImageButton) findViewById(R.id.search_view_clear);
+        ViewUnit.setElevation(this, searchView, 0);
+
+        searchViewClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchViewEditText.setText(null);
+            }
+        });
+
+        viewPager = (ViewPager) findViewById(R.id.main_viewpager);
+        viewPager.setOffscreenPageLimit(5); //
+        viewPager.setAdapter(new MainPagerAdapter(this));
+
+        tabHost = (TabHost) findViewById(android.R.id.tabhost);
+        tabHost.setup();
+        ViewUnit.setElevation(this, tabHost, 2);
+
+        tabWidget = (TabWidget) findViewById(android.R.id.tabs);
+        tabWidget.setStripEnabled(false);
+        tabWidget.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
+
+        tabIndicator = findViewById(R.id.tab_indicator);
+
+        String[] tabs = getResources().getStringArray(R.array.tabs);
+        for (int i = 0; i < 3; i++) {
+            BadgeView badgeView = new BadgeView(this);
+            badgeView.setText(tabs[i]);
+
+            tabHost.addTab(
+                    tabHost.newTabSpec(String.valueOf(i))
+                            .setIndicator(badgeView)
+                            .setContent(android.R.id.tabcontent)
+            );
+        }
+
+        setCustomThemeSecond();
+
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                fragmentFlag = Integer.valueOf(tabId);
+                viewPager.setCurrentItem(fragmentFlag);
+            }
+        });
+
+        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+
+            private int scrollingState = ViewPager.SCROLL_STATE_IDLE;
+
+            private void updateIndicatorPosition(int position, float positionOffset) {
+                View tabView = tabWidget.getChildTabViewAt(position);
+                int indicatorWidth = tabView.getWidth();
+                int indicatorLeft = (int) ((position + positionOffset) * indicatorWidth);
+
+                final FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) tabIndicator.getLayoutParams();
+                layoutParams.width = indicatorWidth;
+                layoutParams.setMargins(indicatorLeft, 0, 0, 0);
+                tabIndicator.setLayoutParams(layoutParams);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (scrollingState == ViewPager.SCROLL_STATE_IDLE) {
+                    updateIndicatorPosition(position, 0);
+                }
+                fragmentFlag = position;
+                tabHost.setCurrentTab(fragmentFlag);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                scrollingState = state;
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                updateIndicatorPosition(position, positionOffset);
+            }
+        });
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         sharedPreferences = getSharedPreferences(
-                getString(R.string.sp_name),
+                getString(R.string.sp_tweetin),
                 MODE_PRIVATE
         );
         editor = sharedPreferences.edit();
@@ -257,6 +260,7 @@ public class MainActivity extends FragmentActivity {
 
         Uri uri = getIntent().getData();
         if (uri != null && uri.toString().startsWith(getString(R.string.app_callback_url))) {
+
             String oAuthVerifier = uri.getQueryParameter(
                     getString(R.string.app_oauth_verifier)
             );
@@ -266,16 +270,9 @@ public class MainActivity extends FragmentActivity {
                     oAuthVerifier
             );
             getAccessTokenTask.execute();
+        } else {
+            initUI();
         }
-
-        timelineFragment = new TimelineFragment();
-        mentionFragment = new MentionFragment();
-        favoriteFragment = new FavoriteFragment();
-
-        elevation = getResources().getDisplayMetrics().density;
-
-        initUserInterface();
-        setCustomThemeSecond();
     }
 
     @Override
@@ -307,7 +304,7 @@ public class MainActivity extends FragmentActivity {
                     searchView.getWidth()
             );
 
-            searchView.setElevation(elevation * 4);
+            ViewUnit.setElevation(this, searchView, 4);
             searchView.setVisibility(View.VISIBLE);
             anim.start();
 
@@ -329,7 +326,7 @@ public class MainActivity extends FragmentActivity {
                     super.onAnimationEnd(animation);
 
                     searchViewEditText.setText(null);
-                    searchView.setElevation(0);
+                    ViewUnit.setElevation(MainActivity.this, searchView, 0);
                     searchView.setVisibility(View.INVISIBLE);
                 }
             });

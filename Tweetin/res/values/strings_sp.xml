@@ -3,14 +3,11 @@
 <resources>
 
     <!-- SharePreferences -->
-    <string name="sp_name">
+    <string name="sp_tweetin">
         SP_TWEETIN
     </string>
 
     <!-- Use info -->
-    <string name="sp_use_id">
-        SP_USE_ID
-    </string>
     <string name="sp_use_screen_name">
         SP_USE_SCREEN_NAME
     </string>

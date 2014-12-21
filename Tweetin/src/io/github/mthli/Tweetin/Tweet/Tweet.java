@@ -1,35 +1,43 @@
-package io.github.mthli.Tweetin.Twitter;
+package io.github.mthli.Tweetin.Tweet;
+
+import android.graphics.Bitmap;
 
 public class Tweet {
 
     private String avatarURL;
     private String name;
     private String screenName;
-    private String createdAt;
+    private long createdAt;
     private String checkIn;
     private boolean protect;
     private String pictureURL;
     private String text;
-    private String retweetedBy;
+    private String retweetedByName;
     private boolean favorite;
 
     private long statusId;
     private long inReplyToStatusId;
+    private String retweetedByScreenName;
+
+    private Bitmap bitmap;
 
     public Tweet() {
         this.avatarURL = null;
         this.name = null;
         this.screenName = null;
-        this.createdAt = null;
+        this.createdAt = -1l;
         this.checkIn = null;
         this.protect = false;
         this.pictureURL = null;
         this.text = null;
-        this.retweetedBy = null;
+        this.retweetedByName = null;
         this.favorite = false;
 
         this.statusId = -1l;
         this.inReplyToStatusId = -1l;
+        this.retweetedByScreenName = null;
+
+        this.bitmap = null;
     }
 
     public String getAvatarURL() {
@@ -53,10 +61,10 @@ public class Tweet {
         this.screenName = screenName;
     }
 
-    public String getCreatedAt() {
+    public long getCreatedAt() {
         return createdAt;
     }
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -88,11 +96,11 @@ public class Tweet {
         this.text = text;
     }
 
-    public String getRetweetedBy() {
-        return retweetedBy;
+    public String getRetweetedByName() {
+        return retweetedByName;
     }
-    public void setRetweetedBy(String retweetedBy) {
-        this.retweetedBy = retweetedBy;
+    public void setRetweetedByName(String retweetedByName) {
+        this.retweetedByName = retweetedByName;
     }
 
     public boolean isFavorite() {
@@ -114,5 +122,19 @@ public class Tweet {
     }
     public void setInReplyToStatusId(long inReplyToStatusId) {
         this.inReplyToStatusId = inReplyToStatusId;
+    }
+
+    public String getRetweetedByScreenName() {
+        return retweetedByScreenName;
+    }
+    public void setRetweetedByScreenName(String retweetedByScreenName) {
+        this.retweetedByScreenName = retweetedByScreenName;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 }

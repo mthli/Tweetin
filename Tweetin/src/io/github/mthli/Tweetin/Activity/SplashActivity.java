@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Task.Initialize.GetAuthorizationURLTask;
+import io.github.mthli.Tweetin.Task.GetAuthorizationURLTask;
 
 public class SplashActivity extends Activity {
 
@@ -17,16 +17,15 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         SharedPreferences sharedPreferences = getSharedPreferences(
-                getString(R.string.sp_name),
+                getString(R.string.sp_tweetin),
                 MODE_PRIVATE
         );
 
-        long useId = sharedPreferences.getLong(
-                getString(R.string.sp_use_id),
-                -1l
+        String useScreenName = sharedPreferences.getString(
+                getString(R.string.sp_use_screen_name),
+                null
         );
-        if (useId > 0l) {
-            /* Do something maybe */
+        if (useScreenName != null) {
             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(intent);
 

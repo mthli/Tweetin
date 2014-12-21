@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Fragment -->
+    <string name="fragmet_empty_get_authorization_failed">
+        Get authorization failed, try to sign in again.
+    </string>
+    <string name="fragment_empty_get_timeline_data_failed">
+        Get timeline data failed.
+    </string>
+    <string name="fragment_empty_get_mention_data_failed">
+        Get mention data failed.
+    </string>
+    <string name="fragment_empty_get_favorite_data_failed">
+        Get favorite data failed.
+    </string>
+    <string name="fragment_empty_get_data_failed">
+        Get data failed.
+    </string>
+
     <!-- Main -->
     <string name="main_pd_get_access_token">
         Get access token&#8230;
@@ -30,18 +47,6 @@
     <string name="splash_sign_in">
         Sign in
     </string>
-    <string name="splash_how_to">
-        How to get Key and Secret?
-    </string>
-    <string name="splash_how_to_en">
-        HowTo_en.html
-    </string>
-    <string name="splash_how_to_zh">
-        HowTo_zh.html
-    </string>
-    <string name="splash_how_to_base_url">
-        file:///android_asset/
-    </string>
     <string name="splash_pd_start_authorization">
         Start authorization&#8230;
     </string>
@@ -62,5 +67,16 @@
     <!-- Tweet -->
     <string name="tweet_info_retweeted_by_me">Me</string>
     <string name="tweet_info_favorite">Favorite</string>
+    <string name="tweet_date_format">
+        HH:mm MM.dd
+    </string>
+    <string name="tweet_just_now">
+        Just now
+    </string>
+    <string-array name="tweet_picture_suffix">
+        <item>.jpg</item>
+        <item>.png</item>
+    </string-array>
+    <string name="tweet_media_type">photo</string>
 
 </resources>

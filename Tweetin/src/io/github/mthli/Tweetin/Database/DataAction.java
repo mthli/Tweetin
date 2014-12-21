@@ -2,10 +2,8 @@ package io.github.mthli.Tweetin.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import io.github.mthli.Tweetin.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +13,8 @@ public class DataAction {
     private SQLiteDatabase database;
     private DataHelper helper;
 
-    private Context context;
-
     public DataAction(Context context) {
         this.helper = new DataHelper(context);
-
-        this.context = context;
     }
 
     public void openDatabase(boolean rw) {
@@ -35,7 +29,7 @@ public class DataAction {
         helper.close();
     }
 
-    public void addRecord(DataRecord record, String targetTable) {
+    public void addDataRecord(DataRecord record, String targetTable) {
         ContentValues values = new ContentValues();
 
         values.put(DataUnit.AVATAR_URL, record.getAvatarURL());
@@ -46,16 +40,17 @@ public class DataAction {
         values.put(DataUnit.PROTECT, String.valueOf(record.isProtect()));
         values.put(DataUnit.PICTURE_URL, record.getPictureURL());
         values.put(DataUnit.TEXT, record.getText());
-        values.put(DataUnit.RETWEETED_BY, record.getRetweetedBy());
+        values.put(DataUnit.RETWEETED_BY_NAME, record.getRetweetedByName());
         values.put(DataUnit.FAVORITE, String.valueOf(record.isFavorite()));
 
         values.put(DataUnit.STATUS_ID, record.getStatusId());
         values.put(DataUnit.IN_REPLY_TO_STATUS_ID, record.getInReplyToStatusId());
+        values.put(DataUnit.RETWEETED_BY_SCREEN_NAME, record.getRetweetedByScreenName());
 
         database.insert(targetTable, null, values);
     }
 
-    public void deleteRecord(DataRecord record, String targetTable) {
+    public void deleteDataRecord(DataRecord record, String targetTable) {
         database.execSQL("DELETE FROM "
                         + targetTable
                         + " WHERE "
@@ -71,17 +66,9 @@ public class DataAction {
     }
 
     public void updatedByRetweet(DataRecord record, String targetTable) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                context.getString(R.string.sp_name),
-                Context.MODE_PRIVATE
-        );
-        String useScreenName = sharedPreferences.getString(
-                context.getString(R.string.sp_use_screen_name),
-                null
-        );
-
         ContentValues values = new ContentValues();
-        values.put(DataUnit.RETWEETED_BY, useScreenName);
+        values.put(DataUnit.RETWEETED_BY_NAME, record.getRetweetedByName());
+        values.put(DataUnit.RETWEETED_BY_SCREEN_NAME, record.getRetweetedByScreenName());
 
         database.update(
                 targetTable,
@@ -109,16 +96,17 @@ public class DataAction {
         record.setAvatarURL(cursor.getString(0));
         record.setName(cursor.getString(1));
         record.setScreenName(cursor.getString(2));
-        record.setCreatedAt(cursor.getString(3));
+        record.setCreatedAt(cursor.getLong(3));
         record.setCheckIn(cursor.getString(4));
         record.setProtect(Boolean.valueOf(cursor.getString(5)));
         record.setPictureURL(cursor.getString(6));
         record.setText(cursor.getString(7));
-        record.setRetweetedBy(cursor.getString(8));
+        record.setRetweetedByName(cursor.getString(8));
         record.setFavorite(Boolean.valueOf(cursor.getString(9)));
 
         record.setStatusId(cursor.getLong(10));
         record.setInReplyToStatusId(cursor.getLong(11));
+        record.setRetweetedByScreenName(cursor.getString(12));
 
         return record;
     }
@@ -137,11 +125,12 @@ public class DataAction {
                         DataUnit.PROTECT,
                         DataUnit.PICTURE_URL,
                         DataUnit.TEXT,
-                        DataUnit.RETWEETED_BY,
+                        DataUnit.RETWEETED_BY_NAME,
                         DataUnit.FAVORITE,
 
                         DataUnit.STATUS_ID,
-                        DataUnit.IN_REPLY_TO_STATUS_ID
+                        DataUnit.IN_REPLY_TO_STATUS_ID,
+                        DataUnit.RETWEETED_BY_SCREEN_NAME
                 },
                 null,
                 null,

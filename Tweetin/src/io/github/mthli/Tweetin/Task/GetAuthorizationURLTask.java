@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Task.Initialize;
+package io.github.mthli.Tweetin.Task;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 import io.github.mthli.Tweetin.Activity.SplashActivity;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
 import twitter4j.auth.RequestToken;
 
 public class GetAuthorizationURLTask extends AsyncTask<Void, Integer, Boolean> {
@@ -48,8 +48,7 @@ public class GetAuthorizationURLTask extends AsyncTask<Void, Integer, Boolean> {
         String consumerKey = splashActivity.getString(R.string.app_consumer_key);
         String consumerSecret = splashActivity.getString(R.string.app_consumer_secret);
 
-        TwitterFactory twitterFactory = new TwitterFactory();
-        Twitter twitter = twitterFactory.getInstance();
+        Twitter twitter = TwitterUnit.getTwitterFromInstance();
         twitter.setOAuthConsumer(consumerKey, consumerSecret);
 
         try {
@@ -90,15 +89,11 @@ public class GetAuthorizationURLTask extends AsyncTask<Void, Integer, Boolean> {
             splashActivity.startActivity(intent);
 
             SharedPreferences sharedPreferences = splashActivity.getSharedPreferences(
-                    splashActivity.getString(R.string.sp_name),
+                    splashActivity.getString(R.string.sp_tweetin),
                     Context.MODE_PRIVATE
             );
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            editor.putLong(
-                    splashActivity.getString(R.string.sp_use_id),
-                    -1l
-            );
             editor.putString(
                     splashActivity.getString(R.string.sp_use_screen_name),
                     null
