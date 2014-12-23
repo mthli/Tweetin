@@ -7,17 +7,17 @@
 
     <TextView android:id="@+id/badge_view_textview"
               android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              android:layout_height="@dimen/tab_height"
               android:layout_centerInParent="true"
-              android:paddingTop="12dp"
-              android:paddingBottom="12dp"
-              android:textSize="16sp">
+              android:gravity="center"
+              android:textSize="14sp"
+              android:textAllCaps="true">
     </TextView>
 
     <View android:id="@+id/badge_view_bubble"
           android:layout_width="5dp"
           android:layout_height="5dp"
-          android:layout_marginTop="10dp"
+          android:layout_marginTop="12dp"
           android:layout_marginLeft="3dp"
           android:layout_toRightOf="@id/badge_view_textview"
           android:background="@drawable/badge_view_bubble_shape"

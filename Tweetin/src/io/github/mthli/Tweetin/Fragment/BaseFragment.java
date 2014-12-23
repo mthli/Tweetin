@@ -2,13 +2,14 @@ package io.github.mthli.Tweetin.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import com.devspark.progressfragment.ProgressFragment;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import io.github.mthli.Tweetin.Activity.MainActivity;
 import io.github.mthli.Tweetin.Custom.ViewUnit;
 import io.github.mthli.Tweetin.Flag.Flag;
 import io.github.mthli.Tweetin.R;
@@ -67,7 +68,7 @@ public class BaseFragment extends ProgressFragment {
         this.taskStatus = taskStatus;
     }
 
-    private void setCustomTheme() {
+    private void setSwipeRefreshLayoutTheme() {
         int spColorValue = sharedPreferences.getInt(
                 getString(R.string.sp_color),
                 0
@@ -126,7 +127,7 @@ public class BaseFragment extends ProgressFragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {getArguments();
+    public void onActivityCreated(Bundle savedInstanceState) {
         fragmentFlag = getArguments().getInt(
                 getString(R.string.bundle_fragment_flag),
                 Flag.IN_TIMELINE_FRAGMENT
@@ -145,16 +146,13 @@ public class BaseFragment extends ProgressFragment {
         setContentShown(true);
 
         initUI();
-
-        /* Do something */
     }
 
     private void initUI() {
-        /* Do something with SwipeRefreshLayout position */
         swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.base_fragment_swipe_container);
 
         int start = 0;
-        int end = (int) getActivity().getResources().getDisplayMetrics().density * 40;
+        int end = ViewUnit.getToolbarSize(getActivity()) + ViewUnit.getTabHeight(getActivity());
         swipeRefreshLayout.setProgressViewOffset(false, start, end);
 
         swipeRefreshLayout.setOnClickListener(new View.OnClickListener() {
@@ -164,9 +162,26 @@ public class BaseFragment extends ProgressFragment {
             }
         });
 
-        setCustomTheme();
+        setSwipeRefreshLayoutTheme();
 
         listView = (ObservableListView) contentView.findViewById(R.id.base_fragment_listview);
+
+        LayoutInflater layoutInflater = getActivity().getLayoutInflater();
+        listView.addHeaderView(layoutInflater.inflate(R.layout.base_fragment_listvew_padding, null));
+
+        if (getArguments().containsKey(getString(R.string.bundle_fragment_initial_position))) {
+            final int initialPosition = getArguments().getInt(getString(R.string.bundle_fragment_initial_position), 0);
+            listView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    listView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                    listView.setSelection(initialPosition);
+                }
+            });
+        }
+
+        listView.setScrollViewCallbacks((MainActivity) getActivity());
 
         /* Do something with detail true or false */
         tweetAdapter = new TweetAdapter(

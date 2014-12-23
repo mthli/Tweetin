@@ -27,15 +27,6 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/commons-io-2.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/glide-3.4.0.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -108,16 +99,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/android-support-v7-appcompat.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/android-support-v7-palette.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/nineoldandroids-library-2.4.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -127,15 +109,6 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/android-support-v7-recyclerview.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/nineoldandroids-library-2.4.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

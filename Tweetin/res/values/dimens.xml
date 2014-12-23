@@ -2,6 +2,6 @@
 
 <resources>
 
-    <dimen name="tab_height">40dp</dimen>
+    <dimen name="tab_height">48dp</dimen>
 
 </resources>

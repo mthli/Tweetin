@@ -17,6 +17,9 @@
     <string name="fragment_empty_get_data_failed">
         Get data failed.
     </string>
+    <string name="fragment_padding_error">
+        Stack Overflow :P
+    </string>
 
     <!-- Main -->
     <string name="main_pd_get_access_token">

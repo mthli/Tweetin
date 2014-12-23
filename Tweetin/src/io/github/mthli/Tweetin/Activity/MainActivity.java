@@ -4,88 +4,39 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
+import com.nineoldandroids.view.*;
+import com.nineoldandroids.view.ViewPropertyAnimator;
 import io.github.mthli.Tweetin.Custom.ViewUnit;
 import io.github.mthli.Tweetin.Flag.Flag;
 import io.github.mthli.Tweetin.Fragment.BaseFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.GetAccessTokenTask;
-import io.github.mthli.Tweetin.Custom.BadgeView;
 
-public class MainActivity extends FragmentActivity {
-
-    private int fragmentFlag = Flag.IN_TIMELINE_FRAGMENT;
-
-    private BaseFragment timelineFragment;
-    private BaseFragment mentionFragment;
-    private BaseFragment favoriteFragment;
-
-    public BaseFragment getCurrentFragment() {
-        switch (fragmentFlag) {
-            case Flag.IN_TIMELINE_FRAGMENT:
-                return timelineFragment;
-            case Flag.IN_MENTION_FRAGMENT:
-                return mentionFragment;
-            case Flag.IN_FAVORITE_FRAGMENT:
-                return favoriteFragment;
-            default:
-                return timelineFragment;
-        }
-    }
-
-    public BaseFragment getFragmentFromPosition(int position) {
-        switch (position) {
-            case Flag.IN_TIMELINE_FRAGMENT:
-                return timelineFragment;
-            case Flag.IN_MENTION_FRAGMENT:
-                return mentionFragment;
-            case Flag.IN_FAVORITE_FRAGMENT:
-                return favoriteFragment;
-            default:
-                return timelineFragment;
-        }
-    }
-
+public class MainActivity extends FragmentActivity implements ObservableScrollViewCallbacks {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
+    private View header;
+    private Toolbar toolbar;
     private RelativeLayout searchView;
     private EditText searchViewEditText;
-
-    private Toolbar toolbar;
-
+    private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
+    private MainPagerAdapter mainPagerAdapter;
 
-    private TabHost tabHost;
-    private TabWidget tabWidget;
-    private View tabIndicator;
-
-    public void initFragment() {
-        timelineFragment = new BaseFragment();
-        Bundle timelineBundle = new Bundle();
-        timelineBundle.putInt(getString(R.string.bundle_fragment_flag), Flag.IN_TIMELINE_FRAGMENT);
-        timelineFragment.setArguments(timelineBundle);
-
-        mentionFragment = new BaseFragment();
-        Bundle mentionBundle = new Bundle();
-        mentionBundle.putInt(getString(R.string.bundle_fragment_flag), Flag.IN_MENTION_FRAGMENT);
-        mentionFragment.setArguments(mentionBundle);
-
-        favoriteFragment = new BaseFragment();
-        Bundle favoriteBundle = new Bundle();
-        favoriteBundle.putInt(getString(R.string.bundle_fragment_flag), Flag.IN_FAVORITE_FRAGMENT);
-        favoriteFragment.setArguments(favoriteBundle);
-    }
-
-
-    public void setCustomThemeFirst() {
+    public void setCustomTheme() {
         int spColorValue = sharedPreferences.getInt(
                 getString(R.string.sp_color),
                 0
@@ -113,58 +64,17 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    public void setCustomThemeSecond() {
-        ColorStateList colorStateList;
-
-        int spColorValue = sharedPreferences.getInt(
-                getString(R.string.sp_color),
-                0
-        );
-
-        switch (spColorValue) {
-            case Flag.COLOR_BLUE:
-                tabHost.setBackgroundColor(getResources().getColor(R.color.blue_500));
-                colorStateList = getResources().getColorStateList(R.color.tab_widget_selector_blue);
-                break;
-            case Flag.COLOR_ORANGE:
-                tabHost.setBackgroundColor(getResources().getColor(R.color.orange_500));
-                colorStateList = getResources().getColorStateList(R.color.tab_widget_selector_orange);
-                break;
-            case Flag.COLOR_PINK:
-                tabHost.setBackgroundColor(getResources().getColor(R.color.pink_500));
-                colorStateList = getResources().getColorStateList(R.color.tab_widget_selector_pink);
-                break;
-            case Flag.COLOR_PURPLE:
-                tabHost.setBackgroundColor(getResources().getColor(R.color.purple_500));
-                colorStateList = getResources().getColorStateList(R.color.tab_widget_selector_purple);
-                break;
-            case Flag.COLOR_TEAL:
-                tabHost.setBackgroundColor(getResources().getColor(R.color.teal_500));
-                colorStateList = getResources().getColorStateList(R.color.tab_widget_selector_teal);
-                break;
-            default:
-                tabHost.setBackgroundColor(getResources().getColor(R.color.blue_500));
-                colorStateList = getResources().getColorStateList(R.color.tab_widget_selector_blue);
-                break;
-        }
-
-        for (int i = 0; i < 3; i++) {
-            BadgeView badgeView = (BadgeView) tabHost.getTabWidget().getChildTabViewAt(i);
-            badgeView.setCustomTheme(colorStateList);
-        }
-    }
-
     public void initUI() {
-        initFragment();
+        header = findViewById(R.id.main_header);
+        ViewCompat.setElevation(header, ViewUnit.getElevation(this, 2));
 
         toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        ViewUnit.setElevation(this, toolbar, 2);
         setActionBar(toolbar);
 
         searchView = (RelativeLayout) findViewById(R.id.search_view);
         searchViewEditText = (EditText) findViewById(R.id.search_view_edittext);
         ImageButton searchViewClear = (ImageButton) findViewById(R.id.search_view_clear);
-        ViewUnit.setElevation(this, searchView, 0);
+        ViewCompat.setElevation(searchView, ViewUnit.getElevation(this, 4));
 
         searchViewClear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,75 +84,34 @@ public class MainActivity extends FragmentActivity {
         });
 
         viewPager = (ViewPager) findViewById(R.id.main_viewpager);
-        viewPager.setOffscreenPageLimit(5); //
-        viewPager.setAdapter(new MainPagerAdapter(this));
+        viewPager.setOffscreenPageLimit(5);
+        mainPagerAdapter = new MainPagerAdapter(this);
+        viewPager.setAdapter(mainPagerAdapter);
 
-        tabHost = (TabHost) findViewById(android.R.id.tabhost);
-        tabHost.setup();
-        ViewUnit.setElevation(this, tabHost, 2);
+        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        slidingTabLayout.setCustomTabView(R.layout.badge_view, R.id.badge_view_textview);
+        slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.white));
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setViewPager(viewPager);
 
-        tabWidget = (TabWidget) findViewById(android.R.id.tabs);
-        tabWidget.setStripEnabled(false);
-        tabWidget.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
-
-        tabIndicator = findViewById(R.id.tab_indicator);
-
-        String[] tabs = getResources().getStringArray(R.array.tabs);
-        for (int i = 0; i < 3; i++) {
-            BadgeView badgeView = new BadgeView(this);
-            badgeView.setText(tabs[i]);
-
-            tabHost.addTab(
-                    tabHost.newTabSpec(String.valueOf(i))
-                            .setIndicator(badgeView)
-                            .setContent(android.R.id.tabcontent)
-            );
-        }
-
-        setCustomThemeSecond();
-
-        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+        slidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onTabChanged(String tabId) {
-                fragmentFlag = Integer.valueOf(tabId);
-                viewPager.setCurrentItem(fragmentFlag);
+            public void onPageScrolled(int i, float v, int i1) {
+                /* Do nothing */
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                propagateToolbarState(isToolbarShown());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+                /* Do nothing */
             }
         });
 
-        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-
-            private int scrollingState = ViewPager.SCROLL_STATE_IDLE;
-
-            private void updateIndicatorPosition(int position, float positionOffset) {
-                View tabView = tabWidget.getChildTabViewAt(position);
-                int indicatorWidth = tabView.getWidth();
-                int indicatorLeft = (int) ((position + positionOffset) * indicatorWidth);
-
-                final FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) tabIndicator.getLayoutParams();
-                layoutParams.width = indicatorWidth;
-                layoutParams.setMargins(indicatorLeft, 0, 0, 0);
-                tabIndicator.setLayoutParams(layoutParams);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if (scrollingState == ViewPager.SCROLL_STATE_IDLE) {
-                    updateIndicatorPosition(position, 0);
-                }
-                fragmentFlag = position;
-                tabHost.setCurrentTab(fragmentFlag);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                scrollingState = state;
-            }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                updateIndicatorPosition(position, positionOffset);
-            }
-        });
+        propagateToolbarState(isToolbarShown());
     }
 
     @Override
@@ -255,7 +124,7 @@ public class MainActivity extends FragmentActivity {
         );
         editor = sharedPreferences.edit();
 
-        setCustomThemeFirst();
+        setCustomTheme();
         setContentView(R.layout.main);
 
         Uri uri = getIntent().getData();
@@ -273,14 +142,6 @@ public class MainActivity extends FragmentActivity {
         } else {
             initUI();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = MainActivity.this.getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
-
-        return super.onCreateOptionsMenu(menu);
     }
 
     private void showSearchView(boolean show) {
@@ -304,7 +165,7 @@ public class MainActivity extends FragmentActivity {
                     searchView.getWidth()
             );
 
-            ViewUnit.setElevation(this, searchView, 4);
+            ViewCompat.setElevation(searchView, ViewUnit.getElevation(this, 4));
             searchView.setVisibility(View.VISIBLE);
             anim.start();
 
@@ -326,7 +187,7 @@ public class MainActivity extends FragmentActivity {
                     super.onAnimationEnd(animation);
 
                     searchViewEditText.setText(null);
-                    ViewUnit.setElevation(MainActivity.this, searchView, 0);
+                    ViewCompat.setElevation(searchView, 0);
                     searchView.setVisibility(View.INVISIBLE);
                 }
             });
@@ -338,25 +199,6 @@ public class MainActivity extends FragmentActivity {
                     InputMethodManager.HIDE_NOT_ALWAYS
             );
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.main_menu_search:
-                showSearchView(true);
-                break;
-            case R.id.main_menu_post:
-                /* Do something */
-                break;
-            case R.id.main_menu_setting:
-                /* Do something */
-                break;
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(menuItem);
     }
 
     private boolean shouldHideSearchView(View view, MotionEvent motionEvent) {
@@ -377,6 +219,33 @@ public class MainActivity extends FragmentActivity {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = MainActivity.this.getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.main_menu_search:
+                showSearchView(true);
+                break;
+            case R.id.main_menu_post:
+                /* Do something */
+                break;
+            case R.id.main_menu_setting:
+                /* Do something */
+                break;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(menuItem);
     }
 
     @Override
@@ -403,5 +272,99 @@ public class MainActivity extends FragmentActivity {
         }
 
         return false;
+    }
+
+    private int baseTranslationY;
+
+    public boolean isToolbarShown() {
+        return (ViewHelper.getTranslationY(header) == 0);
+    }
+
+    private void showToolbar() {
+        if (ViewHelper.getTranslationY(header) != 0) {
+            ViewPropertyAnimator.animate(header).cancel();
+            ViewPropertyAnimator.animate(header).translationY(0).setDuration(256);
+        }
+
+        propagateToolbarState(true);
+    }
+
+    private void hideToolbar() {
+        if (ViewHelper.getTranslationY(header) != -toolbar.getHeight()) {
+            ViewPropertyAnimator.animate(header).cancel();
+            ViewPropertyAnimator.animate(header).translationY(-toolbar.getHeight()).setDuration(256);
+        }
+
+        propagateToolbarState(false);
+    }
+
+    public BaseFragment getCurrentFragment() {
+        return (BaseFragment) mainPagerAdapter.getFragmentFromPosition(viewPager.getCurrentItem());
+    }
+
+    public BaseFragment getFragmentFromPosition(int position) {
+        return (BaseFragment) mainPagerAdapter.getFragmentFromPosition(position);
+    }
+
+    private void propagateToolbarState(boolean show) {
+        mainPagerAdapter.setScrollY(show ? 0 : toolbar.getHeight());
+
+        for (int i = 0; i < mainPagerAdapter.getCount(); i++) {
+            if (i == viewPager.getCurrentItem() || getFragmentFromPosition(i) == null) {
+                continue;
+            }
+
+            ObservableListView listView = getFragmentFromPosition(i).getListView();
+
+            if (show) {
+                if (listView.getCurrentScrollY() > 0) {
+                    listView.setSelection(0);
+                }
+            } else {
+                if (listView.getCurrentScrollY() < toolbar.getHeight()) {
+                    listView.setSelection(1);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+        if (dragging) {
+            if (firstScroll) {
+                if (-toolbar.getHeight() < ViewHelper.getTranslationY(header)) {
+                    baseTranslationY = scrollY;
+                }
+            }
+
+            int headerTranslationY = Math.min(0, Math.max(-toolbar.getHeight(), -(scrollY - baseTranslationY)));
+
+            ViewPropertyAnimator.animate(header).cancel();
+            ViewHelper.setTranslationY(header, headerTranslationY);
+        }
+    }
+
+    @Override
+    public void onDownMotionEvent() {
+        /* Do nothing */
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+        baseTranslationY = 0;
+
+        ObservableListView listView = getCurrentFragment().getListView();
+
+        if (scrollState == ScrollState.UP) {
+            if (toolbar.getHeight() < listView.getCurrentScrollY()) {
+                hideToolbar();
+            } else if (toolbar.getHeight() > listView.getCurrentScrollY()) {
+                showToolbar();
+            }
+        } else if (scrollState == ScrollState.DOWN) {
+            if (toolbar.getHeight() < listView.getCurrentScrollY()) {
+                showToolbar();
+            }
+        }
     }
 }

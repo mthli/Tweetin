@@ -294,10 +294,6 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
             }
         }
 
-        int start = (int) context.getResources().getDisplayMetrics().density * -40;
-        int end = (int) context.getResources().getDisplayMetrics().density * 40;
-        swipeRefreshLayout.setProgressViewOffset(false, start, end);
-
         baseFragment.setTaskStatus(Flag.TASK_IDLE);
     }
 }

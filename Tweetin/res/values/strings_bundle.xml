@@ -6,4 +6,8 @@
         BUNDLE_FRAGMENT_FLAG
     </string>
 
+    <string name="bundle_fragment_initial_position">
+        BUNDLE_FRAGMENT_INITIAL_POSITION
+    </string>
+
 </resources>
