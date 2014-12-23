@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
+import io.github.mthli.Tweetin.Custom.ViewUnit;
 import io.github.mthli.Tweetin.Database.DataAction;
 import io.github.mthli.Tweetin.Database.DataRecord;
 import io.github.mthli.Tweetin.Database.DataUnit;
@@ -293,6 +294,13 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
                 swipeRefreshLayout.setRefreshing(false);
             }
         }
+
+        /* Do something */
+        swipeRefreshLayout.setProgressViewOffset(
+                false,
+                -ViewUnit.getTabHeight(context),
+                ViewUnit.getTabHeight(context)
+        );
 
         baseFragment.setTaskStatus(Flag.TASK_IDLE);
     }

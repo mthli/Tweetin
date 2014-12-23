@@ -11,17 +11,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <com.github.ksoichiro.android.observablescrollview.ObservableListView
-                android:id="@+id/base_fragment_listview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@color/transparent"
-                android:dividerHeight="1dp"
-                android:scrollbars="none"
-                android:scrollingCache="true"
-                android:choiceMode="singleChoice"
-                android:drawSelectorOnTop="true">
-        </com.github.ksoichiro.android.observablescrollview.ObservableListView>
+        <ListView android:id="@+id/base_fragment_listview"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:divider="@color/transparent"
+                  android:dividerHeight="1dp"
+                  android:scrollbars="none"
+                  android:scrollingCache="true"
+                  android:choiceMode="singleChoice"
+                  android:drawSelectorOnTop="true">
+        </ListView>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

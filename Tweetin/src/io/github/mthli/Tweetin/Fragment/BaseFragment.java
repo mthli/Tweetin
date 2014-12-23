@@ -4,12 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
+import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
-import com.github.ksoichiro.android.observablescrollview.ObservableListView;
-import io.github.mthli.Tweetin.Activity.MainActivity;
 import io.github.mthli.Tweetin.Custom.ViewUnit;
 import io.github.mthli.Tweetin.Flag.Flag;
 import io.github.mthli.Tweetin.R;
@@ -35,11 +32,6 @@ public class BaseFragment extends ProgressFragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     public SwipeRefreshLayout getSwipeRefreshLayout() {
         return swipeRefreshLayout;
-    }
-
-    private ObservableListView listView;
-    public ObservableListView getListView() {
-        return listView;
     }
 
     private TweetAdapter tweetAdapter;
@@ -150,38 +142,21 @@ public class BaseFragment extends ProgressFragment {
 
     private void initUI() {
         swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.base_fragment_swipe_container);
-
-        int start = 0;
-        int end = ViewUnit.getToolbarSize(getActivity()) + ViewUnit.getTabHeight(getActivity());
-        swipeRefreshLayout.setProgressViewOffset(false, start, end);
-
+        swipeRefreshLayout.setProgressViewOffset(false, 0, ViewUnit.getTabHeight(getActivity()));
+        setSwipeRefreshLayoutTheme();
         swipeRefreshLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* Do something */
+                initializeTask = new InitializeTask(BaseFragment.this, true);
+                initializeTask.execute();
             }
         });
 
-        setSwipeRefreshLayoutTheme();
-
-        listView = (ObservableListView) contentView.findViewById(R.id.base_fragment_listview);
-
-        LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-        listView.addHeaderView(layoutInflater.inflate(R.layout.base_fragment_listvew_padding, null));
+        final ListView listView = (ListView) contentView.findViewById(R.id.base_fragment_listview);
 
         if (getArguments().containsKey(getString(R.string.bundle_fragment_initial_position))) {
-            final int initialPosition = getArguments().getInt(getString(R.string.bundle_fragment_initial_position), 0);
-            listView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    listView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-
-                    listView.setSelection(initialPosition);
-                }
-            });
+            listView.setSelection(getArguments().getInt(getString(R.string.bundle_fragment_initial_position), 0));
         }
-
-        listView.setScrollViewCallbacks((MainActivity) getActivity());
 
         /* Do something with detail true or false */
         tweetAdapter = new TweetAdapter(

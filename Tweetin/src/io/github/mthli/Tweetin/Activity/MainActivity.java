@@ -12,27 +12,18 @@ import android.support.v4.view.ViewPager;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
-import com.github.ksoichiro.android.observablescrollview.ObservableListView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
-import com.nineoldandroids.view.*;
-import com.nineoldandroids.view.ViewPropertyAnimator;
 import io.github.mthli.Tweetin.Custom.ViewUnit;
 import io.github.mthli.Tweetin.Flag.Flag;
-import io.github.mthli.Tweetin.Fragment.BaseFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.GetAccessTokenTask;
 
-public class MainActivity extends FragmentActivity implements ObservableScrollViewCallbacks {
+public class MainActivity extends FragmentActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    private View header;
-    private Toolbar toolbar;
     private RelativeLayout searchView;
     private EditText searchViewEditText;
-    private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
     private MainPagerAdapter mainPagerAdapter;
 
@@ -65,10 +56,10 @@ public class MainActivity extends FragmentActivity implements ObservableScrollVi
     }
 
     public void initUI() {
-        header = findViewById(R.id.main_header);
+        View header = findViewById(R.id.main_header);
         ViewCompat.setElevation(header, ViewUnit.getElevation(this, 2));
 
-        toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setActionBar(toolbar);
 
         searchView = (RelativeLayout) findViewById(R.id.search_view);
@@ -88,30 +79,11 @@ public class MainActivity extends FragmentActivity implements ObservableScrollVi
         mainPagerAdapter = new MainPagerAdapter(this);
         viewPager.setAdapter(mainPagerAdapter);
 
-        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         slidingTabLayout.setCustomTabView(R.layout.badge_view, R.id.badge_view_textview);
         slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.white));
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
-
-        slidingTabLayout.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-                /* Do nothing */
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                propagateToolbarState(isToolbarShown());
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-                /* Do nothing */
-            }
-        });
-
-        propagateToolbarState(isToolbarShown());
     }
 
     @Override
@@ -272,99 +244,5 @@ public class MainActivity extends FragmentActivity implements ObservableScrollVi
         }
 
         return false;
-    }
-
-    private int baseTranslationY;
-
-    public boolean isToolbarShown() {
-        return (ViewHelper.getTranslationY(header) == 0);
-    }
-
-    private void showToolbar() {
-        if (ViewHelper.getTranslationY(header) != 0) {
-            ViewPropertyAnimator.animate(header).cancel();
-            ViewPropertyAnimator.animate(header).translationY(0).setDuration(256);
-        }
-
-        propagateToolbarState(true);
-    }
-
-    private void hideToolbar() {
-        if (ViewHelper.getTranslationY(header) != -toolbar.getHeight()) {
-            ViewPropertyAnimator.animate(header).cancel();
-            ViewPropertyAnimator.animate(header).translationY(-toolbar.getHeight()).setDuration(256);
-        }
-
-        propagateToolbarState(false);
-    }
-
-    public BaseFragment getCurrentFragment() {
-        return (BaseFragment) mainPagerAdapter.getFragmentFromPosition(viewPager.getCurrentItem());
-    }
-
-    public BaseFragment getFragmentFromPosition(int position) {
-        return (BaseFragment) mainPagerAdapter.getFragmentFromPosition(position);
-    }
-
-    private void propagateToolbarState(boolean show) {
-        mainPagerAdapter.setScrollY(show ? 0 : toolbar.getHeight());
-
-        for (int i = 0; i < mainPagerAdapter.getCount(); i++) {
-            if (i == viewPager.getCurrentItem() || getFragmentFromPosition(i) == null) {
-                continue;
-            }
-
-            ObservableListView listView = getFragmentFromPosition(i).getListView();
-
-            if (show) {
-                if (listView.getCurrentScrollY() > 0) {
-                    listView.setSelection(0);
-                }
-            } else {
-                if (listView.getCurrentScrollY() < toolbar.getHeight()) {
-                    listView.setSelection(1);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-        if (dragging) {
-            if (firstScroll) {
-                if (-toolbar.getHeight() < ViewHelper.getTranslationY(header)) {
-                    baseTranslationY = scrollY;
-                }
-            }
-
-            int headerTranslationY = Math.min(0, Math.max(-toolbar.getHeight(), -(scrollY - baseTranslationY)));
-
-            ViewPropertyAnimator.animate(header).cancel();
-            ViewHelper.setTranslationY(header, headerTranslationY);
-        }
-    }
-
-    @Override
-    public void onDownMotionEvent() {
-        /* Do nothing */
-    }
-
-    @Override
-    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-        baseTranslationY = 0;
-
-        ObservableListView listView = getCurrentFragment().getListView();
-
-        if (scrollState == ScrollState.UP) {
-            if (toolbar.getHeight() < listView.getCurrentScrollY()) {
-                hideToolbar();
-            } else if (toolbar.getHeight() > listView.getCurrentScrollY()) {
-                showToolbar();
-            }
-        } else if (scrollState == ScrollState.DOWN) {
-            if (toolbar.getHeight() < listView.getCurrentScrollY()) {
-                showToolbar();
-            }
-        }
     }
 }
