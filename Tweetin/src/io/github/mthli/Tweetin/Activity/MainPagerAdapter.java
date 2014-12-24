@@ -13,9 +13,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     private String[] titles;
 
-    private SparseArray<Fragment> sparseArray;
-
-    private int scrollY;
+    private SparseArray<BaseFragment> sparseArray;
 
     public MainPagerAdapter(
             MainActivity mainActivity
@@ -26,7 +24,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
         this.titles = mainActivity.getResources().getStringArray(R.array.tabs);
 
-        this.sparseArray = new SparseArray<Fragment>();
+        this.sparseArray = new SparseArray<BaseFragment>();
     }
 
     @Override
@@ -60,10 +58,6 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                 break;
         }
 
-        if (scrollY > 0) {
-            bundle.putInt(mainActivity.getString(R.string.bundle_fragment_initial_position), 1);
-        }
-
         baseFragment.setArguments(bundle);
 
         sparseArray.put(position, baseFragment);
@@ -71,11 +65,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         return baseFragment;
     }
 
-    public void setScrollY(int scrollY) {
-        this.scrollY = scrollY;
-    }
-
-    public Fragment getFragmentFromPosition(int position) {
+    public BaseFragment getFragmentFromPosition(int position) {
         return sparseArray.get(position);
     }
 }

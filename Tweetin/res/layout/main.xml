@@ -8,19 +8,16 @@
                   android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:layout_alignParentTop="true"
-                  android:background="?attr/android:colorPrimary">
+                  android:background="?android:attr/colorPrimary">
 
         <RelativeLayout android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="?android:attr/colorPrimary">
+                        android:layout_height="wrap_content">
 
             <Toolbar android:id="@+id/main_toolbar"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:layout_alignParentTop="true"
                      android:minHeight="?attr/android:actionBarSize"
-                     android:background="?attr/android:colorPrimary"
                      android:title="@string/app_name">
             </Toolbar>
 
@@ -70,7 +67,7 @@
                 android:id="@+id/sliding_tabs"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tab_height"
-                android:background="?android:attr/colorPrimary">
+                android:minHeight="@dimen/tab_height">
         </com.google.samples.apps.iosched.ui.widget.SlidingTabLayout>
 
     </LinearLayout>

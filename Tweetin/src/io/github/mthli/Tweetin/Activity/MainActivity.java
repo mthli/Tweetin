@@ -24,6 +24,7 @@ public class MainActivity extends FragmentActivity {
 
     private RelativeLayout searchView;
     private EditText searchViewEditText;
+
     private ViewPager viewPager;
     private MainPagerAdapter mainPagerAdapter;
 
@@ -57,7 +58,7 @@ public class MainActivity extends FragmentActivity {
 
     public void initUI() {
         View header = findViewById(R.id.main_header);
-        ViewCompat.setElevation(header, ViewUnit.getElevation(this, 2));
+        ViewCompat.setElevation(header, 2); //
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setActionBar(toolbar);
@@ -137,7 +138,6 @@ public class MainActivity extends FragmentActivity {
                     searchView.getWidth()
             );
 
-            ViewCompat.setElevation(searchView, ViewUnit.getElevation(this, 4));
             searchView.setVisibility(View.VISIBLE);
             anim.start();
 
@@ -159,7 +159,6 @@ public class MainActivity extends FragmentActivity {
                     super.onAnimationEnd(animation);
 
                     searchViewEditText.setText(null);
-                    ViewCompat.setElevation(searchView, 0);
                     searchView.setVisibility(View.INVISIBLE);
                 }
             });

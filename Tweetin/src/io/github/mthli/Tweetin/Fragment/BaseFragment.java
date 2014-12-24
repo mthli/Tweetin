@@ -138,6 +138,9 @@ public class BaseFragment extends ProgressFragment {
         setContentShown(true);
 
         initUI();
+
+        initializeTask = new InitializeTask(this, false);
+        initializeTask.execute();
     }
 
     private void initUI() {
@@ -152,11 +155,7 @@ public class BaseFragment extends ProgressFragment {
             }
         });
 
-        final ListView listView = (ListView) contentView.findViewById(R.id.base_fragment_listview);
-
-        if (getArguments().containsKey(getString(R.string.bundle_fragment_initial_position))) {
-            listView.setSelection(getArguments().getInt(getString(R.string.bundle_fragment_initial_position), 0));
-        }
+        ListView listView = (ListView) contentView.findViewById(R.id.base_fragment_listview);
 
         /* Do something with detail true or false */
         tweetAdapter = new TweetAdapter(
@@ -168,8 +167,6 @@ public class BaseFragment extends ProgressFragment {
         listView.setAdapter(tweetAdapter);
         tweetAdapter.notifyDataSetChanged();
 
-        /* Do something with *Listener and Task */
-        initializeTask = new InitializeTask(this, false);
-        initializeTask.execute();
+        /* Do something with *Listener */
     }
 }
