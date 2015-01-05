@@ -12,11 +12,13 @@ import android.support.v4.view.ViewPager;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
-import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import io.github.mthli.Tweetin.Custom.ViewUnit;
 import io.github.mthli.Tweetin.Flag.Flag;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.GetAccessTokenTask;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends FragmentActivity {
     private SharedPreferences sharedPreferences;
@@ -25,8 +27,8 @@ public class MainActivity extends FragmentActivity {
     private RelativeLayout searchView;
     private EditText searchViewEditText;
 
+    private TabWidget tabWidget;
     private ViewPager viewPager;
-    private MainPagerAdapter mainPagerAdapter;
 
     public void setCustomTheme() {
         int spColorValue = sharedPreferences.getInt(
@@ -62,6 +64,8 @@ public class MainActivity extends FragmentActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setActionBar(toolbar);
+        getActionBar().setTitle(null);
+        getActionBar().setDisplayShowHomeEnabled(false);
 
         searchView = (RelativeLayout) findViewById(R.id.search_view);
         searchViewEditText = (EditText) findViewById(R.id.search_view_edittext);
@@ -77,14 +81,90 @@ public class MainActivity extends FragmentActivity {
 
         viewPager = (ViewPager) findViewById(R.id.main_viewpager);
         viewPager.setOffscreenPageLimit(5);
-        mainPagerAdapter = new MainPagerAdapter(this);
+        MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(this);
         viewPager.setAdapter(mainPagerAdapter);
 
-        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-        slidingTabLayout.setCustomTabView(R.layout.badge_view, R.id.badge_view_textview);
-        slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.white));
-        slidingTabLayout.setDistributeEvenly(true);
-        slidingTabLayout.setViewPager(viewPager);
+        final TabHost tabHost = (TabHost) findViewById(android.R.id.tabhost);
+        tabHost.setup();
+
+        LayoutInflater layoutInflater = getLayoutInflater();
+        final List<ImageView> tabIconList = new ArrayList<ImageView>();
+
+        View timelineTab = layoutInflater.inflate(R.layout.badge_view, null);
+        ImageView timelineTabIcon = (ImageView) timelineTab.findViewById(R.id.badge_view_icon);
+        timelineTabIcon.setImageResource(R.drawable.ic_tab_timeline);
+        timelineTabIcon.setImageAlpha(255);
+        tabIconList.add(timelineTabIcon);
+
+        View mentionTab = layoutInflater.inflate(R.layout.badge_view, null);
+        ImageView mentionTabIcon = (ImageView) mentionTab.findViewById(R.id.badge_view_icon);
+        mentionTabIcon.setImageResource(R.drawable.ic_tab_mention);
+        mentionTabIcon.setImageAlpha(153);
+        tabIconList.add(mentionTabIcon);
+
+        View favoriteTab = layoutInflater.inflate(R.layout.badge_view, null);
+        ImageView favoriteTabIcon = (ImageView) favoriteTab.findViewById(R.id.badge_view_icon);
+        favoriteTabIcon.setImageResource(R.drawable.ic_tab_favorite);
+        favoriteTabIcon.setImageAlpha(153);
+        tabIconList.add(favoriteTabIcon);
+
+        tabHost.addTab(tabHost.newTabSpec("0").setIndicator(timelineTab).setContent(android.R.id.tabcontent));
+        tabHost.addTab(tabHost.newTabSpec("1").setIndicator(mentionTab).setContent(android.R.id.tabcontent));
+        tabHost.addTab(tabHost.newTabSpec("2").setIndicator(favoriteTab).setContent(android.R.id.tabcontent));
+
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                for (ImageView icon : tabIconList) {
+                    icon.setImageAlpha(153);
+                }
+                tabIconList.get(Integer.valueOf(tabId)).setImageAlpha(255);
+
+                viewPager.setCurrentItem(Integer.valueOf(tabId));
+            }
+        });
+
+        tabWidget = (TabWidget) findViewById(android.R.id.tabs);
+        final View tabIndicator = findViewById(R.id.tab_indicator);
+
+        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            private int scrollState = ViewPager.SCROLL_STATE_IDLE;
+
+            private void updateIndicatorPosition(int position, float positionOffset) {
+                View tabView = tabWidget.getChildTabViewAt(position);
+                int tabIndicatorWidth = tabView.getWidth();
+                int tabIndicatorLeft = (int) ((position + positionOffset) * tabIndicatorWidth);
+
+                final FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) tabIndicator.getLayoutParams();
+                layoutParams.width = tabIndicatorWidth;
+                layoutParams.setMargins(tabIndicatorLeft, 0, 0, 0);
+                tabIndicator.setLayoutParams(layoutParams);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                scrollState = state;
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                updateIndicatorPosition(position, positionOffset);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (scrollState == ViewPager.SCROLL_STATE_IDLE) {
+                    updateIndicatorPosition(position, 0);
+                }
+
+                for (ImageView icon : tabIconList) {
+                    icon.setImageAlpha(153);
+                }
+                tabIconList.get(position).setImageAlpha(255);
+
+                tabWidget.setCurrentTab(position);
+            }
+        });
     }
 
     @Override
@@ -205,9 +285,6 @@ public class MainActivity extends FragmentActivity {
         switch (menuItem.getItemId()) {
             case R.id.main_menu_search:
                 showSearchView(true);
-                break;
-            case R.id.main_menu_post:
-                /* Do something */
                 break;
             case R.id.main_menu_setting:
                 /* Do something */

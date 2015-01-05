@@ -8,12 +8,6 @@
           android:showAsAction="ifRoom">
     </item>
 
-    <item android:id="@+id/main_menu_post"
-          android:title="@string/main_menu_post"
-          android:icon="@drawable/ic_action_post"
-          android:showAsAction="ifRoom">
-    </item>
-
     <item android:id="@+id/main_menu_setting"
           android:title="@string/main_menu_setting"
           android:showAsAction="collapseActionView">

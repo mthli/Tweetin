@@ -2,24 +2,23 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:minHeight="?attr/android:actionBarSize"
                 android:background="@color/transparent">
 
-    <TextView android:id="@+id/badge_view_textview"
-              android:layout_width="wrap_content"
-              android:layout_height="@dimen/tab_height"
-              android:layout_centerInParent="true"
-              android:gravity="center"
-              android:textSize="14sp"
-              android:textAllCaps="true">
-    </TextView>
+    <ImageView android:id="@+id/badge_view_icon"
+               android:contentDescription="@null"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerInParent="true"
+               android:src="@drawable/ic_tab_favorite">
+    </ImageView>
 
     <View android:id="@+id/badge_view_bubble"
           android:layout_width="5dp"
           android:layout_height="5dp"
-          android:layout_marginTop="12dp"
-          android:layout_marginLeft="3dp"
-          android:layout_toRightOf="@id/badge_view_textview"
+          android:layout_marginTop="10dp"
+          android:layout_toRightOf="@id/badge_view_icon"
           android:background="@drawable/badge_view_bubble_shape"
           android:visibility="gone">
     </View>

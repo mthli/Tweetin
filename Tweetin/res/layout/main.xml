@@ -4,73 +4,88 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <LinearLayout android:id="@+id/main_header"
-                  android:orientation="vertical"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:background="?android:attr/colorPrimary">
+    <RelativeLayout android:id="@+id/main_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/colorPrimary">
 
-        <RelativeLayout android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+        <Toolbar android:id="@+id/main_toolbar"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentTop="true"
+                 android:minHeight="?attr/android:actionBarSize">
 
-            <Toolbar android:id="@+id/main_toolbar"
+            <TabHost android:id="@android:id/tabhost"
                      android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:layout_alignParentTop="true"
-                     android:minHeight="?attr/android:actionBarSize"
-                     android:title="@string/app_name">
-            </Toolbar>
+                     android:layout_height="wrap_content">
 
-            <RelativeLayout android:id="@+id/search_view"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginLeft="7dp"
-                            android:layout_marginRight="7dp"
-                            android:layout_alignParentTop="true"
-                            android:background="@drawable/search_view_shape"
-                            android:visibility="invisible">
+                <FrameLayout android:layout_width="210dp"
+                             android:layout_height="match_parent">
 
-                <ImageButton android:id="@+id/search_view_clear"
-                             android:contentDescription="@null"
-                             android:layout_width="20dp"
-                             android:layout_height="20dp"
-                             android:layout_alignParentRight="true"
-                             android:layout_centerInParent="true"
-                             android:src="@drawable/ic_action_clear"
-                             android:background="@drawable/search_view_clear_ripple">
-                </ImageButton>
+                    <TabWidget android:id="@android:id/tabs"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content">
+                    </TabWidget>
 
-                <EditText android:id="@+id/search_view_edittext"
+                    <FrameLayout android:id="@android:id/tabcontent"
+                                 android:layout_width="0dp"
+                                 android:layout_height="0dp">
+                    </FrameLayout>
+
+                    <View android:id="@+id/tab_indicator"
                           android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:layout_alignParentLeft="true"
-                          android:layout_toLeftOf="@id/search_view_clear"
-                          android:layout_centerInParent="true"
-                          android:layout_marginRight="7dp"
-                          android:hint="@string/search_hint"
-                          android:textColor="@color/text"
-                          android:textSize="16sp"
-                          android:textColorHint="@color/hint"
-                          android:singleLine="true"
-                          android:inputType="text"
-                          android:imeOptions="actionSearch"
+                          android:layout_height="2dp"
+                          android:layout_gravity="bottom"
                           android:background="@color/white">
-                </EditText>
+                    </View>
 
-            </RelativeLayout>
+                </FrameLayout>
+
+            </TabHost>
+
+        </Toolbar>
+
+        <RelativeLayout android:id="@+id/search_view"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/search_view_shape"
+                        android:visibility="invisible">
+
+            <ImageButton android:id="@+id/search_view_clear"
+                         android:contentDescription="@null"
+                         android:layout_width="20dp"
+                         android:layout_height="20dp"
+                         android:layout_alignParentRight="true"
+                         android:layout_centerInParent="true"
+                         android:src="@drawable/ic_action_clear"
+                         android:background="@drawable/search_view_clear_ripple">
+            </ImageButton>
+
+            <EditText android:id="@+id/search_view_edittext"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentLeft="true"
+                      android:layout_toLeftOf="@id/search_view_clear"
+                      android:layout_centerInParent="true"
+                      android:layout_marginRight="7dp"
+                      android:hint="@string/search_hint"
+                      android:textColor="@color/text"
+                      android:textSize="16sp"
+                      android:textColorHint="@color/hint"
+                      android:singleLine="true"
+                      android:inputType="text"
+                      android:imeOptions="actionSearch"
+                      android:background="@color/white">
+            </EditText>
 
         </RelativeLayout>
 
-        <com.google.samples.apps.iosched.ui.widget.SlidingTabLayout
-                android:id="@+id/sliding_tabs"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/tab_height"
-                android:minHeight="@dimen/tab_height">
-        </com.google.samples.apps.iosched.ui.widget.SlidingTabLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
             android:id="@+id/main_viewpager"
