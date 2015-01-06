@@ -31,11 +31,11 @@
     <string name="sp_is_mention_first">
         SP_IS_MENTION_FIRST
     </string>
-    <string name="sp_latest_mention_id">
-        SP_LATEST_MENTION_ID
-    </string>
     <string name="sp_is_favorite_first">
         SP_IS_FAVORITE_FIRST
+    </string>
+    <string name="sp_latest_mention_id">
+        SP_LATEST_MENTION_ID
     </string>
 
     <!-- CustomTheme -->

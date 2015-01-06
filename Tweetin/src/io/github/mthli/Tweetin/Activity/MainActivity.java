@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -28,7 +27,7 @@ public class MainActivity extends FragmentActivity {
     private RelativeLayout searchView;
     private EditText searchViewEditText;
 
-    private TabWidget tabWidget;
+    private View mentionTab;
     private ViewPager viewPager;
 
     public void setCustomTheme() {
@@ -69,6 +68,16 @@ public class MainActivity extends FragmentActivity {
         }
 
         return result;
+    }
+
+    public void showBadge(boolean show) {
+        View bubble = mentionTab.findViewById(R.id.badge_view_bubble);
+
+        if (show) {
+            bubble.setVisibility(View.VISIBLE);
+        } else {
+            bubble.setVisibility(View.GONE);
+        }
     }
 
     public void initUI() {
@@ -119,7 +128,7 @@ public class MainActivity extends FragmentActivity {
         });
         tabIconList.add(timelineTabIcon);
 
-        View mentionTab = layoutInflater.inflate(R.layout.badge_view, null);
+        mentionTab = layoutInflater.inflate(R.layout.badge_view, null);
         ImageView mentionTabIcon = (ImageView) mentionTab.findViewById(R.id.badge_view_icon);
         mentionTabIcon.setImageResource(R.drawable.ic_tab_mention);
         mentionTabIcon.setImageAlpha(153);
@@ -159,11 +168,15 @@ public class MainActivity extends FragmentActivity {
                 }
                 tabIconList.get(Integer.valueOf(tabId)).setImageAlpha(255);
 
+                if (Integer.valueOf(tabId) == Flag.IN_MENTION_FRAGMENT) {
+                    showBadge(false);
+                }
+
                 viewPager.setCurrentItem(Integer.valueOf(tabId));
             }
         });
 
-        tabWidget = (TabWidget) findViewById(android.R.id.tabs);
+        final TabWidget tabWidget = (TabWidget) findViewById(android.R.id.tabs);
         final View tabIndicator = findViewById(R.id.tab_indicator);
 
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -201,6 +214,10 @@ public class MainActivity extends FragmentActivity {
                 }
                 tabIconList.get(position).setImageAlpha(255);
 
+                if (position == Flag.IN_MENTION_FRAGMENT) {
+                    showBadge(false);
+                }
+
                 tabWidget.setCurrentTab(position);
             }
         });
@@ -217,7 +234,7 @@ public class MainActivity extends FragmentActivity {
         editor = sharedPreferences.edit();
 
         setCustomTheme();
-        setContentView(R.layout.main); //
+        setContentView(R.layout.main);
 
         Uri uri = getIntent().getData();
         if (uri != null && uri.toString().startsWith(getString(R.string.app_callback_url))) {

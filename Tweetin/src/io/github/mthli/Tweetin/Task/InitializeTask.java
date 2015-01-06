@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
+import io.github.mthli.Tweetin.Activity.MainActivity;
 import io.github.mthli.Tweetin.Custom.ViewUnit;
 import io.github.mthli.Tweetin.Database.DataAction;
 import io.github.mthli.Tweetin.Database.DataRecord;
@@ -154,7 +155,7 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
-    private twitter4j.Status latestMention;
+    private twitter4j.Status latestMention = null;
 
     private twitter4j.Status getLatestMention() throws TwitterException {
         Twitter twitter = TwitterUnit.getTwitterFromSharedPreferences(context);
@@ -171,8 +172,9 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
         try {
             statusList = getStatusList();
 
-            /* Do something only in TimelineFragment */
-            latestMention = getLatestMention();
+            if (fragmentFlag != Flag.IN_FAVORITE_FRAGMENT) {
+                latestMention = getLatestMention();
+            }
         } catch (Exception e) {
             return false;
         }
@@ -283,7 +285,20 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
                 swipeRefreshLayout.setRefreshing(false);
             }
 
-            /* Do something with latestMention */
+            long spLatestMentionId = sharedPreferences.getLong(
+                    context.getString(R.string.sp_latest_mention_id),
+                    -1
+            );
+            if (latestMention != null && latestMention.getId() > spLatestMentionId) {
+                if (fragmentFlag == Flag.IN_TIMELINE_FRAGMENT) {
+                    ((MainActivity) mainFragment.getActivity()).showBadge(true);
+                }
+
+                editor.putLong(
+                        context.getString(R.string.sp_latest_mention_id),
+                        latestMention.getId()
+                ).commit();
+            }
         } else {
             if (isFirstLoad()) {
                 updateInitializationResultToSharedPreferences(result);
@@ -296,7 +311,6 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
             }
         }
 
-        /* Do something */
         swipeRefreshLayout.setProgressViewOffset(
                 false,
                 -ViewUnit.getTabHeight(context),
