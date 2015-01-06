@@ -52,23 +52,19 @@ public class LoadMoreTask extends AsyncTask<Void, Integer, Boolean> {
         }
     }
 
-    private static int countT = 2;
-    private static int countM = 2;
-    private static int countF = 2;
-
     private List<twitter4j.Status> getStatusList() throws TwitterException {
         Twitter twitter = TwitterUnit.getTwitterFromSharedPreferences(context);
 
+        int nextPage = tweetList.size() / 40 + 1;
+        Paging paging = new Paging(nextPage, 40);
+
         switch (fragmentFlag) {
             case Flag.IN_TIMELINE_FRAGMENT:
-                Paging pagingT = new Paging(countT++, 40);
-                return twitter.getHomeTimeline(pagingT);
+                return twitter.getHomeTimeline(paging);
             case Flag.IN_MENTION_FRAGMENT:
-                Paging pagingM = new Paging(countM++, 40);
-                return twitter.getMentionsTimeline(pagingM);
+                return twitter.getMentionsTimeline(paging);
             case Flag.IN_FAVORITE_FRAGMENT:
-                Paging pagingF = new Paging(countF++, 40);
-                return twitter.getFavorites(pagingF);
+                return twitter.getFavorites(paging);
             default:
                 return new ArrayList<twitter4j.Status>();
         }
