@@ -11,11 +11,13 @@ public class TweetUnit {
     private Context context;
 
     private String useScreenName;
+    private String me;
 
     public TweetUnit(Context context) {
         this.context = context;
 
         this.useScreenName = TwitterUnit.getUseScreenNameFromSharedPreferences(context);
+        this.me = context.getString(R.string.tweet_info_retweeted_by_me);
     }
 
     public String getPictureURLFromStatus(Status status) {
@@ -150,7 +152,11 @@ public class TweetUnit {
             record.setInReplyToStatusId(status.getInReplyToStatusId());
             record.setRetweetedByScreenName(null);
         }
-        /* Do something, check isRetweetedByMe() || isRetweeted() */
+
+        if (status.isRetweetedByMe() || status.isRetweeted()) {
+            record.setRetweetedByName(me);
+            record.setRetweetedByScreenName(useScreenName);
+        }
 
         return record;
     }
@@ -199,7 +205,11 @@ public class TweetUnit {
             tweet.setInReplyToStatusId(status.getInReplyToStatusId());
             tweet.setRetweetedByScreenName(null);
         }
-        /* Do something, check isRetweetedByMe() || isRetweeted() */
+
+        if (status.isRetweetedByMe() || status.isRetweeted()) {
+            tweet.setRetweetedByName(me);
+            tweet.setRetweetedByScreenName(useScreenName);
+        }
 
         return tweet;
     }

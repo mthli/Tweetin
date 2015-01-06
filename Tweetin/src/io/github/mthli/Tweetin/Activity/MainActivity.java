@@ -359,6 +359,8 @@ public class MainActivity extends FragmentActivity {
 
             if (shouldHideSearchView(view, motionEvent)) {
                 showSearchView(false);
+
+                return false;
             }
         }
 

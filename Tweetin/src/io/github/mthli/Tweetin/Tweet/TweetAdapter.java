@@ -125,7 +125,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 
         holder.screenName.setText("@" + tweet.getScreenName());
 
-        /* Do something */
         holder.createdAt.setReferenceTime(tweet.getCreatedAt());
 
         if (tweet.getCheckIn() != null) {
