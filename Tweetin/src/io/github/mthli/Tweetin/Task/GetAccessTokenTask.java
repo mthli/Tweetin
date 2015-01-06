@@ -140,7 +140,7 @@ public class GetAccessTokenTask extends AsyncTask<Void, Integer, Boolean> {
             Toast.makeText(
                     mainActivity,
                     mainActivity.getString(R.string.main_toast_get_access_token_failed),
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_LONG
             ).show();
         }
     }

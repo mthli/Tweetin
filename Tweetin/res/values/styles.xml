@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- InitialAppTheme -->
-    <style name="InitialAppTheme" parent="android:Theme.Material.Light.NoActionBar">
-        <!-- Do something maybe -->
+    <!-- InitAppTheme -->
+    <style name="InitAppTheme" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
 
     <!-- BaseAppTheme -->
@@ -19,8 +20,12 @@
 
         <item name="android:actionModeBackground">@color/blue_500</item>
         <item name="android:popupTheme">@style/BaseAppTheme.PopupTheme</item>
+
         <item name="android:alertDialogTheme">@style/BaseAppTheme.Dialog.Alert</item>
+
         <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
     </style>
     <!-- BaseAppTheme.TextAppearance -->
     <style name="BaseAppTheme.TextAppearance" parent="BaseAppTheme">

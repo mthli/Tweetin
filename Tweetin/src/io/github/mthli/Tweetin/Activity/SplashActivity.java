@@ -44,15 +44,4 @@ public class SplashActivity extends Activity {
             }
         });
     }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation== Configuration.ORIENTATION_LANDSCAPE) {
-            /* Do nothing */
-        }
-        else{
-            /* Do nothing */
-        }
-    }
 }

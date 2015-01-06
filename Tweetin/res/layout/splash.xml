@@ -4,7 +4,9 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/blue_500">
+                android:background="@color/blue_500"
+                android:fitsSystemWindows="true"
+                android:clipToPadding="false">
 
     <ImageView android:id="@+id/splash_tweetin"
                android:contentDescription="@null"

@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import io.github.mthli.Tweetin.Flag.Flag;
-import io.github.mthli.Tweetin.Fragment.BaseFragment;
+import io.github.mthli.Tweetin.Fragment.MainFragment;
 import io.github.mthli.Tweetin.R;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
@@ -13,7 +13,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     private String[] titles;
 
-    private SparseArray<BaseFragment> sparseArray;
+    private SparseArray<MainFragment> sparseArray;
 
     public MainPagerAdapter(
             MainActivity mainActivity
@@ -24,7 +24,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
         this.titles = mainActivity.getResources().getStringArray(R.array.tabs);
 
-        this.sparseArray = new SparseArray<BaseFragment>();
+        this.sparseArray = new SparseArray<MainFragment>();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        BaseFragment baseFragment = new BaseFragment();
+        MainFragment mainFragment = new MainFragment();
 
         Bundle bundle = new Bundle();
 
@@ -58,14 +58,14 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                 break;
         }
 
-        baseFragment.setArguments(bundle);
+        mainFragment.setArguments(bundle);
 
-        sparseArray.put(position, baseFragment);
+        sparseArray.put(position, mainFragment);
 
-        return baseFragment;
+        return mainFragment;
     }
 
-    public BaseFragment getFragmentFromPosition(int position) {
+    public MainFragment getFragmentFromPosition(int position) {
         return sparseArray.get(position);
     }
 }

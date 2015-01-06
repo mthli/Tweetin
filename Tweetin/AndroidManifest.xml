@@ -18,15 +18,13 @@
     <!-- Application -->
     <application android:label="@string/app_name"
                  android:icon="@drawable/ic_launcher"
-                 android:theme="@style/InitialAppTheme"
+                 android:theme="@style/InitAppTheme"
                  android:allowBackup="true"
                  android:largeHeap="true">
 
         <!-- SplashActivity -->
         <activity android:name=".Activity.SplashActivity"
-                  android:label="@null"
-                  android:windowSoftInputMode="adjustPan|stateHidden"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
+                  android:screenOrientation="portrait">
 
             <intent-filter>
 
@@ -40,8 +38,7 @@
 
         <!-- MainActivity -->
         <activity android:name=".Activity.MainActivity"
-                  android:label="@string/app_name"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
+                  android:screenOrientation="portrait">
 
             <intent-filter>
 
@@ -61,8 +58,7 @@
 
         <!-- SettingActivity -->
         <activity android:name=".Activity.SettingActivity"
-                  android:label="@string/setting_label"
-                  android:configChanges="orientation|keyboardHidden|screenSize">
+                  android:screenOrientation="portrait">
         </activity>
 
     </application>

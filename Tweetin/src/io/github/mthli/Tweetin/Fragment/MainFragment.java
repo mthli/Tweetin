@@ -17,7 +17,7 @@ import io.github.mthli.Tweetin.Tweet.TweetAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseFragment extends ProgressFragment {
+public class MainFragment extends ProgressFragment {
 
     private int fragmentFlag;
     public int getFragmentFlag() {
@@ -132,7 +132,7 @@ public class BaseFragment extends ProgressFragment {
         editor = sharedPreferences.edit();
 
         super.onActivityCreated(savedInstanceState);
-        setContentView(R.layout.base_fragment);
+        setContentView(R.layout.main_fragment);
         contentView = getContentView();
         setContentEmpty(false);
         setContentShown(true);
@@ -144,18 +144,18 @@ public class BaseFragment extends ProgressFragment {
     }
 
     private void initUI() {
-        swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.base_fragment_swipe_container);
+        swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.main_fragment_swipe_container);
         swipeRefreshLayout.setProgressViewOffset(false, 0, ViewUnit.getTabHeight(getActivity()));
         setSwipeRefreshLayoutTheme();
-        swipeRefreshLayout.setOnClickListener(new View.OnClickListener() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View view) {
-                initializeTask = new InitializeTask(BaseFragment.this, true);
+            public void onRefresh() {
+                initializeTask = new InitializeTask(MainFragment.this, true);
                 initializeTask.execute();
             }
         });
 
-        ListView listView = (ListView) contentView.findViewById(R.id.base_fragment_listview);
+        ListView listView = (ListView) contentView.findViewById(R.id.main_fragment_listview);
 
         /* Do something with detail true or false */
         tweetAdapter = new TweetAdapter(

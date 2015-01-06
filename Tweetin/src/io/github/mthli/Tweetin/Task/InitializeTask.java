@@ -9,7 +9,7 @@ import io.github.mthli.Tweetin.Database.DataAction;
 import io.github.mthli.Tweetin.Database.DataRecord;
 import io.github.mthli.Tweetin.Database.DataUnit;
 import io.github.mthli.Tweetin.Flag.Flag;
-import io.github.mthli.Tweetin.Fragment.BaseFragment;
+import io.github.mthli.Tweetin.Fragment.MainFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.Tweet;
 import io.github.mthli.Tweetin.Tweet.TweetAdapter;
@@ -24,7 +24,7 @@ import java.util.List;
 
 public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
 
-    private BaseFragment baseFragment;
+    private MainFragment mainFragment;
     private int fragmentFlag;
     private Context context;
 
@@ -39,8 +39,8 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean swipeRefresh;
 
-    public InitializeTask(BaseFragment baseFragment, boolean swipeRefresh) {
-        this.baseFragment = baseFragment;
+    public InitializeTask(MainFragment mainFragment, boolean swipeRefresh) {
+        this.mainFragment = mainFragment;
 
         this.swipeRefresh = swipeRefresh;
     }
@@ -82,14 +82,14 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        if (baseFragment.getTaskStatus() == Flag.TASK_RUNNING) {
+        if (mainFragment.getTaskStatus() == Flag.TASK_RUNNING) {
             onCancelled();
         } else {
-            baseFragment.setTaskStatus(Flag.TASK_RUNNING);
+            mainFragment.setTaskStatus(Flag.TASK_RUNNING);
         }
 
-        fragmentFlag = baseFragment.getFragmentFlag();
-        context = baseFragment.getContentView().getContext();
+        fragmentFlag = mainFragment.getFragmentFlag();
+        context = mainFragment.getContentView().getContext();
 
         sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.sp_tweetin),
@@ -99,21 +99,21 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
 
         String useScreenName = TwitterUnit.getUseScreenNameFromSharedPreferences(context);
         if (useScreenName == null) {
-            baseFragment.setContentEmpty(true);
-            baseFragment.setEmptyText(R.string.fragmet_empty_get_authorization_failed);
-            baseFragment.setContentShown(false);
+            mainFragment.setContentEmpty(true);
+            mainFragment.setEmptyText(R.string.fragmet_empty_get_authorization_failed);
+            mainFragment.setContentShown(false);
 
             onCancelled();
         }
 
-        tweetAdapter = baseFragment.getTweetAdapter();
-        tweetList = baseFragment.getTweetList();
+        tweetAdapter = mainFragment.getTweetAdapter();
+        tweetList = mainFragment.getTweetList();
         tweetUnit = new TweetUnit(context);
 
-        swipeRefreshLayout = baseFragment.getSwipeRefreshLayout();
+        swipeRefreshLayout = mainFragment.getSwipeRefreshLayout();
 
         if (isFirstLoad()) {
-            baseFragment.setContentShown(false);
+            mainFragment.setContentShown(false);
         } else {
             if (!swipeRefreshLayout.isRefreshing()) {
                 swipeRefreshLayout.setRefreshing(true);
@@ -171,6 +171,7 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
         try {
             statusList = getStatusList();
 
+            /* Do something only in TimelineFragment */
             latestMention = getLatestMention();
         } catch (Exception e) {
             return false;
@@ -274,9 +275,9 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
             if (isFirstLoad()) {
                 updateInitializationResultToSharedPreferences(result);
 
-                baseFragment.setContentEmpty(false);
+                mainFragment.setContentEmpty(false);
                 tweetAdapter.notifyDataSetChanged();
-                baseFragment.setContentShown(true);
+                mainFragment.setContentShown(true);
             } else {
                 tweetAdapter.notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
@@ -287,9 +288,9 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
             if (isFirstLoad()) {
                 updateInitializationResultToSharedPreferences(result);
 
-                baseFragment.setContentEmpty(true);
-                baseFragment.setEmptyText(getEmptyText());
-                baseFragment.setContentShown(true);
+                mainFragment.setContentEmpty(true);
+                mainFragment.setEmptyText(getEmptyText());
+                mainFragment.setContentShown(true);
             } else {
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -302,6 +303,6 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
                 ViewUnit.getTabHeight(context)
         );
 
-        baseFragment.setTaskStatus(Flag.TASK_IDLE);
+        mainFragment.setTaskStatus(Flag.TASK_IDLE);
     }
 }

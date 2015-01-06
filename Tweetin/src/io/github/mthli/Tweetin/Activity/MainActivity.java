@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -58,9 +59,23 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    private int getStatusBarHeight() {
+        int result = 0;
+
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+
+        return result;
+    }
+
     public void initUI() {
         View header = findViewById(R.id.main_header);
-        ViewCompat.setElevation(header, 2); //
+        ((RelativeLayout.LayoutParams) header.getLayoutParams()).setMargins(0, getStatusBarHeight(), 0, 0); //
+        header.setVisibility(View.VISIBLE);
+        ViewCompat.setElevation(header, 2);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setActionBar(toolbar);
@@ -81,7 +96,7 @@ public class MainActivity extends FragmentActivity {
 
         viewPager = (ViewPager) findViewById(R.id.main_viewpager);
         viewPager.setOffscreenPageLimit(5);
-        MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(this);
+        final MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(this);
         viewPager.setAdapter(mainPagerAdapter);
 
         final TabHost tabHost = (TabHost) findViewById(android.R.id.tabhost);
@@ -94,18 +109,42 @@ public class MainActivity extends FragmentActivity {
         ImageView timelineTabIcon = (ImageView) timelineTab.findViewById(R.id.badge_view_icon);
         timelineTabIcon.setImageResource(R.drawable.ic_tab_timeline);
         timelineTabIcon.setImageAlpha(255);
+        timelineTab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(MainActivity.this, mainPagerAdapter.getPageTitle(0), Toast.LENGTH_SHORT).show();
+
+                return true;
+            }
+        });
         tabIconList.add(timelineTabIcon);
 
         View mentionTab = layoutInflater.inflate(R.layout.badge_view, null);
         ImageView mentionTabIcon = (ImageView) mentionTab.findViewById(R.id.badge_view_icon);
         mentionTabIcon.setImageResource(R.drawable.ic_tab_mention);
         mentionTabIcon.setImageAlpha(153);
+        mentionTab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(MainActivity.this, mainPagerAdapter.getPageTitle(1), Toast.LENGTH_SHORT).show();
+
+                return true;
+            }
+        });
         tabIconList.add(mentionTabIcon);
 
         View favoriteTab = layoutInflater.inflate(R.layout.badge_view, null);
         ImageView favoriteTabIcon = (ImageView) favoriteTab.findViewById(R.id.badge_view_icon);
         favoriteTabIcon.setImageResource(R.drawable.ic_tab_favorite);
         favoriteTabIcon.setImageAlpha(153);
+        favoriteTab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(MainActivity.this, mainPagerAdapter.getPageTitle(2), Toast.LENGTH_SHORT).show();
+
+                return true;
+            }
+        });
         tabIconList.add(favoriteTabIcon);
 
         tabHost.addTab(tabHost.newTabSpec("0").setIndicator(timelineTab).setContent(android.R.id.tabcontent));
@@ -178,7 +217,7 @@ public class MainActivity extends FragmentActivity {
         editor = sharedPreferences.edit();
 
         setCustomTheme();
-        setContentView(R.layout.main);
+        setContentView(R.layout.main); //
 
         Uri uri = getIntent().getData();
         if (uri != null && uri.toString().startsWith(getString(R.string.app_callback_url))) {
@@ -312,7 +351,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (searchView.isShown()) {
+            if (searchView != null && searchView.isShown()) {
                 showSearchView(false);
             } else {
                 finish();
