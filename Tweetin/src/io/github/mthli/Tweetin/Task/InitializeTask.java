@@ -17,6 +17,7 @@ import io.github.mthli.Tweetin.Tweet.TweetAdapter;
 import io.github.mthli.Tweetin.Tweet.TweetUnit;
 import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 import twitter4j.Paging;
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
@@ -90,7 +91,7 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
         }
 
         fragmentFlag = mainFragment.getFragmentFlag();
-        context = mainFragment.getContentView().getContext();
+        context = mainFragment.getActivity();
 
         sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.sp_tweetin),
@@ -151,7 +152,7 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
             case Flag.IN_FAVORITE_FRAGMENT:
                 return twitter.getFavorites(paging);
             default:
-                return twitter.getHomeTimeline(paging);
+                return new ArrayList<twitter4j.Status>();
         }
     }
 

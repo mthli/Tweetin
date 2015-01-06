@@ -4,10 +4,7 @@ import android.content.Context;
 import io.github.mthli.Tweetin.Database.DataRecord;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Twitter.TwitterUnit;
-import twitter4j.MediaEntity;
-import twitter4j.Place;
-import twitter4j.Status;
-import twitter4j.URLEntity;
+import twitter4j.*;
 
 public class TweetUnit {
 
@@ -156,5 +153,54 @@ public class TweetUnit {
         /* Do something, check isRetweetedByMe() || isRetweeted() */
 
         return record;
+    }
+    
+    public Tweet getTweetFromStatus(Status status) {
+        Tweet tweet = new Tweet();
+
+        if (status.isRetweet()) {
+            tweet.setAvatarURL(status.getRetweetedStatus().getUser().getOriginalProfileImageURL());
+            tweet.setName(status.getRetweetedStatus().getUser().getName());
+            tweet.setScreenName(status.getRetweetedStatus().getUser().getScreenName());
+            tweet.setCreatedAt(status.getRetweetedStatus().getCreatedAt().getTime());
+            Place place = status.getRetweetedStatus().getPlace();
+            if (place != null) {
+                tweet.setCheckIn(place.getFullName());
+            } else {
+                tweet.setCheckIn(null);
+            }
+            tweet.setProtect(status.getRetweetedStatus().getUser().isProtected());
+            tweet.setPictureURL(getPictureURLFromStatus(status.getRetweetedStatus()));
+            tweet.setText(getDetailTextFromStatus(status.getRetweetedStatus()));
+            tweet.setRetweetedByName(status.getUser().getName());
+            tweet.setFavorite(status.getRetweetedStatus().isFavorited());
+
+            tweet.setStatusId(status.getRetweetedStatus().getId());
+            tweet.setInReplyToStatusId(status.getRetweetedStatus().getInReplyToStatusId());
+            tweet.setRetweetedByScreenName(status.getUser().getScreenName());
+        } else {
+            tweet.setAvatarURL(status.getUser().getOriginalProfileImageURL());
+            tweet.setName(status.getUser().getName());
+            tweet.setScreenName(status.getUser().getScreenName());
+            tweet.setCreatedAt(status.getCreatedAt().getTime());
+            Place place = status.getPlace();
+            if (place != null) {
+                tweet.setCheckIn(place.getFullName());
+            } else {
+                tweet.setCheckIn(null);
+            }
+            tweet.setProtect(status.getUser().isProtected());
+            tweet.setPictureURL(getPictureURLFromStatus(status));
+            tweet.setText(getDetailTextFromStatus(status));
+            tweet.setRetweetedByName(null);
+            tweet.setFavorite(status.isFavorited());
+
+            tweet.setStatusId(status.getId());
+            tweet.setInReplyToStatusId(status.getInReplyToStatusId());
+            tweet.setRetweetedByScreenName(null);
+        }
+        /* Do something, check isRetweetedByMe() || isRetweeted() */
+
+        return tweet;
     }
 }

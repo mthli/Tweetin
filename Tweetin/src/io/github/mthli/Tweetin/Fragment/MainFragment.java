@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
 import io.github.mthli.Tweetin.Custom.ViewUnit;
@@ -52,12 +53,19 @@ public class MainFragment extends ProgressFragment {
     private RemoveTask removeTask;
 
     /* Do something */
-    private int taskStatus;
+    private int taskStatus; //
     public int getTaskStatus() {
         return taskStatus;
     }
     public void setTaskStatus(int taskStatus) {
         this.taskStatus = taskStatus;
+    }
+    public boolean isSomeTaskRunning() {
+        if (taskStatus == Flag.TASK_RUNNING) {
+            return true;
+        }
+
+        return false;
     }
 
     private void setSwipeRefreshLayoutTheme() {
@@ -168,5 +176,31 @@ public class MainFragment extends ProgressFragment {
         tweetAdapter.notifyDataSetChanged();
 
         /* Do something with *Listener */
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            private boolean moveToBottom = false;
+            private int previous = 0;
+
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+                /* Do nothing */
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (previous < firstVisibleItem) {
+                    moveToBottom = true;
+                }
+                if (previous >= firstVisibleItem) { //
+                    moveToBottom = false;
+                }
+                previous = firstVisibleItem;
+
+                if (totalItemCount > 7 && totalItemCount == firstVisibleItem + visibleItemCount && !isSomeTaskRunning() && moveToBottom) {
+                    loadMoreTask = new LoadMoreTask(MainFragment.this);
+                    loadMoreTask.execute();
+                }
+            }
+        });
     }
 }
