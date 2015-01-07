@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import io.github.mthli.Tweetin.Activity.MainActivity;
-import io.github.mthli.Tweetin.Custom.ViewUnit;
 import io.github.mthli.Tweetin.Database.DataAction;
 import io.github.mthli.Tweetin.Database.DataRecord;
 import io.github.mthli.Tweetin.Database.DataUnit;
@@ -17,7 +16,6 @@ import io.github.mthli.Tweetin.Tweet.TweetAdapter;
 import io.github.mthli.Tweetin.Tweet.TweetUnit;
 import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 import twitter4j.Paging;
-import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
@@ -311,12 +309,6 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
                 swipeRefreshLayout.setRefreshing(false);
             }
         }
-
-        swipeRefreshLayout.setProgressViewOffset(
-                false,
-                -ViewUnit.getToolbarHeight(context),
-                ViewUnit.getToolbarHeight(context)
-        );
 
         mainFragment.setTaskStatus(Flag.TASK_IDLE);
     }

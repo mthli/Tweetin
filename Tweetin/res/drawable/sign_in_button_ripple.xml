@@ -5,7 +5,13 @@
 
     <item>
 
-        <inset android:drawable="@drawable/round_button_shape" />
+        <shape>
+
+            <solid android:color="@color/white" />
+
+            <corners android:radius="2.5dp" />
+
+        </shape>
 
     </item>
 
