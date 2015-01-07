@@ -314,8 +314,8 @@ public class InitializeTask extends AsyncTask<Void, Integer, Boolean> {
 
         swipeRefreshLayout.setProgressViewOffset(
                 false,
-                -ViewUnit.getTabHeight(context),
-                ViewUnit.getTabHeight(context)
+                -ViewUnit.getToolbarHeight(context),
+                ViewUnit.getToolbarHeight(context)
         );
 
         mainFragment.setTaskStatus(Flag.TASK_IDLE);

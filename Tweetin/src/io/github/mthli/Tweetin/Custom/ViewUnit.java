@@ -2,7 +2,6 @@ package io.github.mthli.Tweetin.Custom;
 
 import android.content.Context;
 import android.util.TypedValue;
-import io.github.mthli.Tweetin.R;
 
 public class ViewUnit {
 
@@ -10,7 +9,7 @@ public class ViewUnit {
         return context.getResources().getDisplayMetrics().density * degree;
     }
 
-    public static int getToolbarSize(Context context) {
+    public static int getToolbarHeight(Context context) {
         TypedValue typedValue = new TypedValue();
 
         if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
@@ -18,9 +17,5 @@ public class ViewUnit {
         }
 
         return 0;
-    }
-
-    public static int getTabHeight(Context context) {
-        return context.getResources().getDimensionPixelSize(R.dimen.tab_height);
     }
 }

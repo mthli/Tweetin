@@ -153,7 +153,7 @@ public class MainFragment extends ProgressFragment {
 
     private void initUI() {
         swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.main_fragment_swipe_container);
-        swipeRefreshLayout.setProgressViewOffset(false, 0, ViewUnit.getTabHeight(getActivity()));
+        swipeRefreshLayout.setProgressViewOffset(false, 0, ViewUnit.getToolbarHeight(getActivity()));
         setSwipeRefreshLayoutTheme();
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

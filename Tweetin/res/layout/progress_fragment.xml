@@ -18,7 +18,6 @@
 -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@color/background">
@@ -31,18 +30,11 @@
                   android:background="@color/background"
                   android:visibility="gone">
 
-        <fr.castorflex.android.circularprogressbar.CircularProgressBar
-                android:id="@android:id/progress"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:indeterminate="true"
-                app:cpb_colors="@array/circular_progress_bar_colors"
-                app:cpb_rotation_speed="1.0"
-                app:cpb_sweep_speed="1.0"
-                app:cpb_stroke_width="2.5dp"
-                app:cpb_min_sweep_angle="24"
-                app:cpb_max_sweep_angle="300">
-        </fr.castorflex.android.circularprogressbar.CircularProgressBar>
+        <ProgressBar android:id="@android:id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/progressBarStyleInverse">
+        </ProgressBar>
 
     </LinearLayout>
 
