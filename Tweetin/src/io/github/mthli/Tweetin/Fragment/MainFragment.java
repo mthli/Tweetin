@@ -1,11 +1,16 @@
 package io.github.mthli.Tweetin.Fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.widget.AbsListView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
 import io.github.mthli.Tweetin.Custom.ViewUnit;
@@ -34,6 +39,9 @@ public class MainFragment extends ProgressFragment {
     public SwipeRefreshLayout getSwipeRefreshLayout() {
         return swipeRefreshLayout;
     }
+
+    private ImageButton fab;
+    private Animator animator;
 
     private TweetAdapter tweetAdapter;
     public TweetAdapter getTweetAdapter() {
@@ -151,6 +159,44 @@ public class MainFragment extends ProgressFragment {
         initializeTask.execute();
     }
 
+    private void showFAB(boolean show) {
+        if ((fragmentFlag != Flag.IN_TIMELINE_FRAGMENT) || (animator != null && animator.isRunning())) {
+            return;
+        }
+
+        if (show && fab.getVisibility() == View.INVISIBLE) {
+            animator = ViewAnimationUtils.createCircularReveal(
+                    fab,
+                    (int) fab.getPivotX(),
+                    (int) fab.getPivotY(),
+                    0,
+                    fab.getWidth()
+            );
+
+            fab.setVisibility(View.VISIBLE);
+            animator.start();
+        } else if (!show && fab.getVisibility() == View.VISIBLE) {
+            animator = ViewAnimationUtils.createCircularReveal(
+                    fab,
+                    (int) fab.getPivotX(),
+                    (int) fab.getPivotY(),
+                    fab.getWidth(),
+                    0
+            );
+
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+
+                    fab.setVisibility(View.INVISIBLE);
+                }
+            });
+
+            animator.start();
+        }
+    }
+
     private void initUI() {
         swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.main_fragment_swipe_container);
         swipeRefreshLayout.setProgressViewOffset(false, 0, ViewUnit.getToolbarHeight(getActivity()));
@@ -162,6 +208,12 @@ public class MainFragment extends ProgressFragment {
                 initializeTask.execute();
             }
         });
+
+        fab = (ImageButton) contentView.findViewById(R.id.main_fragment_fab);
+        if (fragmentFlag == Flag.IN_TIMELINE_FRAGMENT) {
+            fab.setVisibility(View.VISIBLE);
+            ViewCompat.setElevation(fab, ViewUnit.getElevation(getActivity(), 2));
+        }
 
         ListView listView = (ListView) contentView.findViewById(R.id.main_fragment_listview);
 
@@ -191,10 +243,12 @@ public class MainFragment extends ProgressFragment {
                 if (previous < firstVisibleItem) {
                     moveToBottom = true;
                 }
-                if (previous >= firstVisibleItem) { //
+                if (previous > firstVisibleItem) { //
                     moveToBottom = false;
                 }
                 previous = firstVisibleItem;
+
+                showFAB(!moveToBottom);
 
                 if (totalItemCount > 7 && totalItemCount == firstVisibleItem + visibleItemCount && !isSomeTaskRunning() && moveToBottom) {
                     loadMoreTask = new LoadMoreTask(MainFragment.this);

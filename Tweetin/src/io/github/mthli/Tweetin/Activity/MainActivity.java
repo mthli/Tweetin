@@ -84,7 +84,7 @@ public class MainActivity extends FragmentActivity {
         View header = findViewById(R.id.main_header);
         ((RelativeLayout.LayoutParams) header.getLayoutParams()).setMargins(0, getStatusBarHeight(), 0, 0); //
         header.setVisibility(View.VISIBLE);
-        ViewCompat.setElevation(header, 2);
+        ViewCompat.setElevation(header, ViewUnit.getElevation(this, 2));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setActionBar(toolbar);
