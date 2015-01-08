@@ -3,17 +3,16 @@ package io.github.mthli.Tweetin.Fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ImageButton;
-import android.widget.ListView;
+import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
+import io.github.mthli.Tweetin.Activity.PostActivity;
 import io.github.mthli.Tweetin.View.ViewUnit;
 import io.github.mthli.Tweetin.Flag.Flag;
 import io.github.mthli.Tweetin.R;
@@ -216,6 +215,22 @@ public class MainFragment extends ProgressFragment {
         if (fragmentFlag == Flag.IN_TIMELINE_FRAGMENT) {
             fab.setVisibility(View.VISIBLE);
             ViewCompat.setElevation(fab, ViewUnit.getElevation(getActivity(), 2));
+
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), PostActivity.class);
+                    startActivity(intent); //
+                }
+            });
+            fab.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Toast.makeText(getActivity(), R.string.fragment_toast_post_a_new_tweet, Toast.LENGTH_SHORT).show();
+
+                    return true;
+                }
+            });
         }
 
         ListView listView = (ListView) contentView.findViewById(R.id.main_fragment_listview);

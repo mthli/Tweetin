@@ -59,7 +59,12 @@
         <!-- PictureActivity -->
 
         <!-- PostActivity -->
-        <activity android:name=".Activity.PostActivity" />
+        <activity android:name=".Activity.PostActivity"
+                  android:screenOrientation="portrait">
+
+            <!-- Do something with share -->
+
+        </activity>
 
         <!-- DialogueActivity -->
         <activity android:name=".Activity.DetailActivity" />

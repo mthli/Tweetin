@@ -17,8 +17,8 @@
     <string name="fragment_empty_get_data_failed">
         Get data failed.
     </string>
-    <string name="fragment_padding_error">
-        Stack Overflow :P
+    <string name="fragment_toast_post_a_new_tweet">
+        Post a new tweet.
     </string>
 
     <!-- Main -->
@@ -36,6 +36,19 @@
     <string name="main_menu_search">Search</string>
     <string name="main_menu_post">Post</string>
     <string name="main_menu_setting">Setting</string>
+
+    <!-- Post -->
+    <string name="post_label">Post</string>
+    <string name="post_menu_send">Send</string>
+    <string name="post_hint">
+        What\'s on your mind?
+    </string>
+    <string name="post_toast_check_in">
+        Check in
+    </string>
+    <string name="post_toast_picture">
+        Picture
+    </string>
 
     <!-- Search -->
     <string name="search_hint">Search</string>

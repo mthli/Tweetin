@@ -330,8 +330,7 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = MainActivity.this.getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -377,6 +376,6 @@ public class MainActivity extends FragmentActivity {
             }
         }
 
-        return false;
+        return true; //
     }
 }
