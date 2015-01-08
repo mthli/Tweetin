@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
@@ -51,6 +52,11 @@ public class MainFragment extends ProgressFragment {
     private List<Tweet> tweetList = new ArrayList<Tweet>();
     public List<Tweet> getTweetList() {
         return tweetList;
+    }
+
+    private int detailPosition = 0;
+    public int getDetailPosition() {
+        return detailPosition;
     }
 
     private InitializeTask initializeTask;
@@ -217,12 +223,10 @@ public class MainFragment extends ProgressFragment {
 
         ListView listView = (ListView) contentView.findViewById(R.id.main_fragment_listview);
 
-        /* Do something with detail true or false */
         tweetAdapter = new TweetAdapter(
                 getActivity(),
                 R.layout.tweet,
-                tweetList,
-                false
+                tweetList
         );
         listView.setAdapter(tweetAdapter);
         tweetAdapter.notifyDataSetChanged();
@@ -254,6 +258,16 @@ public class MainFragment extends ProgressFragment {
                     loadMoreTask = new LoadMoreTask(MainFragment.this);
                     loadMoreTask.execute();
                 }
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                detailPosition = position;
+
+                tweetList.get(position).setDetail(true);
+                tweetAdapter.notifyDataSetChanged();
             }
         });
     }

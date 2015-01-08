@@ -7,15 +7,16 @@ import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.mthli.Tweetin.Custom.ViewUnit;
 import io.github.mthli.Tweetin.R;
 
 import java.util.List;
@@ -26,8 +27,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
     private int layoutResId;
     private List<Tweet> tweetList;
 
-    private boolean detail;
-
     private RequestQueue requestQueue;
 
     private String useScreenName;
@@ -35,8 +34,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
     public TweetAdapter(
             Activity activity,
             int layoutResId,
-            List<Tweet> tweetList,
-            boolean detail
+            List<Tweet> tweetList
     ) {
         super(activity, layoutResId, tweetList);
 
@@ -44,11 +42,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         this.layoutResId = layoutResId;
         this.tweetList = tweetList;
 
-        this.detail = detail;
-
-        if (detail) {
-            this.requestQueue = Volley.newRequestQueue(activity);
-        }
+        this.requestQueue = Volley.newRequestQueue(activity);
 
         SharedPreferences sharedPreferences = activity.getSharedPreferences(
                 activity.getString(R.string.sp_tweetin),
@@ -73,6 +67,14 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         TextView retweetedBy;
         TextView favorite;
 
+        LinearLayout action;
+        ImageButton replyButton;
+        ImageButton quoteButton;
+        ImageButton retweetButton;
+        ImageButton favoriteButton;
+        ImageButton deleteButton;
+        ImageButton moreButton;
+
         Bitmap bitmap;
     }
 
@@ -82,7 +84,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             View convertView,
             ViewGroup viewGroup
     ) {
-        Holder holder;
+        final Holder holder;
         View view = convertView;
 
         if (view == null) {
@@ -103,12 +105,20 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.retweetedBy = (TextView) view.findViewById(R.id.tweet_info_retweeted_by);
             holder.favorite = (TextView) view.findViewById(R.id.tweet_info_favorite);
 
+            holder.action = (LinearLayout) view.findViewById(R.id.tweet_action);
+            holder.replyButton = (ImageButton) view.findViewById(R.id.tweet_action_reply);
+            holder.quoteButton = (ImageButton) view.findViewById(R.id.tweet_action_quote);
+            holder.retweetButton = (ImageButton) view.findViewById(R.id.tweet_action_retweet);
+            holder.favoriteButton = (ImageButton) view.findViewById(R.id.tweet_action_favorite);
+            holder.deleteButton = (ImageButton) view.findViewById(R.id.tweet_action_delete);
+            holder.moreButton = (ImageButton) view.findViewById(R.id.tweet_action_more);
+
             view.setTag(holder);
         } else {
             holder = (Holder) view.getTag();
         }
 
-        Tweet tweet = tweetList.get(position);
+        final Tweet tweet = tweetList.get(position);
 
         Glide.with(activity)
                 .load(tweet.getAvatarURL())
@@ -140,21 +150,6 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.protect.setVisibility(View.GONE);
         }
 
-        if (detail) {
-            /* Do something */
-        } else {
-            holder.picture.setVisibility(View.GONE);
-        }
-        holder.picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /* Do something */
-            }
-        });
-
-        /* Do something */
-        holder.text.setText(tweet.getText());
-
         if (tweet.getRetweetedByName() != null || tweet.isFavorite()) {
             if (tweet.getRetweetedByName() != null) {
                 holder.retweetedBy.setText(tweet.getRetweetedByName());
@@ -172,9 +167,115 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.info.setVisibility(View.VISIBLE);
         } else {
             holder.info.setVisibility(View.GONE);
-            holder.retweetedBy.setVisibility(View.GONE);
-            holder.favorite.setVisibility(View.GONE);
         }
+
+        if (!tweet.isDetail()) {
+            holder.picture.setVisibility(View.GONE);
+
+            holder.text.setText(tweet.getText());
+
+            holder.action.setVisibility(View.GONE);
+        } else {
+            if (tweet.getPictureURL() != null) {
+                ImageRequest imageRequest = new ImageRequest(
+                        tweet.getPictureURL(),
+                        new Response.Listener<Bitmap>() {
+                            @Override
+                            public void onResponse(Bitmap bitmap) {
+                                holder.bitmap = bitmap; //
+                                holder.picture.setImageBitmap(ViewUnit.fixBitmap(activity, bitmap));
+                                holder.picture.setVisibility(View.VISIBLE);
+                            }
+                        },
+                        0,
+                        0,
+                        Bitmap.Config.ARGB_8888,
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                holder.picture.setVisibility(View.GONE);
+                            }
+                        }
+                );
+                requestQueue.add(imageRequest);
+            } else {
+                holder.picture.setVisibility(View.GONE);
+            }
+
+            if (tweet.isProtect()) {
+                holder.retweetButton.setVisibility(View.GONE);
+            } else if (tweet.getRetweetedByScreenName() != null && tweet.getRetweetedByScreenName().equals(useScreenName)) {
+                holder.retweetButton.setImageResource(R.drawable.ic_action_retweet_active);
+            } else {
+                holder.retweetButton.setImageResource(R.drawable.ic_action_retweet_default);
+            }
+
+            if (tweet.isFavorite()) {
+                holder.favoriteButton.setImageResource(R.drawable.ic_action_favorite_active);
+            } else {
+                holder.favoriteButton.setImageResource(R.drawable.ic_action_favorite_default);
+            }
+
+            if (tweet.getScreenName().equals(useScreenName)) {
+                holder.deleteButton.setVisibility(View.VISIBLE);
+            } else {
+                holder.deleteButton.setVisibility(View.GONE);
+            }
+
+            holder.action.setVisibility(View.VISIBLE);
+
+            /* Do something */
+            holder.text.setText(tweet.getText());
+        }
+
+        holder.picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* Do something */
+            }
+        });
+
+        holder.replyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* Do something */
+            }
+        });
+
+        holder.quoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* Do something */
+            }
+        });
+
+        holder.retweetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* Do something */
+            }
+        });
+
+        holder.favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* Do something */
+            }
+        });
+
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* Do something */
+            }
+        });
+
+        holder.moreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* Do something */
+            }
+        });
 
         return view;
     }

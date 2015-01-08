@@ -103,7 +103,7 @@ public class TweetUnit {
         tweet.setInReplyToStatusId(record.getInReplyToStatusId());
         tweet.setRetweetedByScreenName(record.getRetweetedByScreenName());
 
-        tweet.setBitmap(null);
+        tweet.setDetail(false); //
 
         return tweet;
     }
@@ -210,6 +210,8 @@ public class TweetUnit {
             tweet.setRetweetedByName(me);
             tweet.setRetweetedByScreenName(useScreenName);
         }
+
+        tweet.setDetail(false); //
 
         return tweet;
     }

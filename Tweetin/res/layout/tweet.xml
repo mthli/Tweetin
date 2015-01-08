@@ -19,7 +19,7 @@
                 android:layout_centerInParent="true"
                 android:layout_margin="12dp"
                 app:border_width="0dp"
-                android:background="@drawable/tweet_avatar_ripple">
+                android:background="@drawable/common_ripple">
         </de.hdodenhof.circleimageview.CircleImageView>
 
         <LinearLayout android:orientation="vertical"
@@ -127,7 +127,6 @@
               android:textColor="@color/text">
     </TextView>
 
-    <!-- Do something -->
     <LinearLayout android:id="@+id/tweet_info"
                   android:orientation="horizontal"
                   android:layout_width="wrap_content"
@@ -162,6 +161,75 @@
                   android:ellipsize="end"
                   android:visibility="gone">
         </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/tweet_action"
+                  android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="12dp"
+                  android:layout_marginLeft="12dp"
+                  android:layout_marginRight="12dp"
+                  android:visibility="gone">
+
+        <ImageButton android:id="@+id/tweet_action_reply"
+                     android:contentDescription="@null"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:src="@drawable/ic_action_reply"
+                     android:background="@drawable/common_ripple">
+        </ImageButton>
+
+        <ImageButton android:id="@+id/tweet_action_quote"
+                     android:contentDescription="@null"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:layout_marginStart="12dp"
+                     android:src="@drawable/ic_action_quote"
+                     android:background="@drawable/common_ripple">
+        </ImageButton>
+
+        <ImageButton android:id="@+id/tweet_action_retweet"
+                     android:contentDescription="@null"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:layout_marginStart="12dp"
+                     android:background="@drawable/common_ripple">
+        </ImageButton>
+
+        <ImageButton android:id="@+id/tweet_action_favorite"
+                     android:contentDescription="@null"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:layout_marginStart="12dp"
+                     android:background="@drawable/common_ripple">
+        </ImageButton>
+
+        <ImageButton android:id="@+id/tweet_action_delete"
+                     android:contentDescription="@null"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:layout_marginStart="12dp"
+                     android:src="@drawable/ic_action_delete"
+                     android:background="@drawable/common_ripple"
+                     android:visibility="gone">
+        </ImageButton>
+
+        <ImageButton android:id="@+id/tweet_action_more"
+                     android:contentDescription="@null"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:layout_marginStart="12dp"
+                     android:src="@drawable/ic_action_more"
+                     android:background="@drawable/common_ripple">
+        </ImageButton>
 
     </LinearLayout>
 
