@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Database;
+package io.github.mthli.Tweetin.Data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

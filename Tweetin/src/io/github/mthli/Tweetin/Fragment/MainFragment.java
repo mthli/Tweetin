@@ -14,7 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import com.devspark.progressfragment.ProgressFragment;
-import io.github.mthli.Tweetin.Custom.ViewUnit;
+import io.github.mthli.Tweetin.View.ViewUnit;
 import io.github.mthli.Tweetin.Flag.Flag;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.*;

@@ -1,10 +1,15 @@
 package io.github.mthli.Tweetin.Tweet;
 
 import android.content.Context;
-import io.github.mthli.Tweetin.Database.DataRecord;
+import android.text.SpannableString;
+import android.text.Spanned;
+import com.twitter.Extractor;
+import io.github.mthli.Tweetin.Data.DataRecord;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 import twitter4j.*;
+
+import java.util.List;
 
 public class TweetUnit {
 
@@ -83,6 +88,46 @@ public class TweetUnit {
         }
 
         return text;
+    }
+
+    public SpannableString getSpanFromTweet(Tweet tweet) {
+        String text = tweet.getText();
+
+        Extractor extractor = new Extractor();
+        List<String> urlList = extractor.extractURLs(text);
+        List<String> userList = extractor.extractMentionedScreennames(text);
+        List<String> tagList = extractor.extractHashtags(text);
+
+        SpannableString span = new SpannableString(text);
+
+        for (String url : urlList) {
+            span.setSpan(
+                    new TweetURLSpan(context, url),
+                    text.indexOf(url),
+                    text.indexOf(url) + url.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        }
+
+        for (String user : userList) {
+            span.setSpan(
+                    new TweetUserSpan(context, user),
+                    text.indexOf(user),
+                    text.indexOf(user) + user.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        }
+
+        for (String tag : tagList) {
+            span.setSpan(
+                    new TweetTagSpan(context, tag),
+                    text.indexOf(tag),
+                    text.indexOf(tag) + tag.length(),
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        }
+
+        return span;
     }
 
     public Tweet getTweetFromDataRecord(DataRecord record) {
@@ -215,4 +260,5 @@ public class TweetUnit {
 
         return tweet;
     }
+
 }

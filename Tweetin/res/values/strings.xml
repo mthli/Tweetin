@@ -87,6 +87,12 @@
     <string name="tweet_more_share">
         Share
     </string>
+    <string name="tweet_toast_reply">Reply</string>
+    <string name="tweet_toast_quote">Quote</string>
+    <string name="tweet_toast_retweet">Retweet</string>
+    <string name="tweet_toast_favorite">Favorite</string>
+    <string name="tweet_toast_delete">Delete</string>
+    <string name="tweet_toast_more">More</string>
     <string name="tweet_toast_get_picture_failed">
         Get picture failed.
     </string>

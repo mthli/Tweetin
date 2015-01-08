@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Custom;
+package io.github.mthli.Tweetin.Dialog;
 
 import android.app.Activity;
 import android.content.Context;

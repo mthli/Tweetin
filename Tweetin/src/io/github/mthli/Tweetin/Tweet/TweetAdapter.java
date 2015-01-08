@@ -17,8 +17,8 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.github.mthli.Tweetin.Custom.DialogUnit;
-import io.github.mthli.Tweetin.Custom.ViewUnit;
+import io.github.mthli.Tweetin.Dialog.DialogUnit;
+import io.github.mthli.Tweetin.View.ViewUnit;
 import io.github.mthli.Tweetin.R;
 
 import java.util.List;
@@ -32,6 +32,8 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
     private RequestQueue requestQueue;
 
     private String useScreenName;
+
+    private TweetUnit tweetUnit;
 
     public TweetAdapter(
             Activity activity,
@@ -50,10 +52,12 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                 activity.getString(R.string.sp_tweetin),
                 Context.MODE_PRIVATE
         );
-        useScreenName = sharedPreferences.getString(
+        this.useScreenName = sharedPreferences.getString(
                 activity.getString(R.string.sp_use_screen_name),
                 null
         );
+
+        this.tweetUnit = new TweetUnit(activity);
     }
 
     @Override
@@ -197,12 +201,16 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                 holder.picture.setVisibility(View.GONE);
             }
 
+            holder.text.setText(tweetUnit.getSpanFromTweet(tweet));
+
             if (tweet.isProtect() || tweet.getScreenName().equals(useScreenName)) {
                 holder.retweetButton.setVisibility(View.GONE);
             } else if (tweet.getRetweetedByScreenName() != null && tweet.getRetweetedByScreenName().equals(useScreenName)) {
                 holder.retweetButton.setImageResource(R.drawable.ic_action_retweet_active);
+                holder.retweetButton.setVisibility(View.VISIBLE);
             } else {
                 holder.retweetButton.setImageResource(R.drawable.ic_action_retweet_default);
+                holder.retweetButton.setVisibility(View.VISIBLE);
             }
 
             if (tweet.isFavorite()) {
@@ -219,22 +227,20 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 
             holder.action.setVisibility(View.VISIBLE);
             holder.action.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fade_in));
-
-            /* Do something */
-            holder.text.setText(tweet.getText());
         }
-
-        holder.picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /* Do something */
-            }
-        });
 
         holder.replyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /* Do something */
+            }
+        });
+        holder.replyButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(activity, R.string.tweet_toast_reply, Toast.LENGTH_SHORT).show();
+
+                return true;
             }
         });
 
@@ -244,11 +250,27 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                 /* Do something */
             }
         });
+        holder.quoteButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(activity, R.string.tweet_toast_quote, Toast.LENGTH_SHORT).show();
+
+                return true;
+            }
+        });
 
         holder.retweetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 /* Do something */
+            }
+        });
+        holder.retweetButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(activity, R.string.tweet_toast_retweet, Toast.LENGTH_SHORT).show();
+
+                return true;
             }
         });
 
@@ -258,6 +280,14 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                 /* Do something */
             }
         });
+        holder.favoriteButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(activity, R.string.tweet_toast_favorite, Toast.LENGTH_SHORT).show();
+
+                return true;
+            }
+        });
 
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,11 +295,27 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                 /* Do something */
             }
         });
+        holder.deleteButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(activity, R.string.tweet_toast_delete, Toast.LENGTH_SHORT).show();
+
+                return true;
+            }
+        });
 
         holder.moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogUnit.show(activity, holder, tweet);
+            }
+        });
+        holder.moreButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(activity, R.string.tweet_toast_more, Toast.LENGTH_SHORT).show();
+
+                return true;
             }
         });
 

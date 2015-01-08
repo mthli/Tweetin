@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Custom;
+package io.github.mthli.Tweetin.Dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -43,5 +43,17 @@ public class DialogUnit {
                 /* Do something */
             }
         });
+    }
+
+    public static void detail(Activity activity, Tweet tweet) {
+
+    }
+
+    public static void savePicture(Activity activity, Holder holder) {
+
+    }
+
+    public static void share(Activity activity, Tweet tweet) {
+
     }
 }

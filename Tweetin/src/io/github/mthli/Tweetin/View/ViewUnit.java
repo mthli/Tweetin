@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Custom;
+package io.github.mthli.Tweetin.View;
 
 import android.content.Context;
 import android.graphics.Bitmap;

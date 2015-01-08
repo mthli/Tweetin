@@ -12,7 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
-import io.github.mthli.Tweetin.Custom.ViewUnit;
+import io.github.mthli.Tweetin.View.ViewUnit;
 import io.github.mthli.Tweetin.Flag.Flag;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.GetAccessTokenTask;

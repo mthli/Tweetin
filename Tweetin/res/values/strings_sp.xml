@@ -39,9 +39,7 @@
     </string>
 
     <!-- CustomTheme -->
-    <string name="sp_color">
-        SP_COLOR
-    </string>
+    <string name="sp_color">SP_COLOR</string>
     <integer name="sp_color_blue">0</integer>
     <integer name="sp_color_orange">1</integer>
     <integer name="sp_color_pink">2</integer>
