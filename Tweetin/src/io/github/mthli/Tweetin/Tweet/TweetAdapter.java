@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -183,8 +184,10 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                             @Override
                             public void onResponse(Bitmap bitmap) {
                                 holder.bitmap = bitmap; //
+
                                 holder.picture.setImageBitmap(ViewUnit.fixBitmap(activity, bitmap));
                                 holder.picture.setVisibility(View.VISIBLE);
+                                holder.picture.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fade_in));
                             }
                         },
                         0,
@@ -202,7 +205,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                 holder.picture.setVisibility(View.GONE);
             }
 
-            if (tweet.isProtect()) {
+            if (tweet.isProtect() || tweet.getScreenName().equals(useScreenName)) {
                 holder.retweetButton.setVisibility(View.GONE);
             } else if (tweet.getRetweetedByScreenName() != null && tweet.getRetweetedByScreenName().equals(useScreenName)) {
                 holder.retweetButton.setImageResource(R.drawable.ic_action_retweet_active);
@@ -223,6 +226,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             }
 
             holder.action.setVisibility(View.VISIBLE);
+            holder.action.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fade_in));
 
             /* Do something */
             holder.text.setText(tweet.getText());

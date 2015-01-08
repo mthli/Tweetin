@@ -54,11 +54,6 @@ public class MainFragment extends ProgressFragment {
         return tweetList;
     }
 
-    private int detailPosition = 0;
-    public int getDetailPosition() {
-        return detailPosition;
-    }
-
     private InitializeTask initializeTask;
     private LoadMoreTask loadMoreTask;
     private RetweetTask retweetTask;
@@ -203,6 +198,8 @@ public class MainFragment extends ProgressFragment {
         }
     }
 
+    private int detailPosition = 0;
+
     private void initUI() {
         swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.main_fragment_swipe_container);
         swipeRefreshLayout.setProgressViewOffset(false, 0, ViewUnit.getToolbarHeight(getActivity()));
@@ -237,9 +234,15 @@ public class MainFragment extends ProgressFragment {
             private boolean moveToBottom = false;
             private int previous = 0;
 
+            private int first = 0;
+            private int count = 0;
+
             @Override
             public void onScrollStateChanged(AbsListView absListView, int scrollState) {
-                /* Do nothing */
+                if (scrollState == SCROLL_STATE_IDLE && (detailPosition < first || detailPosition > first + count)) {
+                    tweetList.get(detailPosition).setDetail(false);
+                    tweetAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -251,6 +254,9 @@ public class MainFragment extends ProgressFragment {
                     moveToBottom = false;
                 }
                 previous = firstVisibleItem;
+
+                first = firstVisibleItem;
+                count = visibleItemCount;
 
                 showFAB(!moveToBottom);
 
@@ -264,10 +270,15 @@ public class MainFragment extends ProgressFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                detailPosition = position;
+                if (tweetList.get(detailPosition).isDetail() && position != detailPosition) {
+                    tweetList.get(detailPosition).setDetail(false);
+                    tweetAdapter.notifyDataSetChanged();
+                } else if (!tweetList.get(position).isDetail()) {
+                    detailPosition = position;
 
-                tweetList.get(position).setDetail(true);
-                tweetAdapter.notifyDataSetChanged();
+                    tweetList.get(position).setDetail(true);
+                    tweetAdapter.notifyDataSetChanged();
+                }
             }
         });
     }
