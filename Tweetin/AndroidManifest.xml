@@ -56,6 +56,15 @@
 
         </activity>
 
+        <!-- PictureActivity -->
+        <activity android:name=".Activity.PictureActivity" />
+
+        <!-- PostActivity -->
+        <activity android:name=".Activity.PostActivity" />
+
+        <!-- DialogueActivity -->
+        <activity android:name=".Activity.DetailActivity" />
+
         <!-- SettingActivity -->
         <activity android:name=".Activity.SettingActivity"
                   android:screenOrientation="portrait">

@@ -273,6 +273,11 @@ public class MainFragment extends ProgressFragment {
                 if (tweetList.get(detailPosition).isDetail() && position != detailPosition) {
                     tweetList.get(detailPosition).setDetail(false);
                     tweetAdapter.notifyDataSetChanged();
+
+                    detailPosition = position;
+
+                    tweetList.get(position).setDetail(true);
+                    tweetAdapter.notifyDataSetChanged();
                 } else if (!tweetList.get(position).isDetail()) {
                     detailPosition = position;
 

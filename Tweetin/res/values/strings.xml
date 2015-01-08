@@ -70,9 +70,6 @@
     <!-- Tweet -->
     <string name="tweet_info_retweeted_by_me">Me</string>
     <string name="tweet_info_favorite">Favorite</string>
-    <string name="tweet_date_format">
-        HH:mm MM.dd
-    </string>
     <string name="tweet_just_now">
         Just now
     </string>
@@ -81,5 +78,17 @@
         <item>.png</item>
     </string-array>
     <string name="tweet_media_type">photo</string>
+    <string name="tweet_more_detail">
+        Detail
+    </string>
+    <string name="tweet_more_save_picture">
+        Save picture
+    </string>
+    <string name="tweet_more_share">
+        Share
+    </string>
+    <string name="tweet_toast_get_picture_failed">
+        Get picture failed.
+    </string>
 
 </resources>

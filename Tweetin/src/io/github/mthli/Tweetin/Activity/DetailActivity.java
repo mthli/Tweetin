@@ -1,4 +1,6 @@
 package io.github.mthli.Tweetin.Activity;
 
-public class DetailActivity {
+import android.app.Activity;
+
+public class DetailActivity extends Activity {
 }

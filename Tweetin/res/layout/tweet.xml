@@ -106,6 +106,15 @@
 
     </RelativeLayout>
 
+    <ProgressBar android:id="@+id/tweet_loading"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginBottom="12dp"
+                 android:layout_gravity="center"
+                 style="?android:attr/progressBarStyleSmallInverse"
+                 android:visibility="gone">
+    </ProgressBar>
+
     <ImageView android:id="@+id/tweet_picture"
                android:contentDescription="@null"
                android:layout_width="match_parent"

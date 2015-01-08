@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.mthli.Tweetin.Custom.DialogUnit;
 import io.github.mthli.Tweetin.Custom.ViewUnit;
 import io.github.mthli.Tweetin.R;
 
@@ -55,33 +56,9 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         );
     }
 
-    private class Holder {
-        CircleImageView avatar;
-        TextView name;
-        TextView screenName;
-        RelativeTimeTextView createdAt;
-        TextView checkIn;
-        TextView protect;
-        ImageView picture;
-        TextView text;
-        LinearLayout info;
-        TextView retweetedBy;
-        TextView favorite;
-
-        LinearLayout action;
-        ImageButton replyButton;
-        ImageButton quoteButton;
-        ImageButton retweetButton;
-        ImageButton favoriteButton;
-        ImageButton deleteButton;
-        ImageButton moreButton;
-
-        Bitmap bitmap;
-    }
-
     @Override
     public View getView(
-            int position,
+            final int position,
             View convertView,
             ViewGroup viewGroup
     ) {
@@ -100,6 +77,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.createdAt = (RelativeTimeTextView) view.findViewById(R.id.tweet_created_at);
             holder.checkIn = (TextView) view.findViewById(R.id.tweet_check_in);
             holder.protect = (TextView) view.findViewById(R.id.tweet_protect);
+            holder.loading = (ProgressBar) view.findViewById(R.id.tweet_loading);
             holder.picture = (ImageView) view.findViewById(R.id.tweet_picture);
             holder.text = (TextView) view.findViewById(R.id.tweet_text);
             holder.info = (LinearLayout) view.findViewById(R.id.tweet_info);
@@ -171,6 +149,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         }
 
         if (!tweet.isDetail()) {
+            holder.loading.setVisibility(View.GONE);
             holder.picture.setVisibility(View.GONE);
 
             holder.text.setText(tweet.getText());
@@ -178,14 +157,23 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.action.setVisibility(View.GONE);
         } else {
             if (tweet.getPictureURL() != null) {
+                holder.loading.setVisibility(View.VISIBLE);
+
                 ImageRequest imageRequest = new ImageRequest(
                         tweet.getPictureURL(),
                         new Response.Listener<Bitmap>() {
                             @Override
                             public void onResponse(Bitmap bitmap) {
+                                if (!tweet.isDetail()) {
+                                    return;
+                                }
+
                                 holder.bitmap = bitmap; //
 
                                 holder.picture.setImageBitmap(ViewUnit.fixBitmap(activity, bitmap));
+
+                                holder.loading.setVisibility(View.GONE);
+
                                 holder.picture.setVisibility(View.VISIBLE);
                                 holder.picture.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fade_in));
                             }
@@ -196,12 +184,16 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
+                                holder.loading.setVisibility(View.GONE);
                                 holder.picture.setVisibility(View.GONE);
+
+                                Toast.makeText(activity, R.string.tweet_toast_get_picture_failed, Toast.LENGTH_SHORT).show();
                             }
                         }
                 );
                 requestQueue.add(imageRequest);
             } else {
+                holder.loading.setVisibility(View.GONE);
                 holder.picture.setVisibility(View.GONE);
             }
 
@@ -277,7 +269,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         holder.moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* Do something */
+                DialogUnit.show(activity, holder, tweet);
             }
         });
 
