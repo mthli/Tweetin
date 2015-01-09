@@ -58,6 +58,7 @@
 
         <!-- PictureActivity -->
         <activity android:name=".Activity.PictureActivity"
+                  android:theme="@style/PictureActivityTheme"
                   android:screenOrientation="portrait">
         </activity>
 

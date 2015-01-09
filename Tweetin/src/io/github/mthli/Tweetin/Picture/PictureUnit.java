@@ -1,8 +1,12 @@
 package io.github.mthli.Tweetin.Picture;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.net.Uri;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
@@ -33,6 +37,38 @@ public class PictureUnit {
         String[] array = pictureURL.split("/");
 
         return array[array.length - 1];
+    }
+
+    private static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+        Cursor cursor = null;
+
+        String column = "_data";
+
+        String[] projection = {column};
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                return cursor.getString(cursor.getColumnIndexOrThrow(column));
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return null;
+    }
+
+    public static String getPicturePath(Context context, Uri pictureUri) {
+        Uri contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+
+        String selection = "_id=?";
+
+        String[] selectionArgs = new String[]{DocumentsContract.getDocumentId(pictureUri).split(":")[1]};
+
+        return getDataColumn(context, contentUri, selection, selectionArgs);
     }
 
     public static void savePicture(Context context, Bitmap bitmap, String pcitureName) {

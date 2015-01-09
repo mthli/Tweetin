@@ -67,9 +67,7 @@
     <string name="post_toast_check_in">
         Check in
     </string>
-    <string name="post_toast_picture">
-        Picture
-    </string>
+    <string name="post_toast_picture">Picture</string>
 
     <!-- Search -->
     <string name="search_hint">Search</string>
