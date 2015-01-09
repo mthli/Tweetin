@@ -12,7 +12,6 @@ import twitter4j.*;
 import java.util.List;
 
 public class TweetUnit {
-
     private Context context;
 
     private String useScreenName;
@@ -40,7 +39,7 @@ public class TweetUnit {
         }
 
         for (MediaEntity mediaEntity : mediaEntities) {
-            if (mediaEntity.getType().equals(context.getString(R.string.tweet_media_type))) {
+            if (mediaEntity.getType().equals(context.getString(R.string.picture_media_type))) {
                 return mediaEntity.getMediaURL();
             }
         }

@@ -167,7 +167,7 @@ public class ProgressFragment extends Fragment {
 
     /**
      * Control whether the content is being displayed.  You can make it not
-     * displayed if you are waiting for the initial data to show in it.  During
+     * displayed if you are waiting for the initial data to showContextDialog in it.  During
      * this time an indeterminant progress indicator will be shown instead.
      *
      * @param shown If true, the content view is shown; if false, the progress
@@ -192,7 +192,7 @@ public class ProgressFragment extends Fragment {
 
     /**
      * Control whether the content is being displayed.  You can make it not
-     * displayed if you are waiting for the initial data to show in it.  During
+     * displayed if you are waiting for the initial data to showContextDialog in it.  During
      * this time an indeterminant progress indicator will be shown instead.
      *
      * @param shown   If true, the content view is shown; if false, the progress

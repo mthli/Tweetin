@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
-import io.github.mthli.Tweetin.Flag.Flag;
-import io.github.mthli.Tweetin.Fragment.MainFragment;
+import io.github.mthli.Tweetin.Flag.FlagUnit;
+import io.github.mthli.Tweetin.Fragment.BaseFragment;
 import io.github.mthli.Tweetin.R;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
@@ -13,7 +13,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     private String[] titles;
 
-    private SparseArray<MainFragment> sparseArray;
+    private SparseArray<BaseFragment> sparseArray;
 
     public MainPagerAdapter(
             MainActivity mainActivity
@@ -24,7 +24,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
         this.titles = mainActivity.getResources().getStringArray(R.array.tabs);
 
-        this.sparseArray = new SparseArray<MainFragment>();
+        this.sparseArray = new SparseArray<BaseFragment>();
     }
 
     @Override
@@ -39,33 +39,33 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        MainFragment mainFragment = new MainFragment();
+        BaseFragment baseFragment = new BaseFragment();
 
         Bundle bundle = new Bundle();
 
         switch (position) {
-            case Flag.IN_TIMELINE_FRAGMENT:
-                bundle.putInt(mainActivity.getString(R.string.bundle_fragment_flag), Flag.IN_TIMELINE_FRAGMENT);
+            case FlagUnit.IN_TIMELINE_FRAGMENT:
+                bundle.putInt(mainActivity.getString(R.string.bundle_fragment_flag), FlagUnit.IN_TIMELINE_FRAGMENT);
                 break;
-            case Flag.IN_MENTION_FRAGMENT:
-                bundle.putInt(mainActivity.getString(R.string.bundle_fragment_flag), Flag.IN_MENTION_FRAGMENT);
+            case FlagUnit.IN_MENTION_FRAGMENT:
+                bundle.putInt(mainActivity.getString(R.string.bundle_fragment_flag), FlagUnit.IN_MENTION_FRAGMENT);
                 break;
-            case Flag.IN_FAVORITE_FRAGMENT:
-                bundle.putInt(mainActivity.getString(R.string.bundle_fragment_flag), Flag.IN_FAVORITE_FRAGMENT);
+            case FlagUnit.IN_FAVORITE_FRAGMENT:
+                bundle.putInt(mainActivity.getString(R.string.bundle_fragment_flag), FlagUnit.IN_FAVORITE_FRAGMENT);
                 break;
             default:
-                bundle.putInt(mainActivity.getString(R.string.bundle_fragment_flag), Flag.IN_TIMELINE_FRAGMENT);
+                bundle.putInt(mainActivity.getString(R.string.bundle_fragment_flag), FlagUnit.IN_TIMELINE_FRAGMENT);
                 break;
         }
 
-        mainFragment.setArguments(bundle);
+        baseFragment.setArguments(bundle);
 
-        sparseArray.put(position, mainFragment);
+        sparseArray.put(position, baseFragment);
 
-        return mainFragment;
+        return baseFragment;
     }
 
-    public MainFragment getFragmentFromPosition(int position) {
+    public BaseFragment getFragmentFromPosition(int position) {
         return sparseArray.get(position);
     }
 }

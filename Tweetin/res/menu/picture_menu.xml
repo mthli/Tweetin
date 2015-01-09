@@ -2,10 +2,16 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:id="@+id/picture_menu_share"
+          android:title="@string/picture_menu_share"
+          android:icon="@drawable/ic_action_share"
+          android:showAsAction="ifRoom">
+    </item>
+
     <item android:id="@+id/picture_menu_save"
           android:title="@string/picture_menu_save"
           android:icon="@drawable/ic_action_save"
-          android:showAsAction="always">
+          android:showAsAction="ifRoom">
     </item>
 
 </menu>

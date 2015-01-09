@@ -26,7 +26,6 @@ import java.io.FileOutputStream;
 import java.util.List;
 
 public class TweetAdapter extends ArrayAdapter<Tweet> {
-
     private Activity activity;
     private int layoutResId;
     private List<Tweet> tweetList;
@@ -342,7 +341,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         holder.moreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogUnit.show(activity, holder, tweet);
+                DialogUnit.showContextDialog(activity, holder, tweet);
             }
         });
         holder.moreButton.setOnLongClickListener(new View.OnLongClickListener() {

@@ -3,8 +3,8 @@ package io.github.mthli.Tweetin.Task;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
-import io.github.mthli.Tweetin.Flag.Flag;
-import io.github.mthli.Tweetin.Fragment.MainFragment;
+import io.github.mthli.Tweetin.Flag.FlagUnit;
+import io.github.mthli.Tweetin.Fragment.BaseFragment;
 import io.github.mthli.Tweetin.Tweet.Tweet;
 import io.github.mthli.Tweetin.Tweet.TweetAdapter;
 import io.github.mthli.Tweetin.Tweet.TweetUnit;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoadMoreTask extends AsyncTask<Void, Integer, Boolean> {
-    private MainFragment mainFragment;
+    private BaseFragment baseFragment;
     private int fragmentFlag;
     private Context context;
 
@@ -27,26 +27,26 @@ public class LoadMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public LoadMoreTask(MainFragment mainFragment) {
-        this.mainFragment = mainFragment;
+    public LoadMoreTask(BaseFragment baseFragment) {
+        this.baseFragment = baseFragment;
     }
 
     @Override
     protected void onPreExecute() {
-        if (mainFragment.getTaskStatus() == Flag.TASK_RUNNING) {
+        if (baseFragment.getTaskStatus() == FlagUnit.TASK_RUNNING) {
             onCancelled();
         } else {
-            mainFragment.setTaskStatus(Flag.TASK_RUNNING);
+            baseFragment.setTaskStatus(FlagUnit.TASK_RUNNING);
         }
 
-        fragmentFlag = mainFragment.getFragmentFlag();
-        context = mainFragment.getActivity();
+        fragmentFlag = baseFragment.getFragmentFlag();
+        context = baseFragment.getActivity();
 
-        tweetAdapter = mainFragment.getTweetAdapter();
-        tweetList = mainFragment.getTweetList();
+        tweetAdapter = baseFragment.getTweetAdapter();
+        tweetList = baseFragment.getTweetList();
         tweetUnit = new TweetUnit(context);
 
-        swipeRefreshLayout = mainFragment.getSwipeRefreshLayout();
+        swipeRefreshLayout = baseFragment.getSwipeRefreshLayout();
         if (!swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(true);
         }
@@ -59,11 +59,11 @@ public class LoadMoreTask extends AsyncTask<Void, Integer, Boolean> {
         Paging paging = new Paging(nextPage, 40);
 
         switch (fragmentFlag) {
-            case Flag.IN_TIMELINE_FRAGMENT:
+            case FlagUnit.IN_TIMELINE_FRAGMENT:
                 return twitter.getHomeTimeline(paging);
-            case Flag.IN_MENTION_FRAGMENT:
+            case FlagUnit.IN_MENTION_FRAGMENT:
                 return twitter.getMentionsTimeline(paging);
-            case Flag.IN_FAVORITE_FRAGMENT:
+            case FlagUnit.IN_FAVORITE_FRAGMENT:
                 return twitter.getFavorites(paging);
             default:
                 return new ArrayList<twitter4j.Status>();
@@ -107,6 +107,6 @@ public class LoadMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
         swipeRefreshLayout.setRefreshing(false);
 
-        mainFragment.setTaskStatus(Flag.TASK_IDLE);
+        baseFragment.setTaskStatus(FlagUnit.TASK_IDLE);
     }
 }

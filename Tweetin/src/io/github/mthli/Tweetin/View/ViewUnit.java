@@ -3,8 +3,9 @@ package io.github.mthli.Tweetin.View;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.TypedValue;
-import io.github.mthli.Tweetin.Flag.Flag;
+import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.R;
 
 public class ViewUnit {
@@ -20,23 +21,86 @@ public class ViewUnit {
         );
 
         switch (spColorValue) {
-            case Flag.COLOR_BLUE:
+            case FlagUnit.COLOR_BLUE:
                 activity.setTheme(R.style.BaseAppTheme_Blue);
                 break;
-            case Flag.COLOR_ORANGE:
+            case FlagUnit.COLOR_ORANGE:
                 activity.setTheme(R.style.BaseAppTheme_Orange);
                 break;
-            case Flag.COLOR_PINK:
+            case FlagUnit.COLOR_PINK:
                 activity.setTheme(R.style.BaseAppTheme_Pink);
                 break;
-            case Flag.COLOR_PURPLE:
+            case FlagUnit.COLOR_PURPLE:
                 activity.setTheme(R.style.BaseAppTheme_Purple);
                 break;
-            case Flag.COLOR_TEAL:
+            case FlagUnit.COLOR_TEAL:
                 activity.setTheme(R.style.BaseAppTheme_Teal);
                 break;
             default:
                 activity.setTheme(R.style.BaseAppTheme_Blue);
+                break;
+        }
+    }
+
+    public static void setSwipeRefreshLayoutTheme(Context context, SwipeRefreshLayout swipeRefreshLayout) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.sp_tweetin),
+                Context.MODE_PRIVATE
+        );
+
+        int spColorValue = sharedPreferences.getInt(
+                context.getString(R.string.sp_color),
+                0
+        );
+
+        switch (spColorValue) {
+            case FlagUnit.COLOR_BLUE:
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.blue_700,
+                        R.color.blue_500,
+                        R.color.blue_700,
+                        R.color.blue_500
+                );
+                break;
+            case FlagUnit.COLOR_ORANGE:
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.orange_700,
+                        R.color.orange_500,
+                        R.color.orange_700,
+                        R.color.orange_500
+                );
+                break;
+            case FlagUnit.COLOR_PINK:
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.pink_700,
+                        R.color.pink_500,
+                        R.color.pink_700,
+                        R.color.pink_500
+                );
+                break;
+            case FlagUnit.COLOR_PURPLE:
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.purple_700,
+                        R.color.purple_500,
+                        R.color.purple_700,
+                        R.color.purple_500
+                );
+                break;
+            case FlagUnit.COLOR_TEAL:
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.teal_700,
+                        R.color.teal_500,
+                        R.color.teal_700,
+                        R.color.teal_500
+                );
+                break;
+            default:
+                swipeRefreshLayout.setColorSchemeResources(
+                        R.color.blue_700,
+                        R.color.blue_500,
+                        R.color.blue_700,
+                        R.color.blue_500
+                );
                 break;
         }
     }
@@ -66,4 +130,5 @@ public class ViewUnit {
 
         return 0;
     }
+
 }

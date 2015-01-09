@@ -1,7 +1,6 @@
 package io.github.mthli.Tweetin.Tweet;
 
 public class Tweet {
-
     private String avatarURL;
     private String name;
     private String screenName;

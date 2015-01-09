@@ -2,9 +2,7 @@ package io.github.mthli.Tweetin.Fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,7 +12,7 @@ import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
 import io.github.mthli.Tweetin.Activity.PostActivity;
 import io.github.mthli.Tweetin.View.ViewUnit;
-import io.github.mthli.Tweetin.Flag.Flag;
+import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.*;
 import io.github.mthli.Tweetin.Tweet.Tweet;
@@ -23,15 +21,11 @@ import io.github.mthli.Tweetin.Tweet.TweetAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFragment extends ProgressFragment {
-
+public class BaseFragment extends ProgressFragment {
     private int fragmentFlag;
     public int getFragmentFlag() {
         return fragmentFlag;
     }
-
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
 
     private View contentView;
 
@@ -53,7 +47,7 @@ public class MainFragment extends ProgressFragment {
         return tweetList;
     }
 
-    private InitializeTask initializeTask;
+    private LoadFirstTask loadFirstTask;
     private LoadMoreTask loadMoreTask;
     private RetweetTask retweetTask;
     private FavoriteTask favoriteTask;
@@ -69,83 +63,22 @@ public class MainFragment extends ProgressFragment {
         this.taskStatus = taskStatus;
     }
     public boolean isSomeTaskRunning() {
-        if (taskStatus == Flag.TASK_RUNNING) {
+        if (taskStatus == FlagUnit.TASK_RUNNING) {
             return true;
         }
 
         return false;
     }
-
-    private void setSwipeRefreshLayoutTheme() {
-        int spColorValue = sharedPreferences.getInt(
-                getString(R.string.sp_color),
-                0
-        );
-
-        switch (spColorValue) {
-            case Flag.COLOR_BLUE:
-                swipeRefreshLayout.setColorSchemeResources(
-                        R.color.blue_700,
-                        R.color.blue_500,
-                        R.color.blue_700,
-                        R.color.blue_500
-                );
-                break;
-            case Flag.COLOR_ORANGE:
-                swipeRefreshLayout.setColorSchemeResources(
-                        R.color.orange_700,
-                        R.color.orange_500,
-                        R.color.orange_700,
-                        R.color.orange_500
-                );
-                break;
-            case Flag.COLOR_PINK:
-                swipeRefreshLayout.setColorSchemeResources(
-                        R.color.pink_700,
-                        R.color.pink_500,
-                        R.color.pink_700,
-                        R.color.pink_500
-                );
-                break;
-            case Flag.COLOR_PURPLE:
-                swipeRefreshLayout.setColorSchemeResources(
-                        R.color.purple_700,
-                        R.color.purple_500,
-                        R.color.purple_700,
-                        R.color.purple_500
-                );
-                break;
-            case Flag.COLOR_TEAL:
-                swipeRefreshLayout.setColorSchemeResources(
-                        R.color.teal_700,
-                        R.color.teal_500,
-                        R.color.teal_700,
-                        R.color.teal_500
-                );
-                break;
-            default:
-                swipeRefreshLayout.setColorSchemeResources(
-                        R.color.blue_700,
-                        R.color.blue_500,
-                        R.color.blue_700,
-                        R.color.blue_500
-                );
-                break;
-        }
+    public void cancelAllTask() {
+        /* Do something */
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         fragmentFlag = getArguments().getInt(
                 getString(R.string.bundle_fragment_flag),
-                Flag.IN_TIMELINE_FRAGMENT
+                FlagUnit.IN_TIMELINE_FRAGMENT
         );
-
-        sharedPreferences = getActivity().getSharedPreferences(
-                getString(R.string.sp_tweetin),
-                Context.MODE_PRIVATE
-        );
-        editor = sharedPreferences.edit();
 
         super.onActivityCreated(savedInstanceState);
         setContentView(R.layout.main_fragment);
@@ -155,12 +88,12 @@ public class MainFragment extends ProgressFragment {
 
         initUI();
 
-        initializeTask = new InitializeTask(this, false);
-        initializeTask.execute();
+        loadFirstTask = new LoadFirstTask(this, false);
+        loadFirstTask.execute();
     }
 
     private void showFAB(boolean show) {
-        if ((fragmentFlag != Flag.IN_TIMELINE_FRAGMENT) || (animator != null && animator.isRunning())) {
+        if ((fragmentFlag != FlagUnit.IN_TIMELINE_FRAGMENT) || (animator != null && animator.isRunning())) {
             return;
         }
 
@@ -202,17 +135,17 @@ public class MainFragment extends ProgressFragment {
     private void initUI() {
         swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.main_fragment_swipe_container);
         swipeRefreshLayout.setProgressViewOffset(false, 0, ViewUnit.getToolbarHeight(getActivity()));
-        setSwipeRefreshLayoutTheme();
+        ViewUnit.setSwipeRefreshLayoutTheme(getActivity(), swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initializeTask = new InitializeTask(MainFragment.this, true);
-                initializeTask.execute();
+                loadFirstTask = new LoadFirstTask(BaseFragment.this, true);
+                loadFirstTask.execute();
             }
         });
 
         fab = (ImageButton) contentView.findViewById(R.id.main_fragment_fab);
-        if (fragmentFlag == Flag.IN_TIMELINE_FRAGMENT) {
+        if (fragmentFlag == FlagUnit.IN_TIMELINE_FRAGMENT) {
             fab.setVisibility(View.VISIBLE);
             ViewCompat.setElevation(fab, ViewUnit.getElevation(getActivity(), 2));
 
@@ -276,7 +209,7 @@ public class MainFragment extends ProgressFragment {
                 showFAB(!moveToBottom);
 
                 if (totalItemCount > 7 && totalItemCount == firstVisibleItem + visibleItemCount && !isSomeTaskRunning() && moveToBottom) {
-                    loadMoreTask = new LoadMoreTask(MainFragment.this);
+                    loadMoreTask = new LoadMoreTask(BaseFragment.this);
                     loadMoreTask.execute();
                 }
             }

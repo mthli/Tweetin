@@ -8,7 +8,6 @@ import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
 public class TwitterUnit {
-
     public static Twitter getTwitterFromInstance() {
         TwitterFactory twitterFactory = new TwitterFactory();
 
@@ -52,5 +51,4 @@ public class TwitterUnit {
                 null
         );
     }
-
 }

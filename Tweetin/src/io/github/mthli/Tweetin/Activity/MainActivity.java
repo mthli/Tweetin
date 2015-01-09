@@ -12,7 +12,7 @@ import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import io.github.mthli.Tweetin.View.ViewUnit;
-import io.github.mthli.Tweetin.Flag.Flag;
+import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.GetAccessTokenTask;
 
@@ -124,7 +124,7 @@ public class MainActivity extends FragmentActivity {
                 }
                 tabIconList.get(Integer.valueOf(tabId)).setImageAlpha(255);
 
-                if (Integer.valueOf(tabId) == Flag.IN_MENTION_FRAGMENT) {
+                if (Integer.valueOf(tabId) == FlagUnit.IN_MENTION_FRAGMENT) {
                     showBadge(false);
                 }
 
@@ -170,7 +170,7 @@ public class MainActivity extends FragmentActivity {
                 }
                 tabIconList.get(position).setImageAlpha(255);
 
-                if (position == Flag.IN_MENTION_FRAGMENT) {
+                if (position == FlagUnit.IN_MENTION_FRAGMENT) {
                     showBadge(false);
                 }
 

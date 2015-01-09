@@ -1,10 +1,11 @@
 package io.github.mthli.Tweetin.Flag;
 
-public class Flag {
+public class FlagUnit {
 
     public static final int IN_TIMELINE_FRAGMENT = 0;
     public static final int IN_MENTION_FRAGMENT = 1;
     public static final int IN_FAVORITE_FRAGMENT = 2;
+    public static final int IN_SEARCH_FRAGMENT = 3;
 
     public static final int COLOR_BLUE = 0;
     public static final int COLOR_ORANGE = 1;

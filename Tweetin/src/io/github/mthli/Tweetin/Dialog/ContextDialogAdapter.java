@@ -11,12 +11,12 @@ import io.github.mthli.Tweetin.R;
 
 import java.util.List;
 
-public class DialogAdapter extends ArrayAdapter<String> {
+public class ContextDialogAdapter extends ArrayAdapter<String> {
     private Context context;
     private int layoutResId;
     private List<String> list;
 
-    public DialogAdapter(
+    public ContextDialogAdapter(
             Context context,
             int layoutResId,
             List<String> list
@@ -46,7 +46,7 @@ public class DialogAdapter extends ArrayAdapter<String> {
             view = inflater.inflate(layoutResId, viewGroup, false);
 
             holder = new Holder();
-            holder.textView = (TextView) view.findViewById(R.id.dialog_item);
+            holder.textView = (TextView) view.findViewById(R.id.context_dialog_item);
             view.setTag(holder);
         } else {
             holder = (Holder) view.getTag();

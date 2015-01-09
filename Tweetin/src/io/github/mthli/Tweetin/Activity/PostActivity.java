@@ -7,7 +7,7 @@ import android.support.v4.view.ViewCompat;
 import android.view.*;
 import android.widget.*;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import io.github.mthli.Tweetin.Flag.Flag;
+import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.View.ViewUnit;
 
@@ -25,23 +25,23 @@ public class PostActivity extends Activity {
         );
 
         switch (spColorValue) {
-            case Flag.COLOR_BLUE:
+            case FlagUnit.COLOR_BLUE:
                 checkInButton.setBackgroundDrawable(getDrawable(R.drawable.post_option_check_in_blue_selector));
                 pictureButton.setBackgroundDrawable(getDrawable(R.drawable.post_option_picture_blue_selector));
                 break;
-            case Flag.COLOR_ORANGE:
+            case FlagUnit.COLOR_ORANGE:
                 checkInButton.setBackgroundDrawable(getDrawable(R.drawable.post_option_check_in_orange_selector));
                 pictureButton.setBackgroundDrawable(getDrawable(R.drawable.post_option_picture_orange_selector));
                 break;
-            case Flag.COLOR_PINK:
+            case FlagUnit.COLOR_PINK:
                 checkInButton.setBackgroundDrawable(getDrawable(R.drawable.post_option_check_in_pink_selector));
                 pictureButton.setBackgroundDrawable(getDrawable(R.drawable.post_option_picture_pink_selector));
                 break;
-            case Flag.COLOR_PURPLE:
+            case FlagUnit.COLOR_PURPLE:
                 checkInButton.setBackgroundDrawable(getDrawable(R.drawable.post_option_check_in_purple_selector));
                 pictureButton.setBackgroundDrawable(getDrawable(R.drawable.post_option_picture_purple_selector));
                 break;
-            case Flag.COLOR_TEAL:
+            case FlagUnit.COLOR_TEAL:
                 checkInButton.setBackgroundDrawable(getDrawable(R.drawable.post_option_check_in_teal_selector));
                 pictureButton.setBackgroundDrawable(getDrawable(R.drawable.post_option_picture_teal_selector));
                 break;
