@@ -3,7 +3,6 @@ package io.github.mthli.Tweetin.Activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -21,54 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity {
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
-
     private RelativeLayout searchView;
     private EditText searchViewEditText;
 
     private View mentionTab;
     private ViewPager viewPager;
-
-    public void setCustomTheme() {
-        int spColorValue = sharedPreferences.getInt(
-                getString(R.string.sp_color),
-                0
-        );
-
-        switch (spColorValue) {
-            case Flag.COLOR_BLUE:
-                setTheme(R.style.BaseAppTheme_Blue);
-                break;
-            case Flag.COLOR_ORANGE:
-                setTheme(R.style.BaseAppTheme_Orange);
-                break;
-            case Flag.COLOR_PINK:
-                setTheme(R.style.BaseAppTheme_Pink);
-                break;
-            case Flag.COLOR_PURPLE:
-                setTheme(R.style.BaseAppTheme_Purple);
-                break;
-            case Flag.COLOR_TEAL:
-                setTheme(R.style.BaseAppTheme_Teal);
-                break;
-            default:
-                setTheme(R.style.BaseAppTheme_Blue);
-                break;
-        }
-    }
-
-    private int getStatusBarHeight() {
-        int result = 0;
-
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-
-        return result;
-    }
 
     public void showBadge(boolean show) {
         View bubble = mentionTab.findViewById(R.id.badge_view_bubble);
@@ -82,7 +38,7 @@ public class MainActivity extends FragmentActivity {
 
     public void initUI() {
         View header = findViewById(R.id.main_header);
-        ((RelativeLayout.LayoutParams) header.getLayoutParams()).setMargins(0, getStatusBarHeight(), 0, 0); //
+        ((RelativeLayout.LayoutParams) header.getLayoutParams()).setMargins(0, ViewUnit.getStatusBarHeight(this), 0, 0); //
         header.setVisibility(View.VISIBLE);
         ViewCompat.setElevation(header, ViewUnit.getElevation(this, 2));
 
@@ -227,13 +183,7 @@ public class MainActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sharedPreferences = getSharedPreferences(
-                getString(R.string.sp_tweetin),
-                MODE_PRIVATE
-        );
-        editor = sharedPreferences.edit();
-
-        setCustomTheme();
+        ViewUnit.setCustomTheme(this);
         setContentView(R.layout.main);
 
         Uri uri = getIntent().getData();

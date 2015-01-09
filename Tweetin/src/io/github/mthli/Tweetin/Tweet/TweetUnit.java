@@ -26,7 +26,7 @@ public class TweetUnit {
     }
 
     public String getPictureURLFromStatus(Status status) {
-        String[] suffixes = context.getResources().getStringArray(R.array.tweet_picture_suffix);
+        String[] suffixes = context.getResources().getStringArray(R.array.picture_suffixes); //
 
         URLEntity[] urlEntities;
         MediaEntity[] mediaEntities;

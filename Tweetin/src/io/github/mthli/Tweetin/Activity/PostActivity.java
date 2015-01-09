@@ -18,34 +18,6 @@ public class PostActivity extends Activity {
     private ToggleButton checkInButton;
     private ToggleButton pictureButton;
 
-    private void setCustomTheme() {
-        int spColorValue = sharedPreferences.getInt(
-                getString(R.string.sp_color),
-                0
-        );
-
-        switch (spColorValue) {
-            case Flag.COLOR_BLUE:
-                setTheme(R.style.BaseAppTheme_Blue);
-                break;
-            case Flag.COLOR_ORANGE:
-                setTheme(R.style.BaseAppTheme_Orange);
-                break;
-            case Flag.COLOR_PINK:
-                setTheme(R.style.BaseAppTheme_Pink);
-                break;
-            case Flag.COLOR_PURPLE:
-                setTheme(R.style.BaseAppTheme_Purple);
-                break;
-            case Flag.COLOR_TEAL:
-                setTheme(R.style.BaseAppTheme_Teal);
-                break;
-            default:
-                setTheme(R.style.BaseAppTheme_Blue);
-                break;
-        }
-    }
-
     private void setPostOptionTheme() {
         int spColorValue = sharedPreferences.getInt(
                 getString(R.string.sp_color),
@@ -136,7 +108,7 @@ public class PostActivity extends Activity {
                 MODE_PRIVATE
         );
 
-        setCustomTheme();
+        ViewUnit.setCustomTheme(this);
         setContentView(R.layout.post);
 
         initUI();

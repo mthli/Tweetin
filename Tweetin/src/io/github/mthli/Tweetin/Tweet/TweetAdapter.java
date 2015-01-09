@@ -2,9 +2,9 @@ package io.github.mthli.Tweetin.Tweet;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -17,10 +17,12 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.mthli.Tweetin.Activity.PictureActivity;
 import io.github.mthli.Tweetin.Dialog.DialogUnit;
-import io.github.mthli.Tweetin.View.ViewUnit;
+import io.github.mthli.Tweetin.Picture.PictureUnit;
 import io.github.mthli.Tweetin.R;
 
+import java.io.FileOutputStream;
 import java.util.List;
 
 public class TweetAdapter extends ArrayAdapter<Tweet> {
@@ -66,12 +68,12 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             View convertView,
             ViewGroup viewGroup
     ) {
-        final Holder holder;
         View view = convertView;
 
+        final Holder holder;
+
         if (view == null) {
-            LayoutInflater layoutInflater = activity.getLayoutInflater();
-            view = layoutInflater.inflate(layoutResId, viewGroup, false);
+            view = activity.getLayoutInflater().inflate(layoutResId, viewGroup, false);
 
             holder = new Holder();
 
@@ -176,7 +178,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 
                                 holder.bitmap = bitmap; //
 
-                                holder.picture.setImageBitmap(ViewUnit.fixBitmap(activity, bitmap));
+                                holder.picture.setImageBitmap(PictureUnit.fixBitmap(activity, bitmap));
 
                                 holder.loading.setVisibility(View.GONE);
 
@@ -193,7 +195,9 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                                 holder.loading.setVisibility(View.GONE);
                                 holder.picture.setVisibility(View.GONE);
 
-                                Toast.makeText(activity, R.string.tweet_toast_get_picture_failed, Toast.LENGTH_SHORT).show();
+                                if (tweet.isDetail()) {
+                                    Toast.makeText(activity, R.string.tweet_toast_get_picture_failed, Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
                 );
@@ -234,7 +238,29 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         holder.picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* Do something */
+                try {
+                    String pictureName = PictureUnit.getPictureName(tweet.getPictureURL());
+
+                    FileOutputStream fileOutputStream = activity.openFileOutput(pictureName, Context.MODE_PRIVATE);
+                    String[] suffixes = activity.getResources().getStringArray(R.array.picture_suffixes);
+                    if (tweet.getPictureURL().endsWith(suffixes[0])) {
+                        holder.bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+                    } else {
+                        holder.bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                    }
+                    fileOutputStream.close();
+
+                    Intent intent = new Intent(activity, PictureActivity.class);
+                    intent.putExtra(
+                            activity.getString(R.string.picture_intent_picture_name),
+                            pictureName
+                    );
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                } catch (Exception e) {
+                    Toast.makeText(activity, R.string.picture_toast_can_not_open_this_picture, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

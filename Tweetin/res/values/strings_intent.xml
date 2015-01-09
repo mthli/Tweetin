@@ -2,4 +2,8 @@
 
 <resources>
 
+    <string name="picture_intent_picture_name">
+        PICTURE_INTENT_PICTURE_NAME
+    </string>
+
 </resources>
