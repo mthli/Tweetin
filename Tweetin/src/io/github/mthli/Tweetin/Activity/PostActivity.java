@@ -1,22 +1,55 @@
 package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.*;
 import android.widget.*;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
+import io.github.mthli.Tweetin.Picture.PictureUnit;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.View.ViewUnit;
 
 public class PostActivity extends Activity {
+    private int postFlag;
+    public int getPostFlag() {
+        return postFlag;
+    }
 
     private SharedPreferences sharedPreferences;
 
+    private ImageView postPicture;
+    private EditText postText;
     private ToggleButton checkInButton;
     private ToggleButton pictureButton;
+    private TextView countWords;
+
+    private String text = "";
+    public String getText() {
+        return text;
+    }
+
+    private String picturePath = null;
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    private boolean checkIn = false;
+    public boolean isCheckIn() {
+        return checkIn;
+    }
+
+    private boolean picture = false;
+    public boolean isPicture() {
+        return picture;
+    }
 
     private void setPostOptionTheme() {
         int spColorValue = sharedPreferences.getInt(
@@ -52,6 +85,15 @@ public class PostActivity extends Activity {
         }
     }
 
+    private void setCountWordsStatus() {
+        if (text.length() <= 140) {
+            countWords.setTextColor(getResources().getColor(R.color.secondary_text));
+        } else {
+            countWords.setTextColor(getResources().getColor(R.color.red_500));
+        }
+        countWords.setText(String.valueOf(text.length()));
+    }
+
     private void initUI() {
         SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
         systemBarTintManager.setNavigationBarTintEnabled(true);
@@ -64,14 +106,36 @@ public class PostActivity extends Activity {
         getActionBar().setTitle(getString(R.string.post_label));
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
+        postPicture = (ImageView) findViewById(R.id.post_picture);
+        postText = (EditText) findViewById(R.id.post_text);
         checkInButton = (ToggleButton) findViewById(R.id.post_option_check_in);
         pictureButton = (ToggleButton) findViewById(R.id.post_option_picture);
+        countWords = (TextView) findViewById(R.id.post_count_words);
         setPostOptionTheme();
+
+        postText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                /* Do something */
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                /* Do nothing */
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                text = editable.toString();
+
+                setCountWordsStatus();
+            }
+        });
 
         checkInButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                /* Do something */
+            public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
+                checkIn = check;
             }
         });
         checkInButton.setOnLongClickListener(new View.OnLongClickListener() {
@@ -85,8 +149,21 @@ public class PostActivity extends Activity {
 
         pictureButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                /* Do something */
+            public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
+                if (check) {
+                    if (postFlag == FlagUnit.POST_SHARE) {
+                        postFlag = FlagUnit.POST_NEW;
+
+                        return;
+                    }
+
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_PICK);
+                    startActivityForResult(intent, FlagUnit.REQUEST_PHOTO);
+                } else {
+                    postPicture.setVisibility(View.GONE);
+                }
             }
         });
         pictureButton.setOnLongClickListener(new View.OnLongClickListener() {
@@ -97,6 +174,8 @@ public class PostActivity extends Activity {
                 return true;
             }
         });
+
+        initPostStatus();
     }
 
     @Override
@@ -135,5 +214,103 @@ public class PostActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode != Activity.RESULT_OK) {
+            postPicture.setVisibility(View.GONE);
+            pictureButton.setChecked(false);
+
+            return;
+        }
+
+        if (requestCode == FlagUnit.REQUEST_PHOTO) {
+            picturePath = PictureUnit.getPicturePath(this, data.getData());
+
+            if (picturePath != null) {
+                postPicture.setImageBitmap(PictureUnit.fixBitmap(this, BitmapFactory.decodeFile(picturePath)));
+                postPicture.setVisibility(View.VISIBLE);
+            } else {
+                postPicture.setVisibility(View.GONE);
+                pictureButton.setChecked(false);
+            }
+        }
+    }
+
+    private void initPostWithShare() {
+        if (getIntent().getType() == null) {
+            return;
+        }
+
+        if (getIntent().getType().equals("text/plain")) {
+            text = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+
+            postText.setText(text);
+            postText.setSelection(text.length());
+
+            setCountWordsStatus();
+        } else if (getIntent().getType().startsWith("image/")) {
+            picturePath = PictureUnit.getPicturePath(this, (Uri) getIntent().getParcelableExtra(Intent.EXTRA_STREAM));
+
+            if (picturePath != null) {
+                postPicture.setImageBitmap(PictureUnit.fixBitmap(this, BitmapFactory.decodeFile(picturePath)));
+                postPicture.setVisibility(View.VISIBLE);
+
+                pictureButton.setChecked(true);
+            } else {
+                postPicture.setVisibility(View.GONE);
+                pictureButton.setChecked(false);
+            }
+        }
+    }
+
+    private void initPostStatus() {
+        postFlag = getIntent().getIntExtra(getString(R.string.post_intent_post_flag), FlagUnit.POST_NEW);
+
+        if (getIntent().getAction() != null && getIntent().getAction().equals(Intent.ACTION_SEND)) {
+            postFlag = FlagUnit.POST_SHARE;
+        }
+
+        switch (postFlag) {
+            case FlagUnit.POST_NEW:
+                setCountWordsStatus();
+                break;
+            case FlagUnit.POST_REPLY:
+                /* Do something */
+                break;
+            case FlagUnit.POST_QUOTE:
+                /* Do something */
+                break;
+            case FlagUnit.POST_SHARE:
+                initPostWithShare();
+                break;
+            case FlagUnit.POST_RESEND:
+                /* Do something */
+                break;
+            case FlagUnit.POST_ADVICE:
+                /* Do something */
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void initPostWithReply() {
+        /* Do something */
+    }
+
+    private void initPostWithQuote() {
+        /* Do something */
+    }
+
+    private void initPostWithResend() {
+        /* Do something */
+    }
+
+    private void initPostWithAdvice() {
+        /* Do something */
     }
 }

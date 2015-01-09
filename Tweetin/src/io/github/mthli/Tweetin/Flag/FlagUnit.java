@@ -1,7 +1,6 @@
 package io.github.mthli.Tweetin.Flag;
 
 public class FlagUnit {
-
     public static final int IN_TIMELINE_FRAGMENT = 0;
     public static final int IN_MENTION_FRAGMENT = 1;
     public static final int IN_FAVORITE_FRAGMENT = 2;
@@ -16,4 +15,12 @@ public class FlagUnit {
     public static final int TASK_IDLE = 0x100;
     public static final int TASK_RUNNING = 0x101;
 
+    public static final int POST_NEW = 0x100;
+    public static final int POST_REPLY = 0x101;
+    public static final int POST_QUOTE = 0x102;
+    public static final int POST_SHARE = 0x103;
+    public static final int POST_RESEND = 0x104;
+    public static final int POST_ADVICE = 0x105;
+
+    public static final int REQUEST_PHOTO = 0x101;
 }

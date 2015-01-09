@@ -13,7 +13,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.VIBRATE" />
 
     <!-- Application -->
     <application android:label="@string/app_name"
@@ -66,12 +65,26 @@
         <activity android:name=".Activity.PostActivity"
                   android:screenOrientation="portrait">
 
-            <!-- Do something with share -->
+            <!-- Share text -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
+            <!-- Share picture -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
 
         </activity>
 
         <!-- DialogueActivity -->
-        <activity android:name=".Activity.DetailActivity" />
+        <activity android:name=".Activity.DetailActivity"
+                  android:screenOrientation="portrait">
+        </activity>
 
         <!-- SettingActivity -->
         <activity android:name=".Activity.SettingActivity"

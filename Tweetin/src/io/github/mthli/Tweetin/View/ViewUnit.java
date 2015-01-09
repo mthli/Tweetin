@@ -42,6 +42,33 @@ public class ViewUnit {
         }
     }
 
+    public static int getCustomThemeColor(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                context.getString(R.string.sp_tweetin),
+                Context.MODE_PRIVATE
+        );
+
+        int spColorValue = sharedPreferences.getInt(
+                context.getString(R.string.sp_color),
+                0
+        );
+
+        switch (spColorValue) {
+            case FlagUnit.COLOR_BLUE:
+                return context.getResources().getColor(R.color.blue_500);
+            case FlagUnit.COLOR_ORANGE:
+                return context.getResources().getColor(R.color.orange_500);
+            case FlagUnit.COLOR_PINK:
+                return context.getResources().getColor(R.color.pink_500);
+            case FlagUnit.COLOR_PURPLE:
+                return context.getResources().getColor(R.color.purple_500);
+            case FlagUnit.COLOR_TEAL:
+                return context.getResources().getColor(R.color.teal_500);
+            default:
+                return context.getResources().getColor(R.color.blue_500);
+        }
+    }
+
     public static void setSwipeRefreshLayoutTheme(Context context, SwipeRefreshLayout swipeRefreshLayout) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(
                 context.getString(R.string.sp_tweetin),
@@ -130,5 +157,4 @@ public class ViewUnit {
 
         return 0;
     }
-
 }

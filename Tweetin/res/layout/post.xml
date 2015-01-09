@@ -17,7 +17,7 @@
 
     <RelativeLayout android:id="@+id/post_option"
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
+                  android:layout_height="30dp"
                   android:layout_alignParentBottom="true"
                   android:layout_margin="15dp"
                   android:background="@color/transparent">
@@ -25,6 +25,8 @@
         <ToggleButton android:id="@+id/post_option_check_in"
                       android:layout_width="24dp"
                       android:layout_height="24dp"
+                      android:layout_centerInParent="true"
+                      android:layout_alignParentStart="true"
                       android:text=""
                       android:textOff=""
                       android:textOn="">
@@ -33,6 +35,7 @@
         <ToggleButton android:id="@+id/post_option_picture"
                       android:layout_width="24dp"
                       android:layout_height="24dp"
+                      android:layout_centerInParent="true"
                       android:layout_toEndOf="@id/post_option_check_in"
                       android:layout_marginStart="15dp"
                       android:text=""
@@ -63,7 +66,7 @@
                       android:layout_height="wrap_content">
 
             <!-- Do something -->
-            <ImageView android:id="@+id/post_photo"
+            <ImageView android:id="@+id/post_picture"
                        android:contentDescription="@null"
                        android:layout_width="match_parent"
                        android:layout_height="wrap_content"

@@ -68,6 +68,7 @@
         Check in
     </string>
     <string name="post_toast_picture">Picture</string>
+    <string name="post_toast_clear">Clear</string>
 
     <!-- Search -->
     <string name="search_hint">Search</string>

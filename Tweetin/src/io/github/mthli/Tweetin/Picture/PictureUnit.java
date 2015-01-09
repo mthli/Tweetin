@@ -1,10 +1,12 @@
 package io.github.mthli.Tweetin.Picture;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
@@ -39,6 +41,18 @@ public class PictureUnit {
         return array[array.length - 1];
     }
 
+    private static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    private static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    private static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+    
     private static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
         Cursor cursor = null;
 
@@ -62,13 +76,51 @@ public class PictureUnit {
     }
 
     public static String getPicturePath(Context context, Uri pictureUri) {
-        Uri contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        if (DocumentsContract.isDocumentUri(context, pictureUri)) {
+            if (isExternalStorageDocument(pictureUri)) {
+                String[] split = DocumentsContract.getDocumentId(pictureUri).split(":");
+                
+                String type = split[0];
 
-        String selection = "_id=?";
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
 
-        String[] selectionArgs = new String[]{DocumentsContract.getDocumentId(pictureUri).split(":")[1]};
+                // TODO handle non-primary volumes
+            } else if (isDownloadsDocument(pictureUri)) {
+                Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), 
+                        Long.valueOf(DocumentsContract.getDocumentId(pictureUri))
+                );
+                
+                return getDataColumn(context, contentUri, null, null);
+            } else if (isMediaDocument(pictureUri)) {
+                String[] split = DocumentsContract.getDocumentId(pictureUri).split(":");
+                
+                String type = split[0];
 
-        return getDataColumn(context, contentUri, selection, selectionArgs);
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+
+                String selection = "_id=?";
+                
+                String[] selectionArgs = new String[] {split[1]};
+
+                return getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+        } else if ("content".equalsIgnoreCase(pictureUri.getScheme())) {
+            return getDataColumn(context, pictureUri, null, null);
+        } else if ("file".equalsIgnoreCase(pictureUri.getScheme())) {
+            return pictureUri.getPath();
+        }
+
+        return null;
     }
 
     public static void savePicture(Context context, Bitmap bitmap, String pcitureName) {

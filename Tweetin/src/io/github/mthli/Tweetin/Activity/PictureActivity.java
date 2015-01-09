@@ -1,12 +1,14 @@
 package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.Toast;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.View.ViewUnit;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 import java.io.FileInputStream;
@@ -15,6 +17,13 @@ public class PictureActivity extends Activity {
     private String pictureName;
 
     private void initUI() {
+        ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(
+                getString(R.string.app_name),
+                BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher),
+                ViewUnit.getCustomThemeColor(this)
+        );
+        setTaskDescription(taskDescription);
+
         ImageView pictureView = (ImageView) findViewById(R.id.picture_view);
 
         pictureName = getIntent().getStringExtra(getString(R.string.picture_intent_picture_name));

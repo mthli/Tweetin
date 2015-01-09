@@ -26,6 +26,8 @@
     <color name="teal_300">#4DB6AC</color>
     <color name="teal_100">#B2DFDB</color>
 
+    <color name="red_500">#F44336</color>
+
     <color name="black">#000000</color>
     <color name="background">#F3F3F3</color>
     <color name="white">#FFFFFF</color>

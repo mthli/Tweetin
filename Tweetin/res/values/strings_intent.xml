@@ -6,4 +6,8 @@
         PICTURE_INTENT_PICTURE_NAME
     </string>
 
+    <string name="post_intent_post_flag">
+        POST_INTENT_POST_FLAG
+    </string>
+
 </resources>
