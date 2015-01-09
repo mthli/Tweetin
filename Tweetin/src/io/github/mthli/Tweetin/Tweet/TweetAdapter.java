@@ -150,6 +150,8 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.info.setVisibility(View.VISIBLE);
         } else {
             holder.info.setVisibility(View.GONE);
+            holder.retweetedBy.setVisibility(View.GONE);
+            holder.favorite.setVisibility(View.GONE);
         }
 
         if (!tweet.isDetail()) {
@@ -228,6 +230,13 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
             holder.action.setVisibility(View.VISIBLE);
             holder.action.startAnimation(AnimationUtils.loadAnimation(activity, R.anim.fade_in));
         }
+
+        holder.picture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* Do something */
+            }
+        });
 
         holder.replyButton.setOnClickListener(new View.OnClickListener() {
             @Override
