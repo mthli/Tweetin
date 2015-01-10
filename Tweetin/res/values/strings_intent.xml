@@ -9,5 +9,14 @@
     <string name="post_intent_post_flag">
         POST_INTENT_POST_FLAG
     </string>
+    <string name="post_intent_in_reply_to_status_id">
+        POST_INTENT_IN_REPLY_TO_STATUS_ID
+    </string>
+    <string name="post_intent_in_reply_to_screen_name">
+        POST_INTENT_IN_REPLY_TO_SCREEN_NAME
+    </string>
+    <string name="post_intent_quote">
+        POST_INTENT_QUOTE
+    </string>
 
 </resources>

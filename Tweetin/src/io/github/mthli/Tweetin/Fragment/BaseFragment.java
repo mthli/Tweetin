@@ -153,7 +153,8 @@ public class BaseFragment extends ProgressFragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity(), PostActivity.class);
-                    startActivity(intent); //
+                    intent.putExtra(getString(R.string.post_intent_post_flag), FlagUnit.POST_NEW);
+                    startActivity(intent);
                 }
             });
             fab.setOnLongClickListener(new View.OnLongClickListener() {

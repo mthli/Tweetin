@@ -15,14 +15,10 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.Picture.PictureUnit;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 import io.github.mthli.Tweetin.View.ViewUnit;
 
 public class PostActivity extends Activity {
-    private int postFlag;
-    public int getPostFlag() {
-        return postFlag;
-    }
-
     private SharedPreferences sharedPreferences;
 
     private ImageView postPicture;
@@ -31,14 +27,24 @@ public class PostActivity extends Activity {
     private ToggleButton pictureButton;
     private TextView countWords;
 
-    private String text = "";
-    public String getText() {
-        return text;
+    private long inReplyToStatusId = -1l;
+    public long getInReplyToStatusId() {
+        return inReplyToStatusId;
+    }
+
+    private String inReplyToScreenName = null;
+    public String getInReplyToScreenName() {
+        return inReplyToScreenName;
     }
 
     private String picturePath = null;
     public String getPicturePath() {
         return picturePath;
+    }
+
+    private String text = "";
+    public String getText() {
+        return text;
     }
 
     private boolean checkIn = false;
@@ -92,6 +98,116 @@ public class PostActivity extends Activity {
             countWords.setTextColor(getResources().getColor(R.color.red_500));
         }
         countWords.setText(String.valueOf(text.length()));
+    }
+
+    private int postFlag = FlagUnit.POST_NEW;
+    public int getPostFlag() {
+        return postFlag;
+    }
+
+    private void initPostWithReply() {
+        inReplyToStatusId = getIntent().getLongExtra(getString(R.string.post_intent_in_reply_to_status_id), -1);
+        inReplyToScreenName = getIntent().getStringExtra(getString(R.string.post_intent_in_reply_to_screen_name));
+
+        text = "@" + inReplyToScreenName + " ";
+
+        postText.setText(text);
+        postText.setSelection(text.length());
+
+        setCountWordsStatus();
+    }
+
+    private void initPostWithQuote() {
+        inReplyToStatusId = getIntent().getLongExtra(getString(R.string.post_intent_in_reply_to_status_id), -1);
+        inReplyToScreenName = getIntent().getStringExtra(getString(R.string.post_intent_in_reply_to_screen_name));
+        String quote = getIntent().getStringExtra(getString(R.string.post_intent_quote));
+
+        text = " @" + inReplyToScreenName + ": " + quote;
+
+        postText.setText(text);
+        postText.setSelection(0);
+
+        setCountWordsStatus();
+    }
+
+    private void initPostWithShare() {
+        if (getIntent().getType() == null) {
+            return;
+        }
+
+        if (getIntent().getType().equals("text/plain")) {
+            text = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+
+            if (text != null) {
+                postText.setText(text);
+                postText.setSelection(text.length());
+            } else {
+                text = "";
+            }
+
+            setCountWordsStatus();
+        } else if (getIntent().getType().startsWith("image/")) {
+            picturePath = PictureUnit.getPicturePath(this, (Uri) getIntent().getParcelableExtra(Intent.EXTRA_STREAM));
+
+            if (picturePath != null) {
+                postPicture.setImageBitmap(PictureUnit.fixBitmap(this, BitmapFactory.decodeFile(picturePath)));
+                postPicture.setVisibility(View.VISIBLE);
+
+                pictureButton.setChecked(true);
+            } else {
+                picturePath = null; //
+
+                postPicture.setVisibility(View.GONE);
+
+                pictureButton.setChecked(false);
+            }
+        }
+    }
+
+    private void initPostWithResend() {
+        /* Do something */
+    }
+
+    private void initPostWithAdvice() {
+        inReplyToScreenName = TwitterUnit.getUseScreenNameFromSharedPreferences(this);
+
+        text = "@" + inReplyToScreenName + " ";
+
+        postText.setText(text);
+        postText.setSelection(text.length());
+
+        setCountWordsStatus();
+    }
+
+    private void initPostStatus() {
+        postFlag = getIntent().getIntExtra(getString(R.string.post_intent_post_flag), FlagUnit.POST_NEW);
+
+        if (getIntent().getAction() != null && getIntent().getAction().equals(Intent.ACTION_SEND)) {
+            postFlag = FlagUnit.POST_SHARE;
+        }
+
+        switch (postFlag) {
+            case FlagUnit.POST_NEW:
+                setCountWordsStatus();
+                break;
+            case FlagUnit.POST_REPLY:
+                initPostWithReply();
+                break;
+            case FlagUnit.POST_QUOTE:
+                initPostWithQuote();
+                break;
+            case FlagUnit.POST_SHARE:
+                initPostWithShare();
+                break;
+            case FlagUnit.POST_RESEND:
+                initPostWithResend();
+                break;
+            case FlagUnit.POST_ADVICE:
+                initPostWithAdvice();
+                break;
+            default:
+                break;
+        }
     }
 
     private void initUI() {
@@ -151,9 +267,7 @@ public class PostActivity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
                 if (check) {
-                    if (postFlag == FlagUnit.POST_SHARE) {
-                        postFlag = FlagUnit.POST_NEW;
-
+                    if (picturePath != null) {
                         return;
                     }
 
@@ -162,6 +276,8 @@ public class PostActivity extends Activity {
                     intent.setAction(Intent.ACTION_PICK);
                     startActivityForResult(intent, FlagUnit.REQUEST_PHOTO);
                 } else {
+                    picturePath = null;
+
                     postPicture.setVisibility(View.GONE);
                 }
             }
@@ -234,83 +350,12 @@ public class PostActivity extends Activity {
                 postPicture.setImageBitmap(PictureUnit.fixBitmap(this, BitmapFactory.decodeFile(picturePath)));
                 postPicture.setVisibility(View.VISIBLE);
             } else {
+                picturePath = null; //
+
                 postPicture.setVisibility(View.GONE);
+
                 pictureButton.setChecked(false);
             }
         }
-    }
-
-    private void initPostWithShare() {
-        if (getIntent().getType() == null) {
-            return;
-        }
-
-        if (getIntent().getType().equals("text/plain")) {
-            text = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-
-            postText.setText(text);
-            postText.setSelection(text.length());
-
-            setCountWordsStatus();
-        } else if (getIntent().getType().startsWith("image/")) {
-            picturePath = PictureUnit.getPicturePath(this, (Uri) getIntent().getParcelableExtra(Intent.EXTRA_STREAM));
-
-            if (picturePath != null) {
-                postPicture.setImageBitmap(PictureUnit.fixBitmap(this, BitmapFactory.decodeFile(picturePath)));
-                postPicture.setVisibility(View.VISIBLE);
-
-                pictureButton.setChecked(true);
-            } else {
-                postPicture.setVisibility(View.GONE);
-                pictureButton.setChecked(false);
-            }
-        }
-    }
-
-    private void initPostStatus() {
-        postFlag = getIntent().getIntExtra(getString(R.string.post_intent_post_flag), FlagUnit.POST_NEW);
-
-        if (getIntent().getAction() != null && getIntent().getAction().equals(Intent.ACTION_SEND)) {
-            postFlag = FlagUnit.POST_SHARE;
-        }
-
-        switch (postFlag) {
-            case FlagUnit.POST_NEW:
-                setCountWordsStatus();
-                break;
-            case FlagUnit.POST_REPLY:
-                /* Do something */
-                break;
-            case FlagUnit.POST_QUOTE:
-                /* Do something */
-                break;
-            case FlagUnit.POST_SHARE:
-                initPostWithShare();
-                break;
-            case FlagUnit.POST_RESEND:
-                /* Do something */
-                break;
-            case FlagUnit.POST_ADVICE:
-                /* Do something */
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void initPostWithReply() {
-        /* Do something */
-    }
-
-    private void initPostWithQuote() {
-        /* Do something */
-    }
-
-    private void initPostWithResend() {
-        /* Do something */
-    }
-
-    private void initPostWithAdvice() {
-        /* Do something */
     }
 }

@@ -3,7 +3,6 @@ package io.github.mthli.Tweetin.Tweet;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,12 @@ import com.bumptech.glide.Glide;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.mthli.Tweetin.Activity.PictureActivity;
+import io.github.mthli.Tweetin.Activity.PostActivity;
 import io.github.mthli.Tweetin.Dialog.DialogUnit;
+import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.Picture.PictureUnit;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 
 import java.io.FileOutputStream;
 import java.util.List;
@@ -49,14 +51,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 
         this.requestQueue = Volley.newRequestQueue(activity);
 
-        SharedPreferences sharedPreferences = activity.getSharedPreferences(
-                activity.getString(R.string.sp_tweetin),
-                Context.MODE_PRIVATE
-        );
-        this.useScreenName = sharedPreferences.getString(
-                activity.getString(R.string.sp_use_screen_name),
-                null
-        );
+        this.useScreenName = TwitterUnit.getUseScreenNameFromSharedPreferences(activity);
 
         this.tweetUnit = new TweetUnit(activity);
     }
@@ -266,7 +261,11 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         holder.replyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* Do something */
+                Intent intent = new Intent(activity, PostActivity.class);
+                intent.putExtra(activity.getString(R.string.post_intent_post_flag), FlagUnit.POST_REPLY);
+                intent.putExtra(activity.getString(R.string.post_intent_in_reply_to_status_id), tweet.getStatusId());
+                intent.putExtra(activity.getString(R.string.post_intent_in_reply_to_screen_name), tweet.getScreenName());
+                activity.startActivity(intent);
             }
         });
         holder.replyButton.setOnLongClickListener(new View.OnLongClickListener() {
@@ -281,7 +280,12 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         holder.quoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /* Do something */
+                Intent intent = new Intent(activity, PostActivity.class);
+                intent.putExtra(activity.getString(R.string.post_intent_post_flag), FlagUnit.POST_QUOTE);
+                intent.putExtra(activity.getString(R.string.post_intent_in_reply_to_status_id), tweet.getStatusId());
+                intent.putExtra(activity.getString(R.string.post_intent_in_reply_to_screen_name), tweet.getScreenName());
+                intent.putExtra(activity.getString(R.string.post_intent_quote), tweet.getText());
+                activity.startActivity(intent);
             }
         });
         holder.quoteButton.setOnLongClickListener(new View.OnLongClickListener() {
