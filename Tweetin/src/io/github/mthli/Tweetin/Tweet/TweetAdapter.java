@@ -284,7 +284,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                 intent.putExtra(activity.getString(R.string.post_intent_post_flag), FlagUnit.POST_QUOTE);
                 intent.putExtra(activity.getString(R.string.post_intent_in_reply_to_status_id), tweet.getStatusId());
                 intent.putExtra(activity.getString(R.string.post_intent_in_reply_to_screen_name), tweet.getScreenName());
-                intent.putExtra(activity.getString(R.string.post_intent_quote), tweet.getText());
+                intent.putExtra(activity.getString(R.string.post_intent_text), tweet.getText());
                 activity.startActivity(intent);
             }
         });

@@ -69,6 +69,9 @@
     </string>
     <string name="post_toast_picture">Picture</string>
     <string name="post_toast_clear">Clear</string>
+    <string name="post_toast_empty">
+        You haven\'t written anything.
+    </string>
 
     <!-- Search -->
     <string name="search_hint">Search</string>

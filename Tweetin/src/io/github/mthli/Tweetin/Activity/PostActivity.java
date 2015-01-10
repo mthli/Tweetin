@@ -15,6 +15,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.Picture.PictureUnit;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Task.PostTask;
 import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 import io.github.mthli.Tweetin.View.ViewUnit;
 
@@ -44,17 +45,16 @@ public class PostActivity extends Activity {
 
     private String text = "";
     public String getText() {
+        if (text == null) {
+            return "";
+        }
+
         return text;
     }
 
     private boolean checkIn = false;
     public boolean isCheckIn() {
         return checkIn;
-    }
-
-    private boolean picture = false;
-    public boolean isPicture() {
-        return picture;
     }
 
     private void setPostOptionTheme() {
@@ -100,11 +100,6 @@ public class PostActivity extends Activity {
         countWords.setText(String.valueOf(text.length()));
     }
 
-    private int postFlag = FlagUnit.POST_NEW;
-    public int getPostFlag() {
-        return postFlag;
-    }
-
     private void initPostWithReply() {
         inReplyToStatusId = getIntent().getLongExtra(getString(R.string.post_intent_in_reply_to_status_id), -1);
         inReplyToScreenName = getIntent().getStringExtra(getString(R.string.post_intent_in_reply_to_screen_name));
@@ -120,9 +115,9 @@ public class PostActivity extends Activity {
     private void initPostWithQuote() {
         inReplyToStatusId = getIntent().getLongExtra(getString(R.string.post_intent_in_reply_to_status_id), -1);
         inReplyToScreenName = getIntent().getStringExtra(getString(R.string.post_intent_in_reply_to_screen_name));
-        String quote = getIntent().getStringExtra(getString(R.string.post_intent_quote));
+        text = getIntent().getStringExtra(getString(R.string.post_intent_text));
 
-        text = " @" + inReplyToScreenName + ": " + quote;
+        text = " @" + inReplyToScreenName + ": " + text;
 
         postText.setText(text);
         postText.setSelection(0);
@@ -180,7 +175,7 @@ public class PostActivity extends Activity {
     }
 
     private void initPostStatus() {
-        postFlag = getIntent().getIntExtra(getString(R.string.post_intent_post_flag), FlagUnit.POST_NEW);
+        int postFlag = getIntent().getIntExtra(getString(R.string.post_intent_post_flag), FlagUnit.POST_NEW);
 
         if (getIntent().getAction() != null && getIntent().getAction().equals(Intent.ACTION_SEND)) {
             postFlag = FlagUnit.POST_SHARE;
@@ -323,7 +318,16 @@ public class PostActivity extends Activity {
                 finish();
                 break;
             case R.id.post_menu_send:
-                /* Do something */
+                if (text.length() <= 0 && picturePath == null) {
+                    Toast.makeText(this, R.string.post_toast_empty, Toast.LENGTH_SHORT).show();
+
+                    break;
+                }
+
+                (new PostTask(this)).execute();
+
+                finish();
+
                 break;
             default:
                 break;

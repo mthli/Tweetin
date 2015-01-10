@@ -15,8 +15,14 @@
     <string name="post_intent_in_reply_to_screen_name">
         POST_INTENT_IN_REPLY_TO_SCREEN_NAME
     </string>
-    <string name="post_intent_quote">
+    <string name="post_intent_picture_path">
+        POST_INTENT_PICTURE_PATH
+    </string>
+    <string name="post_intent_text">
         POST_INTENT_QUOTE
+    </string>
+    <string name="post_intent_check_in">
+        POST_INTENT_CHECK_IN
     </string>
 
 </resources>
