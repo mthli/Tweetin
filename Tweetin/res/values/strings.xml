@@ -72,6 +72,9 @@
     <string name="post_toast_empty">
         You haven\'t written anything.
     </string>
+    <string name="post_toast_check_in_failed">
+        Check in failed, please open your Location setting.
+    </string>
 
     <!-- Search -->
     <string name="search_hint">Search</string>

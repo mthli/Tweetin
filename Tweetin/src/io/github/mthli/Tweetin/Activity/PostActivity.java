@@ -1,9 +1,11 @@
 package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
@@ -246,6 +248,15 @@ public class PostActivity extends Activity {
         checkInButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean check) {
+                LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+                if (check && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    checkInButton.setChecked(false);
+
+                    Toast.makeText(PostActivity.this, R.string.post_toast_check_in_failed, Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+
                 checkIn = check;
             }
         });
