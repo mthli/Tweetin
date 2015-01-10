@@ -47,6 +47,53 @@
     <string name="picture_menu_share">Share</string>
     <string name="picture_menu_save">Save</string>
     <string name="post_menu_send">Send</string>
+    
+    <!-- Notification -->
+    <string name="notification_delete_ing">
+        Deleting&#8230;
+    </string>
+    <string name="notification_delete_successful">
+        Delete successful.
+    </string>
+    <string name="notification_delete_failed">
+        Delete failed.
+    </string>
+    <string name="notification_post_ing">
+        Posting&#8230;
+    </string>
+    <string name="notification_post_successful">
+        Post successful.
+    </string>
+    <string name="notification_post_failed">
+        Post failed.
+    </string>
+    <string name="notification_retweet_ing">
+        Retweeting&#8230;
+    </string>
+    <string name="notification_retweet_successful">
+        Retweet successful.
+    </string>
+    <string name="notification_retweet_failed">
+        Retweet failed.
+    </string>
+    <string name="notification_add_favorite_ing">
+        Adding favorite&#8230;
+    </string>
+    <string name="notification_add_favorite_successful">
+        Add favorite successful.
+    </string>
+    <string name="notification_add_favorite_failed">
+        Add favorite failed.
+    </string>
+    <string name="notification_remove_favorite_ing">
+        Removing favorite&#8230;
+    </string>
+    <string name="notification_remove_favorite_successful">
+        Remove favorite successful.
+    </string>
+    <string name="notification_remove_favorite_failed">
+        Remove favorite failed.
+    </string>
 
     <!-- Picture -->
     <string name="picture_label">Picture</string>

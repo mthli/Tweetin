@@ -1,5 +1,6 @@
 package io.github.mthli.Tweetin.Task;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -7,6 +8,8 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import io.github.mthli.Tweetin.Activity.PostActivity;
+import io.github.mthli.Tweetin.Notification.NotificationUnit;
+import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 import twitter4j.GeoLocation;
 import twitter4j.StatusUpdate;
@@ -94,6 +97,8 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
         if (picturePath != null) {
             statusUpdate.setMedia(new File(picturePath));
         }
+
+        NotificationUnit.show(postActivity, R.drawable.ic_notification_send, R.string.notification_post_ing, text);
     }
 
     @Override
@@ -101,7 +106,11 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
         try {
             TwitterUnit.getTwitterFromSharedPreferences(postActivity).updateStatus(statusUpdate);
 
-            /* Do something with Notification */
+            NotificationUnit.show(postActivity, R.drawable.ic_notification_send, R.string.notification_post_successful, text);
+
+            Thread.sleep(1000); //
+
+            NotificationUnit.cancel(postActivity);
         } catch (Exception e) {
             /* Do something with Notification and Intent */
 
@@ -127,5 +136,11 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         /* Do nothing */
+    }
+
+    private PendingIntent getPendingIntent() {
+        /* Do something */
+
+        return null;
     }
 }

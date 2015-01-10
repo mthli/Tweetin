@@ -1,7 +1,6 @@
 package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
@@ -280,7 +279,7 @@ public class PostActivity extends Activity {
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_PICK);
-                    startActivityForResult(intent, FlagUnit.REQUEST_PHOTO);
+                    startActivityForResult(intent, FlagUnit.REQUEST_PICTURE);
                 } else {
                     picturePath = null;
 
@@ -358,7 +357,7 @@ public class PostActivity extends Activity {
             return;
         }
 
-        if (requestCode == FlagUnit.REQUEST_PHOTO) {
+        if (requestCode == FlagUnit.REQUEST_PICTURE) {
             picturePath = PictureUnit.getPicturePath(this, data.getData());
 
             if (picturePath != null) {
