@@ -229,7 +229,7 @@ public class BaseFragment extends ProgressFragment {
                         tweetList.get(detailPosition).setLoad(false);
                         tweetAdapter.notifyDataSetChanged();
 
-                        listView.setSelection(detailPosition);
+                        listView.setSelection(position);
                     }
 
                     detailPosition = position;
