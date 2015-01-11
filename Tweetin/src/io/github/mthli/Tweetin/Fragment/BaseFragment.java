@@ -130,7 +130,7 @@ public class BaseFragment extends ProgressFragment {
         }
     }
 
-    private int detailPosition = 0;
+    private int lastDetailPosition = 0;
 
     private void initUI() {
         swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.main_fragment_swipe_container);
@@ -188,9 +188,9 @@ public class BaseFragment extends ProgressFragment {
 
             @Override
             public void onScrollStateChanged(AbsListView absListView, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE && (detailPosition < currentFirst || detailPosition > currentFirst + currentCount)) {
-                    tweetList.get(detailPosition).setDetail(false);
-                    tweetList.get(detailPosition).setLoad(false);
+                if (scrollState == SCROLL_STATE_IDLE && (lastDetailPosition < currentFirst || lastDetailPosition > currentFirst + currentCount)) {
+                    tweetList.get(lastDetailPosition).setDetail(false);
+                    tweetList.get(lastDetailPosition).setLoad(false);
                     tweetAdapter.notifyDataSetChanged();
                 }
             }
@@ -220,24 +220,24 @@ public class BaseFragment extends ProgressFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                if (tweetList.get(detailPosition).isDetail() && position != detailPosition) {
-                    tweetList.get(detailPosition).setDetail(false);
+                if (tweetList.get(lastDetailPosition).isDetail() && position != lastDetailPosition) {
+                    tweetList.get(lastDetailPosition).setDetail(false);
                     tweetList.get(position).setDetail(true);
                     tweetAdapter.notifyDataSetChanged();
 
-                    if (tweetList.get(detailPosition).isLoad() && position > detailPosition) {
-                        tweetList.get(detailPosition).setLoad(false);
+                    if (tweetList.get(lastDetailPosition).isLoad() && position > lastDetailPosition) {
+                        tweetList.get(lastDetailPosition).setLoad(false);
                         tweetAdapter.notifyDataSetChanged();
 
                         listView.setSelection(position);
                     }
 
-                    detailPosition = position;
+                    lastDetailPosition = position;
                 } else if (!tweetList.get(position).isDetail()) {
                     tweetList.get(position).setDetail(true);
                     tweetAdapter.notifyDataSetChanged();
 
-                    detailPosition = position;
+                    lastDetailPosition = position;
                 }
             }
         });

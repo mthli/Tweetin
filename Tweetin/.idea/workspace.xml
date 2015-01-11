@@ -76,13 +76,13 @@
       <file leaf-file-name="BaseFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Fragment/BaseFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3644068" vertical-offset="2843" max-vertical-offset="3315">
-              <caret line="231" column="56" selection-start-line="231" selection-start-column="56" selection-end-line="231" selection-end-column="56" />
+            <state vertical-scroll-proportion="6.2923727" vertical-offset="0" max-vertical-offset="3315">
+              <caret line="228" column="73" selection-start-line="228" selection-start-column="73" selection-end-line="228" selection-end-column="73" />
               <folding>
                 <element signature="method#isSomeTaskRunning#0;class#BaseFragment#0" expanded="false" />
-                <element signature="e#5074#5115#0" expanded="true" />
-                <element signature="e#7549#8619#0" expanded="true" />
-                <element signature="e#8618#8619#0" expanded="true" />
+                <element signature="e#5078#5119#0" expanded="true" />
+                <element signature="e#7569#8671#0" expanded="true" />
+                <element signature="e#8670#8671#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -739,7 +739,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2915129" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="944" y="72" width="366" height="630" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2915129" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="944" y="72" width="366" height="630" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46679688" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -1220,13 +1220,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Fragment/BaseFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3644068" vertical-offset="2843" max-vertical-offset="3315">
-          <caret line="231" column="56" selection-start-line="231" selection-start-column="56" selection-end-line="231" selection-end-column="56" />
+        <state vertical-scroll-proportion="6.2923727" vertical-offset="0" max-vertical-offset="3315">
+          <caret line="228" column="73" selection-start-line="228" selection-start-column="73" selection-end-line="228" selection-end-column="73" />
           <folding>
             <element signature="method#isSomeTaskRunning#0;class#BaseFragment#0" expanded="false" />
-            <element signature="e#5074#5115#0" expanded="true" />
-            <element signature="e#7549#8619#0" expanded="true" />
-            <element signature="e#8618#8619#0" expanded="true" />
+            <element signature="e#5078#5119#0" expanded="true" />
+            <element signature="e#7569#8671#0" expanded="true" />
+            <element signature="e#8670#8671#0" expanded="true" />
           </folding>
         </state>
       </provider>
