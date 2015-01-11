@@ -118,7 +118,7 @@ public class PostActivity extends Activity {
         inReplyToScreenName = getIntent().getStringExtra(getString(R.string.post_intent_in_reply_to_screen_name));
         text = getIntent().getStringExtra(getString(R.string.post_intent_text));
 
-        text = " @" + inReplyToScreenName + ": " + text;
+        text = " RT @" + inReplyToScreenName + ": " + text;
 
         postText.setText(text);
         postText.setSelection(0);

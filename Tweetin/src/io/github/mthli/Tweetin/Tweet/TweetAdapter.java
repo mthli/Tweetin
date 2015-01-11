@@ -170,7 +170,9 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                                     return;
                                 }
 
-                                holder.bitmap = bitmap; //
+                                tweet.setLoad(true); //
+
+                                holder.bitmap = bitmap;
 
                                 holder.picture.setImageBitmap(PictureUnit.fixBitmap(activity, bitmap));
 
@@ -186,6 +188,8 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
+                                tweet.setLoad(false); //
+
                                 holder.loading.setVisibility(View.GONE);
                                 holder.picture.setVisibility(View.GONE);
 

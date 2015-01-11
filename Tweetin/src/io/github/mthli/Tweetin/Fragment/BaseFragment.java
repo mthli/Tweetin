@@ -167,7 +167,7 @@ public class BaseFragment extends ProgressFragment {
             });
         }
 
-        ListView listView = (ListView) contentView.findViewById(R.id.main_fragment_listview);
+        final ListView listView = (ListView) contentView.findViewById(R.id.main_fragment_listview);
 
         tweetAdapter = new TweetAdapter(
                 getActivity(),
@@ -183,13 +183,14 @@ public class BaseFragment extends ProgressFragment {
             private boolean moveToBottom = false;
             private int previous = 0;
 
-            private int first = 0;
-            private int count = 0;
+            private int currentFirst = 0;
+            private int currentCount = 0;
 
             @Override
             public void onScrollStateChanged(AbsListView absListView, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE && (detailPosition < first || detailPosition > first + count)) {
+                if (scrollState == SCROLL_STATE_IDLE && (detailPosition < currentFirst || detailPosition > currentFirst + currentCount)) {
                     tweetList.get(detailPosition).setDetail(false);
+                    tweetList.get(detailPosition).setLoad(false);
                     tweetAdapter.notifyDataSetChanged();
                 }
             }
@@ -199,13 +200,13 @@ public class BaseFragment extends ProgressFragment {
                 if (previous < firstVisibleItem) {
                     moveToBottom = true;
                 }
-                if (previous > firstVisibleItem) { //
+                if (previous > firstVisibleItem) {
                     moveToBottom = false;
                 }
                 previous = firstVisibleItem;
 
-                first = firstVisibleItem;
-                count = visibleItemCount;
+                currentFirst = firstVisibleItem;
+                currentCount = visibleItemCount;
 
                 showFAB(!moveToBottom);
 
@@ -221,17 +222,22 @@ public class BaseFragment extends ProgressFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (tweetList.get(detailPosition).isDetail() && position != detailPosition) {
                     tweetList.get(detailPosition).setDetail(false);
-                    tweetAdapter.notifyDataSetChanged();
-
-                    detailPosition = position;
-
                     tweetList.get(position).setDetail(true);
                     tweetAdapter.notifyDataSetChanged();
+
+                    if (tweetList.get(detailPosition).isLoad() && position > detailPosition) {
+                        tweetList.get(detailPosition).setLoad(false);
+                        tweetAdapter.notifyDataSetChanged();
+
+                        listView.setSelection(detailPosition);
+                    }
+
+                    detailPosition = position;
                 } else if (!tweetList.get(position).isDetail()) {
-                    detailPosition = position;
-
                     tweetList.get(position).setDetail(true);
                     tweetAdapter.notifyDataSetChanged();
+
+                    detailPosition = position;
                 }
             }
         });

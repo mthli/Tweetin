@@ -147,7 +147,8 @@ public class TweetUnit {
         tweet.setInReplyToStatusId(record.getInReplyToStatusId());
         tweet.setRetweetedByScreenName(record.getRetweetedByScreenName());
 
-        tweet.setDetail(false); //
+        tweet.setDetail(false);
+        tweet.setLoad(false);
 
         return tweet;
     }
@@ -255,9 +256,9 @@ public class TweetUnit {
             tweet.setRetweetedByScreenName(useScreenName);
         }
 
-        tweet.setDetail(false); //
+        tweet.setDetail(false);
+        tweet.setLoad(false);
 
         return tweet;
     }
-
 }
