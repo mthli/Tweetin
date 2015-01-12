@@ -141,6 +141,8 @@ public class BaseFragment extends ProgressFragment {
     }
 
     private int lastDetailPosition = 0;
+    private int currentFirst = 0;
+    private int currentCount = 0;
 
     private void initUI() {
         swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.main_fragment_swipe_container);
@@ -193,9 +195,6 @@ public class BaseFragment extends ProgressFragment {
             private boolean moveToBottom = false;
             private int previous = 0;
 
-            private int currentFirst = 0;
-            private int currentCount = 0;
-
             @Override
             public void onScrollStateChanged(AbsListView absListView, int scrollState) {
                 if (scrollState == SCROLL_STATE_IDLE && (lastDetailPosition < currentFirst || lastDetailPosition > currentFirst + currentCount)) {
@@ -223,8 +222,6 @@ public class BaseFragment extends ProgressFragment {
                 if (totalItemCount > 7 && totalItemCount == firstVisibleItem + visibleItemCount && !isSomeTaskRunning() && moveToBottom) {
                     loadMoreTask = new LoadMoreTask(BaseFragment.this);
                     loadMoreTask.execute();
-
-                    System.out.println("nextPage = " + nextPage);
                 }
             }
         });
@@ -234,9 +231,13 @@ public class BaseFragment extends ProgressFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (tweetList.get(lastDetailPosition).isDetail() && position != lastDetailPosition) {
                     tweetList.get(lastDetailPosition).setDetail(false);
-                    tweetList.get(lastDetailPosition).setLoad(false);
                     tweetList.get(position).setDetail(true);
                     tweetAdapter.notifyDataSetChanged();
+
+                    if (tweetList.get(lastDetailPosition).isLoad() && lastDetailPosition < position) {
+                        listView.setSelection(lastDetailPosition);
+                    }
+                    tweetList.get(lastDetailPosition).setLoad(false);
 
                     lastDetailPosition = position;
                 } else if (!tweetList.get(position).isDetail()) {
