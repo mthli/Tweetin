@@ -3,6 +3,7 @@ package io.github.mthli.Tweetin.Fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -49,13 +50,16 @@ public class BaseFragment extends ProgressFragment {
 
     private LoadFirstTask loadFirstTask;
     private LoadMoreTask loadMoreTask;
-    private RetweetTask retweetTask;
-    private FavoriteTask favoriteTask;
-    private DeleteTask deleteTask;
-    private RemoveTask removeTask;
 
-    /* Do something */
-    private int taskStatus; //
+    private int nextPage = 2;
+    public int getNextPage() {
+        return nextPage;
+    }
+    public void setNextPage(int nextPage) {
+        this.nextPage = nextPage;
+    }
+
+    private int taskStatus;
     public int getTaskStatus() {
         return taskStatus;
     }
@@ -70,7 +74,13 @@ public class BaseFragment extends ProgressFragment {
         return false;
     }
     public void cancelAllTask() {
-        /* Do something */
+        if (loadFirstTask != null && loadFirstTask.getStatus() == AsyncTask.Status.RUNNING) {
+            loadFirstTask.cancel(true);
+        }
+
+        if (loadMoreTask != null && loadMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
+            loadMoreTask.cancel(true);
+        }
     }
 
     @Override
@@ -213,6 +223,8 @@ public class BaseFragment extends ProgressFragment {
                 if (totalItemCount > 7 && totalItemCount == firstVisibleItem + visibleItemCount && !isSomeTaskRunning() && moveToBottom) {
                     loadMoreTask = new LoadMoreTask(BaseFragment.this);
                     loadMoreTask.execute();
+
+                    System.out.println("nextPage = " + nextPage);
                 }
             }
         });
@@ -222,15 +234,9 @@ public class BaseFragment extends ProgressFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 if (tweetList.get(lastDetailPosition).isDetail() && position != lastDetailPosition) {
                     tweetList.get(lastDetailPosition).setDetail(false);
+                    tweetList.get(lastDetailPosition).setLoad(false);
                     tweetList.get(position).setDetail(true);
                     tweetAdapter.notifyDataSetChanged();
-
-                    if (tweetList.get(lastDetailPosition).isLoad() && position > lastDetailPosition) {
-                        tweetList.get(lastDetailPosition).setLoad(false);
-                        tweetAdapter.notifyDataSetChanged();
-
-                        listView.setSelection(position);
-                    }
 
                     lastDetailPosition = position;
                 } else if (!tweetList.get(position).isDetail()) {

@@ -168,5 +168,8 @@
     <string name="tweet_toast_get_picture_failed">
         Get picture failed.
     </string>
+    <string name="tweet_toast_already_retweeted">
+        Already retweeted.
+    </string>
 
 </resources>

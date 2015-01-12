@@ -1,5 +1,9 @@
 package io.github.mthli.Tweetin.Data;
 
+import android.content.Context;
+import io.github.mthli.Tweetin.Tweet.Tweet;
+import io.github.mthli.Tweetin.Tweet.TweetUnit;
+
 public class DataUnit {
 
     public static final String TIMELINE_TABLE = "TIMELINE_TABLE";
@@ -81,5 +85,45 @@ public class DataUnit {
             + " " + RETWEETED_BY_SCREEN_NAME + " text"
             + ")";
 
-    /* Do something */
+    public static void updateByRetweet(Context context, Tweet tweet) {
+        DataAction action = new DataAction(context);
+
+        DataRecord record = (new TweetUnit(context)).getDataRecordFromTweet(tweet);
+
+        action.openDatabase(true);
+
+        action.updatedByRetweet(record, TIMELINE_TABLE);
+        action.updatedByRetweet(record, MENTION_TABLE);
+        action.updatedByRetweet(record, FAVORITE_TABLE);
+
+        action.closeDatabase();
+    }
+
+    public static void updateByFavorite(Context context, Tweet tweet) {
+        DataAction action = new DataAction(context);
+
+        DataRecord record = (new TweetUnit(context)).getDataRecordFromTweet(tweet);
+
+        action.openDatabase(true);
+
+        action.updatedByFavorite(record, TIMELINE_TABLE);
+        action.updatedByFavorite(record, MENTION_TABLE);
+        action.updatedByFavorite(record, FAVORITE_TABLE);
+
+        action.closeDatabase();
+    }
+
+    public static void updateByDelete(Context context, Tweet tweet) {
+        DataAction action = new DataAction(context);
+
+        DataRecord record = (new TweetUnit(context)).getDataRecordFromTweet(tweet);
+
+        action.openDatabase(true);
+
+        action.deleteDataRecord(record, TIMELINE_TABLE);
+        action.deleteDataRecord(record, MENTION_TABLE);
+        action.deleteDataRecord(record, FAVORITE_TABLE);
+
+        action.closeDatabase();
+    }
 }

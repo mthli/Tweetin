@@ -25,6 +25,8 @@ public class LoadMoreTask extends AsyncTask<Void, Integer, Boolean> {
     private List<Tweet> tweetList;
     private TweetUnit tweetUnit;
 
+    private int nextPage;
+
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public LoadMoreTask(BaseFragment baseFragment) {
@@ -46,6 +48,8 @@ public class LoadMoreTask extends AsyncTask<Void, Integer, Boolean> {
         tweetList = baseFragment.getTweetList();
         tweetUnit = new TweetUnit(context);
 
+        nextPage = baseFragment.getNextPage();
+
         swipeRefreshLayout = baseFragment.getSwipeRefreshLayout();
         if (!swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(true);
@@ -55,7 +59,6 @@ public class LoadMoreTask extends AsyncTask<Void, Integer, Boolean> {
     private List<twitter4j.Status> getStatusList() throws TwitterException {
         Twitter twitter = TwitterUnit.getTwitterFromSharedPreferences(context);
 
-        int nextPage = tweetList.size() / 40 + 1;
         Paging paging = new Paging(nextPage, 40);
 
         switch (fragmentFlag) {
@@ -107,6 +110,7 @@ public class LoadMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
         swipeRefreshLayout.setRefreshing(false);
 
+        baseFragment.setNextPage(++nextPage);
         baseFragment.setTaskStatus(FlagUnit.TASK_IDLE);
     }
 }

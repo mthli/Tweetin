@@ -129,83 +129,6 @@ public class TweetUnit {
         return span;
     }
 
-    public Tweet getTweetFromDataRecord(DataRecord record) {
-        Tweet tweet = new Tweet();
-
-        tweet.setAvatarURL(record.getAvatarURL());
-        tweet.setName(record.getName());
-        tweet.setScreenName(record.getScreenName());
-        tweet.setCreatedAt(record.getCreatedAt());
-        tweet.setCheckIn(record.getCheckIn());
-        tweet.setProtect(record.isProtect());
-        tweet.setPictureURL(record.getPictureURL());
-        tweet.setText(record.getText());
-        tweet.setRetweetedByName(record.getRetweetedByName());
-        tweet.setFavorite(record.isFavorite());
-
-        tweet.setStatusId(record.getStatusId());
-        tweet.setInReplyToStatusId(record.getInReplyToStatusId());
-        tweet.setRetweetedByScreenName(record.getRetweetedByScreenName());
-
-        tweet.setDetail(false);
-        tweet.setLoad(false);
-
-        return tweet;
-    }
-
-    public DataRecord getDataRecordFromStatus(Status status) {
-        DataRecord record = new DataRecord();
-
-        if (status.isRetweet()) {
-            record.setAvatarURL(status.getRetweetedStatus().getUser().getOriginalProfileImageURL());
-            record.setName(status.getRetweetedStatus().getUser().getName());
-            record.setScreenName(status.getRetweetedStatus().getUser().getScreenName());
-            record.setCreatedAt(status.getRetweetedStatus().getCreatedAt().getTime());
-            Place place = status.getRetweetedStatus().getPlace();
-            if (place != null) {
-                record.setCheckIn(place.getFullName());
-            } else {
-                record.setCheckIn(null);
-            }
-            record.setProtect(status.getRetweetedStatus().getUser().isProtected());
-            record.setPictureURL(getPictureURLFromStatus(status.getRetweetedStatus()));
-            record.setText(getDetailTextFromStatus(status.getRetweetedStatus()));
-            record.setRetweetedByName(status.getUser().getName());
-            record.setFavorite(status.getRetweetedStatus().isFavorited());
-
-            record.setStatusId(status.getRetweetedStatus().getId());
-            record.setInReplyToStatusId(status.getRetweetedStatus().getInReplyToStatusId());
-            record.setRetweetedByScreenName(status.getUser().getScreenName());
-        } else {
-            record.setAvatarURL(status.getUser().getOriginalProfileImageURL());
-            record.setName(status.getUser().getName());
-            record.setScreenName(status.getUser().getScreenName());
-            record.setCreatedAt(status.getCreatedAt().getTime());
-            Place place = status.getPlace();
-            if (place != null) {
-                record.setCheckIn(place.getFullName());
-            } else {
-                record.setCheckIn(null);
-            }
-            record.setProtect(status.getUser().isProtected());
-            record.setPictureURL(getPictureURLFromStatus(status));
-            record.setText(getDetailTextFromStatus(status));
-            record.setRetweetedByName(null);
-            record.setFavorite(status.isFavorited());
-
-            record.setStatusId(status.getId());
-            record.setInReplyToStatusId(status.getInReplyToStatusId());
-            record.setRetweetedByScreenName(null);
-        }
-
-        if (status.isRetweetedByMe() || status.isRetweeted()) {
-            record.setRetweetedByName(me);
-            record.setRetweetedByScreenName(useScreenName);
-        }
-
-        return record;
-    }
-    
     public Tweet getTweetFromStatus(Status status) {
         Tweet tweet = new Tweet();
 
@@ -261,4 +184,103 @@ public class TweetUnit {
 
         return tweet;
     }
+
+    public Tweet getTweetFromDataRecord(DataRecord record) {
+        Tweet tweet = new Tweet();
+
+        tweet.setAvatarURL(record.getAvatarURL());
+        tweet.setName(record.getName());
+        tweet.setScreenName(record.getScreenName());
+        tweet.setCreatedAt(record.getCreatedAt());
+        tweet.setCheckIn(record.getCheckIn());
+        tweet.setProtect(record.isProtect());
+        tweet.setPictureURL(record.getPictureURL());
+        tweet.setText(record.getText());
+        tweet.setRetweetedByName(record.getRetweetedByName());
+        tweet.setFavorite(record.isFavorite());
+
+        tweet.setStatusId(record.getStatusId());
+        tweet.setInReplyToStatusId(record.getInReplyToStatusId());
+        tweet.setRetweetedByScreenName(record.getRetweetedByScreenName());
+
+        tweet.setDetail(false);
+        tweet.setLoad(false);
+
+        return tweet;
+    }
+
+    public DataRecord getDataRecordFromTweet(Tweet tweet) {
+        DataRecord record = new DataRecord();
+
+        record.setAvatarURL(tweet.getAvatarURL());
+        record.setName(tweet.getName());
+        record.setScreenName(tweet.getScreenName());
+        record.setCreatedAt(tweet.getCreatedAt());
+        record.setCheckIn(tweet.getCheckIn());
+        record.setProtect(tweet.isProtect());
+        record.setPictureURL(tweet.getPictureURL());
+        record.setText(tweet.getText());
+        record.setRetweetedByName(tweet.getRetweetedByName());
+        record.setFavorite(tweet.isFavorite());
+
+        record.setStatusId(tweet.getStatusId());
+        record.setInReplyToStatusId(tweet.getInReplyToStatusId());
+        record.setRetweetedByScreenName(tweet.getRetweetedByScreenName());
+
+        return record;
+    }
+
+    public DataRecord getDataRecordFromStatus(Status status) {
+        DataRecord record = new DataRecord();
+
+        if (status.isRetweet()) {
+            record.setAvatarURL(status.getRetweetedStatus().getUser().getOriginalProfileImageURL());
+            record.setName(status.getRetweetedStatus().getUser().getName());
+            record.setScreenName(status.getRetweetedStatus().getUser().getScreenName());
+            record.setCreatedAt(status.getRetweetedStatus().getCreatedAt().getTime());
+            Place place = status.getRetweetedStatus().getPlace();
+            if (place != null) {
+                record.setCheckIn(place.getFullName());
+            } else {
+                record.setCheckIn(null);
+            }
+            record.setProtect(status.getRetweetedStatus().getUser().isProtected());
+            record.setPictureURL(getPictureURLFromStatus(status.getRetweetedStatus()));
+            record.setText(getDetailTextFromStatus(status.getRetweetedStatus()));
+            record.setRetweetedByName(status.getUser().getName());
+            record.setFavorite(status.getRetweetedStatus().isFavorited());
+
+            record.setStatusId(status.getRetweetedStatus().getId());
+            record.setInReplyToStatusId(status.getRetweetedStatus().getInReplyToStatusId());
+            record.setRetweetedByScreenName(status.getUser().getScreenName());
+        } else {
+            record.setAvatarURL(status.getUser().getOriginalProfileImageURL());
+            record.setName(status.getUser().getName());
+            record.setScreenName(status.getUser().getScreenName());
+            record.setCreatedAt(status.getCreatedAt().getTime());
+            Place place = status.getPlace();
+            if (place != null) {
+                record.setCheckIn(place.getFullName());
+            } else {
+                record.setCheckIn(null);
+            }
+            record.setProtect(status.getUser().isProtected());
+            record.setPictureURL(getPictureURLFromStatus(status));
+            record.setText(getDetailTextFromStatus(status));
+            record.setRetweetedByName(null);
+            record.setFavorite(status.isFavorited());
+
+            record.setStatusId(status.getId());
+            record.setInReplyToStatusId(status.getInReplyToStatusId());
+            record.setRetweetedByScreenName(null);
+        }
+
+        if (status.isRetweetedByMe() || status.isRetweeted()) {
+            record.setRetweetedByName(me);
+            record.setRetweetedByScreenName(useScreenName);
+        }
+
+        return record;
+    }
+
 }
