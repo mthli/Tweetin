@@ -12,6 +12,7 @@ import android.view.ViewAnimationUtils;
 import android.widget.*;
 import com.devspark.progressfragment.ProgressFragment;
 import io.github.mthli.Tweetin.Activity.PostActivity;
+import io.github.mthli.Tweetin.Activity.SearchActivity;
 import io.github.mthli.Tweetin.View.ViewUnit;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.R;
@@ -49,15 +50,12 @@ public class BaseFragment extends ProgressFragment {
     }
 
     private LoadFirstTask loadFirstTask;
-    private LoadMoreTask loadMoreTask;
+    public void startLoadFirstTask(boolean swipeRefresh) {
+        loadFirstTask = new LoadFirstTask(this, swipeRefresh);
+        loadFirstTask.execute();
+    }
 
-    private int nextPage = 2;
-    public int getNextPage() {
-        return nextPage;
-    }
-    public void setNextPage(int nextPage) {
-        this.nextPage = nextPage;
-    }
+    private LoadMoreTask loadMoreTask;
 
     private int taskStatus;
     public int getTaskStatus() {
@@ -83,15 +81,24 @@ public class BaseFragment extends ProgressFragment {
         }
     }
 
+    private int nextPage = 2;
+    public int getNextPage() {
+        return nextPage;
+    }
+    public void setNextPage(int nextPage) {
+        this.nextPage = nextPage;
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        fragmentFlag = getArguments().getInt(
-                getString(R.string.bundle_fragment_flag),
-                FlagUnit.IN_TIMELINE_FRAGMENT
-        );
+        if (getActivity() instanceof SearchActivity) {
+            fragmentFlag = FlagUnit.IN_SEARCH_FRAGMENT;
+        } else {
+            fragmentFlag = getArguments().getInt(getString(R.string.bundle_fragment_flag), FlagUnit.IN_TIMELINE_FRAGMENT);
+        }
 
         super.onActivityCreated(savedInstanceState);
-        setContentView(R.layout.main_fragment);
+        setContentView(R.layout.base_fragment);
         contentView = getContentView();
         setContentEmpty(false);
         setContentShown(true);
@@ -145,7 +152,7 @@ public class BaseFragment extends ProgressFragment {
     private int currentCount = 0;
 
     private void initUI() {
-        swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.main_fragment_swipe_container);
+        swipeRefreshLayout = (SwipeRefreshLayout) contentView.findViewById(R.id.base_fragment_swipe_container);
         swipeRefreshLayout.setProgressViewOffset(false, 0, ViewUnit.getToolbarHeight(getActivity()));
         ViewUnit.setSwipeRefreshLayoutTheme(getActivity(), swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -156,7 +163,7 @@ public class BaseFragment extends ProgressFragment {
             }
         });
 
-        fab = (ImageButton) contentView.findViewById(R.id.main_fragment_fab);
+        fab = (ImageButton) contentView.findViewById(R.id.base_fragment_fab);
         if (fragmentFlag == FlagUnit.IN_TIMELINE_FRAGMENT) {
             fab.setVisibility(View.VISIBLE);
             ViewCompat.setElevation(fab, ViewUnit.getElevation(getActivity(), 2));
@@ -179,7 +186,7 @@ public class BaseFragment extends ProgressFragment {
             });
         }
 
-        final ListView listView = (ListView) contentView.findViewById(R.id.main_fragment_listview);
+        final ListView listView = (ListView) contentView.findViewById(R.id.base_fragment_listview);
 
         tweetAdapter = new TweetAdapter(
                 getActivity(),
@@ -188,8 +195,6 @@ public class BaseFragment extends ProgressFragment {
         );
         listView.setAdapter(tweetAdapter);
         tweetAdapter.notifyDataSetChanged();
-
-        /* Do something with *Listener */
 
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             private boolean moveToBottom = false;

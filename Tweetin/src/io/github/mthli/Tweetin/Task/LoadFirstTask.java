@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import io.github.mthli.Tweetin.Activity.MainActivity;
+import io.github.mthli.Tweetin.Activity.SearchActivity;
 import io.github.mthli.Tweetin.Data.DataAction;
 import io.github.mthli.Tweetin.Data.DataRecord;
 import io.github.mthli.Tweetin.Data.DataUnit;
@@ -16,6 +17,7 @@ import io.github.mthli.Tweetin.Tweet.TweetAdapter;
 import io.github.mthli.Tweetin.Tweet.TweetUnit;
 import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 import twitter4j.Paging;
+import twitter4j.Query;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
@@ -23,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoadFirstTask extends AsyncTask<Void, Integer, Boolean> {
-
     private BaseFragment baseFragment;
     private int fragmentFlag;
     private Context context;
@@ -48,20 +49,13 @@ public class LoadFirstTask extends AsyncTask<Void, Integer, Boolean> {
     private boolean isFirstLoad() {
         switch (fragmentFlag) {
             case FlagUnit.IN_TIMELINE_FRAGMENT:
-                return sharedPreferences.getBoolean(
-                        context.getString(R.string.sp_is_timeline_first),
-                        false
-                );
+                return sharedPreferences.getBoolean(context.getString(R.string.sp_is_timeline_first), false);
             case FlagUnit.IN_MENTION_FRAGMENT:
-                return sharedPreferences.getBoolean(
-                        context.getString(R.string.sp_is_mention_first),
-                        false
-                );
+                return sharedPreferences.getBoolean(context.getString(R.string.sp_is_mention_first), false);
             case FlagUnit.IN_FAVORITE_FRAGMENT:
-                return sharedPreferences.getBoolean(
-                        context.getString(R.string.sp_is_favorite_first),
-                        false
-                );
+                return sharedPreferences.getBoolean(context.getString(R.string.sp_is_favorite_first), false);
+            case FlagUnit.IN_SEARCH_FRAGMENT:
+                return sharedPreferences.getBoolean(context.getString(R.string.sp_is_search_first), true);
             default:
                 return false;
         }
@@ -91,10 +85,7 @@ public class LoadFirstTask extends AsyncTask<Void, Integer, Boolean> {
         fragmentFlag = baseFragment.getFragmentFlag();
         context = baseFragment.getActivity();
 
-        sharedPreferences = context.getSharedPreferences(
-                context.getString(R.string.sp_tweetin),
-                Context.MODE_PRIVATE
-        );
+        sharedPreferences = context.getSharedPreferences(context.getString(R.string.sp_tweetin),Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         String useScreenName = TwitterUnit.getUseScreenNameFromSharedPreferences(context);
@@ -120,7 +111,7 @@ public class LoadFirstTask extends AsyncTask<Void, Integer, Boolean> {
             }
         }
 
-        if (!swipeRefresh) {
+        if (!swipeRefresh && fragmentFlag != FlagUnit.IN_SEARCH_FRAGMENT) {
             DataAction action = new DataAction(context);
             action.openDatabase(false);
             recordList = action.getDataRecordList(getCurrentDatabaseTable());
@@ -149,6 +140,11 @@ public class LoadFirstTask extends AsyncTask<Void, Integer, Boolean> {
                 return twitter.getMentionsTimeline(paging);
             case FlagUnit.IN_FAVORITE_FRAGMENT:
                 return twitter.getFavorites(paging);
+            case FlagUnit.IN_SEARCH_FRAGMENT:
+                Query query = new Query(((SearchActivity) baseFragment.getActivity()).getKeyWord());
+                query.setCount(100);
+
+                return twitter.search(query).getTweets();
             default:
                 return new ArrayList<twitter4j.Status>();
         }
@@ -171,7 +167,7 @@ public class LoadFirstTask extends AsyncTask<Void, Integer, Boolean> {
         try {
             statusList = getStatusList();
 
-            if (fragmentFlag != FlagUnit.IN_FAVORITE_FRAGMENT) {
+            if (fragmentFlag == FlagUnit.IN_TIMELINE_FRAGMENT || fragmentFlag == FlagUnit.IN_MENTION_FRAGMENT) {
                 latestMention = getLatestMention();
             }
         } catch (Exception e) {
@@ -182,21 +178,29 @@ public class LoadFirstTask extends AsyncTask<Void, Integer, Boolean> {
             return false;
         }
 
-        DataAction action = new DataAction(context);
-        action.openDatabase(true);
-        action.deleteAll(getCurrentDatabaseTable());
+        if (fragmentFlag != FlagUnit.IN_SEARCH_FRAGMENT) {
+            DataAction action = new DataAction(context);
+            action.openDatabase(true);
+            action.deleteAll(getCurrentDatabaseTable());
 
-        recordList.clear();
+            recordList.clear();
 
-        for (twitter4j.Status status : statusList) {
-            DataRecord record = tweetUnit.getDataRecordFromStatus(status);
+            for (twitter4j.Status status : statusList) {
+                DataRecord record = tweetUnit.getDataRecordFromStatus(status);
 
-            action.addDataRecord(record, getCurrentDatabaseTable());
+                action.addDataRecord(record, getCurrentDatabaseTable());
 
-            recordList.add(record);
+                recordList.add(record);
+            }
+
+            action.closeDatabase();
+        } else {
+            recordList.clear();
+
+            for (twitter4j.Status status : statusList) {
+                recordList.add(tweetUnit.getDataRecordFromStatus(status));
+            }
         }
-
-        action.closeDatabase();
 
         if (isCancelled()) {
             return false;
@@ -222,6 +226,8 @@ public class LoadFirstTask extends AsyncTask<Void, Integer, Boolean> {
                 return context.getString(R.string.fragment_empty_get_mention_data_failed);
             case FlagUnit.IN_FAVORITE_FRAGMENT:
                 return context.getString(R.string.fragment_empty_get_favorite_data_failed);
+            case FlagUnit.IN_SEARCH_FRAGMENT:
+                return context.getString(R.string.fragment_empty_search_failed);
             default:
                 return context.getString(R.string.fragment_empty_get_data_failed);
         }
@@ -230,36 +236,20 @@ public class LoadFirstTask extends AsyncTask<Void, Integer, Boolean> {
     private void updateInitializationResultToSharedPreferences(boolean result) {
         switch (fragmentFlag) {
             case FlagUnit.IN_TIMELINE_FRAGMENT:
-                editor.putBoolean(
-                        context.getString(R.string.sp_is_timeline_first),
-                        !result
-                ).commit();
+                editor.putBoolean(context.getString(R.string.sp_is_timeline_first), !result).commit();
                 break;
             case FlagUnit.IN_MENTION_FRAGMENT:
-                editor.putBoolean(
-                        context.getString(R.string.sp_is_mention_first),
-                        !result
-                ).commit();
+                editor.putBoolean(context.getString(R.string.sp_is_mention_first), !result).commit();
                 break;
             case FlagUnit.IN_FAVORITE_FRAGMENT:
-                editor.putBoolean(
-                        context.getString(R.string.sp_is_favorite_first),
-                        !result
-                ).commit();
+                editor.putBoolean(context.getString(R.string.sp_is_favorite_first), !result).commit();
+                break;
+            case FlagUnit.IN_SEARCH_FRAGMENT:
                 break;
             default:
-                editor.putBoolean(
-                        context.getString(R.string.sp_is_timeline_first),
-                        true
-                ).commit();
-                editor.putBoolean(
-                        context.getString(R.string.sp_is_mention_first),
-                        true
-                ).commit();
-                editor.putBoolean(
-                        context.getString(R.string.sp_is_favorite_first),
-                        true
-                ).commit();
+                editor.putBoolean(context.getString(R.string.sp_is_timeline_first), true).commit();
+                editor.putBoolean(context.getString(R.string.sp_is_mention_first), true).commit();
+                editor.putBoolean(context.getString(R.string.sp_is_favorite_first), true).commit();
                 break;
         }
     }
@@ -284,10 +274,7 @@ public class LoadFirstTask extends AsyncTask<Void, Integer, Boolean> {
                 swipeRefreshLayout.setRefreshing(false);
             }
 
-            long spLatestMentionId = sharedPreferences.getLong(
-                    context.getString(R.string.sp_latest_mention_id),
-                    -1
-            );
+            long spLatestMentionId = sharedPreferences.getLong(context.getString(R.string.sp_latest_mention_id), -1);
             if (latestMention != null && latestMention.getId() > spLatestMentionId) {
                 if (fragmentFlag == FlagUnit.IN_TIMELINE_FRAGMENT) {
                     ((MainActivity) baseFragment.getActivity()).showBadge(true);

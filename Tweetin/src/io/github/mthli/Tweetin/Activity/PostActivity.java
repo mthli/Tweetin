@@ -12,7 +12,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.*;
 import android.widget.*;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.Picture.PictureUnit;
 import io.github.mthli.Tweetin.R;
@@ -207,10 +206,6 @@ public class PostActivity extends Activity {
     }
 
     private void initUI() {
-        SystemBarTintManager systemBarTintManager = new SystemBarTintManager(this);
-        systemBarTintManager.setNavigationBarTintEnabled(true);
-        systemBarTintManager.setNavigationBarTintColor(getResources().getColor(R.color.black));
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.post_toolbar);
         ViewCompat.setElevation(toolbar, ViewUnit.getElevation(this, 2));
 

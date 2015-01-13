@@ -3,12 +3,14 @@ package io.github.mthli.Tweetin.Activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.view.*;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import io.github.mthli.Tweetin.View.ViewUnit;
@@ -25,6 +27,7 @@ public class MainActivity extends FragmentActivity {
 
     private View mentionTab;
     private ViewPager viewPager;
+    private MainPagerAdapter mainPagerAdapter;
 
     public void showBadge(boolean show) {
         View bubble = mentionTab.findViewById(R.id.badge_view_bubble);
@@ -36,9 +39,12 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    public boolean isBadgeShown() {
+        return mentionTab.findViewById(R.id.badge_view_bubble).getVisibility() == View.VISIBLE;
+    }
+
     public void initUI() {
         View header = findViewById(R.id.main_header);
-        ((RelativeLayout.LayoutParams) header.getLayoutParams()).setMargins(0, ViewUnit.getStatusBarHeight(this), 0, 0); //
         header.setVisibility(View.VISIBLE);
         ViewCompat.setElevation(header, ViewUnit.getElevation(this, 2));
 
@@ -52,6 +58,27 @@ public class MainActivity extends FragmentActivity {
         ImageButton searchViewClear = (ImageButton) findViewById(R.id.search_view_clear);
         ViewCompat.setElevation(searchView, ViewUnit.getElevation(this, 4));
 
+        searchViewEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String keyWord = searchViewEditText.getText().toString();
+
+                    if (keyWord.length() > 0) {
+                        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                        intent.putExtra(getString(R.string.search_intent_key_word), keyWord);
+                        startActivity(intent);
+
+                        showSearchView(false);
+                    } else {
+                        Toast.makeText(MainActivity.this, R.string.search_toast_empty, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                return true;
+            }
+        });
+
         searchViewClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +88,7 @@ public class MainActivity extends FragmentActivity {
 
         viewPager = (ViewPager) findViewById(R.id.main_viewpager);
         viewPager.setOffscreenPageLimit(5);
-        final MainPagerAdapter mainPagerAdapter = new MainPagerAdapter(this);
+        mainPagerAdapter = new MainPagerAdapter(this);
         viewPager.setAdapter(mainPagerAdapter);
 
         final TabHost tabHost = (TabHost) findViewById(android.R.id.tabhost);
@@ -124,7 +151,9 @@ public class MainActivity extends FragmentActivity {
                 }
                 tabIconList.get(Integer.valueOf(tabId)).setImageAlpha(255);
 
-                if (Integer.valueOf(tabId) == FlagUnit.IN_MENTION_FRAGMENT) {
+                if (isBadgeShown() && Integer.valueOf(tabId) == FlagUnit.IN_MENTION_FRAGMENT) {
+                    mainPagerAdapter.getFragmentFromPosition(Integer.valueOf(tabId)).startLoadFirstTask(true);
+
                     showBadge(false);
                 }
 
@@ -170,7 +199,9 @@ public class MainActivity extends FragmentActivity {
                 }
                 tabIconList.get(position).setImageAlpha(255);
 
-                if (position == FlagUnit.IN_MENTION_FRAGMENT) {
+                if (isBadgeShown() && position == FlagUnit.IN_MENTION_FRAGMENT) {
+                    mainPagerAdapter.getFragmentFromPosition(position).startLoadFirstTask(true);
+
                     showBadge(false);
                 }
 
@@ -268,11 +299,7 @@ public class MainActivity extends FragmentActivity {
             int top = location[1];
             int bottom = top + searchView.getHeight();
 
-            if (left <= motionEvent.getRawX() && motionEvent.getRawX() <= right && top <= motionEvent.getRawY() && motionEvent.getRawY() <= bottom) {
-                return false;
-            } else {
-                return true;
-            }
+            return !(left <= motionEvent.getRawX() && motionEvent.getRawX() <= right && top <= motionEvent.getRawY() && motionEvent.getRawY() <= bottom);
         }
 
         return false;
@@ -322,10 +349,25 @@ public class MainActivity extends FragmentActivity {
             if (searchView != null && searchView.isShown()) {
                 showSearchView(false);
             } else {
+                for (int i = 0; i < mainPagerAdapter.getCount(); i++) {
+                    mainPagerAdapter.getFragmentFromPosition(i).cancelAllTask();
+                }
+
                 finish();
             }
         }
 
-        return true; //
+        return true;
     }
+
+    @Override
+    public void onDestroy() {
+        for (int i = 0; i < mainPagerAdapter.getCount(); i++) {
+            mainPagerAdapter.getFragmentFromPosition(i).cancelAllTask();
+        }
+
+        super.onDestroy();
+    }
+
+    // TODO: onActivityResult
 }

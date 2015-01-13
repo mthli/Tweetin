@@ -81,8 +81,13 @@
 
         </activity>
 
-        <!-- DialogueActivity -->
+        <!-- DetailActivity -->
         <activity android:name=".Activity.DetailActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+
+        <!-- SearchActvity -->
+        <activity android:name=".Activity.SearchActivity"
                   android:screenOrientation="portrait">
         </activity>
 

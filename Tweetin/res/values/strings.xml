@@ -22,6 +22,9 @@
     <string name="fragment_empty_get_favorite_data_failed">
         Get favorite data failed.
     </string>
+    <string name="fragment_empty_search_failed">
+        Search failed.
+    </string>
     <string name="fragment_empty_get_data_failed">
         Get data failed.
     </string>
@@ -125,6 +128,10 @@
 
     <!-- Search -->
     <string name="search_hint">Search</string>
+    <string name="search_defauft_key_word">42</string>
+    <string name="search_toast_empty">
+        You haven\'t inputted anything.
+    </string>
 
     <!-- Setting -->
     <string name="setting_label">Setting</string>

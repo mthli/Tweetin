@@ -39,10 +39,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        BaseFragment baseFragment = new BaseFragment();
-
         Bundle bundle = new Bundle();
-
         switch (position) {
             case FlagUnit.IN_TIMELINE_FRAGMENT:
                 bundle.putInt(mainActivity.getString(R.string.bundle_fragment_flag), FlagUnit.IN_TIMELINE_FRAGMENT);
@@ -58,6 +55,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                 break;
         }
 
+        BaseFragment baseFragment = new BaseFragment();
         baseFragment.setArguments(bundle);
 
         sparseArray.put(position, baseFragment);

@@ -2,10 +2,12 @@
 
 <resources>
 
+    <!-- Picture -->
     <string name="picture_intent_picture_name">
         PICTURE_INTENT_PICTURE_NAME
     </string>
 
+    <!-- Post -->
     <string name="post_intent_post_flag">
         POST_INTENT_POST_FLAG
     </string>
@@ -23,6 +25,11 @@
     </string>
     <string name="post_intent_check_in">
         POST_INTENT_CHECK_IN
+    </string>
+
+    <!-- Search -->
+    <string name="search_intent_key_word">
+        SEARCH_INTENT_KEY_WORD
     </string>
 
 </resources>

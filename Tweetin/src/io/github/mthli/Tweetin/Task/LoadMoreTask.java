@@ -35,6 +35,10 @@ public class LoadMoreTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onPreExecute() {
+        if (baseFragment.getFragmentFlag() == FlagUnit.IN_SEARCH_FRAGMENT) {
+            onCancelled();
+        }
+
         if (baseFragment.getTaskStatus() == FlagUnit.TASK_RUNNING) {
             onCancelled();
         } else {
