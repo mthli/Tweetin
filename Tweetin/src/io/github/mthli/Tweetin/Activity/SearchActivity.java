@@ -14,14 +14,6 @@ import io.github.mthli.Tweetin.View.ViewUnit;
 public class SearchActivity extends FragmentActivity {
     private SearchFragment searchFragment;
 
-    private String keyWord;
-    public String getKeyWord() {
-        if (keyWord == null) {
-            return getString(R.string.search_defauft_key_word);
-        }
-        return keyWord;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,14 +24,14 @@ public class SearchActivity extends FragmentActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.search_toolbar);
         ViewCompat.setElevation(toolbar, ViewUnit.getElevation(this, 2));
 
-        setActionBar(toolbar);
-        getActionBar().setTitle(keyWord);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        keyWord = getIntent().getStringExtra(getString(R.string.search_intent_key_word));
+        String keyWord = getIntent().getStringExtra(getString(R.string.search_intent_key_word));
         if (keyWord == null) {
             keyWord = getString(R.string.search_defauft_key_word);
         }
+
+        setActionBar(toolbar);
+        getActionBar().setTitle(keyWord);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.search_fragment);
     }

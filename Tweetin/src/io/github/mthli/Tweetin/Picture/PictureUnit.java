@@ -2,6 +2,7 @@ package io.github.mthli.Tweetin.Picture;
 
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -11,6 +12,11 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
+import android.widget.Toast;
+import io.github.mthli.Tweetin.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class PictureUnit {
     public static Bitmap fixBitmap(Context context, Bitmap bitmap) {
@@ -35,10 +41,19 @@ public class PictureUnit {
         return bitmap;
     }
 
-    public static String getPictureName(String pictureURL) {
-        String[] array = pictureURL.split("/");
+    public static String getPictureName(Context context, String pictureURL) {
+        String[] suffixes = context.getResources().getStringArray(R.array.picture_suffixes);
 
-        return array[array.length - 1];
+        String[] array = pictureURL.split("/");
+        String pictureName = array[array.length - 1];
+
+        for (String suffix : suffixes) {
+            if (pictureName.endsWith(suffix)) {
+                return pictureName;
+            }
+        }
+
+        return pictureName + suffixes[0];
     }
 
     private static boolean isExternalStorageDocument(Uri uri) {
@@ -123,7 +138,35 @@ public class PictureUnit {
         return null;
     }
 
-    public static void save(Context context, Bitmap bitmap, String pcitureName) {
+    public static void save(Context context, Bitmap bitmap, String pictureURL) {
+        if (bitmap == null) {
+            Toast.makeText(context, R.string.picture_toast_save_picture_failed, Toast.LENGTH_SHORT).show();
+            return;
+        }
 
+        String pictureName = getPictureName(context, pictureURL);
+
+        File appDir = new File(Environment.getExternalStorageDirectory(), context.getString(R.string.app_name));
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        File file = new File(appDir, pictureName);
+        try {
+            String[] suffixes = context.getResources().getStringArray(R.array.picture_suffixes);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            if (pictureName.endsWith(suffixes[0])) {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            } else {
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            }
+            outputStream.flush();
+            outputStream.close();
+        } catch (Exception e) {
+            Toast.makeText(context, R.string.picture_toast_save_picture_failed, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+
+        Toast.makeText(context, R.string.picture_toast_save_picture_successful, Toast.LENGTH_SHORT).show();
     }
 }

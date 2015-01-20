@@ -112,8 +112,8 @@
               android:layout_marginBottom="12dp"
               android:layout_marginLeft="12dp"
               android:layout_marginRight="12dp"
-              android:textSize="14sp"
-              android:textColor="@color/text">
+              android:textColor="@color/text"
+              android:textSize="14sp">
     </TextView>
 
     <LinearLayout android:id="@+id/tweet_info"

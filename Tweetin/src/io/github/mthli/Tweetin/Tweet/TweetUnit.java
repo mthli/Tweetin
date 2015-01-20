@@ -1,8 +1,12 @@
 package io.github.mthli.Tweetin.Tweet;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.widget.Toast;
 import com.twitter.Extractor;
 import io.github.mthli.Tweetin.Data.DataRecord;
 import io.github.mthli.Tweetin.R;
@@ -281,5 +285,56 @@ public class TweetUnit {
         }
 
         return record;
+    }
+
+    public Intent getIntentFromTweet(Tweet tweet, Class<?> cls) {
+        Intent intent = new Intent(context, cls);
+        intent.putExtra(context.getString(R.string.tweet_intent_avatar_url), tweet.getAvatarURL());
+        intent.putExtra(context.getString(R.string.tweet_intent_name), tweet.getName());
+        intent.putExtra(context.getString(R.string.tweet_intent_screen_name), tweet.getScreenName());
+        intent.putExtra(context.getString(R.string.tweet_intent_created_at), tweet.getCreatedAt());
+        intent.putExtra(context.getString(R.string.tweet_intent_check_in), tweet.getCheckIn());
+        intent.putExtra(context.getString(R.string.tweet_intent_protect), tweet.isProtect());
+        intent.putExtra(context.getString(R.string.tweet_intent_picture_url), tweet.getPictureURL());
+        intent.putExtra(context.getString(R.string.tweet_intent_text), tweet.getText());
+        intent.putExtra(context.getString(R.string.tweet_intent_retweeted_by_name), tweet.getRetweetedByName());
+        intent.putExtra(context.getString(R.string.tweet_intent_favorite), tweet.isFavorite());
+        intent.putExtra(context.getString(R.string.tweet_intent_status_id), tweet.getStatusId());
+        intent.putExtra(context.getString(R.string.tweet_intent_in_reply_to_status_id), tweet.getInReplyToStatusId());
+        intent.putExtra(context.getString(R.string.tweet_intent_retweeted_by_screen_name), tweet.getRetweetedByScreenName());
+        return intent;
+    }
+
+    public Tweet getTweetFromIntent(Intent intent) {
+        Tweet tweet = new Tweet();
+        tweet.setAvatarURL(intent.getStringExtra(context.getString(R.string.tweet_intent_avatar_url)));
+        tweet.setName(intent.getStringExtra(context.getString(R.string.tweet_intent_name)));
+        tweet.setScreenName(intent.getStringExtra(context.getString(R.string.tweet_intent_screen_name)));
+        tweet.setCreatedAt(intent.getLongExtra(context.getString(R.string.tweet_intent_created_at), 0));
+        tweet.setCheckIn(intent.getStringExtra(context.getString(R.string.tweet_intent_check_in)));
+        tweet.setProtect(intent.getBooleanExtra(context.getString(R.string.tweet_intent_protect), false));
+        tweet.setPictureURL(intent.getStringExtra(context.getString(R.string.tweet_intent_picture_url)));
+        tweet.setText(intent.getStringExtra(context.getString(R.string.tweet_intent_text)));
+        tweet.setRetweetedByName(intent.getStringExtra(context.getString(R.string.tweet_intent_retweeted_by_name)));
+        tweet.setFavorite(intent.getBooleanExtra(context.getString(R.string.tweet_intent_favorite), false));
+        tweet.setStatusId(intent.getLongExtra(context.getString(R.string.tweet_intent_status_id), -1));
+        tweet.setInReplyToStatusId(intent.getLongExtra(context.getString(R.string.tweet_intent_in_reply_to_status_id), -1));
+        tweet.setRetweetedByScreenName(intent.getStringExtra(context.getString(R.string.tweet_intent_retweeted_by_screen_name)));
+        return tweet;
+    }
+
+    public void share(Tweet tweet) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, "@" + tweet.getScreenName() + ": " + tweet.getText());
+        context.startActivity(Intent.createChooser(intent, context.getString(R.string.tweet_share_label)));
+    }
+
+    public void copy(Tweet tweet) {
+        ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText(context.getString(R.string.tweet_copy_label), tweet.getText());
+        clipboardManager.setPrimaryClip(clipData);
+        Toast.makeText(context, R.string.tweet_toast_copy_successful, Toast.LENGTH_SHORT).show();
     }
 }

@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.Tweet;
+import io.github.mthli.Tweetin.Tweet.TweetUnit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,38 +33,28 @@ public class DialogUnit {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(linearLayout);
         builder.setCancelable(true);
-        AlertDialog alertDialog = builder.create();
+        final AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
+        final TweetUnit tweetUnit = new TweetUnit(context);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        detail(context, tweet);
-                        break;
-                    case 1:
-                        share(context, tweet);
-                        break;
-                    case 2:
-                        copy(context, tweet);
-                        break;
-                    default:
-                        break;
+                String text = stringList.get(position);
+                if (text.equals(context.getString(R.string.dialog_item_detail))) {
+                    // TODO
+                } else if (text.equals(context.getString(R.string.dialog_item_share))) {
+                    tweetUnit.share(tweet);
+                } else if (text.equals(context.getString(R.string.dialog_item_copy))) {
+                    tweetUnit.copy(tweet);
                 }
+                alertDialog.hide();
+                alertDialog.dismiss();
             }
         });
     }
 
     private static void detail(Context context, Tweet tweet) {
-
-    }
-
-    private static void share(Context context, Tweet tweet) {
-
-    }
-
-    private static void copy(Context context, Tweet tweet) {
 
     }
 }

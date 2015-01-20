@@ -1,10 +1,12 @@
 package io.github.mthli.Tweetin.Tweet;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import io.github.mthli.Tweetin.Activity.SearchActivity;
 import io.github.mthli.Tweetin.R;
 
 public class TweetTagSpan extends ClickableSpan {
@@ -27,6 +29,8 @@ public class TweetTagSpan extends ClickableSpan {
 
     @Override
     public void onClick(View view) {
-        /* Do something */
+        Intent intent = new Intent(context, SearchActivity.class);
+        intent.putExtra(context.getString(R.string.search_intent_key_word), "#" + tag);
+        context.startActivity(intent);
     }
 }

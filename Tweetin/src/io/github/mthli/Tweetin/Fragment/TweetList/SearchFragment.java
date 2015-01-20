@@ -29,6 +29,14 @@ public class SearchFragment extends ListFragment {
 
     private int previousPosition = 0;
 
+    private String keyWord = null;
+    public String getKeyWord() {
+        if (keyWord == null) {
+            return getString(R.string.search_defauft_key_word);
+        }
+        return keyWord;
+    }
+
     private SearchTask searchTask;
 
     private int taskStatus = FlagUnit.TASK_IDLE;
@@ -41,6 +49,11 @@ public class SearchFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
 
         initUI();
+
+        keyWord = getActivity().getIntent().getStringExtra(getString(R.string.search_intent_key_word));
+        if (keyWord == null) {
+            keyWord =  getString(R.string.search_defauft_key_word);
+        }
 
         searchTask = new SearchTask(this, false);
         searchTask.execute();

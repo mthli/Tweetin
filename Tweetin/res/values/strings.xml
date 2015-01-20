@@ -45,7 +45,7 @@
     <string name="main_menu_search">Search</string>
     <string name="main_menu_post">Post</string>
     <string name="main_menu_setting">Setting</string>
-    <string name="picture_menu_description">Description</string>
+    <string name="picture_menu_share">Share</string>
     <string name="picture_menu_save">Save</string>
     <string name="post_menu_send">Send</string>
     
@@ -100,6 +100,10 @@
     <string name="picture_label">Picture</string>
     <string name="picture_reload">Reload</string>
     <string name="picture_media_type">photo</string>
+    <string-array name="picture_suffixes">
+        <item>.jpg</item>
+        <item>.png</item>
+    </string-array>
     <string name="picture_instagram_prefix">
         http://instagram.com/p/
     </string>
@@ -115,8 +119,11 @@
     <string name="picture_toast_reload">
         Reload picture.
     </string>
-    <string name="picture_error_get_picture_failed">
-        Get picture failed.
+    <string name="picture_toast_save_picture_successful">
+        Save picture successful.
+    </string>
+    <string name="picture_toast_save_picture_failed">
+        Save picture failed.
     </string>
 
     <!-- Post -->
@@ -176,6 +183,10 @@
     <string name="tweet_just_now">
         Just now
     </string>
+    <string name="tweet_share_label">
+        Share tweet
+    </string>
+    <string name="tweet_copy_label">COPY</string>
     <string name="tweet_toast_reply">Reply</string>
     <string name="tweet_toast_quote">Quote</string>
     <string name="tweet_toast_retweet">Retweet</string>
@@ -190,6 +201,9 @@
     </string>
     <string name="tweet_toast_already_retweeted">
         Already retweeted.
+    </string>
+    <string name="tweet_toast_copy_successful">
+        Copy successful.
     </string>
 
 </resources>

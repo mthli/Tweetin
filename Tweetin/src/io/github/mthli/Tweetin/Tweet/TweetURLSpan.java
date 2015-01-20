@@ -1,7 +1,9 @@
 package io.github.mthli.Tweetin.Tweet;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
@@ -27,6 +29,8 @@ public class TweetURLSpan extends ClickableSpan {
 
     @Override
     public void onClick(View view) {
-
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        context.startActivity(intent);
     }
 }

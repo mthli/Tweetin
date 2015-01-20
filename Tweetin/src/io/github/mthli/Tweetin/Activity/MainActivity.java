@@ -38,11 +38,9 @@ public class MainActivity extends FragmentActivity {
 
         Uri uri = getIntent().getData();
         if (uri != null && uri.toString().startsWith(getString(R.string.app_callback_url))) {
-
             String oAuthVerifier = uri.getQueryParameter(
                     getString(R.string.app_oauth_verifier)
             );
-
             GetAccessTokenTask getAccessTokenTask = new GetAccessTokenTask(
                     this,
                     oAuthVerifier
@@ -56,7 +54,6 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -80,10 +77,8 @@ public class MainActivity extends FragmentActivity {
     public boolean dispatchTouchEvent(MotionEvent motionEvent) {
         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
             View view = getCurrentFocus();
-
             if (shouldHideSearchView(view, motionEvent)) {
                 showSearchView(false);
-
                 return false;
             }
         }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,6 +134,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         }
 
         if (tweet.isDetail()) {
+            tweetHolder.text.setMovementMethod(LinkMovementMethod.getInstance());
             tweetHolder.text.setText(tweetUnit.getSpanFromTweet(tweet));
 
             if (tweet.isProtect() || tweet.getScreenName().equals(useScreenName)) {
@@ -165,6 +167,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
 
             tweetHolder.action.setVisibility(View.VISIBLE);
         } else {
+            tweetHolder.text.setMovementMethod(null);
             tweetHolder.text.setText(tweet.getText());
 
             tweetHolder.action.setVisibility(View.GONE);
@@ -266,10 +269,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         tweetHolder.pictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, PictureActivity.class);
-                intent.putExtra(activity.getString(R.string.picture_intent_picture_url), tweet.getPictureURL());
-                intent.putExtra(activity.getString(R.string.picture_intent_description), tweet.getText());
-                activity.startActivity(intent);
+                activity.startActivity(tweetUnit.getIntentFromTweet(tweet, PictureActivity.class));
                 activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });

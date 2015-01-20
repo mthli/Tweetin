@@ -2,14 +2,6 @@
 
 <resources>
 
-    <!-- Picture -->
-    <string name="picture_intent_picture_url">
-        PICTURE_INTENT_PICTURE_URL
-    </string>
-    <string name="picture_intent_description">
-        PICTURE_INTENT_DESCRIPTION
-    </string>
-
     <!-- Post -->
     <string name="post_intent_post_flag">
         POST_INTENT_POST_FLAG
@@ -33,6 +25,47 @@
     <!-- Search -->
     <string name="search_intent_key_word">
         SEARCH_INTENT_KEY_WORD
+    </string>
+
+    <!-- Tweet -->
+    <string name="tweet_intent_avatar_url">
+        TWEET_INTENT_AVATAR_URL
+    </string>
+    <string name="tweet_intent_name">
+        TWEET_INTENT_NAME
+    </string>
+    <string name="tweet_intent_screen_name">
+        TWEET_INTENT_SCREEN_NAME
+    </string>
+    <string name="tweet_intent_created_at">
+        TWEET_INTENT_CREATED_AT
+    </string>
+    <string name="tweet_intent_check_in">
+        TWEET_INTENT_CHECK_IN
+    </string>
+    <string name="tweet_intent_protect">
+        TWEET_INTENT_PROTECT
+    </string>
+    <string name="tweet_intent_picture_url">
+        TWEET_INTENT_PICTURE_URL
+    </string>
+    <string name="tweet_intent_text">
+        TWEET_INTENT_TEXT
+    </string>
+    <string name="tweet_intent_retweeted_by_name">
+        TWEET_INTENT_RETWEETED_BY_NAME
+    </string>
+    <string name="tweet_intent_favorite">
+        TWEET_INTENT_FAVORITE
+    </string>
+    <string name="tweet_intent_status_id">
+        TWEET_INTENT_STATUS_ID
+    </string>
+    <string name="tweet_intent_in_reply_to_status_id">
+        TWEET_INTENT_IN_REPLY_TO_STATUS_ID
+    </string>
+    <string name="tweet_intent_retweeted_by_screen_name">
+        TWEET_INTENT_RETWEETED_BY_SCREEN_NAME
     </string>
 
 </resources>

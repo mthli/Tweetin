@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.Toast;
-import io.github.mthli.Tweetin.Activity.SearchActivity;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.Fragment.TweetList.SearchFragment;
 import io.github.mthli.Tweetin.R;
@@ -74,7 +73,7 @@ public class SearchTask extends AsyncTask<Void, Void, Boolean> {
         }
 
         try {
-            Query query = new Query(((SearchActivity) searchFragment.getActivity()).getKeyWord());
+            Query query = new Query(searchFragment.getKeyWord());
             query.setCount(100);
             statusList = TwitterUnit.getTwitterFromSharedPreferences(context).search(query).getTweets();
         } catch (TwitterException t) {

@@ -1,9 +1,9 @@
 package io.github.mthli.Tweetin.Fragment.Picture;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +16,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.pnikosis.materialishprogress.ProgressWheel;
-import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Tweet.Tweet;
 import io.github.mthli.Tweetin.Tweet.TweetUnit;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -26,22 +26,12 @@ public class PictureFragment extends Fragment {
     private TextView reloadView;
     private ImageView pictureView;
 
-    private TextView descriptionView;
-    public TextView getDescriptionView() {
-        return descriptionView;
-    }
-
     private String pictureURL = null;
     private RequestQueue requestQueue;
 
     private Bitmap originBitmap = null;
     public Bitmap getOriginBitmap() {
         return originBitmap;
-    }
-
-    private int taskStatus = FlagUnit.TASK_IDLE;
-    public void setTaskStatus(int taskStatus) {
-        this.taskStatus = taskStatus;
     }
 
     @Override
@@ -62,18 +52,20 @@ public class PictureFragment extends Fragment {
         pictureView = (ImageView) getView().findViewById(R.id.picture_fragment_picture);
         pictureView.setVisibility(View.GONE);
 
-        descriptionView = (TextView) getView().findViewById(R.id.picture_fragment_description);
+        TextView descriptionView = (TextView) getView().findViewById(R.id.picture_fragment_description);
         descriptionView.getBackground().setAlpha(153);
         descriptionView.setVisibility(View.VISIBLE);
 
-        Intent intent = getActivity().getIntent();
-        pictureURL = intent.getStringExtra(getString(R.string.picture_intent_picture_url));
+        Tweet tweet = (new TweetUnit(getActivity())).getTweetFromIntent(getActivity().getIntent());
+        pictureURL = tweet.getPictureURL();
         if (pictureURL == null) {
             pictureURL = getString(R.string.picture_default_picture_url);
         }
-        String description = intent.getStringExtra(getString(R.string.picture_intent_description));
+        String description = tweet.getText();
         if (description == null) {
             description = getString(R.string.picture_default_desciption);
+        } else {
+            description = "@" + tweet.getScreenName() + ": " + description;
         }
 
         reloadView.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +82,7 @@ public class PictureFragment extends Fragment {
             }
         });
 
+        descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
         descriptionView.setText((new TweetUnit(getActivity())).getSpanFromText(description));
 
         requestQueue = Volley.newRequestQueue(getActivity());
@@ -128,8 +121,6 @@ public class PictureFragment extends Fragment {
                         progressWheel.setVisibility(View.GONE);
                         reloadView.setVisibility(View.VISIBLE);
                         pictureView.setVisibility(View.GONE);
-
-                        Toast.makeText(getActivity(), R.string.tweet_toast_get_picture_failed, Toast.LENGTH_SHORT).show();
                     }
                 }
         );

@@ -20,9 +20,9 @@
               android:layout_height="wrap_content"
               android:layout_centerInParent="true"
               android:gravity="center"
-              android:textColor="@color/white"
               android:text="@string/picture_reload"
-              android:textSize="16sp"
+              android:textColor="@color/textview_reload_selector"
+              android:textSize="18sp"
               android:visibility="gone">
     </TextView>
 
@@ -39,7 +39,8 @@
               android:layout_height="wrap_content"
               android:layout_alignParentBottom="true"
               android:padding="12dp"
-              android:textColor="@color/textview_reload_selector"
+              android:textColor="@color/white"
+              android:textColorHighlight="@color/white"
               android:textSize="12sp"
               android:background="@color/black">
     </TextView>
