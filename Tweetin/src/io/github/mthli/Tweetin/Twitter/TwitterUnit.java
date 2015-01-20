@@ -9,9 +9,7 @@ import twitter4j.auth.AccessToken;
 
 public class TwitterUnit {
     public static Twitter getTwitterFromInstance() {
-        TwitterFactory twitterFactory = new TwitterFactory();
-
-        return twitterFactory.getInstance();
+        return (new TwitterFactory()).getInstance();
     }
 
     public static Twitter getTwitterFromSharedPreferences(Context context) {
@@ -31,7 +29,7 @@ public class TwitterUnit {
                 null
         );
 
-        Twitter twitter = getTwitterFromInstance();
+        Twitter twitter = (new TwitterFactory()).getInstance();
         twitter.setOAuthConsumer(consumerKey, consumerSecret);
 
         AccessToken token = new AccessToken(accessToken, accessTokenSecret);

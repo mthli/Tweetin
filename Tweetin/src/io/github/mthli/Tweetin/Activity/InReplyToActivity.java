@@ -7,38 +7,33 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toolbar;
-import io.github.mthli.Tweetin.Fragment.TweetList.SearchFragment;
+import io.github.mthli.Tweetin.Fragment.TweetList.InReplyToFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.View.ViewUnit;
 
-public class SearchActivity extends FragmentActivity {
-    private SearchFragment searchFragment;
+public class InReplyToActivity extends FragmentActivity {
+    private InReplyToFragment inReplyToFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ViewUnit.setCustomTheme(this);
-        setContentView(R.layout.search);
+        setContentView(R.layout.in_reply_to);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.search_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.in_reply_to_toolbar);
         ViewCompat.setElevation(toolbar, ViewUnit.getElevation(this, 2));
 
-        String keyWord = getIntent().getStringExtra(getString(R.string.search_intent_key_word));
-        if (keyWord == null) {
-            keyWord = getString(R.string.search_defauft_key_word);
-        }
-
         setActionBar(toolbar);
-        getActionBar().setTitle(keyWord);
+        getActionBar().setTitle(getString(R.string.in_reply_to_label));
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        searchFragment = (SearchFragment) getSupportFragmentManager().findFragmentById(R.id.search_fragment);
+        inReplyToFragment = (InReplyToFragment) getSupportFragmentManager().findFragmentById(R.id.in_reply_to_fragment);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_menu, menu);
+        getMenuInflater().inflate(R.menu.in_reply_to_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -46,7 +41,7 @@ public class SearchActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                searchFragment.cancelAllTasks();
+                inReplyToFragment.cancelAllTasks();
                 finish();
                 break;
             default:
@@ -58,7 +53,7 @@ public class SearchActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            searchFragment.cancelAllTasks();
+            inReplyToFragment.cancelAllTasks();
             finish();
         }
         return true;
@@ -66,7 +61,7 @@ public class SearchActivity extends FragmentActivity {
 
     @Override
     public void onDestroy() {
-        searchFragment.cancelAllTasks();
+        inReplyToFragment.cancelAllTasks();
         super.onDestroy();
     }
 

@@ -9,14 +9,14 @@ import android.widget.AdapterView;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.Fragment.Base.ListFragment;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Task.TweetList.SearchTask;
+import io.github.mthli.Tweetin.Task.TweetList.InReplyToTask;
 import io.github.mthli.Tweetin.Tweet.Tweet;
 import io.github.mthli.Tweetin.Tweet.TweetAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends ListFragment {
+public class InReplyToFragment extends ListFragment {
     private TweetAdapter tweetAdapter;
     public TweetAdapter getTweetAdapter() {
         return tweetAdapter;
@@ -32,15 +32,7 @@ public class SearchFragment extends ListFragment {
         this.previousPosition = previousPosition;
     }
 
-    private String keyWord = null;
-    public String getKeyWord() {
-        if (keyWord == null) {
-            return getString(R.string.search_defauft_key_word);
-        }
-        return keyWord;
-    }
-
-    private SearchTask searchTask;
+    private InReplyToTask inReplyToTask;
 
     private int taskStatus = FlagUnit.TASK_IDLE;
     public void setTaskStatus(int taskStatus) {
@@ -53,13 +45,8 @@ public class SearchFragment extends ListFragment {
 
         initUI();
 
-        keyWord = getActivity().getIntent().getStringExtra(getString(R.string.search_intent_key_word));
-        if (keyWord == null) {
-            keyWord =  getString(R.string.search_defauft_key_word);
-        }
-
-        searchTask = new SearchTask(this, false);
-        searchTask.execute();
+        inReplyToTask = new InReplyToTask(this, false);
+        inReplyToTask.execute();
     }
 
     private void initUI() {
@@ -67,8 +54,8 @@ public class SearchFragment extends ListFragment {
             @Override
             public void onRefresh() {
                 if (!isSomeTasksRunning()) {
-                    searchTask = new SearchTask(SearchFragment.this, true);
-                    searchTask.execute();
+                    inReplyToTask = new InReplyToTask(InReplyToFragment.this, true);
+                    inReplyToTask.execute();
                 }
             }
         });
@@ -117,8 +104,8 @@ public class SearchFragment extends ListFragment {
     }
 
     public void cancelAllTasks() {
-        if (searchTask != null && searchTask.getStatus() == AsyncTask.Status.RUNNING) {
-            searchTask.cancel(true);
+        if (inReplyToTask != null && inReplyToTask.getStatus() == AsyncTask.Status.RUNNING) {
+            inReplyToTask.cancel(true);
         }
     }
 }

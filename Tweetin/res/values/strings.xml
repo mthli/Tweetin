@@ -2,7 +2,7 @@
 <resources>
 
     <!-- Dialog -->
-    <string name="dialog_item_detail">Detail</string>
+    <string name="dialog_item_in_reply_to">In reply to</string>
     <string name="dialog_item_share">Share</string>
     <string name="dialog_item_copy">Copy</string>
 
@@ -27,6 +27,12 @@
     </string>
     <string name="fragment_toast_post_a_new_tweet">
         Post a new tweet.
+    </string>
+
+    <!-- InReplyTo -->
+    <string name="in_reply_to_label">Tweet</string>
+    <string name="in_reply_to_error_get_tweets_failed">
+        Get tweets failed.
     </string>
 
     <!-- Main -->

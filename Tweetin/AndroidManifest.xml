@@ -81,7 +81,7 @@
         </activity>
 
         <!-- DetailActivity -->
-        <activity android:name=".Activity.DetailActivity"
+        <activity android:name=".Activity.InReplyToActivity"
                   android:screenOrientation="portrait">
         </activity>
 

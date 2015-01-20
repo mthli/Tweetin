@@ -59,6 +59,8 @@ public class SearchTask extends AsyncTask<Void, Void, Boolean> {
             return;
         }
 
+        searchFragment.setPreviousPosition(0);
+
         if (!swipeRefresh) {
             searchFragment.setContentShown(false);
         } else if (!swipeRefreshLayout.isRefreshing()) {

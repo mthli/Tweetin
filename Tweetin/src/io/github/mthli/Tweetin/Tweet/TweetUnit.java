@@ -55,8 +55,6 @@ public class TweetUnit {
             }
         }
 
-        // TODO: Support more, such us *.gif
-
         return null;
     }
 
