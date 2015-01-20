@@ -128,6 +128,13 @@ public class MentionFragment extends ListFragment {
         return taskStatus == FlagUnit.TASK_RUNNING;
     }
 
+    public void getLatestMentions() {
+        if (!isSomeTasksRunning()) {
+            mentionFirstTask = new MentionFirstTask(this, true);
+            mentionFirstTask.execute();
+        }
+    }
+
     public void cancelAllTasks() {
         if (mentionFirstTask != null && mentionFirstTask.getStatus() == AsyncTask.Status.RUNNING) {
             mentionFirstTask.cancel(true);

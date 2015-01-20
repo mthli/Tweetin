@@ -48,7 +48,6 @@ public class DialogUnit {
                 if (text.equals(activity.getString(R.string.dialog_item_in_reply_to))) {
                     Intent intent = tweetUnit.getIntentFromTweet(tweet, InReplyToActivity.class);
                     activity.startActivity(intent);
-                    // TODO: startActivityForResult();
                 } else if (text.equals(activity.getString(R.string.dialog_item_share))) {
                     tweetUnit.share(tweet);
                 } else if (text.equals(activity.getString(R.string.dialog_item_copy))) {

@@ -23,6 +23,10 @@ import io.github.mthli.Tweetin.Dialog.DialogUnit;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.Picture.PictureUnit;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Task.Tweet.DeleteTask;
+import io.github.mthli.Tweetin.Task.Tweet.FavoriteTask;
+import io.github.mthli.Tweetin.Task.Tweet.RemoveTask;
+import io.github.mthli.Tweetin.Task.Tweet.RetweetTask;
 import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 
 import java.io.FileOutputStream;
@@ -55,7 +59,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
         View view = convertView;
         final TweetHolder tweetHolder;
 
@@ -227,7 +231,13 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         tweetHolder.retweetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
+                String screenName = tweet.getRetweetedByScreenName();
+                if (screenName != null && screenName.equals(TwitterUnit.getUseScreenNameFromSharedPreferences(activity))) {
+                    Toast.makeText(activity, R.string.tweet_toast_already_retweeted, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                (new RetweetTask(activity, TweetAdapter.this, tweetList, position)).execute();
             }
         });
         tweetHolder.retweetButton.setOnLongClickListener(new View.OnLongClickListener() {
@@ -241,7 +251,11 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         tweetHolder.favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
+                if (!tweet.isFavorite()) {
+                    (new FavoriteTask(activity, TweetAdapter.this, tweetList, position)).execute();
+                } else {
+                    (new RemoveTask(activity, TweetAdapter.this, tweetList, position)).execute();
+                }
             }
         });
         tweetHolder.favoriteButton.setOnLongClickListener(new View.OnLongClickListener() {
@@ -255,7 +269,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         tweetHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
+                (new DeleteTask(activity, TweetAdapter.this, tweetList, position)).execute();
             }
         });
         tweetHolder.deleteButton.setOnLongClickListener(new View.OnLongClickListener() {

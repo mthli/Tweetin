@@ -13,6 +13,9 @@ import io.github.mthli.Tweetin.View.ViewUnit;
 
 public class InReplyToActivity extends FragmentActivity {
     private InReplyToFragment inReplyToFragment;
+    public InReplyToFragment getInReplyToFragment() {
+        return inReplyToFragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,5 +68,5 @@ public class InReplyToActivity extends FragmentActivity {
         super.onDestroy();
     }
 
-    // TODO: onActivityResult()
+    // TODO: onActivityResult();
 }

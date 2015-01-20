@@ -70,5 +70,5 @@ public class SearchActivity extends FragmentActivity {
         super.onDestroy();
     }
 
-    // TODO: onActivityResult()
+    // TODO: onActivityResult();
 }

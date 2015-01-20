@@ -13,6 +13,9 @@ import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+import io.github.mthli.Tweetin.Fragment.TweetList.FavoriteFragment;
+import io.github.mthli.Tweetin.Fragment.TweetList.MentionFragment;
+import io.github.mthli.Tweetin.Fragment.TweetList.TimelineFragment;
 import io.github.mthli.Tweetin.View.ViewUnit;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.R;
@@ -38,13 +41,8 @@ public class MainActivity extends FragmentActivity {
 
         Uri uri = getIntent().getData();
         if (uri != null && uri.toString().startsWith(getString(R.string.app_callback_url))) {
-            String oAuthVerifier = uri.getQueryParameter(
-                    getString(R.string.app_oauth_verifier)
-            );
-            GetAccessTokenTask getAccessTokenTask = new GetAccessTokenTask(
-                    this,
-                    oAuthVerifier
-            );
+            String oAuthVerifier = uri.getQueryParameter(getString(R.string.app_oauth_verifier));
+            GetAccessTokenTask getAccessTokenTask = new GetAccessTokenTask(this, oAuthVerifier);
             getAccessTokenTask.execute();
         } else {
             initUI();
@@ -92,12 +90,7 @@ public class MainActivity extends FragmentActivity {
             if (searchView != null && searchView.isShown()) {
                 showSearchView(false);
             } else {
-                /*
-                for (int i = 0; i < mainPagerAdapter.getCount(); i++) {
-                    mainPagerAdapter.getFragmentFromPosition(i).cancelAllTasks(); // TODO: check if execute
-                }
-                */
-
+                cancelAllTasks();
                 finish();
             }
         }
@@ -107,16 +100,9 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onDestroy() {
-        /*
-        for (int i = 0; i < mainPagerAdapter.getCount(); i++) {
-            mainPagerAdapter.getFragmentFromPosition(i).cancelAllTasks(); // TODO: check if execute
-        }
-        */
-
+        cancelAllTasks();
         super.onDestroy();
     }
-
-    // TODO: onActivityResult
 
     public void initUI() {
         View header = findViewById(R.id.main_header);
@@ -187,7 +173,6 @@ public class MainActivity extends FragmentActivity {
             @Override
             public boolean onLongClick(View view) {
                 Toast.makeText(MainActivity.this, mainPagerAdapter.getPageTitle(0), Toast.LENGTH_SHORT).show();
-
                 return true;
             }
         });
@@ -201,7 +186,6 @@ public class MainActivity extends FragmentActivity {
             @Override
             public boolean onLongClick(View view) {
                 Toast.makeText(MainActivity.this, mainPagerAdapter.getPageTitle(1), Toast.LENGTH_SHORT).show();
-
                 return true;
             }
         });
@@ -215,7 +199,6 @@ public class MainActivity extends FragmentActivity {
             @Override
             public boolean onLongClick(View view) {
                 Toast.makeText(MainActivity.this, mainPagerAdapter.getPageTitle(2), Toast.LENGTH_SHORT).show();
-
                 return true;
             }
         });
@@ -234,10 +217,8 @@ public class MainActivity extends FragmentActivity {
                 tabIconList.get(Integer.valueOf(tabId)).setImageAlpha(255);
 
                 if (isBadgeShown() && Integer.valueOf(tabId) == FlagUnit.IN_MENTION_FRAGMENT) {
-                    /*
-                     * TODO:
-                     * mainPagerAdapter.getFragmentFromPosition(Integer.valueOf(tabId)).startLoadFirstTask(true);
-                     */
+                    MentionFragment mentionFragment = (MentionFragment) mainPagerAdapter.getFragmentFromPosition(FlagUnit.IN_MENTION_FRAGMENT);
+                    mentionFragment.getLatestMentions();
 
                     showBadge(false);
                 }
@@ -285,10 +266,8 @@ public class MainActivity extends FragmentActivity {
                 tabIconList.get(position).setImageAlpha(255);
 
                 if (isBadgeShown() && position == FlagUnit.IN_MENTION_FRAGMENT) {
-                    /*
-                     * TODO:
-                     * mainPagerAdapter.getFragmentFromPosition(Integer.valueOf(tabId)).startLoadFirstTask(true);
-                     */
+                    MentionFragment mentionFragment = (MentionFragment) mainPagerAdapter.getFragmentFromPosition(FlagUnit.IN_MENTION_FRAGMENT);
+                    mentionFragment.getLatestMentions();
 
                     showBadge(false);
                 }
@@ -300,7 +279,6 @@ public class MainActivity extends FragmentActivity {
 
     public void showBadge(boolean show) {
         View bubble = mentionTab.findViewById(R.id.badge_view_bubble);
-
         if (show) {
             bubble.setVisibility(View.VISIBLE);
         } else {
@@ -315,9 +293,7 @@ public class MainActivity extends FragmentActivity {
     private void showSearchView(boolean show) {
         View view = findViewById(R.id.main_menu_search);
 
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(
-                Context.INPUT_METHOD_SERVICE
-        );
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         int[] location = new int[2];
         view.getLocationOnScreen(location);
@@ -347,7 +323,6 @@ public class MainActivity extends FragmentActivity {
                     searchView.getWidth(),
                     0
             );
-
             anim.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
@@ -357,7 +332,6 @@ public class MainActivity extends FragmentActivity {
                     searchView.setVisibility(View.INVISIBLE);
                 }
             });
-
             anim.start();
 
             inputMethodManager.hideSoftInputFromWindow(
@@ -382,4 +356,12 @@ public class MainActivity extends FragmentActivity {
 
         return false;
     }
+
+    private void cancelAllTasks() {
+        ((TimelineFragment) mainPagerAdapter.getFragmentFromPosition(FlagUnit.IN_TIMELINE_FRAGMENT)).cancelAllTasks();
+        ((MentionFragment) mainPagerAdapter.getFragmentFromPosition(FlagUnit.IN_MENTION_FRAGMENT)).cancelAllTasks();
+        ((FavoriteFragment) mainPagerAdapter.getFragmentFromPosition(FlagUnit.IN_FAVORITE_FRAGMENT)).cancelAllTasks();
+    }
+
+    // TODO: onActivityResult();
 }
