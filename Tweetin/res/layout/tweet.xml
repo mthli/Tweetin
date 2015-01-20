@@ -106,26 +106,6 @@
 
     </RelativeLayout>
 
-    <ProgressBar android:id="@+id/tweet_loading"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_marginBottom="12dp"
-                 android:layout_gravity="center"
-                 style="?android:attr/progressBarStyleSmallInverse"
-                 android:visibility="gone">
-    </ProgressBar>
-
-    <ImageView android:id="@+id/tweet_picture"
-               android:contentDescription="@null"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_marginBottom="12dp"
-               android:adjustViewBounds="true"
-               android:scaleType="centerCrop"
-               android:background="@color/white"
-               android:visibility="gone">
-    </ImageView>
-
     <TextView android:id="@+id/tweet_text"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
@@ -222,6 +202,16 @@
                      android:layout_height="wrap_content"
                      android:layout_weight="1"
                      android:src="@drawable/ic_action_delete"
+                     android:background="@drawable/common_ripple"
+                     android:visibility="gone">
+        </ImageButton>
+
+        <ImageButton android:id="@+id/tweet_action_picture"
+                     android:contentDescription="@null"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:src="@drawable/ic_action_picture"
                      android:background="@drawable/common_ripple"
                      android:visibility="gone">
         </ImageButton>

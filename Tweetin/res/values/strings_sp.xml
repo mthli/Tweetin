@@ -34,9 +34,6 @@
     <string name="sp_is_favorite_first">
         SP_IS_FAVORITE_FIRST
     </string>
-    <string name="sp_is_search_first">
-        SP_IS_SEARCH_FIRST
-    </string>
     <string name="sp_latest_mention_id">
         SP_LATEST_MENTION_ID
     </string>

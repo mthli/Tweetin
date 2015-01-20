@@ -17,7 +17,6 @@ public class Tweet {
     private String retweetedByScreenName;
 
     private boolean detail;
-    private boolean load;
 
     public Tweet() {
         this.avatarURL = null;
@@ -36,7 +35,6 @@ public class Tweet {
         this.retweetedByScreenName = null;
 
         this.detail = false;
-        this.load = false;
     }
 
     public String getAvatarURL() {
@@ -135,12 +133,5 @@ public class Tweet {
     }
     public void setDetail(boolean detail) {
         this.detail = detail;
-    }
-
-    public boolean isLoad() {
-        return load;
-    }
-    public void setLoad(boolean load) {
-        this.load = load;
     }
 }

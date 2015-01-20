@@ -25,8 +25,6 @@ public class TweetUnit {
     }
 
     public String getPictureURLFromStatus(Status status) {
-        String[] suffixes = context.getResources().getStringArray(R.array.picture_suffixes); //
-
         URLEntity[] urlEntities;
         MediaEntity[] mediaEntities;
 
@@ -38,20 +36,22 @@ public class TweetUnit {
             mediaEntities = status.getMediaEntities();
         }
 
+        /* Support for *.png and *.jpg */
         for (MediaEntity mediaEntity : mediaEntities) {
             if (mediaEntity.getType().equals(context.getString(R.string.picture_media_type))) {
                 return mediaEntity.getMediaURL();
             }
         }
 
+        /* Support for Instagram */
         for (URLEntity urlEntity : urlEntities) {
             String expandedURL = urlEntity.getExpandedURL();
-            for (String suffix : suffixes) {
-                if (expandedURL.endsWith(suffix)) {
-                    return expandedURL;
-                }
+            if (expandedURL.startsWith(context.getString(R.string.picture_instagram_prefix))) {
+                return expandedURL + context.getString(R.string.picture_instagram_suffix);
             }
         }
+
+        // TODO: Support more, such us *.gif
 
         return null;
     }
@@ -89,9 +89,7 @@ public class TweetUnit {
         return text;
     }
 
-    public SpannableString getSpanFromTweet(Tweet tweet) {
-        String text = tweet.getText();
-
+    public SpannableString getSpanFromText(String text) {
         Extractor extractor = new Extractor();
         List<String> urlList = extractor.extractURLs(text);
         List<String> userList = extractor.extractMentionedScreennames(text);
@@ -127,6 +125,10 @@ public class TweetUnit {
         }
 
         return span;
+    }
+
+    public SpannableString getSpanFromTweet(Tweet tweet) {
+        return getSpanFromText(tweet.getText());
     }
 
     public Tweet getTweetFromStatus(Status status) {
@@ -180,7 +182,6 @@ public class TweetUnit {
         }
 
         tweet.setDetail(false);
-        tweet.setLoad(false);
 
         return tweet;
     }
@@ -204,7 +205,6 @@ public class TweetUnit {
         tweet.setRetweetedByScreenName(record.getRetweetedByScreenName());
 
         tweet.setDetail(false);
-        tweet.setLoad(false);
 
         return tweet;
     }
@@ -282,5 +282,4 @@ public class TweetUnit {
 
         return record;
     }
-
 }

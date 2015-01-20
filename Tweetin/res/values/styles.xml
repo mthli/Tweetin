@@ -15,6 +15,7 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
         <item name="android:textColorHighlight">@color/blue_300</item>
+        <item name="android:textColorHint">@color/hint</item>
         <item name="android:itemTextAppearance">@style/BaseAppTheme.TextAppearance</item>
 
         <item name="android:actionModeBackground">@color/blue_500</item>
@@ -72,13 +73,6 @@
         <item name="android:colorAccent">@color/teal_700</item>
         <item name="android:textColorHighlight">@color/teal_300</item>
         <item name="android:actionModeBackground">@color/teal_500</item>
-    </style>
-
-    <!-- PictureActivityTheme -->
-    <style name="PictureActivityTheme" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowBackground">@color/black</item>
     </style>
 
 </resources>

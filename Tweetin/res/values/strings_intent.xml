@@ -3,8 +3,11 @@
 <resources>
 
     <!-- Picture -->
-    <string name="picture_intent_picture_name">
-        PICTURE_INTENT_PICTURE_NAME
+    <string name="picture_intent_picture_url">
+        PICTURE_INTENT_PICTURE_URL
+    </string>
+    <string name="picture_intent_description">
+        PICTURE_INTENT_DESCRIPTION
     </string>
 
     <!-- Post -->

@@ -6,11 +6,11 @@
              android:background="@color/background">
 
     <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/base_fragment_swipe_container"
+            android:id="@+id/list_fragment_swipe_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <ListView android:id="@+id/base_fragment_listview"
+        <ListView android:id="@+id/list_fragment_listview"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:divider="@color/transparent"
@@ -23,7 +23,7 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <ImageButton android:id="@+id/base_fragment_fab"
+    <ImageButton android:id="@+id/list_fragment_fab"
                  android:contentDescription="@null"
                  android:layout_width="56dp"
                  android:layout_height="56dp"

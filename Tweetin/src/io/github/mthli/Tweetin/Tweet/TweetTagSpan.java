@@ -9,7 +9,6 @@ import io.github.mthli.Tweetin.R;
 
 public class TweetTagSpan extends ClickableSpan {
     private Context context;
-
     private String tag;
 
     public TweetTagSpan(Context context, String tag) {

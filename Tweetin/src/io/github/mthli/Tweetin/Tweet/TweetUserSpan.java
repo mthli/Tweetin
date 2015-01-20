@@ -9,12 +9,10 @@ import io.github.mthli.Tweetin.R;
 
 public class TweetUserSpan extends ClickableSpan {
     private Context context;
-
     private String user;
 
     public TweetUserSpan(Context context, String user) {
         this.context = context;
-
         this.user = user;
     }
 

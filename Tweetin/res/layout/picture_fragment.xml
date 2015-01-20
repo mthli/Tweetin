@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:wheel="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black">
+
+    <com.pnikosis.materialishprogress.ProgressWheel
+            android:id="@+id/picture_fragment_progress_bar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            wheel:matProg_barColor="@color/white"
+            wheel:matProg_progressIndeterminate="true">
+    </com.pnikosis.materialishprogress.ProgressWheel>
+
+    <TextView android:id="@+id/picture_fragment_reload"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_centerInParent="true"
+              android:gravity="center"
+              android:textColor="@color/white"
+              android:text="@string/picture_reload"
+              android:textSize="16sp"
+              android:visibility="gone">
+    </TextView>
+
+    <ImageView android:id="@+id/picture_fragment_picture"
+               android:contentDescription="@null"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:layout_centerInParent="true"
+               android:visibility="gone">
+    </ImageView>
+
+    <TextView android:id="@+id/picture_fragment_description"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true"
+              android:padding="12dp"
+              android:textColor="@color/textview_reload_selector"
+              android:textSize="12sp"
+              android:background="@color/black">
+    </TextView>
+
+</RelativeLayout>

@@ -7,10 +7,13 @@ public class FlagUnit {
     public static final int COLOR_PURPLE = 3;
     public static final int COLOR_TEAL = 4;
 
+    public static final int IN_TWEET_LIST_FRAGMENT = 0x100;
+    public static final int IN_DETAIL_FRAGMENT = 0x101;
+    public static final int IN_SEARCH_FRAGMENT = 0x102;
+
     public static final int IN_TIMELINE_FRAGMENT = 0;
     public static final int IN_MENTION_FRAGMENT = 1;
     public static final int IN_FAVORITE_FRAGMENT = 2;
-    public static final int IN_SEARCH_FRAGMENT = 3;
 
     public static final int NOTIFICATION_ID = 0x100;
 

@@ -1,4 +1,4 @@
-package io.github.mthli.Tweetin.Task;
+package io.github.mthli.Tweetin.Task.Tweet;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,7 +16,7 @@ import twitter4j.StatusUpdate;
 
 import java.io.File;
 
-public class PostTask extends AsyncTask<Void, Integer, Boolean> {
+public class PostTask extends AsyncTask<Void, Void, Boolean> {
     private PostActivity postActivity;
 
     private long inReplyToStatusId;
@@ -124,19 +124,10 @@ public class PostTask extends AsyncTask<Void, Integer, Boolean> {
     }
 
     @Override
-    protected void onCancelled() {
-        /* Do nothing */
-    }
+    protected void onCancelled() {}
 
     @Override
-    protected void onProgressUpdate(Integer... values) {
-        /* Do nothing */
-    }
-
-    @Override
-    protected void onPostExecute(Boolean result) {
-        /* Do nothing */
-    }
+    protected void onPostExecute(Boolean result) {}
 
     private PendingIntent getPendingIntent() {
         /* Do something */

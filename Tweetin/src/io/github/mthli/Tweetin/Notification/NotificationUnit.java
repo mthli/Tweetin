@@ -7,22 +7,11 @@ import android.content.Context;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
 
 public class NotificationUnit {
-    public static void show(
-            Context context,
-            int smallIconResId,
-            int contentTitleResId,
-            String contentText
-    ) {
+    public static void show(Context context, int smallIconResId, int contentTitleResId, String contentText) {
         show(context, smallIconResId, contentTitleResId, contentText, null);
     }
 
-    public static void show(
-            Context context,
-            int smallIconResId,
-            int contentTitleResId,
-            String contentText,
-            PendingIntent pendingIntent
-    ) {
+    public static void show(Context context, int smallIconResId, int contentTitleResId, String contentText, PendingIntent pendingIntent) {
         Notification.Builder builder = new Notification.Builder(context);
         builder.setSmallIcon(smallIconResId)
                 .setContentTitle(context.getString(contentTitleResId))

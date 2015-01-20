@@ -7,7 +7,7 @@
               android:paddingTop="15dp"
               android:paddingBottom="15dp">
 
-    <TextView android:id="@+id/context_dialog_item"
+    <TextView android:id="@+id/dialog_item"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginStart="15dp"

@@ -9,12 +9,10 @@ import io.github.mthli.Tweetin.R;
 
 public class TweetURLSpan extends ClickableSpan {
     private Context context;
-
     private String url;
 
     public TweetURLSpan(Context context, String url) {
         this.context = context;
-
         this.url = url;
     }
 

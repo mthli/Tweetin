@@ -16,7 +16,7 @@ import android.widget.*;
 import io.github.mthli.Tweetin.View.ViewUnit;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Task.GetAccessTokenTask;
+import io.github.mthli.Tweetin.Task.OAuth.GetAccessTokenTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,19 +29,99 @@ public class MainActivity extends FragmentActivity {
     private ViewPager viewPager;
     private MainPagerAdapter mainPagerAdapter;
 
-    public void showBadge(boolean show) {
-        View bubble = mentionTab.findViewById(R.id.badge_view_bubble);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        if (show) {
-            bubble.setVisibility(View.VISIBLE);
+        ViewUnit.setCustomTheme(this);
+        setContentView(R.layout.main);
+
+        Uri uri = getIntent().getData();
+        if (uri != null && uri.toString().startsWith(getString(R.string.app_callback_url))) {
+
+            String oAuthVerifier = uri.getQueryParameter(
+                    getString(R.string.app_oauth_verifier)
+            );
+
+            GetAccessTokenTask getAccessTokenTask = new GetAccessTokenTask(
+                    this,
+                    oAuthVerifier
+            );
+            getAccessTokenTask.execute();
         } else {
-            bubble.setVisibility(View.GONE);
+            initUI();
         }
     }
 
-    public boolean isBadgeShown() {
-        return mentionTab.findViewById(R.id.badge_view_bubble).getVisibility() == View.VISIBLE;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.main_menu_search:
+                showSearchView(true);
+                break;
+            case R.id.main_menu_setting:
+                /* Do something */
+                break;
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(menuItem);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent motionEvent) {
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+            View view = getCurrentFocus();
+
+            if (shouldHideSearchView(view, motionEvent)) {
+                showSearchView(false);
+
+                return false;
+            }
+        }
+
+        return super.dispatchTouchEvent(motionEvent);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (searchView != null && searchView.isShown()) {
+                showSearchView(false);
+            } else {
+                /*
+                for (int i = 0; i < mainPagerAdapter.getCount(); i++) {
+                    mainPagerAdapter.getFragmentFromPosition(i).cancelAllTasks(); // TODO: check if execute
+                }
+                */
+
+                finish();
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        /*
+        for (int i = 0; i < mainPagerAdapter.getCount(); i++) {
+            mainPagerAdapter.getFragmentFromPosition(i).cancelAllTasks(); // TODO: check if execute
+        }
+        */
+
+        super.onDestroy();
+    }
+
+    // TODO: onActivityResult
 
     public void initUI() {
         View header = findViewById(R.id.main_header);
@@ -83,6 +163,13 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 searchViewEditText.setText(null);
+            }
+        });
+        searchViewClear.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(MainActivity.this, getString(R.string.search_view_toast_clear), Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
 
@@ -152,7 +239,10 @@ public class MainActivity extends FragmentActivity {
                 tabIconList.get(Integer.valueOf(tabId)).setImageAlpha(255);
 
                 if (isBadgeShown() && Integer.valueOf(tabId) == FlagUnit.IN_MENTION_FRAGMENT) {
-                    mainPagerAdapter.getFragmentFromPosition(Integer.valueOf(tabId)).startLoadFirstTask(true);
+                    /*
+                     * TODO:
+                     * mainPagerAdapter.getFragmentFromPosition(Integer.valueOf(tabId)).startLoadFirstTask(true);
+                     */
 
                     showBadge(false);
                 }
@@ -200,7 +290,10 @@ public class MainActivity extends FragmentActivity {
                 tabIconList.get(position).setImageAlpha(255);
 
                 if (isBadgeShown() && position == FlagUnit.IN_MENTION_FRAGMENT) {
-                    mainPagerAdapter.getFragmentFromPosition(position).startLoadFirstTask(true);
+                    /*
+                     * TODO:
+                     * mainPagerAdapter.getFragmentFromPosition(Integer.valueOf(tabId)).startLoadFirstTask(true);
+                     */
 
                     showBadge(false);
                 }
@@ -210,28 +303,18 @@ public class MainActivity extends FragmentActivity {
         });
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void showBadge(boolean show) {
+        View bubble = mentionTab.findViewById(R.id.badge_view_bubble);
 
-        ViewUnit.setCustomTheme(this);
-        setContentView(R.layout.main);
-
-        Uri uri = getIntent().getData();
-        if (uri != null && uri.toString().startsWith(getString(R.string.app_callback_url))) {
-
-            String oAuthVerifier = uri.getQueryParameter(
-                    getString(R.string.app_oauth_verifier)
-            );
-
-            GetAccessTokenTask getAccessTokenTask = new GetAccessTokenTask(
-                    this,
-                    oAuthVerifier
-            );
-            getAccessTokenTask.execute();
+        if (show) {
+            bubble.setVisibility(View.VISIBLE);
         } else {
-            initUI();
+            bubble.setVisibility(View.GONE);
         }
+    }
+
+    public boolean isBadgeShown() {
+        return mentionTab.findViewById(R.id.badge_view_bubble).getVisibility() == View.VISIBLE;
     }
 
     private void showSearchView(boolean show) {
@@ -304,70 +387,4 @@ public class MainActivity extends FragmentActivity {
 
         return false;
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.main_menu_search:
-                showSearchView(true);
-                break;
-            case R.id.main_menu_setting:
-                /* Do something */
-                break;
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(menuItem);
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent motionEvent) {
-        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-            View view = getCurrentFocus();
-
-            if (shouldHideSearchView(view, motionEvent)) {
-                showSearchView(false);
-
-                return false;
-            }
-        }
-
-        return super.dispatchTouchEvent(motionEvent);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (searchView != null && searchView.isShown()) {
-                showSearchView(false);
-            } else {
-                for (int i = 0; i < mainPagerAdapter.getCount(); i++) {
-                    mainPagerAdapter.getFragmentFromPosition(i).cancelAllTask();
-                }
-
-                finish();
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public void onDestroy() {
-        for (int i = 0; i < mainPagerAdapter.getCount(); i++) {
-            mainPagerAdapter.getFragmentFromPosition(i).cancelAllTask();
-        }
-
-        super.onDestroy();
-    }
-
-    // TODO: onActivityResult
 }

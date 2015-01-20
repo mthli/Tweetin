@@ -3,29 +3,26 @@
 
     <!-- Dialog -->
     <string name="dialog_item_detail">Detail</string>
-    <string name="dialog_item_save_picture">
-        Save picture
-    </string>
     <string name="dialog_item_share">Share</string>
     <string name="dialog_item_copy">Copy</string>
 
     <!-- Fragment -->
-    <string name="fragmet_empty_get_authorization_failed">
+    <string name="fragment_error_get_authorization_failed">
         Get authorization failed, try to sign in again.
     </string>
-    <string name="fragment_empty_get_timeline_data_failed">
+    <string name="fragment_error_get_timeline_data_failed">
         Get timeline data failed.
     </string>
-    <string name="fragment_empty_get_mention_data_failed">
+    <string name="fragment_error_get_mention_data_failed">
         Get mention data failed.
     </string>
-    <string name="fragment_empty_get_favorite_data_failed">
+    <string name="fragment_error_get_favorite_data_failed">
         Get favorite data failed.
     </string>
-    <string name="fragment_empty_search_failed">
+    <string name="fragment_error_search_failed">
         Search failed.
     </string>
-    <string name="fragment_empty_get_data_failed">
+    <string name="fragment_error_get_data_failed">
         Get data failed.
     </string>
     <string name="fragment_toast_post_a_new_tweet">
@@ -42,12 +39,13 @@
     <string name="main_toast_get_access_token_failed">
         Get access token failed.
     </string>
+    <string name="search_view_toast_clear">Clear</string>
 
     <!-- Menu -->
     <string name="main_menu_search">Search</string>
     <string name="main_menu_post">Post</string>
     <string name="main_menu_setting">Setting</string>
-    <string name="picture_menu_share">Share</string>
+    <string name="picture_menu_description">Description</string>
     <string name="picture_menu_save">Save</string>
     <string name="post_menu_send">Send</string>
     
@@ -100,13 +98,25 @@
 
     <!-- Picture -->
     <string name="picture_label">Picture</string>
+    <string name="picture_reload">Reload</string>
     <string name="picture_media_type">photo</string>
-    <string-array name="picture_suffixes">
-        <item>.jpg</item>
-        <item>.png</item>
-    </string-array>
-    <string name="picture_toast_can_not_open_this_picture">
-        Can not open this picture.
+    <string name="picture_instagram_prefix">
+        http://instagram.com/p/
+    </string>
+    <string name="picture_instagram_suffix">
+        media/?size=l
+    </string>
+    <string name="picture_default_picture_url">
+        http://instagram.com/p/fA9uwTtkSN/media/?size=l
+    </string>
+    <string name="picture_default_desciption">
+        Cat and Wii.
+    </string>
+    <string name="picture_toast_reload">
+        Reload picture.
+    </string>
+    <string name="picture_error_get_picture_failed">
+        Get picture failed.
     </string>
 
     <!-- Post -->
@@ -171,6 +181,9 @@
     <string name="tweet_toast_retweet">Retweet</string>
     <string name="tweet_toast_favorite">Favorite</string>
     <string name="tweet_toast_delete">Delete</string>
+    <string name="tweet_toast_picture">
+        Show picture.
+    </string>
     <string name="tweet_toast_more">More</string>
     <string name="tweet_toast_get_picture_failed">
         Get picture failed.

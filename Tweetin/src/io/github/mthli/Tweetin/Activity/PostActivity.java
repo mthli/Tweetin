@@ -15,7 +15,7 @@ import android.widget.*;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.Picture.PictureUnit;
 import io.github.mthli.Tweetin.R;
-import io.github.mthli.Tweetin.Task.PostTask;
+import io.github.mthli.Tweetin.Task.Tweet.PostTask;
 import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 import io.github.mthli.Tweetin.View.ViewUnit;
 
@@ -223,7 +223,7 @@ public class PostActivity extends Activity {
         postText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                /* Do something */
+                /* Do nothing */
             }
 
             @Override

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/picture_menu_description"
+          android:title="@string/picture_menu_description"
+          android:showAsAction="ifRoom">
+    </item>
+
+    <item android:id="@+id/picture_menu_save"
+          android:title="@string/picture_menu_save"
+          android:showAsAction="ifRoom">
+    </item>
+
+</menu>

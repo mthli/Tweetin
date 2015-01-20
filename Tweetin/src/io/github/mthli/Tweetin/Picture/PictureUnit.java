@@ -123,7 +123,7 @@ public class PictureUnit {
         return null;
     }
 
-    public static void savePicture(Context context, Bitmap bitmap, String pcitureName) {
+    public static void save(Context context, Bitmap bitmap, String pcitureName) {
 
     }
 }

@@ -11,21 +11,17 @@ import io.github.mthli.Tweetin.R;
 
 import java.util.List;
 
-public class ContextDialogAdapter extends ArrayAdapter<String> {
+public class DialogAdapter extends ArrayAdapter<String> {
     private Context context;
     private int layoutResId;
-    private List<String> list;
+    private List<String> stringList;
 
-    public ContextDialogAdapter(
-            Context context,
-            int layoutResId,
-            List<String> list
-    ) {
-        super(context, layoutResId, list);
+    public DialogAdapter(Context context, int layoutResId, List<String> stringList) {
+        super(context, layoutResId, stringList);
 
         this.context = context;
         this.layoutResId = layoutResId;
-        this.list = list;
+        this.stringList = stringList;
     }
 
     private class Holder {
@@ -33,11 +29,7 @@ public class ContextDialogAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getView(
-            final int position,
-            final View convertView,
-            ViewGroup viewGroup
-    ) {
+    public View getView(final int position, final View convertView, ViewGroup viewGroup) {
         Holder holder;
         View view = convertView;
 
@@ -46,13 +38,13 @@ public class ContextDialogAdapter extends ArrayAdapter<String> {
             view = inflater.inflate(layoutResId, viewGroup, false);
 
             holder = new Holder();
-            holder.textView = (TextView) view.findViewById(R.id.context_dialog_item);
+            holder.textView = (TextView) view.findViewById(R.id.dialog_item);
             view.setTag(holder);
         } else {
             holder = (Holder) view.getTag();
         }
 
-        holder.textView.setText(list.get(position));
+        holder.textView.setText(stringList.get(position));
 
         return view;
     }
