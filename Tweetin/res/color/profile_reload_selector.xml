@@ -3,9 +3,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_pressed="true"
-          android:color="?android:attr/colorPrimaryDark">
+          android:color="@color/secondary_text">
     </item>
 
-    <item android:color="?android:attr/colorPrimary" />
+    <item android:color="@color/hint" />
 
 </selector>

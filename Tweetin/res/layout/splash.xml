@@ -31,8 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:background="@drawable/round_button_ripple"
             android:text="@string/splash_sign_in"
             android:textColor="@color/blue_500">

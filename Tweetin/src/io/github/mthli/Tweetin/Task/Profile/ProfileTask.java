@@ -58,6 +58,13 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
                 // TODO
             }
         });
+        reload.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(activity, R.string.profile_toast_reload, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
 
         profileAll = (RelativeLayout) profileView.findViewById(R.id.profile_all);
         profileAll.setVisibility(View.GONE);
@@ -84,8 +91,10 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
         try {
             Twitter twitter = TwitterUnit.getTwitterFromSharedPreferences(activity);
             user = twitter.showUser(sn);
-            Relationship relationship = twitter.friendsFollowers().showFriendship(usn, sn);
-            fo = relationship.isSourceFollowingTarget();
+            if (!sn.equals(usn)) {
+                Relationship relationship = twitter.friendsFollowers().showFriendship(usn, sn);
+                fo = relationship.isSourceFollowingTarget();
+            }
         } catch (TwitterException t) {
             return false;
         }
@@ -149,6 +158,9 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
             follow.setText(activity.getString(R.string.profile_follow_unfollow));
         } else {
             follow.setText(activity.getString(R.string.profile_follow_follow));
+        }
+        if (sn.equals(usn)) {
+            follow.setVisibility(View.GONE);
         }
 
         profileAll.setVisibility(View.VISIBLE);

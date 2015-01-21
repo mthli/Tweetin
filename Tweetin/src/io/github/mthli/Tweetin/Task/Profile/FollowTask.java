@@ -1,4 +1,7 @@
 package io.github.mthli.Tweetin.Task.Profile;
 
-public class FollowTask {
+import android.os.AsyncTask;
+
+public class FollowTask extends AsyncTask<Void, Void, Boolean> {
+    
 }
