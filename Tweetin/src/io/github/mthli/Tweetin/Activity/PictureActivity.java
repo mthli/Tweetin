@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toolbar;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import io.github.mthli.Tweetin.Fragment.Picture.PictureFragment;
 import io.github.mthli.Tweetin.Picture.PictureUnit;
 import io.github.mthli.Tweetin.R;
@@ -71,9 +72,14 @@ public class PictureActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            pictureFragment.cancelAllTasks();
-            finish();
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            SlidingUpPanelLayout slidingUpPanelLayout = pictureFragment.getSlidingUpPanelLayout();
+            if (slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            } else {
+                pictureFragment.cancelAllTasks();
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
         }
         return true;
     }

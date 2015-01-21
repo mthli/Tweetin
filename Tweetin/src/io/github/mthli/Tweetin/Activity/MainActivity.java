@@ -13,6 +13,7 @@ import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import io.github.mthli.Tweetin.Fragment.Base.ListFragment;
 import io.github.mthli.Tweetin.Fragment.TweetList.FavoriteFragment;
 import io.github.mthli.Tweetin.Fragment.TweetList.MentionFragment;
@@ -91,8 +92,13 @@ public class MainActivity extends FragmentActivity {
             if (searchView != null && searchView.isShown()) {
                 showSearchView(false);
             } else {
-                cancelAllTasks();
-                finish();
+                SlidingUpPanelLayout slidingUpPanelLayout = getCurrentListFragment().getSlidingUpPanelLayout();
+                if (slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+                    slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+                } else {
+                    cancelAllTasks();
+                    finish();
+                }
             }
         }
 

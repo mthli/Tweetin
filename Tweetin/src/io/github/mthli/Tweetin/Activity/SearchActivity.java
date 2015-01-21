@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toolbar;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import io.github.mthli.Tweetin.Fragment.TweetList.SearchFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.View.ViewUnit;
@@ -61,8 +62,13 @@ public class SearchActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            searchFragment.cancelAllTasks();
-            finish();
+            SlidingUpPanelLayout slidingUpPanelLayout = searchFragment.getSlidingUpPanelLayout();
+            if (slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            } else {
+                searchFragment.cancelAllTasks();
+                finish();
+            }
         }
         return true;
     }

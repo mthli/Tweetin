@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toolbar;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import io.github.mthli.Tweetin.Fragment.TweetList.InReplyToFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.View.ViewUnit;
@@ -56,8 +57,13 @@ public class InReplyToActivity extends FragmentActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            inReplyToFragment.cancelAllTasks();
-            finish();
+            SlidingUpPanelLayout slidingUpPanelLayout = inReplyToFragment.getSlidingUpPanelLayout();
+            if (slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            } else {
+                inReplyToFragment.cancelAllTasks();
+                finish();
+            }
         }
         return true;
     }

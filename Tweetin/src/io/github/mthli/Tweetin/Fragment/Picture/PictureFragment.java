@@ -28,6 +28,10 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class PictureFragment extends Fragment {
     private SlidingUpPanelLayout slidingUpPanelLayout;
+    public SlidingUpPanelLayout getSlidingUpPanelLayout() {
+        return slidingUpPanelLayout;
+    }
+
     private ProgressWheel progressWheel;
     private TextView reloadView;
     private ImageView pictureView;
