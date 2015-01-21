@@ -10,15 +10,9 @@ import io.github.mthli.Tweetin.R;
 
 public class ViewUnit {
     public static void setCustomTheme(Activity activity) {
-        SharedPreferences sharedPreferences = activity.getSharedPreferences(
-                activity.getString(R.string.sp_tweetin),
-                Context.MODE_PRIVATE
-        );
+        SharedPreferences sharedPreferences = activity.getSharedPreferences(activity.getString(R.string.sp_tweetin), Context.MODE_PRIVATE);
 
-        int spColorValue = sharedPreferences.getInt(
-                activity.getString(R.string.sp_color),
-                0
-        );
+        int spColorValue = sharedPreferences.getInt(activity.getString(R.string.sp_color), 0);
 
         switch (spColorValue) {
             case FlagUnit.COLOR_BLUE:
@@ -43,15 +37,9 @@ public class ViewUnit {
     }
 
     public static int getCustomThemeColor(Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                context.getString(R.string.sp_tweetin),
-                Context.MODE_PRIVATE
-        );
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.sp_tweetin), Context.MODE_PRIVATE);
 
-        int spColorValue = sharedPreferences.getInt(
-                context.getString(R.string.sp_color),
-                0
-        );
+        int spColorValue = sharedPreferences.getInt(context.getString(R.string.sp_color), 0);
 
         switch (spColorValue) {
             case FlagUnit.COLOR_BLUE:
@@ -70,15 +58,9 @@ public class ViewUnit {
     }
 
     public static void setSwipeRefreshLayoutTheme(Context context, SwipeRefreshLayout swipeRefreshLayout) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                context.getString(R.string.sp_tweetin),
-                Context.MODE_PRIVATE
-        );
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.sp_tweetin), Context.MODE_PRIVATE);
 
-        int spColorValue = sharedPreferences.getInt(
-                context.getString(R.string.sp_color),
-                0
-        );
+        int spColorValue = sharedPreferences.getInt(context.getString(R.string.sp_color), 0);
 
         switch (spColorValue) {
             case FlagUnit.COLOR_BLUE:
@@ -130,6 +112,10 @@ public class ViewUnit {
                 );
                 break;
         }
+    }
+
+    public static float getElevation(Context context, float degree) {
+        return context.getResources().getDisplayMetrics().density * degree;
     }
 
     public static float getElevation(Context context, int degree) {

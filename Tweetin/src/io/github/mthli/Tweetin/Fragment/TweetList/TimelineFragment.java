@@ -40,9 +40,9 @@ public class TimelineFragment extends ListFragment {
     private TimelineFirstTask timelineFirstTask;
     private TimelineMoreTask timelineMoreTask;
 
-    private int taskStatus = FlagUnit.TASK_IDLE;
-    public void setTaskStatus(int taskStatus) {
-        this.taskStatus = taskStatus;
+    private int loadTaskStatus = FlagUnit.TASK_IDLE;
+    public void setLoadTaskStatus(int loadTaskStatus) {
+        this.loadTaskStatus = loadTaskStatus;
     }
 
     private int nextPage = 2;
@@ -123,14 +123,14 @@ public class TimelineFragment extends ListFragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!isSomeTasksRunning()) {
+                if (!isSomeLoadTasksRunning()) {
                     timelineFirstTask = new TimelineFirstTask(TimelineFragment.this, true);
                     timelineFirstTask.execute();
                 }
             }
         });
 
-        tweetAdapter = new TweetAdapter(getActivity(), R.layout.tweet, tweetList);
+        tweetAdapter = new TweetAdapter(this, R.layout.tweet, tweetList);
         listView.setAdapter(tweetAdapter);
         tweetAdapter.notifyDataSetChanged();
 
@@ -163,7 +163,7 @@ public class TimelineFragment extends ListFragment {
 
                 showFab(!moveToBottom);
 
-                if (totalItemCount > 7 && totalItemCount == firstVisibleItem + visibleItemCount && moveToBottom && !isSomeTasksRunning()) {
+                if (totalItemCount > 7 && totalItemCount == firstVisibleItem + visibleItemCount && moveToBottom && !isSomeLoadTasksRunning()) {
                     timelineMoreTask = new TimelineMoreTask(TimelineFragment.this);
                     timelineMoreTask.execute();
                 }
@@ -186,8 +186,8 @@ public class TimelineFragment extends ListFragment {
         });
     }
 
-    public boolean isSomeTasksRunning() {
-        return taskStatus == FlagUnit.TASK_RUNNING;
+    public boolean isSomeLoadTasksRunning() {
+        return loadTaskStatus == FlagUnit.TASK_RUNNING;
     }
 
     public void cancelAllTasks() {
@@ -197,5 +197,6 @@ public class TimelineFragment extends ListFragment {
         if (timelineMoreTask != null && timelineMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
             timelineMoreTask.cancel(true);
         }
+        cancelProfileTask();
     }
 }

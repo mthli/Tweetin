@@ -1,12 +1,14 @@
 package io.github.mthli.Tweetin.Fragment.Picture;
 
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,12 +18,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.pnikosis.materialishprogress.ProgressWheel;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Task.Profile.ProfileTask;
 import io.github.mthli.Tweetin.Tweet.Tweet;
 import io.github.mthli.Tweetin.Tweet.TweetUnit;
+import io.github.mthli.Tweetin.View.ViewUnit;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class PictureFragment extends Fragment {
+    private SlidingUpPanelLayout slidingUpPanelLayout;
     private ProgressWheel progressWheel;
     private TextView reloadView;
     private ImageView pictureView;
@@ -34,6 +40,13 @@ public class PictureFragment extends Fragment {
         return originBitmap;
     }
 
+    private View profile;
+    public View getProfile() {
+        return profile;
+    }
+
+    private ProfileTask profileTask;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.picture_fragment, viewGroup, false);
@@ -42,6 +55,19 @@ public class PictureFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        slidingUpPanelLayout = (SlidingUpPanelLayout) getView().findViewById(R.id.picture_fragment_sliding_layout);
+        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        slidingUpPanelLayout.setShadowHeight(0);
+
+        profile = LayoutInflater.from(getActivity()).inflate(R.layout.profile, null, false);
+
+        FrameLayout drag = (FrameLayout) getView().findViewById(R.id.picture_fragment_drag);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+        );
+        drag.addView(profile, layoutParams);
 
         progressWheel = (ProgressWheel) getView().findViewById(R.id.picture_fragment_progress_bar);
         progressWheel.setVisibility(View.VISIBLE);
@@ -67,6 +93,33 @@ public class PictureFragment extends Fragment {
         } else {
             description = "@" + tweet.getScreenName() + ": " + description;
         }
+
+        slidingUpPanelLayout.setPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {}
+
+            @Override
+            public void onPanelCollapsed(View panel) {
+                if (profileTask != null && profileTask.getStatus() == AsyncTask.Status.RUNNING) {
+                    profileTask.cancel(true);
+                }
+                slidingUpPanelLayout.setShadowHeight(0);
+            }
+
+            @Override
+            public void onPanelExpanded(View panel) {}
+
+            @Override
+            public void onPanelAnchored(View panel) {}
+
+            @Override
+            public void onPanelHidden(View panel) {
+                if (profileTask != null && profileTask.getStatus() == AsyncTask.Status.RUNNING) {
+                    profileTask.cancel(true);
+                }
+                slidingUpPanelLayout.setShadowHeight(0);
+            }
+        });
 
         reloadView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +180,29 @@ public class PictureFragment extends Fragment {
         requestQueue.add(imageRequest);
     }
 
+    public void showProfile(String screenName) {
+        if (screenName == null) {
+            return;
+        }
+
+        if (profileTask != null && profileTask.getStatus() == AsyncTask.Status.RUNNING) {
+            profileTask.cancel(true);
+        }
+
+        profile.findViewById(R.id.profile_progress_bar).setVisibility(View.VISIBLE);
+        profile.findViewById(R.id.profile_all).setVisibility(View.GONE);
+
+        slidingUpPanelLayout.setShadowHeight((int) ViewUnit.getElevation(getActivity(), 2));
+        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+
+        profileTask = new ProfileTask(getActivity(), profile, screenName);
+        profileTask.execute();
+    }
+
     public void cancelAllTasks() {
+        if (profileTask != null && profileTask.getStatus() == AsyncTask.Status.RUNNING) {
+            profileTask.cancel(true);
+        }
         requestQueue.stop();
     }
 }

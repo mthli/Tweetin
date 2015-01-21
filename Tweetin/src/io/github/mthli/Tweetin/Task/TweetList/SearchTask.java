@@ -41,14 +41,14 @@ public class SearchTask extends AsyncTask<Void, Void, Boolean> {
         this.tweetAdapter = searchFragment.getTweetAdapter();
         this.tweetList = searchFragment.getTweetList();
         this.statusList = new ArrayList<twitter4j.Status>();
-        this.tweetUnit = new TweetUnit(context);
+        this.tweetUnit = new TweetUnit(searchFragment.getActivity());
 
         this.error = context.getString(R.string.fragment_error_search_failed);
     }
 
     @Override
     protected void onPreExecute() {
-        searchFragment.setTaskStatus(FlagUnit.TASK_RUNNING);
+        searchFragment.setLoadTaskStatus(FlagUnit.TASK_RUNNING);
 
         if (TwitterUnit.getUseScreenNameFromSharedPreferences(context) == null) {
             searchFragment.setContentEmpty(true);
@@ -119,6 +119,6 @@ public class SearchTask extends AsyncTask<Void, Void, Boolean> {
             }
         }
 
-        searchFragment.setTaskStatus(FlagUnit.TASK_IDLE);
+        searchFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
     }
 }

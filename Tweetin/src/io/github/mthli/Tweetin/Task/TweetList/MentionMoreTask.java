@@ -40,7 +40,7 @@ public class MentionMoreTask extends AsyncTask<Void, Void, Boolean> {
 
         this.tweetAdapter = mentionFragment.getTweetAdapter();
         this.tweetList = mentionFragment.getTweetList();
-        this.tweetUnit = new TweetUnit(context);
+        this.tweetUnit = new TweetUnit(mentionFragment.getActivity());
 
         this.statusList = new ArrayList<twitter4j.Status>();
         this.nextPage = mentionFragment.getNextPage();
@@ -50,7 +50,7 @@ public class MentionMoreTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        mentionFragment.setTaskStatus(FlagUnit.TASK_RUNNING);
+        mentionFragment.setLoadTaskStatus(FlagUnit.TASK_RUNNING);
 
         if (!swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(true);
@@ -93,6 +93,6 @@ public class MentionMoreTask extends AsyncTask<Void, Void, Boolean> {
         }
 
         swipeRefreshLayout.setRefreshing(false);
-        mentionFragment.setTaskStatus(FlagUnit.TASK_IDLE);
+        mentionFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
     }
 }

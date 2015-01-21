@@ -8,6 +8,7 @@
     <RelativeLayout android:id="@+id/main_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:background="?android:attr/colorPrimary"
                     android:visibility="gone">
 

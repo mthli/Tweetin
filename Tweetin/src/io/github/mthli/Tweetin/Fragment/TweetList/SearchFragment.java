@@ -42,9 +42,9 @@ public class SearchFragment extends ListFragment {
 
     private SearchTask searchTask;
 
-    private int taskStatus = FlagUnit.TASK_IDLE;
-    public void setTaskStatus(int taskStatus) {
-        this.taskStatus = taskStatus;
+    private int loadTaskStatus = FlagUnit.TASK_IDLE;
+    public void setLoadTaskStatus(int loadTaskStatus) {
+        this.loadTaskStatus = loadTaskStatus;
     }
 
     @Override
@@ -66,14 +66,14 @@ public class SearchFragment extends ListFragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!isSomeTasksRunning()) {
+                if (!isSomeLoadTasksRunning()) {
                     searchTask = new SearchTask(SearchFragment.this, true);
                     searchTask.execute();
                 }
             }
         });
 
-        tweetAdapter = new TweetAdapter(getActivity(), R.layout.tweet, tweetList);
+        tweetAdapter = new TweetAdapter(this, R.layout.tweet, tweetList);
         listView.setAdapter(tweetAdapter);
         tweetAdapter.notifyDataSetChanged();
 
@@ -112,13 +112,14 @@ public class SearchFragment extends ListFragment {
         });
     }
 
-    public boolean isSomeTasksRunning() {
-        return taskStatus == FlagUnit.TASK_RUNNING;
+    public boolean isSomeLoadTasksRunning() {
+        return loadTaskStatus == FlagUnit.TASK_RUNNING;
     }
 
     public void cancelAllTasks() {
         if (searchTask != null && searchTask.getStatus() == AsyncTask.Status.RUNNING) {
             searchTask.cancel(true);
         }
+        cancelProfileTask();
     }
 }

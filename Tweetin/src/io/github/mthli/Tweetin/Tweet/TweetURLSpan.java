@@ -1,6 +1,6 @@
 package io.github.mthli.Tweetin.Tweet;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -10,11 +10,11 @@ import android.view.View;
 import io.github.mthli.Tweetin.R;
 
 public class TweetURLSpan extends ClickableSpan {
-    private Context context;
+    private Activity activity;
     private String url;
 
-    public TweetURLSpan(Context context, String url) {
-        this.context = context;
+    public TweetURLSpan(Activity activity, String url) {
+        this.activity = activity;
         this.url = url;
     }
 
@@ -23,7 +23,7 @@ public class TweetURLSpan extends ClickableSpan {
         super.updateDrawState(textPaint);
 
         textPaint.setUnderlineText(false);
-        textPaint.setColor(context.getResources().getColor(R.color.secondary_text));
+        textPaint.setColor(activity.getResources().getColor(R.color.secondary_text));
         textPaint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.ITALIC));
     }
 
@@ -31,6 +31,6 @@ public class TweetURLSpan extends ClickableSpan {
     public void onClick(View view) {
         Uri uri = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        context.startActivity(intent);
+        activity.startActivity(intent);
     }
 }

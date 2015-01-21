@@ -149,6 +149,14 @@
         Check in failed, please open your Location setting.
     </string>
 
+    <!-- Profile -->
+    <string name="profile_reload">Reload</string>
+    <string name="profile_follow_follow">Follow</string>
+    <string name="profile_follow_unfollow">UnFollow</string>
+    <string name="profile_toast_reload">
+        Reload user profile.
+    </string>
+
     <!-- Search -->
     <string name="search_hint">Search</string>
     <string name="search_defauft_key_word">42</string>

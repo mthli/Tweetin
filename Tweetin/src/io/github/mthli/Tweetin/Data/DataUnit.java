@@ -1,5 +1,6 @@
 package io.github.mthli.Tweetin.Data;
 
+import android.app.Activity;
 import android.content.Context;
 import io.github.mthli.Tweetin.Tweet.Tweet;
 import io.github.mthli.Tweetin.Tweet.TweetUnit;
@@ -85,10 +86,10 @@ public class DataUnit {
             + " " + RETWEETED_BY_SCREEN_NAME + " text"
             + ")";
 
-    public static void updateByRetweet(Context context, Tweet tweet) {
-        DataAction action = new DataAction(context);
+    public static void updateByRetweet(Activity activity, Tweet tweet) {
+        DataAction action = new DataAction(activity);
 
-        DataRecord record = (new TweetUnit(context)).getDataRecordFromTweet(tweet);
+        DataRecord record = (new TweetUnit(activity)).getDataRecordFromTweet(tweet);
 
         action.openDatabase(true);
 
@@ -99,10 +100,10 @@ public class DataUnit {
         action.closeDatabase();
     }
 
-    public static void updateByFavorite(Context context, Tweet tweet) {
-        DataAction action = new DataAction(context);
+    public static void updateByFavorite(Activity activity, Tweet tweet) {
+        DataAction action = new DataAction(activity);
 
-        DataRecord record = (new TweetUnit(context)).getDataRecordFromTweet(tweet);
+        DataRecord record = (new TweetUnit(activity)).getDataRecordFromTweet(tweet);
 
         action.openDatabase(true);
 
@@ -113,10 +114,10 @@ public class DataUnit {
         action.closeDatabase();
     }
 
-    public static void updateByDelete(Context context, Tweet tweet) {
-        DataAction action = new DataAction(context);
+    public static void updateByDelete(Activity activity, Tweet tweet) {
+        DataAction action = new DataAction(activity);
 
-        DataRecord record = (new TweetUnit(context)).getDataRecordFromTweet(tweet);
+        DataRecord record = (new TweetUnit(activity)).getDataRecordFromTweet(tweet);
 
         action.openDatabase(true);
 

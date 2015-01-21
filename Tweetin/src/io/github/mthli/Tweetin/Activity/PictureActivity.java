@@ -16,6 +16,10 @@ import io.github.mthli.Tweetin.View.ViewUnit;
 
 public class PictureActivity extends FragmentActivity {
     private PictureFragment pictureFragment;
+    public PictureFragment getPictureFragment() {
+        return pictureFragment;
+    }
+
     private Tweet tweet;
 
     @Override

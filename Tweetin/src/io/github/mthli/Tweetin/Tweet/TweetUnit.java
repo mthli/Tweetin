@@ -1,5 +1,6 @@
 package io.github.mthli.Tweetin.Tweet;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -16,16 +17,16 @@ import twitter4j.*;
 import java.util.List;
 
 public class TweetUnit {
-    private Context context;
+    private Activity activity;
 
     private String useScreenName;
     private String me;
 
-    public TweetUnit(Context context) {
-        this.context = context;
+    public TweetUnit(Activity activity) {
+        this.activity = activity;
 
-        this.useScreenName = TwitterUnit.getUseScreenNameFromSharedPreferences(context);
-        this.me = context.getString(R.string.tweet_info_retweeted_by_me);
+        this.useScreenName = TwitterUnit.getUseScreenNameFromSharedPreferences(activity);
+        this.me = activity.getString(R.string.tweet_info_retweeted_by_me);
     }
 
     public String getPictureURLFromStatus(Status status) {
@@ -42,7 +43,7 @@ public class TweetUnit {
 
         /* Support for *.png and *.jpg */
         for (MediaEntity mediaEntity : mediaEntities) {
-            if (mediaEntity.getType().equals(context.getString(R.string.picture_media_type))) {
+            if (mediaEntity.getType().equals(activity.getString(R.string.picture_media_type))) {
                 return mediaEntity.getMediaURL();
             }
         }
@@ -50,8 +51,8 @@ public class TweetUnit {
         /* Support for Instagram */
         for (URLEntity urlEntity : urlEntities) {
             String expandedURL = urlEntity.getExpandedURL();
-            if (expandedURL.startsWith(context.getString(R.string.picture_instagram_prefix))) {
-                return expandedURL + context.getString(R.string.picture_instagram_suffix);
+            if (expandedURL.startsWith(activity.getString(R.string.picture_instagram_prefix))) {
+                return expandedURL + activity.getString(R.string.picture_instagram_suffix);
             }
         }
 
@@ -101,7 +102,7 @@ public class TweetUnit {
 
         for (String url : urlList) {
             span.setSpan(
-                    new TweetURLSpan(context, url),
+                    new TweetURLSpan(activity, url),
                     text.indexOf(url),
                     text.indexOf(url) + url.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -110,7 +111,7 @@ public class TweetUnit {
 
         for (String user : userList) {
             span.setSpan(
-                    new TweetUserSpan(context, user),
+                    new TweetUserSpan(activity, user),
                     text.indexOf(user),
                     text.indexOf(user) + user.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -119,7 +120,7 @@ public class TweetUnit {
 
         for (String tag : tagList) {
             span.setSpan(
-                    new TweetTagSpan(context, tag),
+                    new TweetTagSpan(activity, tag),
                     text.indexOf(tag),
                     text.indexOf(tag) + tag.length(),
                     Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -286,38 +287,38 @@ public class TweetUnit {
     }
 
     public Intent getIntentFromTweet(Tweet tweet, Class<?> cls) {
-        Intent intent = new Intent(context, cls);
-        intent.putExtra(context.getString(R.string.tweet_intent_avatar_url), tweet.getAvatarURL());
-        intent.putExtra(context.getString(R.string.tweet_intent_name), tweet.getName());
-        intent.putExtra(context.getString(R.string.tweet_intent_screen_name), tweet.getScreenName());
-        intent.putExtra(context.getString(R.string.tweet_intent_created_at), tweet.getCreatedAt());
-        intent.putExtra(context.getString(R.string.tweet_intent_check_in), tweet.getCheckIn());
-        intent.putExtra(context.getString(R.string.tweet_intent_protect), tweet.isProtect());
-        intent.putExtra(context.getString(R.string.tweet_intent_picture_url), tweet.getPictureURL());
-        intent.putExtra(context.getString(R.string.tweet_intent_text), tweet.getText());
-        intent.putExtra(context.getString(R.string.tweet_intent_retweeted_by_name), tweet.getRetweetedByName());
-        intent.putExtra(context.getString(R.string.tweet_intent_favorite), tweet.isFavorite());
-        intent.putExtra(context.getString(R.string.tweet_intent_status_id), tweet.getStatusId());
-        intent.putExtra(context.getString(R.string.tweet_intent_in_reply_to_status_id), tweet.getInReplyToStatusId());
-        intent.putExtra(context.getString(R.string.tweet_intent_retweeted_by_screen_name), tweet.getRetweetedByScreenName());
+        Intent intent = new Intent(activity, cls);
+        intent.putExtra(activity.getString(R.string.tweet_intent_avatar_url), tweet.getAvatarURL());
+        intent.putExtra(activity.getString(R.string.tweet_intent_name), tweet.getName());
+        intent.putExtra(activity.getString(R.string.tweet_intent_screen_name), tweet.getScreenName());
+        intent.putExtra(activity.getString(R.string.tweet_intent_created_at), tweet.getCreatedAt());
+        intent.putExtra(activity.getString(R.string.tweet_intent_check_in), tweet.getCheckIn());
+        intent.putExtra(activity.getString(R.string.tweet_intent_protect), tweet.isProtect());
+        intent.putExtra(activity.getString(R.string.tweet_intent_picture_url), tweet.getPictureURL());
+        intent.putExtra(activity.getString(R.string.tweet_intent_text), tweet.getText());
+        intent.putExtra(activity.getString(R.string.tweet_intent_retweeted_by_name), tweet.getRetweetedByName());
+        intent.putExtra(activity.getString(R.string.tweet_intent_favorite), tweet.isFavorite());
+        intent.putExtra(activity.getString(R.string.tweet_intent_status_id), tweet.getStatusId());
+        intent.putExtra(activity.getString(R.string.tweet_intent_in_reply_to_status_id), tweet.getInReplyToStatusId());
+        intent.putExtra(activity.getString(R.string.tweet_intent_retweeted_by_screen_name), tweet.getRetweetedByScreenName());
         return intent;
     }
 
     public Tweet getTweetFromIntent(Intent intent) {
         Tweet tweet = new Tweet();
-        tweet.setAvatarURL(intent.getStringExtra(context.getString(R.string.tweet_intent_avatar_url)));
-        tweet.setName(intent.getStringExtra(context.getString(R.string.tweet_intent_name)));
-        tweet.setScreenName(intent.getStringExtra(context.getString(R.string.tweet_intent_screen_name)));
-        tweet.setCreatedAt(intent.getLongExtra(context.getString(R.string.tweet_intent_created_at), 0));
-        tweet.setCheckIn(intent.getStringExtra(context.getString(R.string.tweet_intent_check_in)));
-        tweet.setProtect(intent.getBooleanExtra(context.getString(R.string.tweet_intent_protect), false));
-        tweet.setPictureURL(intent.getStringExtra(context.getString(R.string.tweet_intent_picture_url)));
-        tweet.setText(intent.getStringExtra(context.getString(R.string.tweet_intent_text)));
-        tweet.setRetweetedByName(intent.getStringExtra(context.getString(R.string.tweet_intent_retweeted_by_name)));
-        tweet.setFavorite(intent.getBooleanExtra(context.getString(R.string.tweet_intent_favorite), false));
-        tweet.setStatusId(intent.getLongExtra(context.getString(R.string.tweet_intent_status_id), -1));
-        tweet.setInReplyToStatusId(intent.getLongExtra(context.getString(R.string.tweet_intent_in_reply_to_status_id), -1));
-        tweet.setRetweetedByScreenName(intent.getStringExtra(context.getString(R.string.tweet_intent_retweeted_by_screen_name)));
+        tweet.setAvatarURL(intent.getStringExtra(activity.getString(R.string.tweet_intent_avatar_url)));
+        tweet.setName(intent.getStringExtra(activity.getString(R.string.tweet_intent_name)));
+        tweet.setScreenName(intent.getStringExtra(activity.getString(R.string.tweet_intent_screen_name)));
+        tweet.setCreatedAt(intent.getLongExtra(activity.getString(R.string.tweet_intent_created_at), 0));
+        tweet.setCheckIn(intent.getStringExtra(activity.getString(R.string.tweet_intent_check_in)));
+        tweet.setProtect(intent.getBooleanExtra(activity.getString(R.string.tweet_intent_protect), false));
+        tweet.setPictureURL(intent.getStringExtra(activity.getString(R.string.tweet_intent_picture_url)));
+        tweet.setText(intent.getStringExtra(activity.getString(R.string.tweet_intent_text)));
+        tweet.setRetweetedByName(intent.getStringExtra(activity.getString(R.string.tweet_intent_retweeted_by_name)));
+        tweet.setFavorite(intent.getBooleanExtra(activity.getString(R.string.tweet_intent_favorite), false));
+        tweet.setStatusId(intent.getLongExtra(activity.getString(R.string.tweet_intent_status_id), -1));
+        tweet.setInReplyToStatusId(intent.getLongExtra(activity.getString(R.string.tweet_intent_in_reply_to_status_id), -1));
+        tweet.setRetweetedByScreenName(intent.getStringExtra(activity.getString(R.string.tweet_intent_retweeted_by_screen_name)));
         return tweet;
     }
 
@@ -326,13 +327,13 @@ public class TweetUnit {
         intent.setAction(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, "@" + tweet.getScreenName() + ": " + tweet.getText());
-        context.startActivity(Intent.createChooser(intent, context.getString(R.string.tweet_share_label)));
+        activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.tweet_share_label)));
     }
 
     public void copy(Tweet tweet) {
-        ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clipData = ClipData.newPlainText(context.getString(R.string.tweet_copy_label), tweet.getText());
+        ClipboardManager clipboardManager = (ClipboardManager) activity.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText(activity.getString(R.string.tweet_copy_label), tweet.getText());
         clipboardManager.setPrimaryClip(clipData);
-        Toast.makeText(context, R.string.tweet_toast_copy_successful, Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, R.string.tweet_toast_copy_successful, Toast.LENGTH_SHORT).show();
     }
 }

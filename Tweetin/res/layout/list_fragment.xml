@@ -1,38 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:sliding="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@color/background">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/list_fragment_swipe_container"
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+            android:id="@+id/list_fragment_sliding_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            sliding:umanoPanelHeight="0dp"
+            sliding:umanoParalaxOffset="64dp"
+            sliding:umanoDragView="@+id/list_fragment_drag">
 
-        <ListView android:id="@+id/list_fragment_listview"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:divider="@color/transparent"
-                  android:dividerHeight="1dp"
-                  android:scrollbars="none"
-                  android:scrollingCache="true"
-                  android:choiceMode="singleChoice"
-                  android:drawSelectorOnTop="true">
-        </ListView>
+        <FrameLayout android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:background="@color/background">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <android.support.v4.widget.SwipeRefreshLayout
+                    android:id="@+id/list_fragment_swipe_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    <ImageButton android:id="@+id/list_fragment_fab"
-                 android:contentDescription="@null"
-                 android:layout_width="56dp"
-                 android:layout_height="56dp"
-                 android:layout_marginEnd="16dp"
-                 android:layout_marginBottom="16dp"
-                 android:layout_gravity="end|bottom"
-                 android:src="@drawable/ic_action_add"
-                 android:background="@drawable/floating_action_button_ripple"
-                 android:visibility="invisible">
-    </ImageButton>
+                <ListView android:id="@+id/list_fragment_listview"
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+                          android:divider="@color/transparent"
+                          android:dividerHeight="1dp"
+                          android:scrollbars="none"
+                          android:scrollingCache="true"
+                          android:choiceMode="singleChoice"
+                          android:drawSelectorOnTop="true">
+                </ListView>
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+            <ImageButton android:id="@+id/list_fragment_fab"
+                         android:contentDescription="@null"
+                         android:layout_width="56dp"
+                         android:layout_height="56dp"
+                         android:layout_marginEnd="16dp"
+                         android:layout_marginBottom="16dp"
+                         android:layout_gravity="end|bottom"
+                         android:src="@drawable/ic_action_add"
+                         android:background="@drawable/floating_action_button_ripple"
+                         android:visibility="invisible">
+            </ImageButton>
+
+        </FrameLayout>
+
+        <FrameLayout android:id="@+id/list_fragment_drag"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:background="@color/white">
+
+            <!-- Do nothing here -->
+
+        </FrameLayout>
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
 </FrameLayout>

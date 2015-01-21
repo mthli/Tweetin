@@ -40,7 +40,7 @@ public class FavoriteMoreTask extends AsyncTask<Void, Void, Boolean> {
 
         this.tweetAdapter = favoriteFragment.getTweetAdapter();
         this.tweetList = favoriteFragment.getTweetList();
-        this.tweetUnit = new TweetUnit(context);
+        this.tweetUnit = new TweetUnit(favoriteFragment.getActivity());
 
         this.statusList = new ArrayList<twitter4j.Status>();
         this.nextPage = favoriteFragment.getNextPage();
@@ -50,7 +50,7 @@ public class FavoriteMoreTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        favoriteFragment.setTaskStatus(FlagUnit.TASK_RUNNING);
+        favoriteFragment.setLoadTaskStatus(FlagUnit.TASK_RUNNING);
 
         if (!swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(true);
@@ -93,6 +93,6 @@ public class FavoriteMoreTask extends AsyncTask<Void, Void, Boolean> {
         }
 
         swipeRefreshLayout.setRefreshing(false);
-        favoriteFragment.setTaskStatus(FlagUnit.TASK_IDLE);
+        favoriteFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
     }
 }

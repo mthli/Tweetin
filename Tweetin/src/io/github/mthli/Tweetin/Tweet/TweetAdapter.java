@@ -1,19 +1,13 @@
 package io.github.mthli.Tweetin.Tweet;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.support.v4.app.Fragment;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -21,7 +15,7 @@ import io.github.mthli.Tweetin.Activity.PictureActivity;
 import io.github.mthli.Tweetin.Activity.PostActivity;
 import io.github.mthli.Tweetin.Dialog.DialogUnit;
 import io.github.mthli.Tweetin.Flag.FlagUnit;
-import io.github.mthli.Tweetin.Picture.PictureUnit;
+import io.github.mthli.Tweetin.Fragment.Base.ListFragment;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.Tweet.DeleteTask;
 import io.github.mthli.Tweetin.Task.Tweet.FavoriteTask;
@@ -29,29 +23,25 @@ import io.github.mthli.Tweetin.Task.Tweet.RemoveTask;
 import io.github.mthli.Tweetin.Task.Tweet.RetweetTask;
 import io.github.mthli.Tweetin.Twitter.TwitterUnit;
 
-import java.io.FileOutputStream;
 import java.util.List;
 
 public class TweetAdapter extends ArrayAdapter<Tweet> {
+    private ListFragment listFragment;
     private Activity activity;
     private int layoutResId;
     private List<Tweet> tweetList;
-
-    private RequestQueue requestQueue;
-    private ImageRequest imageRequest;
 
     private String useScreenName;
 
     private TweetUnit tweetUnit;
 
-    public TweetAdapter(Activity activity, int layoutResId, List<Tweet> tweetList) {
-        super(activity, layoutResId, tweetList);
+    public TweetAdapter(ListFragment listFragment, int layoutResId, List<Tweet> tweetList) {
+        super(listFragment.getActivity(), layoutResId, tweetList);
 
-        this.activity = activity;
+        this.listFragment = listFragment;
+        this.activity = listFragment.getActivity();
         this.layoutResId = layoutResId;
         this.tweetList = tweetList;
-
-        this.requestQueue = Volley.newRequestQueue(activity);
 
         this.useScreenName = TwitterUnit.getUseScreenNameFromSharedPreferences(activity);
 
@@ -180,7 +170,7 @@ public class TweetAdapter extends ArrayAdapter<Tweet> {
         tweetHolder.avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
+                listFragment.showProfile(tweet.getScreenName());
             }
         });
         tweetHolder.avatar.setOnLongClickListener(new View.OnLongClickListener() {

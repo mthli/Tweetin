@@ -1,0 +1,156 @@
+package io.github.mthli.Tweetin.Task.Profile;
+
+import android.app.Activity;
+import android.os.AsyncTask;
+import android.text.method.LinkMovementMethod;
+import android.view.View;
+import android.widget.*;
+import com.bumptech.glide.Glide;
+import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.mthli.Tweetin.R;
+import io.github.mthli.Tweetin.Tweet.TweetUnit;
+import io.github.mthli.Tweetin.Twitter.TwitterUnit;
+import twitter4j.Relationship;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.User;
+
+public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
+    private Activity activity;
+    private View profileView;
+
+    private ProgressBar progressBar;
+    private TextView reload;
+
+    private RelativeLayout profileAll;
+    private ImageView background;
+    private CircleImageView avatar;
+    private TextView name;
+    private TextView screenName;
+    private TextView protect;
+    private TextView description;
+    private TextView location;
+    private Button follow;
+
+    private String sn;
+    private String usn;
+    private User user;
+    private boolean fo;
+
+    public ProfileTask(Activity activity, View profile, String sn) {
+        this.activity = activity;
+        this.profileView = profile;
+        this.sn = sn;
+        this.usn = TwitterUnit.getUseScreenNameFromSharedPreferences(activity);
+        this.fo = false;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        progressBar = (ProgressBar) profileView.findViewById(R.id.profile_progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        reload = (TextView) profileView.findViewById(R.id.profile_reload);
+        reload.setVisibility(View.GONE);
+        reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO
+            }
+        });
+
+        profileAll = (RelativeLayout) profileView.findViewById(R.id.profile_all);
+        profileAll.setVisibility(View.GONE);
+
+        background = (ImageView) profileView.findViewById(R.id.profile_background);
+        avatar = (CircleImageView) profileView.findViewById(R.id.profile_avatar);
+        name = (TextView) profileView.findViewById(R.id.profile_name);
+        screenName = (TextView) profileView.findViewById(R.id.profile_screen_name);
+        protect = (TextView) profileView.findViewById(R.id.profile_protect);
+        description = (TextView) profileView.findViewById(R.id.profile_description);
+        location = (TextView) profileView.findViewById(R.id.profile_location);
+
+        follow = (Button) profileView.findViewById(R.id.profile_follow);
+        follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO
+            }
+        });
+    }
+
+    @Override
+    protected Boolean doInBackground(Void... params) {
+        try {
+            Twitter twitter = TwitterUnit.getTwitterFromSharedPreferences(activity);
+            user = twitter.showUser(sn);
+            Relationship relationship = twitter.friendsFollowers().showFriendship(usn, sn);
+            fo = relationship.isSourceFollowingTarget();
+        } catch (TwitterException t) {
+            return false;
+        }
+
+        if (isCancelled()) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    protected void onCancelled() {}
+
+    @Override
+    protected void onPostExecute(Boolean result) {
+        if (result) {
+            progressBar.setVisibility(View.GONE);
+            reload.setVisibility(View.GONE);
+            showProfile();
+        } else {
+            progressBar.setVisibility(View.GONE);
+            reload.setVisibility(View.VISIBLE);
+            profileAll.setVisibility(View.GONE);
+        }
+    }
+
+    private void showProfile() {
+        if (user.getProfileBackgroundImageURL() != null) {
+            Glide.with(activity).load(user.getProfileBackgroundImageURL()).centerCrop().crossFade().into(background);
+        } else {
+            background.setVisibility(View.GONE);
+        }
+
+        Glide.with(activity).load(user.getOriginalProfileImageURL()).crossFade().into(avatar);
+
+        name.setText(user.getName());
+        screenName.setText("@" + user.getScreenName());
+
+        if (user.isProtected()) {
+            protect.setVisibility(View.VISIBLE);
+        } else {
+            protect.setVisibility(View.GONE);
+        }
+
+        if (user.getDescription().length() > 0) {
+            description.setMovementMethod(LinkMovementMethod.getInstance());
+            description.setText((new TweetUnit(activity)).getSpanFromText(user.getDescription()));
+            description.setVisibility(View.VISIBLE);
+        } else {
+            description.setVisibility(View.GONE);
+        }
+
+        if (user.getLocation().length() > 0) {
+            location.setText(user.getLocation());
+            location.setVisibility(View.VISIBLE);
+        } else {
+            location.setVisibility(View.GONE);
+        }
+
+        if (fo) {
+            follow.setText(activity.getString(R.string.profile_follow_unfollow));
+        } else {
+            follow.setText(activity.getString(R.string.profile_follow_follow));
+        }
+
+        profileAll.setVisibility(View.VISIBLE);
+    }
+}

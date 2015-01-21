@@ -51,7 +51,7 @@ public class MentionFirstTask extends AsyncTask<Void, Void, Boolean> {
         this.tweetAdapter = mentionFragment.getTweetAdapter();
         this.tweetList = mentionFragment.getTweetList();
         this.recordList = new ArrayList<DataRecord>();
-        this.tweetUnit = new TweetUnit(context);
+        this.tweetUnit = new TweetUnit(mentionFragment.getActivity());
 
         this.error = context.getString(R.string.fragment_error_get_mention_data_failed);
     }
@@ -62,7 +62,7 @@ public class MentionFirstTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        mentionFragment.setTaskStatus(FlagUnit.TASK_RUNNING);
+        mentionFragment.setLoadTaskStatus(FlagUnit.TASK_RUNNING);
 
         if (TwitterUnit.getUseScreenNameFromSharedPreferences(context) == null) {
             mentionFragment.setContentEmpty(true);
@@ -166,6 +166,6 @@ public class MentionFirstTask extends AsyncTask<Void, Void, Boolean> {
             }
         }
 
-        mentionFragment.setTaskStatus(FlagUnit.TASK_IDLE);
+        mentionFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
     }
 }

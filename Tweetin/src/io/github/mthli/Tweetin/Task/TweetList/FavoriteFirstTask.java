@@ -51,7 +51,7 @@ public class FavoriteFirstTask extends AsyncTask<Void, Void, Boolean> {
         this.tweetAdapter = favoriteFragment.getTweetAdapter();
         this.tweetList = favoriteFragment.getTweetList();
         this.recordList = new ArrayList<DataRecord>();
-        this.tweetUnit = new TweetUnit(context);
+        this.tweetUnit = new TweetUnit(favoriteFragment.getActivity());
 
         this.error = context.getString(R.string.fragment_error_get_favorite_data_failed);
     }
@@ -62,7 +62,7 @@ public class FavoriteFirstTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        favoriteFragment.setTaskStatus(FlagUnit.TASK_RUNNING);
+        favoriteFragment.setLoadTaskStatus(FlagUnit.TASK_RUNNING);
 
         if (TwitterUnit.getUseScreenNameFromSharedPreferences(context) == null) {
             favoriteFragment.setContentEmpty(true);
@@ -166,6 +166,6 @@ public class FavoriteFirstTask extends AsyncTask<Void, Void, Boolean> {
             }
         }
 
-        favoriteFragment.setTaskStatus(FlagUnit.TASK_IDLE);
+        favoriteFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
     }
 }

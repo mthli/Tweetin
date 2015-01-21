@@ -13,6 +13,7 @@ import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+import io.github.mthli.Tweetin.Fragment.Base.ListFragment;
 import io.github.mthli.Tweetin.Fragment.TweetList.FavoriteFragment;
 import io.github.mthli.Tweetin.Fragment.TweetList.MentionFragment;
 import io.github.mthli.Tweetin.Fragment.TweetList.TimelineFragment;
@@ -217,7 +218,7 @@ public class MainActivity extends FragmentActivity {
                 tabIconList.get(Integer.valueOf(tabId)).setImageAlpha(255);
 
                 if (isBadgeShown() && Integer.valueOf(tabId) == FlagUnit.IN_MENTION_FRAGMENT) {
-                    MentionFragment mentionFragment = (MentionFragment) mainPagerAdapter.getFragmentFromPosition(FlagUnit.IN_MENTION_FRAGMENT);
+                    MentionFragment mentionFragment = (MentionFragment) mainPagerAdapter.getListFragmentFromPosition(FlagUnit.IN_MENTION_FRAGMENT);
                     mentionFragment.getLatestMentions();
 
                     showBadge(false);
@@ -266,7 +267,7 @@ public class MainActivity extends FragmentActivity {
                 tabIconList.get(position).setImageAlpha(255);
 
                 if (isBadgeShown() && position == FlagUnit.IN_MENTION_FRAGMENT) {
-                    MentionFragment mentionFragment = (MentionFragment) mainPagerAdapter.getFragmentFromPosition(FlagUnit.IN_MENTION_FRAGMENT);
+                    MentionFragment mentionFragment = (MentionFragment) mainPagerAdapter.getListFragmentFromPosition(FlagUnit.IN_MENTION_FRAGMENT);
                     mentionFragment.getLatestMentions();
 
                     showBadge(false);
@@ -357,10 +358,14 @@ public class MainActivity extends FragmentActivity {
         return false;
     }
 
+    public ListFragment getCurrentListFragment() {
+        return mainPagerAdapter.getListFragmentFromPosition(viewPager.getCurrentItem());
+    }
+
     private void cancelAllTasks() {
-        ((TimelineFragment) mainPagerAdapter.getFragmentFromPosition(FlagUnit.IN_TIMELINE_FRAGMENT)).cancelAllTasks();
-        ((MentionFragment) mainPagerAdapter.getFragmentFromPosition(FlagUnit.IN_MENTION_FRAGMENT)).cancelAllTasks();
-        ((FavoriteFragment) mainPagerAdapter.getFragmentFromPosition(FlagUnit.IN_FAVORITE_FRAGMENT)).cancelAllTasks();
+        ((TimelineFragment) mainPagerAdapter.getListFragmentFromPosition(FlagUnit.IN_TIMELINE_FRAGMENT)).cancelAllTasks();
+        ((MentionFragment) mainPagerAdapter.getListFragmentFromPosition(FlagUnit.IN_MENTION_FRAGMENT)).cancelAllTasks();
+        ((FavoriteFragment) mainPagerAdapter.getListFragmentFromPosition(FlagUnit.IN_FAVORITE_FRAGMENT)).cancelAllTasks();
     }
 
     // TODO: onActivityResult();

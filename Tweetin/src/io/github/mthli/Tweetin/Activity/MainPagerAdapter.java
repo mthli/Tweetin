@@ -13,14 +13,14 @@ import io.github.mthli.Tweetin.R;
 public class MainPagerAdapter extends FragmentPagerAdapter {
     private String[] titles;
 
-    private SparseArray<Fragment> sparseArray;
+    private SparseArray<ListFragment> sparseArray;
 
     public MainPagerAdapter(MainActivity mainActivity) {
         super(mainActivity.getSupportFragmentManager());
 
         this.titles = mainActivity.getResources().getStringArray(R.array.tabs);
 
-        this.sparseArray = new SparseArray<Fragment>();
+        this.sparseArray = new SparseArray<ListFragment>();
     }
 
     @Override
@@ -52,12 +52,12 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                 break;
         }
 
-        sparseArray.put(position, fragment);
+        sparseArray.put(position, (ListFragment) fragment);
 
         return fragment;
     }
 
-    public Fragment getFragmentFromPosition(int position) {
+    public ListFragment getListFragmentFromPosition(int position) {
         return sparseArray.get(position);
     }
 }

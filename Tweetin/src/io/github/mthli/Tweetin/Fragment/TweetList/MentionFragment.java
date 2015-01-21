@@ -36,9 +36,9 @@ public class MentionFragment extends ListFragment {
     private MentionFirstTask mentionFirstTask;
     private MentionMoreTask mentionMoreTask;
 
-    private int taskStatus = FlagUnit.TASK_IDLE;
-    public void setTaskStatus(int taskStatus) {
-        this.taskStatus = taskStatus;
+    private int loadTaskStatus = FlagUnit.TASK_IDLE;
+    public void setLoadTaskStatus(int loadTaskStatus) {
+        this.loadTaskStatus = loadTaskStatus;
     }
 
     private int nextPage = 2;
@@ -63,14 +63,14 @@ public class MentionFragment extends ListFragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!isSomeTasksRunning()) {
+                if (!isSomeLoadTasksRunning()) {
                     mentionFirstTask = new MentionFirstTask(MentionFragment.this, true);
                     mentionFirstTask.execute();
                 }
             }
         });
 
-        tweetAdapter = new TweetAdapter(getActivity(), R.layout.tweet, tweetList);
+        tweetAdapter = new TweetAdapter(this, R.layout.tweet, tweetList);
         listView.setAdapter(tweetAdapter);
         tweetAdapter.notifyDataSetChanged();
 
@@ -101,7 +101,7 @@ public class MentionFragment extends ListFragment {
                 currentFirst = firstVisibleItem;
                 currentCount = visibleItemCount;
 
-                if (totalItemCount > 7 && totalItemCount == firstVisibleItem + visibleItemCount && moveToBottom && !isSomeTasksRunning()) {
+                if (totalItemCount > 7 && totalItemCount == firstVisibleItem + visibleItemCount && moveToBottom && !isSomeLoadTasksRunning()) {
                     mentionMoreTask = new MentionMoreTask(MentionFragment.this);
                     mentionMoreTask.execute();
                 }
@@ -124,12 +124,12 @@ public class MentionFragment extends ListFragment {
         });
     }
 
-    public boolean isSomeTasksRunning() {
-        return taskStatus == FlagUnit.TASK_RUNNING;
+    public boolean isSomeLoadTasksRunning() {
+        return loadTaskStatus == FlagUnit.TASK_RUNNING;
     }
 
     public void getLatestMentions() {
-        if (!isSomeTasksRunning()) {
+        if (!isSomeLoadTasksRunning()) {
             mentionFirstTask = new MentionFirstTask(this, true);
             mentionFirstTask.execute();
         }
@@ -142,5 +142,6 @@ public class MentionFragment extends ListFragment {
         if (mentionMoreTask != null && mentionMoreTask.getStatus() == AsyncTask.Status.RUNNING) {
             mentionMoreTask.cancel(true);
         }
+        cancelProfileTask();
     }
 }

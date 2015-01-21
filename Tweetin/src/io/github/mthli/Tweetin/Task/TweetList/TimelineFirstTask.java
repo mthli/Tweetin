@@ -55,7 +55,7 @@ public class TimelineFirstTask extends AsyncTask<Void, Void, Boolean> {
         this.tweetAdapter = timelineFragment.getTweetAdapter();
         this.tweetList = timelineFragment.getTweetList();
         this.recordList = new ArrayList<DataRecord>();
-        this.tweetUnit = new TweetUnit(context);
+        this.tweetUnit = new TweetUnit(timelineFragment.getActivity());
 
         this.error = context.getString(R.string.fragment_error_get_timeline_data_failed);
     }
@@ -66,7 +66,7 @@ public class TimelineFirstTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        timelineFragment.setTaskStatus(FlagUnit.TASK_RUNNING);
+        timelineFragment.setLoadTaskStatus(FlagUnit.TASK_RUNNING);
 
         if (TwitterUnit.getUseScreenNameFromSharedPreferences(context) == null) {
             timelineFragment.setContentEmpty(true);
@@ -183,6 +183,6 @@ public class TimelineFirstTask extends AsyncTask<Void, Void, Boolean> {
             }
         }
 
-        timelineFragment.setTaskStatus(FlagUnit.TASK_IDLE);
+        timelineFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
     }
 }

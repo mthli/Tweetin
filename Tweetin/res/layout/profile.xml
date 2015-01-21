@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:circle="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+    <ProgressBar android:id="@+id/profile_progress_bar"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerInParent="true"
+                 style="?android:attr/progressBarStyleInverse">
+    </ProgressBar>
+
+    <TextView android:id="@+id/profile_reload"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_centerInParent="true"
+              android:gravity="center"
+              android:text="@string/profile_reload"
+              android:textColor="@color/profile_reload_selector"
+              android:textSize="18sp"
+              android:visibility="gone">
+    </TextView>
+
+    <RelativeLayout android:id="@+id/profile_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/white"
+                    android:visibility="gone">
+
+        <ImageView android:id="@+id/profile_background"
+                   android:contentDescription="@null"
+                   android:layout_width="match_parent"
+                   android:layout_height="170dp"
+                   android:layout_alignParentTop="true"
+                   android:adjustViewBounds="true"
+                   android:background="@color/white">
+        </ImageView>
+
+        <LinearLayout android:id="@+id/profile_info"
+                      android:orientation="vertical"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentTop="true"
+                      android:layout_marginTop="100dp"
+                      android:layout_marginStart="12dp"
+                      android:layout_marginEnd="12dp"
+                      android:paddingBottom="12dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_avatar"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    circle:border_width="2dp"
+                    circle:border_color="@color/white">
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <TextView android:id="@+id/profile_name"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="5dp"
+                      android:gravity="center"
+                      android:textColor="?android:attr/colorPrimary"
+                      android:textSize="18sp"
+                      android:singleLine="true"
+                      android:ellipsize="end">
+            </TextView>
+
+            <LinearLayout android:orientation="horizontal"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:gravity="center">
+
+                <TextView android:id="@+id/profile_screen_name"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textSize="12sp"
+                          android:textColor="@color/hint"
+                          android:singleLine="true"
+                          android:ellipsize="end">
+                </TextView>
+
+                <TextView android:id="@+id/profile_protect"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:paddingStart="5dp"
+                          android:drawableStart="@drawable/ic_tweet_protect"
+                          android:drawablePadding="2dp"
+                          android:textSize="12sp"
+                          android:textColor="@color/hint"
+                          android:visibility="gone">
+                </TextView>
+
+            </LinearLayout>
+
+            <TextView android:id="@+id/profile_description"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="12dp"
+                      android:layout_gravity="center"
+                      android:gravity="center"
+                      android:textColor="@color/text"
+                      android:textSize="14sp"
+                      android:maxLines="10"
+                      android:visibility="gone">
+            </TextView>
+
+            <TextView android:id="@+id/profile_location"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="12dp"
+                      android:layout_gravity="center"
+                      android:drawableStart="@drawable/ic_tweet_check_in"
+                      android:drawablePadding="2dp"
+                      android:textSize="12sp"
+                      android:textColor="@color/hint"
+                      android:singleLine="true"
+                      android:ellipsize="end"
+                      android:visibility="gone">
+            </TextView>
+
+        </LinearLayout>
+
+        <Button android:id="@+id/profile_follow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_info"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="?android:attr/colorPrimary"
+                android:background="@drawable/round_button_ripple">
+        </Button>
+
+    </RelativeLayout>
+
+</RelativeLayout>

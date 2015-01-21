@@ -45,7 +45,7 @@ public class InReplyToTask extends AsyncTask<Void, Void, Boolean> {
         this.tweetAdapter = inReplyToFragment.getTweetAdapter();
         this.tweetList = inReplyToFragment.getTweetList();
         this.statusList = new ArrayList<twitter4j.Status>();
-        this.tweetUnit = new TweetUnit(context);
+        this.tweetUnit = new TweetUnit(inReplyToFragment.getActivity());
 
         this.twitter = TwitterUnit.getTwitterFromSharedPreferences(context);
         this.currentTweet = tweetUnit.getTweetFromIntent(inReplyToFragment.getActivity().getIntent());
@@ -55,7 +55,7 @@ public class InReplyToTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        inReplyToFragment.setTaskStatus(FlagUnit.TASK_RUNNING);
+        inReplyToFragment.setLoadTaskStatus(FlagUnit.TASK_RUNNING);
 
         if (TwitterUnit.getUseScreenNameFromSharedPreferences(context) == null) {
             inReplyToFragment.setContentEmpty(true);
@@ -146,6 +146,6 @@ public class InReplyToTask extends AsyncTask<Void, Void, Boolean> {
             }
         }
 
-        inReplyToFragment.setTaskStatus(FlagUnit.TASK_IDLE);
+        inReplyToFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
     }
 }

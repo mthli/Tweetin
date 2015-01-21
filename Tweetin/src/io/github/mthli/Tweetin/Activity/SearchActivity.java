@@ -13,6 +13,9 @@ import io.github.mthli.Tweetin.View.ViewUnit;
 
 public class SearchActivity extends FragmentActivity {
     private SearchFragment searchFragment;
+    public SearchFragment getSearchFragment() {
+        return searchFragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

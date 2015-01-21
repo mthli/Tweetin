@@ -33,7 +33,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/sign_in_button_ripple"
+            android:background="@drawable/round_button_ripple"
             android:text="@string/splash_sign_in"
             android:textColor="@color/blue_500">
     </Button>

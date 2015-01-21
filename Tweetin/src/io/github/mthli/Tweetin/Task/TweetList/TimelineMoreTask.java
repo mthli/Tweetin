@@ -40,7 +40,7 @@ public class TimelineMoreTask extends AsyncTask<Void, Void, Boolean> {
 
         this.tweetAdapter = timelineFragment.getTweetAdapter();
         this.tweetList = timelineFragment.getTweetList();
-        this.tweetUnit = new TweetUnit(context);
+        this.tweetUnit = new TweetUnit(timelineFragment.getActivity());
 
         this.statusList = new ArrayList<twitter4j.Status>();
         this.nextPage = timelineFragment.getNextPage();
@@ -50,7 +50,7 @@ public class TimelineMoreTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        timelineFragment.setTaskStatus(FlagUnit.TASK_RUNNING);
+        timelineFragment.setLoadTaskStatus(FlagUnit.TASK_RUNNING);
 
         if (!swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(true);
@@ -93,6 +93,6 @@ public class TimelineMoreTask extends AsyncTask<Void, Void, Boolean> {
         }
 
         swipeRefreshLayout.setRefreshing(false);
-        timelineFragment.setTaskStatus(FlagUnit.TASK_IDLE);
+        timelineFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
     }
 }
