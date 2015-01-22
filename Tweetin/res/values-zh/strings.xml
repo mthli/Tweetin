@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ColorPicker -->
+    <string name="color_picker_default_title">主题</string>
+
+    <!-- Dialog -->
+    <string name="dialog_item_in_reply_to">对话</string>
+    <string name="dialog_item_share">分享</string>
+    <string name="dialog_item_copy">拷贝</string>
+
+    <!-- Fragment -->
+    <string name="fragment_list_empty">
+        当前列表为空。
+    </string>
+    <string name="fragment_error_get_authorization_failed">
+        获取认证失败，请尝试重新登陆。
+    </string>
+    <string name="fragment_error_get_timeline_data_failed">
+        获取时间线失败。
+    </string>
+    <string name="fragment_error_get_mention_data_failed">
+        获取提及列表失败。
+    </string>
+    <string name="fragment_error_get_favorite_data_failed">
+        获取收藏列表失败。
+    </string>
+    <string name="fragment_error_search_failed">
+        搜索失败。
+    </string>
+    <string name="fragment_error_get_data_failed">
+        获取数据失败。
+    </string>
+    <string name="fragment_toast_post_a_new_tweet">
+        撰写一条新的推文。
+    </string>
+
+    <!-- InReplyTo -->
+    <string name="in_reply_to_label">对话</string>
+    <string name="in_reply_to_error_get_tweets_failed">
+        获取对话失败。
+    </string>
+
+    <!-- Main -->
+    <string name="main_pd_get_access_token">
+        获取access token&#8230;
+    </string>
+    <string name="main_toast_initializing">
+        正在初始化&#8230;
+    </string>
+    <string name="main_toast_get_access_token_failed">
+        获取access token失败。
+    </string>
+    <string name="search_view_toast_clear">清空</string>
+
+    <!-- Menu -->
+    <string name="main_menu_search">搜索</string>
+    <string name="main_menu_post">撰写</string>
+    <string name="main_menu_setting">设置</string>
+    <string name="picture_menu_share">分享</string>
+    <string name="picture_menu_save">保存</string>
+    <string name="post_menu_send">发送</string>
+
+    <!-- Notification -->
+    <string name="notification_delete_ing">
+        正在删除&#8230;
+    </string>
+    <string name="notification_delete_successful">
+        删除成功。
+    </string>
+    <string name="notification_delete_failed">
+        删除失败。
+    </string>
+    <string name="notification_post_ing">
+        正在发送&#8230;
+    </string>
+    <string name="notification_post_successful">
+        发送成功。
+    </string>
+    <string name="notification_post_failed">
+        发送失败。
+    </string>
+    <string name="notification_retweet_ing">
+        正在转推&#8230;
+    </string>
+    <string name="notification_retweet_successful">
+        转推成功。
+    </string>
+    <string name="notification_retweet_failed">
+        转推失败。
+    </string>
+    <string name="notification_add_favorite_ing">
+        正在添加收藏&#8230;
+    </string>
+    <string name="notification_add_favorite_successful">
+        添加收藏成功。
+    </string>
+    <string name="notification_add_favorite_failed">
+        添加收藏失败。
+    </string>
+    <string name="notification_remove_favorite_ing">
+        正在移除收藏&#8230;
+    </string>
+    <string name="notification_remove_favorite_successful">
+        移除收藏成功。
+    </string>
+    <string name="notification_remove_favorite_failed">
+        移除收藏失败。
+    </string>
+    <string name="notification_follow_ing">
+        正在添加关注&#8230;
+    </string>
+    <string name="notification_follow_successful">
+        添加关注成功。
+    </string>
+    <string name="notification_follow_failed">
+        添加关注失败。
+    </string>
+    <string name="notification_unfollow_ing">
+        正在取消关注&#8230;
+    </string>
+    <string name="notification_unfollow_successful">
+        取消关注成功。
+    </string>
+    <string name="notification_unfollow_failed">
+        取消关注失败。
+    </string>
+
+    <!-- Picture -->
+    <string name="picture_label">图片</string>
+    <string name="picture_reload">重新加载</string>
+    <string name="picture_default_desciption">
+        猫和Wii。
+    </string>
+    <string name="picture_toast_reload">
+        重新加载图片。
+    </string>
+    <string name="picture_toast_save_picture_successful">
+        图片保存成功。
+    </string>
+    <string name="picture_toast_save_picture_failed">
+        图片保存失败。
+    </string>
+
+    <!-- Post -->
+    <string name="post_label">撰写</string>
+    <string name="post_hint">
+        你正在想什么呢？
+    </string>
+    <string name="post_toast_check_in">
+        签到
+    </string>
+    <string name="post_toast_picture">图片</string>
+    <string name="post_toast_clear">清空</string>
+    <string name="post_toast_empty">
+        你还没有撰写任何东西。
+    </string>
+    <string name="post_toast_check_in_failed">
+        签到失败，请检查手机的定位设置。
+    </string>
+
+    <!-- Profile -->
+    <string name="profile_reload">重新加载</string>
+    <string name="profile_follow_follow">添加关注</string>
+    <string name="profile_follow_unfollow">取消关注</string>
+    <string name="profile_toast_reload">
+        重新加载用户信息。
+    </string>
+
+    <!-- Search -->
+    <string name="search_hint">搜索</string>
+    <string name="search_toast_empty">
+        你还没有输入任何东西。
+    </string>
+
+    <!-- Setting -->
+    <string name="setting_label">设置</string>
+    <string name="setting_theme">主题</string>
+    <string name="setting_theme_blue">蓝</string>
+    <string name="setting_theme_orange">橙</string>
+    <string name="setting_theme_pink">粉红</string>
+    <string name="setting_theme_purple">紫</string>
+    <string name="setting_theme_teal">青</string>
+    <string name="setting_author">作者</string>
+    <string name="setting_advice">建议</string>
+    <string name="setting_advice_content">
+        给作者提供建议或者意见。
+    </string>
+    <string name="setting_homepage">主页</string>
+    <string name="setting_sign_out">
+        登出
+    </string>
+    <string name="setting_sign_out_content">
+        清除所有数据并且登出当前账户。
+    </string>
+
+    <!-- Splash -->
+    <string name="splash_description">
+        迄今为止又一款Twitter第三方客户端。
+    </string>
+    <string name="splash_sign_in">
+        登入
+    </string>
+    <string name="splash_pd_start_authorization">
+        开始认证&#8230;
+    </string>
+    <string name="splash_toast_authorization_failed">
+        认证失败。
+    </string>
+
+    <!-- Tabs -->
+    <string-array name="tabs">
+        <item>时间线</item>
+        <item>提及</item>
+        <item>收藏</item>
+    </string-array>
+
+    <!-- Tweet -->
+    <string name="tweet_info_retweeted_by_me">我</string>
+    <string name="tweet_info_favorite">已收藏</string>
+    <string name="tweet_just_now">
+        刚刚
+    </string>
+    <string name="tweet_share_label">
+        分享推文
+    </string>
+    <string name="tweet_toast_reply">回复</string>
+    <string name="tweet_toast_quote">引用</string>
+    <string name="tweet_toast_retweet">转推</string>
+    <string name="tweet_toast_favorite">收藏</string>
+    <string name="tweet_toast_delete">删除</string>
+    <string name="tweet_toast_picture">
+        分享图片。
+    </string>
+    <string name="tweet_toast_more">更多</string>
+    <string name="tweet_toast_get_picture_failed">
+        获取图片失败。
+    </string>
+    <string name="tweet_toast_already_retweeted">
+        已经转推过了。
+    </string>
+    <string name="tweet_toast_copy_successful">
+        拷贝成功。
+    </string>
+
+</resources>

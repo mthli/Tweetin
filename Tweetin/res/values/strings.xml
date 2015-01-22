@@ -228,9 +228,6 @@
     <string name="splash_pd_start_authorization">
         Start authorization&#8230;
     </string>
-    <string name="splash_toast_miss_oauth_information">
-        Please complete your OAuth information.
-    </string>
     <string name="splash_toast_authorization_failed">
         Authorization failed.
     </string>

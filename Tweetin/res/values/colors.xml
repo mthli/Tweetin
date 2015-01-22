@@ -6,10 +6,10 @@
     <color name="blue_300">#64B5F6</color>
     <color name="blue_100">#BBDEFB</color>
 
-    <color name="orange_700">#F57C00</color>
-    <color name="orange_500">#FF9800</color>
-    <color name="orange_300">#FFB74D</color>
-    <color name="orange_100">#FFE0B2</color>
+    <color name="orange_700">#E64A19</color>
+    <color name="orange_500">#FF5722</color>
+    <color name="orange_300">#FF8A65</color>
+    <color name="orange_100">#FFCCBC</color>
 
     <color name="pink_700">#C2185B</color>
     <color name="pink_500">#E91E63</color>
