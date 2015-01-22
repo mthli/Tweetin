@@ -156,7 +156,30 @@ public class PostActivity extends Activity {
     }
 
     private void initPostWithResend() {
-        // TODO
+        inReplyToStatusId = getIntent().getLongExtra(getString(R.string.post_intent_in_reply_to_status_id), -1);
+        inReplyToScreenName = getIntent().getStringExtra(getString(R.string.post_intent_in_reply_to_screen_name));
+        text = getIntent().getStringExtra(getString(R.string.post_intent_text));
+        checkIn = getIntent().getBooleanExtra(getString(R.string.post_intent_check_in), false);
+        picturePath = getIntent().getStringExtra(getString(R.string.post_intent_picture_path));
+
+        if (text != null) {
+            postText.setText(text);
+            postText.setSelection(text.length());
+        } else {
+            text = "";
+        }
+
+        checkInButton.setChecked(checkIn);
+
+        if (picturePath != null) {
+            postPicture.setImageBitmap(PictureUnit.fixBitmap(this, BitmapFactory.decodeFile(picturePath)));
+            postPicture.setVisibility(View.VISIBLE);
+            pictureButton.setChecked(true);
+        } else {
+            picturePath = null;
+            postPicture.setVisibility(View.GONE);
+            pictureButton.setChecked(false);
+        }
     }
 
     private void initPostWithAdvice() {

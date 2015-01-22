@@ -64,6 +64,11 @@
         <activity android:name=".Activity.PostActivity"
                   android:screenOrientation="portrait">
 
+            <!-- PendingIntent -->
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".Activity.MainActivity">
+            </meta-data>
+
             <!-- Share text -->
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />

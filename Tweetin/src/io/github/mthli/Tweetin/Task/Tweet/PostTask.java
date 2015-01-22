@@ -2,12 +2,15 @@ package io.github.mthli.Tweetin.Task.Tweet;
 
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
 import io.github.mthli.Tweetin.Activity.PostActivity;
+import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.Notification.NotificationUnit;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Twitter.TwitterUnit;
@@ -101,8 +104,7 @@ public class PostTask extends AsyncTask<Void, Void, Boolean> {
             NotificationUnit.show(postActivity, R.drawable.ic_notification_send, R.string.notification_post_successful, text);
             NotificationUnit.cancel(postActivity);
         } catch (Exception e) {
-            // TODO
-
+            NotificationUnit.show(postActivity, R.drawable.ic_notification_send, R.string.notification_post_failed, text, getPendingIntent());
             return false;
         }
 
@@ -119,8 +121,16 @@ public class PostTask extends AsyncTask<Void, Void, Boolean> {
     protected void onPostExecute(Boolean result) {}
 
     private PendingIntent getPendingIntent() {
-        // TODO
+        Intent intent = postActivity.getIntent();
+        intent.putExtra(postActivity.getString(R.string.post_intent_post_flag), FlagUnit.POST_RESEND);
+        intent.putExtra(postActivity.getString(R.string.post_intent_text), text);
+        intent.putExtra(postActivity.getString(R.string.post_intent_check_in), checkIn);
+        intent.putExtra(postActivity.getString(R.string.post_intent_picture_path), picturePath);
 
-        return null;
+        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(postActivity);
+        taskStackBuilder.addParentStack(PostActivity.class);
+        taskStackBuilder.addNextIntent(intent);
+
+        return taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_ONE_SHOT);
     }
 }
