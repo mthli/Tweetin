@@ -155,9 +155,10 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
             protect.setVisibility(View.GONE);
         }
 
+        TweetUnit tweetUnit = new TweetUnit(activity);
         if (user.getDescription().length() > 0) {
             description.setMovementMethod(LinkMovementMethod.getInstance());
-            description.setText((new TweetUnit(activity)).getSpanFromText(user.getDescription()));
+            description.setText(tweetUnit.getSpanFromText(tweetUnit.getDescriptionFromUser(user)));
             description.setVisibility(View.VISIBLE);
         } else {
             description.setVisibility(View.GONE);

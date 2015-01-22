@@ -30,6 +30,7 @@ public class TweetUnit {
     }
 
     public String getPictureURLFromStatus(Status status) {
+        String[] suffixes = activity.getResources().getStringArray(R.array.picture_suffixes);
         URLEntity[] urlEntities;
         MediaEntity[] mediaEntities;
 
@@ -45,6 +46,14 @@ public class TweetUnit {
         for (MediaEntity mediaEntity : mediaEntities) {
             if (mediaEntity.getType().equals(activity.getString(R.string.picture_media_type))) {
                 return mediaEntity.getMediaURL();
+            }
+        }
+        for (URLEntity urlEntity : urlEntities) {
+            String expandedURL = urlEntity.getExpandedURL();
+            for (String suffix : suffixes) {
+                if (expandedURL.endsWith(suffix)) {
+                    return expandedURL;
+                }
             }
         }
 
@@ -76,20 +85,25 @@ public class TweetUnit {
         }
 
         for (URLEntity urlEntity : urlEntities) {
-            text = text.replace(
-                    urlEntity.getURL(),
-                    urlEntity.getExpandedURL()
-            );
+            text = text.replace(urlEntity.getURL(), urlEntity.getExpandedURL());
         }
 
         for (MediaEntity mediaEntity : mediaEntities) {
-            text = text.replace(
-                    mediaEntity.getURL(),
-                    mediaEntity.getMediaURL()
-            );
+            text = text.replace(mediaEntity.getURL(), mediaEntity.getMediaURL());
         }
 
         return text;
+    }
+
+    public String getDescriptionFromUser(User user) {
+        URLEntity[] urlEntities = user.getDescriptionURLEntities();
+        String description = user.getDescription();
+
+        for (URLEntity urlEntity : urlEntities) {
+            description = description.replace(urlEntity.getURL(), urlEntity.getExpandedURL());
+        }
+
+        return description;
     }
 
     public SpannableString getSpanFromText(String text) {
