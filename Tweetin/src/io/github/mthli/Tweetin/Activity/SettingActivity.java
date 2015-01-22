@@ -155,7 +155,9 @@ public class SettingActivity extends FragmentActivity {
                         startActivity(toEmail);
                         break;
                     case 3:
-                        // TODO
+                        Intent toAdvice = new Intent(SettingActivity.this, PostActivity.class);
+                        toAdvice.putExtra(getString(R.string.post_intent_post_flag), FlagUnit.POST_ADVICE);
+                        startActivity(toAdvice);
                         break;
                     case 4:
                         signOut();
