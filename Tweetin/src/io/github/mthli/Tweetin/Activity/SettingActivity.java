@@ -1,20 +1,24 @@
 package io.github.mthli.Tweetin.Activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewCompat;
 import android.view.*;
 import android.widget.*;
+import com.fourmob.colorpicker.ColorPickerDialog;
+import com.fourmob.colorpicker.ColorPickerSwatch;
+import io.github.mthli.Tweetin.Flag.FlagUnit;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.View.ViewUnit;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingActivity extends Activity {
+public class SettingActivity extends FragmentActivity {
     private class SettingItem {
         private String title;
         private String content;
@@ -81,7 +85,8 @@ public class SettingActivity extends Activity {
         }
     }
 
-    private ListView listView;
+    private Toolbar toolbar;
+
     private SettingAdapter settingAdapter;
     private List<SettingItem> settingItemList = new ArrayList<SettingItem>();
 
@@ -92,14 +97,16 @@ public class SettingActivity extends Activity {
         ViewUnit.setCustomTheme(this);
         setContentView(R.layout.setting);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.setting_toolbar);
+        // TODO: TaskDescription
+
+        toolbar = (Toolbar) findViewById(R.id.setting_toolbar);
         ViewCompat.setElevation(toolbar, ViewUnit.getElevation(this, 2));
 
         setActionBar(toolbar);
         getActionBar().setTitle(getString(R.string.setting_label));
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        listView = (ListView) findViewById(R.id.setting_listview);
+        ListView listView = (ListView) findViewById(R.id.setting_listview);
 
         settingAdapter = new SettingAdapter(this, R.layout.setting_item, settingItemList);
         listView.setAdapter(settingAdapter);
@@ -137,7 +144,7 @@ public class SettingActivity extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        // TODO
+                        showColorPicker();
                         break;
                     case 1:
                         Intent toHomepage = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.setting_homepage_content)));
@@ -170,11 +177,110 @@ public class SettingActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                // TODO
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
             default:
                 break;
         }
 
         return super.onOptionsItemSelected(menuItem);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent keyEvent) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+
+        return true;
+    }
+
+    private void showColorPicker() {
+        final int[] colors = new int[5];
+        colors[0] = getResources().getColor(R.color.blue_500);
+        colors[1] = getResources().getColor(R.color.orange_500);
+        colors[2] = getResources().getColor(R.color.pink_500);
+        colors[3] = getResources().getColor(R.color.purple_500);
+        colors[4] = getResources().getColor(R.color.teal_500);
+
+        ColorPickerDialog dialog = new ColorPickerDialog();
+
+        dialog.initialize(
+                R.string.color_picker_default_title,
+                colors,
+                ViewUnit.getCustomThemeColorValue(this),
+                3,
+                2
+        );
+
+        dialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
+            @Override
+            public void onColorSelected(int color) {
+                if (color == colors[0]) {
+                    setCustomTheme(FlagUnit.COLOR_BLUE);
+                    return;
+                }
+
+                if (color == colors[1]) {
+                    setCustomTheme(FlagUnit.COLOR_ORANGE);
+                    return;
+                }
+
+                if (color == colors[2]) {
+                    setCustomTheme(FlagUnit.COLOR_PINK);
+                    return;
+                }
+
+                if (color == colors[3]) {
+                    setCustomTheme(FlagUnit.COLOR_PURPLE);
+                    return;
+                }
+
+                if (color == colors[4]) {
+                    setCustomTheme(FlagUnit.COLOR_TEAL);
+                    return;
+                }
+            }
+        });
+
+        dialog.show(getSupportFragmentManager(), getString(R.string.color_picker_tag));
+    }
+
+    private void setCustomTheme(int flag) {
+        SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.sp_tweetin), MODE_PRIVATE).edit();
+        editor.putInt(getString(R.string.sp_color), flag).commit();
+
+        settingItemList.get(0).setContent(ViewUnit.getCustomThemeColorName(this));
+        settingAdapter.notifyDataSetChanged();
+
+        switch (flag) {
+            case FlagUnit.COLOR_BLUE:
+                getWindow().setStatusBarColor(getResources().getColor(R.color.blue_700));
+                toolbar.setBackgroundColor(getResources().getColor(R.color.blue_500));
+                break;
+            case FlagUnit.COLOR_ORANGE:
+                getWindow().setStatusBarColor(getResources().getColor(R.color.orange_700));
+                toolbar.setBackgroundColor(getResources().getColor(R.color.orange_500));
+                break;
+            case FlagUnit.COLOR_PINK:
+                getWindow().setStatusBarColor(getResources().getColor(R.color.pink_700));
+                toolbar.setBackgroundColor(getResources().getColor(R.color.pink_500));
+                break;
+            case FlagUnit.COLOR_PURPLE:
+                getWindow().setStatusBarColor(getResources().getColor(R.color.purple_700));
+                toolbar.setBackgroundColor(getResources().getColor(R.color.purple_500));
+                break;
+            case FlagUnit.COLOR_TEAL:
+                getWindow().setStatusBarColor(getResources().getColor(R.color.teal_700));
+                toolbar.setBackgroundColor(getResources().getColor(R.color.teal_500));
+                break;
+            default:
+                getWindow().setStatusBarColor(getResources().getColor(R.color.blue_700));
+                toolbar.setBackgroundColor(getResources().getColor(R.color.blue_500));
+                break;
+        }
     }
 }

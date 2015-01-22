@@ -2,6 +2,7 @@ package io.github.mthli.Tweetin.Activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -34,12 +35,16 @@ public class MainActivity extends FragmentActivity {
     private ViewPager viewPager;
     private MainPagerAdapter mainPagerAdapter;
 
+    private int customThemeColorValue = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ViewUnit.setCustomTheme(this);
         setContentView(R.layout.main);
+
+        customThemeColorValue = ViewUnit.getCustomThemeColorValue(this);
 
         Uri uri = getIntent().getData();
         if (uri != null && uri.toString().startsWith(getString(R.string.app_callback_url))) {
@@ -65,8 +70,7 @@ public class MainActivity extends FragmentActivity {
                 break;
             case R.id.main_menu_setting:
                 Intent intent = new Intent(this, SettingActivity.class);
-                // TODO
-                startActivity(intent);
+                startActivityForResult(intent, FlagUnit.REQUEST_SETTING);
                 break;
             default:
                 break;
@@ -86,6 +90,18 @@ public class MainActivity extends FragmentActivity {
         }
 
         return super.dispatchTouchEvent(motionEvent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (customThemeColorValue != ViewUnit.getCustomThemeColorValue(this)) {
+                startActivity(getIntent());
+                finish();
+            }
+        }
     }
 
     @Override
@@ -375,6 +391,4 @@ public class MainActivity extends FragmentActivity {
         ((MentionFragment) mainPagerAdapter.getListFragmentFromPosition(FlagUnit.IN_MENTION_FRAGMENT)).cancelAllTasks();
         ((FavoriteFragment) mainPagerAdapter.getListFragmentFromPosition(FlagUnit.IN_FAVORITE_FRAGMENT)).cancelAllTasks();
     }
-
-    // TODO: onActivityResult()
 }

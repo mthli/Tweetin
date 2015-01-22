@@ -36,7 +36,7 @@ public class ViewUnit {
         }
     }
 
-    public static int getCustomThemeColor(Context context) {
+    public static int getCustomThemeColorValue(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.sp_tweetin), Context.MODE_PRIVATE);
 
         int spColorValue = sharedPreferences.getInt(context.getString(R.string.sp_color), 0);

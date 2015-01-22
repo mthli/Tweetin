@@ -21,6 +21,7 @@ public class FlagUnit {
     public static final int POST_ADVICE = 0x105;
 
     public static final int REQUEST_PICTURE = 0x101;
+    public static final int REQUEST_SETTING = 0x102;
 
     public static final int TASK_IDLE = 0x100;
     public static final int TASK_RUNNING = 0x101;
