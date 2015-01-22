@@ -143,6 +143,14 @@ public class FavoriteFirstTask extends AsyncTask<Void, Void, Boolean> {
                 tweetList.add(tweetUnit.getTweetFromDataRecord(record));
             }
 
+            if (tweetList.size() <= 0) {
+                favoriteFragment.setContentEmpty(true);
+                favoriteFragment.setEmptyText(R.string.fragment_list_empty);
+                favoriteFragment.setContentShown(true);
+                favoriteFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
+                return;
+            }
+
             if (isFirstLoad()) {
                 editor.putBoolean(context.getString(R.string.sp_is_favorite_first), false).commit();
 

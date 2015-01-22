@@ -100,6 +100,14 @@ public class SearchTask extends AsyncTask<Void, Void, Boolean> {
                 tweetList.add(tweetUnit.getTweetFromStatus(status));
             }
 
+            if (tweetList.size() <= 0) {
+                searchFragment.setContentEmpty(true);
+                searchFragment.setEmptyText(R.string.fragment_list_empty);
+                searchFragment.setContentShown(true);
+                searchFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
+                return;
+            }
+
             if (!swipeRefresh) {
                 searchFragment.setContentEmpty(false);
                 tweetAdapter.notifyDataSetChanged();

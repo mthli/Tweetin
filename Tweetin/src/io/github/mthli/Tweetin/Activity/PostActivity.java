@@ -48,7 +48,6 @@ public class PostActivity extends Activity {
         if (text == null) {
             return "";
         }
-
         return text;
     }
 
@@ -147,20 +146,17 @@ public class PostActivity extends Activity {
             if (picturePath != null) {
                 postPicture.setImageBitmap(PictureUnit.fixBitmap(this, BitmapFactory.decodeFile(picturePath)));
                 postPicture.setVisibility(View.VISIBLE);
-
                 pictureButton.setChecked(true);
             } else {
-                picturePath = null; //
-
+                picturePath = null;
                 postPicture.setVisibility(View.GONE);
-
                 pictureButton.setChecked(false);
             }
         }
     }
 
     private void initPostWithResend() {
-        /* Do something */
+        // TODO
     }
 
     private void initPostWithAdvice() {
@@ -222,19 +218,14 @@ public class PostActivity extends Activity {
 
         postText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                /* Do nothing */
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                /* Do nothing */
-            }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void afterTextChanged(Editable editable) {
                 text = editable.toString();
-
                 setCountWordsStatus();
             }
         });
@@ -245,12 +236,9 @@ public class PostActivity extends Activity {
                 LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
                 if (check && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                     checkInButton.setChecked(false);
-
                     Toast.makeText(PostActivity.this, R.string.post_toast_check_in_failed, Toast.LENGTH_SHORT).show();
-
                     return;
                 }
-
                 checkIn = check;
             }
         });
@@ -258,7 +246,6 @@ public class PostActivity extends Activity {
             @Override
             public boolean onLongClick(View view) {
                 Toast.makeText(PostActivity.this, R.string.post_toast_check_in, Toast.LENGTH_SHORT).show();
-
                 return true;
             }
         });
@@ -270,14 +257,12 @@ public class PostActivity extends Activity {
                     if (picturePath != null) {
                         return;
                     }
-
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_PICK);
                     startActivityForResult(intent, FlagUnit.REQUEST_PICTURE);
                 } else {
                     picturePath = null;
-
                     postPicture.setVisibility(View.GONE);
                 }
             }
@@ -286,7 +271,6 @@ public class PostActivity extends Activity {
             @Override
             public boolean onLongClick(View view) {
                 Toast.makeText(PostActivity.this, R.string.post_toast_picture, Toast.LENGTH_SHORT).show();
-
                 return true;
             }
         });
@@ -312,7 +296,6 @@ public class PostActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.post_menu, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -328,11 +311,8 @@ public class PostActivity extends Activity {
 
                     break;
                 }
-
                 (new PostTask(this)).execute();
-
                 finish();
-
                 break;
             default:
                 break;
@@ -348,7 +328,6 @@ public class PostActivity extends Activity {
         if (resultCode != Activity.RESULT_OK) {
             postPicture.setVisibility(View.GONE);
             pictureButton.setChecked(false);
-
             return;
         }
 
@@ -359,10 +338,8 @@ public class PostActivity extends Activity {
                 postPicture.setImageBitmap(PictureUnit.fixBitmap(this, BitmapFactory.decodeFile(picturePath)));
                 postPicture.setVisibility(View.VISIBLE);
             } else {
-                picturePath = null; //
-
+                picturePath = null;
                 postPicture.setVisibility(View.GONE);
-
                 pictureButton.setChecked(false);
             }
         }

@@ -47,24 +47,16 @@ public class PostTask extends AsyncTask<Void, Void, Boolean> {
                 0,
                 new LocationListener() {
                     @Override
-                    public void onLocationChanged(Location location) {
-                        /* Do nothing */
-                    }
+                    public void onLocationChanged(Location location) {}
 
                     @Override
-                    public void onStatusChanged(String s, int i, Bundle bundle) {
-                        /* Do nothing */
-                    }
+                    public void onStatusChanged(String s, int i, Bundle bundle) {}
 
                     @Override
-                    public void onProviderEnabled(String s) {
-                        /* Do nothing */
-                    }
+                    public void onProviderEnabled(String s) {}
 
                     @Override
-                    public void onProviderDisabled(String s) {
-                        /* Do nothing */
-                    }
+                    public void onProviderDisabled(String s) {}
                 }
         );
 
@@ -107,12 +99,9 @@ public class PostTask extends AsyncTask<Void, Void, Boolean> {
             TwitterUnit.getTwitterFromSharedPreferences(postActivity).updateStatus(statusUpdate);
 
             NotificationUnit.show(postActivity, R.drawable.ic_notification_send, R.string.notification_post_successful, text);
-
-            Thread.sleep(1000); //
-
             NotificationUnit.cancel(postActivity);
         } catch (Exception e) {
-            /* Do something with Notification and Intent */
+            // TODO
 
             return false;
         }
@@ -130,7 +119,7 @@ public class PostTask extends AsyncTask<Void, Void, Boolean> {
     protected void onPostExecute(Boolean result) {}
 
     private PendingIntent getPendingIntent() {
-        /* Do something */
+        // TODO
 
         return null;
     }

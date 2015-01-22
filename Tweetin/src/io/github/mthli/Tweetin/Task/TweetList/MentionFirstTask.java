@@ -143,6 +143,14 @@ public class MentionFirstTask extends AsyncTask<Void, Void, Boolean> {
                 tweetList.add(tweetUnit.getTweetFromDataRecord(record));
             }
 
+            if (tweetList.size() <= 0) {
+                mentionFragment.setContentEmpty(true);
+                mentionFragment.setEmptyText(R.string.fragment_list_empty);
+                mentionFragment.setContentShown(true);
+                mentionFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
+                return;
+            }
+
             if (isFirstLoad()) {
                 editor.putBoolean(context.getString(R.string.sp_is_mention_first), false).commit();
 

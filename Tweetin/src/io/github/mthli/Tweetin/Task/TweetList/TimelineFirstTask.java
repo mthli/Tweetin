@@ -153,6 +153,14 @@ public class TimelineFirstTask extends AsyncTask<Void, Void, Boolean> {
                 tweetList.add(tweetUnit.getTweetFromDataRecord(record));
             }
 
+            if (tweetList.size() <= 0) {
+                timelineFragment.setContentEmpty(true);
+                timelineFragment.setEmptyText(R.string.fragment_list_empty);
+                timelineFragment.setContentShown(true);
+                timelineFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
+                return;
+            }
+
             if (isFirstLoad()) {
                 editor.putBoolean(context.getString(R.string.sp_is_timeline_first), false).commit();
 

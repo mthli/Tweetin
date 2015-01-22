@@ -125,6 +125,14 @@ public class InReplyToTask extends AsyncTask<Void, Void, Boolean> {
             }
             tweetList.add(currentTweet);
 
+            if (tweetList.size() <= 0) {
+                inReplyToFragment.setContentEmpty(true);
+                inReplyToFragment.setEmptyText(R.string.fragment_list_empty);
+                inReplyToFragment.setContentShown(true);
+                inReplyToFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);
+                return;
+            }
+
             if (!swipeRefresh) {
                 inReplyToFragment.setContentEmpty(false);
                 tweetAdapter.notifyDataSetChanged();
