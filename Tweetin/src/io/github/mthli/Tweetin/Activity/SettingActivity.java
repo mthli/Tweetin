@@ -158,7 +158,7 @@ public class SettingActivity extends FragmentActivity {
                         // TODO
                         break;
                     case 4:
-                        // TODO
+                        signOut();
                         break;
                     default:
                         break;
@@ -183,7 +183,6 @@ public class SettingActivity extends FragmentActivity {
             default:
                 break;
         }
-
         return super.onOptionsItemSelected(menuItem);
     }
 
@@ -194,7 +193,6 @@ public class SettingActivity extends FragmentActivity {
             setResult(RESULT_OK, intent);
             finish();
         }
-
         return true;
     }
 
@@ -282,5 +280,13 @@ public class SettingActivity extends FragmentActivity {
                 toolbar.setBackgroundColor(getResources().getColor(R.color.blue_500));
                 break;
         }
+    }
+
+    private void signOut() {
+        getSharedPreferences(getString(R.string.sp_tweetin), MODE_PRIVATE).edit().clear().commit();
+
+        Intent intent = new Intent(this, SplashActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

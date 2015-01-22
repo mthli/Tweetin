@@ -76,8 +76,8 @@
       <file leaf-file-name="SettingActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/SettingActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.7809365" vertical-offset="1052" max-vertical-offset="3435">
-              <caret line="99" column="32" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.77424747" vertical-offset="1442" max-vertical-offset="2040">
+              <caret line="289" column="30" selection-start-line="289" selection-start-column="30" selection-end-line="289" selection-end-column="30" />
               <folding>
                 <element signature="class#SettingItem#0;class#SettingActivity#0" expanded="false" />
                 <element signature="class#SettingHolder#0;class#SettingActivity#0" expanded="false" />
@@ -94,12 +94,17 @@
                 <element signature="e#4562#4606#0" expanded="true" />
                 <element signature="e#5149#5193#0" expanded="true" />
                 <element signature="e#5403#5445#0" expanded="true" />
-                <element signature="e#7162#7197#0" expanded="true" />
-                <element signature="e#7371#8252#0" expanded="true" />
-                <element signature="e#8251#8252#0" expanded="true" />
-                <element signature="e#8305#8341#0" expanded="true" />
-                <element signature="e#8458#8488#0" expanded="true" />
-                <element signature="e#8534#8562#0" expanded="true" />
+                <element signature="method#onOptionsItemSelected#0;class#SettingActivity#0" expanded="false" />
+                <element signature="method#onKeyDown#0;class#SettingActivity#0" expanded="false" />
+                <element signature="method#showColorPicker#0;class#SettingActivity#0" expanded="false" />
+                <element signature="e#7163#7198#0" expanded="true" />
+                <element signature="e#7372#8253#0" expanded="true" />
+                <element signature="e#8252#8253#0" expanded="true" />
+                <element signature="e#8306#8342#0" expanded="true" />
+                <element signature="method#setCustomTheme#0;class#SettingActivity#0" expanded="false" />
+                <element signature="e#8459#8489#0" expanded="true" />
+                <element signature="e#8535#8563#0" expanded="true" />
+                <element signature="e#10235#10265#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -179,8 +184,8 @@
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/View/ViewUnit.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Flag/FlagUnit.java" />
-        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/SettingActivity.java" />
         <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/MainActivity.java" />
+        <option value="$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/SettingActivity.java" />
       </list>
     </option>
   </component>
@@ -690,7 +695,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.42857143" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="778" y="69" width="362" height="607" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.42857143" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" x="778" y="69" width="362" height="607" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4512" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -1353,8 +1358,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/io/github/mthli/Tweetin/Activity/SettingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.7809365" vertical-offset="1052" max-vertical-offset="3435">
-          <caret line="99" column="32" selection-start-line="99" selection-start-column="32" selection-end-line="99" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.77424747" vertical-offset="1442" max-vertical-offset="2040">
+          <caret line="289" column="30" selection-start-line="289" selection-start-column="30" selection-end-line="289" selection-end-column="30" />
           <folding>
             <element signature="class#SettingItem#0;class#SettingActivity#0" expanded="false" />
             <element signature="class#SettingHolder#0;class#SettingActivity#0" expanded="false" />
@@ -1371,12 +1376,17 @@
             <element signature="e#4562#4606#0" expanded="true" />
             <element signature="e#5149#5193#0" expanded="true" />
             <element signature="e#5403#5445#0" expanded="true" />
-            <element signature="e#7162#7197#0" expanded="true" />
-            <element signature="e#7371#8252#0" expanded="true" />
-            <element signature="e#8251#8252#0" expanded="true" />
-            <element signature="e#8305#8341#0" expanded="true" />
-            <element signature="e#8458#8488#0" expanded="true" />
-            <element signature="e#8534#8562#0" expanded="true" />
+            <element signature="method#onOptionsItemSelected#0;class#SettingActivity#0" expanded="false" />
+            <element signature="method#onKeyDown#0;class#SettingActivity#0" expanded="false" />
+            <element signature="method#showColorPicker#0;class#SettingActivity#0" expanded="false" />
+            <element signature="e#7163#7198#0" expanded="true" />
+            <element signature="e#7372#8253#0" expanded="true" />
+            <element signature="e#8252#8253#0" expanded="true" />
+            <element signature="e#8306#8342#0" expanded="true" />
+            <element signature="method#setCustomTheme#0;class#SettingActivity#0" expanded="false" />
+            <element signature="e#8459#8489#0" expanded="true" />
+            <element signature="e#8535#8563#0" expanded="true" />
+            <element signature="e#10235#10265#0" expanded="true" />
           </folding>
         </state>
       </provider>
