@@ -4,7 +4,7 @@
              xmlns:sliding="http://schemas.android.com/apk/res/io.github.mthli.Tweetin"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/background">
+             android:background="@color/white">
 
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
             android:id="@+id/list_fragment_sliding_layout"
@@ -17,7 +17,7 @@
 
         <FrameLayout android:layout_width="match_parent"
                      android:layout_height="match_parent"
-                     android:background="@color/background">
+                     android:background="@color/white">
 
             <android.support.v4.widget.SwipeRefreshLayout
                     android:id="@+id/list_fragment_swipe_container"
@@ -27,7 +27,7 @@
                 <ListView android:id="@+id/list_fragment_listview"
                           android:layout_width="match_parent"
                           android:layout_height="match_parent"
-                          android:divider="@color/transparent"
+                          android:divider="@color/background"
                           android:dividerHeight="1dp"
                           android:scrollbars="none"
                           android:scrollingCache="true"

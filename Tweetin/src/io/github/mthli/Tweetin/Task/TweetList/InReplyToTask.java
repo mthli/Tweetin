@@ -23,7 +23,6 @@ public class InReplyToTask extends AsyncTask<Void, Void, Boolean> {
     private Context context;
 
     private SwipeRefreshLayout swipeRefreshLayout;
-    private boolean swipeRefresh;
 
     private TweetAdapter tweetAdapter;
     private List<Tweet> tweetList;
@@ -35,12 +34,11 @@ public class InReplyToTask extends AsyncTask<Void, Void, Boolean> {
 
     private String error;
 
-    public InReplyToTask(InReplyToFragment inReplyToFragment, boolean swipeRefresh) {
+    public InReplyToTask(InReplyToFragment inReplyToFragment) {
         this.inReplyToFragment = inReplyToFragment;
         this.context = inReplyToFragment.getContext();
 
         this.swipeRefreshLayout = inReplyToFragment.getSwipeRefreshLayout();
-        this.swipeRefresh = swipeRefresh;
 
         this.tweetAdapter = inReplyToFragment.getTweetAdapter();
         this.tweetList = inReplyToFragment.getTweetList();
@@ -48,7 +46,7 @@ public class InReplyToTask extends AsyncTask<Void, Void, Boolean> {
         this.tweetUnit = new TweetUnit(inReplyToFragment.getActivity());
 
         this.twitter = TwitterUnit.getTwitterFromSharedPreferences(context);
-        this.currentTweet = tweetUnit.getTweetFromIntent(inReplyToFragment.getActivity().getIntent());
+        this.currentTweet = inReplyToFragment.getCurrentTweet();
 
         this.error = context.getString(R.string.in_reply_to_error_get_tweets_failed);
     }
@@ -68,11 +66,7 @@ public class InReplyToTask extends AsyncTask<Void, Void, Boolean> {
 
         inReplyToFragment.setPreviousPosition(0);
 
-        if (!swipeRefresh) {
-            inReplyToFragment.setContentShown(false);
-        } else if (!swipeRefreshLayout.isRefreshing()) {
-            swipeRefreshLayout.setRefreshing(true);
-        }
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     private List<twitter4j.Status> getInReplyToStatusList(long inReplyToStatusId) throws TwitterException {
@@ -133,23 +127,11 @@ public class InReplyToTask extends AsyncTask<Void, Void, Boolean> {
                 return;
             }
 
-            if (!swipeRefresh) {
-                inReplyToFragment.setContentEmpty(false);
-                tweetAdapter.notifyDataSetChanged();
-                inReplyToFragment.setContentShown(true);
-            } else {
-                tweetAdapter.notifyDataSetChanged();
-                swipeRefreshLayout.setRefreshing(false);
-            }
+            tweetAdapter.notifyDataSetChanged();
+            swipeRefreshLayout.setRefreshing(false);
         } else {
-            if (!swipeRefresh) {
-                inReplyToFragment.setContentEmpty(true);
-                inReplyToFragment.setEmptyText(error);
-                inReplyToFragment.setContentShown(true);
-            } else {
-                swipeRefreshLayout.setRefreshing(false);
-                Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
-            }
+            swipeRefreshLayout.setRefreshing(false);
+            Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
         }
 
         inReplyToFragment.setLoadTaskStatus(FlagUnit.TASK_IDLE);

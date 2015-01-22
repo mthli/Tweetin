@@ -64,7 +64,9 @@ public class MainActivity extends FragmentActivity {
                 showSearchView(true);
                 break;
             case R.id.main_menu_setting:
-                /* Do something */
+                Intent intent = new Intent(this, SettingActivity.class);
+                // TODO
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -373,4 +375,6 @@ public class MainActivity extends FragmentActivity {
         ((MentionFragment) mainPagerAdapter.getListFragmentFromPosition(FlagUnit.IN_MENTION_FRAGMENT)).cancelAllTasks();
         ((FavoriteFragment) mainPagerAdapter.getListFragmentFromPosition(FlagUnit.IN_FAVORITE_FRAGMENT)).cancelAllTasks();
     }
+
+    // TODO: onActivityResult()
 }

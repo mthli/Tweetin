@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/library-1.0.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/twitter4j-stream-4.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/glide-3.4.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/nineoldandroids-library-2.4.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/android-support-v7-palette.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/snakeyaml-1.10-android.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/android-support-v4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/twitter-text-1.10.2-SNAPSHOT.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/twitter4j-core-4.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/twitter4j-media-support-4.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/twitter4j-async-4.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

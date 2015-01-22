@@ -12,6 +12,7 @@ import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Task.TweetList.InReplyToTask;
 import io.github.mthli.Tweetin.Tweet.Tweet;
 import io.github.mthli.Tweetin.Tweet.TweetAdapter;
+import io.github.mthli.Tweetin.Tweet.TweetUnit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,11 @@ public class InReplyToFragment extends ListFragment {
     private List<Tweet> tweetList = new ArrayList<Tweet>();
     public List<Tweet> getTweetList() {
         return tweetList;
+    }
+
+    private Tweet currentTweet;
+    public Tweet getCurrentTweet() {
+        return currentTweet;
     }
 
     private int previousPosition = 0;
@@ -45,7 +51,7 @@ public class InReplyToFragment extends ListFragment {
 
         initUI();
 
-        inReplyToTask = new InReplyToTask(this, false);
+        inReplyToTask = new InReplyToTask(this);
         inReplyToTask.execute();
     }
 
@@ -54,7 +60,7 @@ public class InReplyToFragment extends ListFragment {
             @Override
             public void onRefresh() {
                 if (!isSomeLoadTasksRunning()) {
-                    inReplyToTask = new InReplyToTask(InReplyToFragment.this, true);
+                    inReplyToTask = new InReplyToTask(InReplyToFragment.this);
                     inReplyToTask.execute();
                 }
             }
@@ -62,6 +68,10 @@ public class InReplyToFragment extends ListFragment {
 
         tweetAdapter = new TweetAdapter(this, R.layout.tweet, tweetList);
         listView.setAdapter(tweetAdapter);
+        tweetAdapter.notifyDataSetChanged();
+
+        currentTweet = new TweetUnit(getActivity()).getTweetFromIntent(getActivity().getIntent());
+        tweetList.add(currentTweet);
         tweetAdapter.notifyDataSetChanged();
 
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {

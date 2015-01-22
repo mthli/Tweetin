@@ -4,6 +4,24 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/background">
+              android:background="@color/white">
+
+    <Toolbar android:id="@+id/setting_toolbar"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:minHeight="?attr/android:actionBarSize"
+             android:background="?android:attr/colorPrimary">
+    </Toolbar>
+
+    <ListView android:id="@+id/setting_listview"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:divider="@color/background"
+              android:dividerHeight="1dp"
+              android:scrollbars="none"
+              android:scrollingCache="true"
+              android:choiceMode="singleChoice"
+              android:drawSelectorOnTop="true">
+    </ListView>
 
 </LinearLayout>

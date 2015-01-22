@@ -187,6 +187,30 @@
 
     <!-- Setting -->
     <string name="setting_label">Setting</string>
+    <string name="setting_theme">Theme</string>
+    <string name="setting_theme_blue">Blue</string>
+    <string name="setting_theme_orange">Orange</string>
+    <string name="setting_theme_pink">Pink</string>
+    <string name="setting_theme_purple">Purple</string>
+    <string name="setting_theme_teal">Teal</string>
+    <string name="setting_author">Author</string>
+    <string name="setting_author_content">
+        matthewlee0725@gmail.com
+    </string>
+    <string name="setting_advice">Advice</string>
+    <string name="setting_advice_content">
+        Send advice to author.
+    </string>
+    <string name="setting_homepage">Homepage</string>
+    <string name="setting_homepage_content">
+        https://github.com/mthli/Tweetin
+    </string>
+    <string name="setting_sign_out">
+        Sign out
+    </string>
+    <string name="setting_sign_out_content">
+        Clear app data and sign out.
+    </string>
 
     <!-- Splash -->
     <string name="splash_description">
