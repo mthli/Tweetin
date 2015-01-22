@@ -78,6 +78,4 @@ public class SearchActivity extends FragmentActivity {
         searchFragment.cancelAllTasks();
         super.onDestroy();
     }
-
-    // TODO: onActivityResult();
 }

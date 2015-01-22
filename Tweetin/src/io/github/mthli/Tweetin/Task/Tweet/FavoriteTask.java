@@ -31,7 +31,7 @@ public class FavoriteTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        NotificationUnit.show(activity, R.drawable.ic_notification_favorite_active, R.string.notification_add_favorite_ing, tweet.getText());
+        NotificationUnit.show(activity, R.drawable.ic_notification_favorite, R.string.notification_add_favorite_ing, tweet.getText());
     }
 
     @Override
@@ -43,10 +43,10 @@ public class FavoriteTask extends AsyncTask<Void, Void, Boolean> {
 
             DataUnit.updateByFavorite(activity, tweet);
 
-            NotificationUnit.show(activity, R.drawable.ic_notification_favorite_active, R.string.notification_add_favorite_successful, tweet.getText());
+            NotificationUnit.show(activity, R.drawable.ic_notification_favorite, R.string.notification_add_favorite_successful, tweet.getText());
             NotificationUnit.cancel(activity);
         } catch (TwitterException t) {
-            NotificationUnit.show(activity, R.drawable.ic_notification_favorite_active, R.string.notification_add_favorite_failed, tweet.getText());
+            NotificationUnit.show(activity, R.drawable.ic_notification_favorite, R.string.notification_add_favorite_failed, tweet.getText());
             return false;
         }
 

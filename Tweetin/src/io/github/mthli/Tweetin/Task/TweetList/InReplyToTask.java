@@ -119,8 +119,6 @@ public class InReplyToTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
         if (result) {
-            // TODO: Notification
-
             tweetList.clear();
             for (twitter4j.Status status : statusList) {
                 tweetList.add(tweetUnit.getTweetFromStatus(status));

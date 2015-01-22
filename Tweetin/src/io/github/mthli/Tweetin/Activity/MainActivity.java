@@ -373,6 +373,4 @@ public class MainActivity extends FragmentActivity {
         ((MentionFragment) mainPagerAdapter.getListFragmentFromPosition(FlagUnit.IN_MENTION_FRAGMENT)).cancelAllTasks();
         ((FavoriteFragment) mainPagerAdapter.getListFragmentFromPosition(FlagUnit.IN_FAVORITE_FRAGMENT)).cancelAllTasks();
     }
-
-    // TODO: onActivityResult();
 }

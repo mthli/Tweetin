@@ -109,6 +109,4 @@ public class InReplyToFragment extends ListFragment {
         }
         cancelProfileTask();
     }
-
-    // TODO: onActivityResult();
 }

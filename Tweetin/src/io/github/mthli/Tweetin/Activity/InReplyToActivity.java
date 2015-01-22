@@ -73,6 +73,4 @@ public class InReplyToActivity extends FragmentActivity {
         inReplyToFragment.cancelAllTasks();
         super.onDestroy();
     }
-
-    // TODO: onActivityResult();
 }

@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.*;
 import com.bumptech.glide.Glide;
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.mthli.Tweetin.Activity.InReplyToActivity;
+import io.github.mthli.Tweetin.Activity.MainActivity;
+import io.github.mthli.Tweetin.Activity.PictureActivity;
+import io.github.mthli.Tweetin.Activity.SearchActivity;
 import io.github.mthli.Tweetin.R;
 import io.github.mthli.Tweetin.Tweet.TweetUnit;
 import io.github.mthli.Tweetin.Twitter.TwitterUnit;
@@ -17,7 +21,7 @@ import twitter4j.User;
 
 public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
     private Activity activity;
-    private View profileView;
+    private View profile;
 
     private ProgressBar progressBar;
     private TextView reload;
@@ -39,7 +43,7 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
 
     public ProfileTask(Activity activity, View profile, String sn) {
         this.activity = activity;
-        this.profileView = profile;
+        this.profile = profile;
         this.sn = sn;
         this.usn = TwitterUnit.getUseScreenNameFromSharedPreferences(activity);
         this.fo = false;
@@ -47,15 +51,33 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPreExecute() {
-        progressBar = (ProgressBar) profileView.findViewById(R.id.profile_progress_bar);
+        progressBar = (ProgressBar) profile.findViewById(R.id.profile_progress_bar);
         progressBar.setVisibility(View.VISIBLE);
 
-        reload = (TextView) profileView.findViewById(R.id.profile_reload);
+        reload = (TextView) profile.findViewById(R.id.profile_reload);
         reload.setVisibility(View.GONE);
         reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO
+                if (activity instanceof MainActivity) {
+                    ((MainActivity) activity).getCurrentListFragment().showProfile(sn);
+                    return;
+                }
+
+                if (activity instanceof InReplyToActivity) {
+                    ((InReplyToActivity) activity).getInReplyToFragment().showProfile(sn);
+                    return;
+                }
+
+                if (activity instanceof PictureActivity) {
+                    ((PictureActivity) activity).getPictureFragment().showProfile(sn);
+                    return;
+                }
+
+                if (activity instanceof SearchActivity) {
+                    ((SearchActivity) activity).getSearchFragment().showProfile(sn);
+                    return;
+                }
             }
         });
         reload.setOnLongClickListener(new View.OnLongClickListener() {
@@ -66,24 +88,18 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
             }
         });
 
-        profileAll = (RelativeLayout) profileView.findViewById(R.id.profile_all);
+        profileAll = (RelativeLayout) profile.findViewById(R.id.profile_all);
         profileAll.setVisibility(View.GONE);
 
-        background = (ImageView) profileView.findViewById(R.id.profile_background);
-        avatar = (CircleImageView) profileView.findViewById(R.id.profile_avatar);
-        name = (TextView) profileView.findViewById(R.id.profile_name);
-        screenName = (TextView) profileView.findViewById(R.id.profile_screen_name);
-        protect = (TextView) profileView.findViewById(R.id.profile_protect);
-        description = (TextView) profileView.findViewById(R.id.profile_description);
-        location = (TextView) profileView.findViewById(R.id.profile_location);
+        background = (ImageView) profile.findViewById(R.id.profile_background);
+        avatar = (CircleImageView) profile.findViewById(R.id.profile_avatar);
+        name = (TextView) profile.findViewById(R.id.profile_name);
+        screenName = (TextView) profile.findViewById(R.id.profile_screen_name);
+        protect = (TextView) profile.findViewById(R.id.profile_protect);
+        description = (TextView) profile.findViewById(R.id.profile_description);
+        location = (TextView) profile.findViewById(R.id.profile_location);
 
-        follow = (Button) profileView.findViewById(R.id.profile_follow);
-        follow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO
-            }
-        });
+        follow = (Button) profile.findViewById(R.id.profile_follow);
     }
 
     @Override
@@ -159,6 +175,19 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
         } else {
             follow.setText(activity.getString(R.string.profile_follow_follow));
         }
+
+        follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String text = follow.getText().toString();
+                if (text.equals(activity.getString(R.string.profile_follow_follow))) {
+                    (new FollowTask(activity, profile, sn)).execute();
+                } else {
+                    (new UnFollowTask(activity, profile, sn)).execute();
+                }
+            }
+        });
+
         if (sn.equals(usn)) {
             follow.setVisibility(View.GONE);
         }

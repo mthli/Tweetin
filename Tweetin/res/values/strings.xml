@@ -7,6 +7,9 @@
     <string name="dialog_item_copy">Copy</string>
 
     <!-- Fragment -->
+    <string name="fragment_list_empty">
+        Current list is empty.
+    </string>
     <string name="fragment_error_get_authorization_failed">
         Get authorization failed, try to sign in again.
     </string>
@@ -100,6 +103,24 @@
     </string>
     <string name="notification_remove_favorite_failed">
         Remove favorite failed.
+    </string>
+    <string name="notification_follow_ing">
+        Following&#8230;
+    </string>
+    <string name="notification_follow_successful">
+        Follow successful.
+    </string>
+    <string name="notification_follow_failed">
+        Follow failed.
+    </string>
+    <string name="notification_unfollow_ing">
+        UnFollowing&#8230;
+    </string>
+    <string name="notification_unfollow_successful">
+        UnFollow successful.
+    </string>
+    <string name="notification_unfollow_failed">
+        UnFollow failed.
     </string>
 
     <!-- Picture -->
