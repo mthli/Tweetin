@@ -2,6 +2,8 @@ package io.github.mthli.Tweetin.Activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.view.*;
@@ -138,10 +140,12 @@ public class SettingActivity extends Activity {
                         // TODO
                         break;
                     case 1:
-                        // TODO
+                        Intent toHomepage = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.setting_homepage_content)));
+                        startActivity(toHomepage);
                         break;
                     case 2:
-                        // TODO
+                        Intent toEmail = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + getString(R.string.setting_author_content)));
+                        startActivity(toEmail);
                         break;
                     case 3:
                         // TODO

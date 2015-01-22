@@ -1,6 +1,7 @@
 package io.github.mthli.Tweetin.Task.Profile;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
@@ -27,7 +28,7 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
     private TextView reload;
 
     private RelativeLayout profileAll;
-    private ImageView background;
+    private View background;
     private CircleImageView avatar;
     private TextView name;
     private TextView screenName;
@@ -91,7 +92,7 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
         profileAll = (RelativeLayout) profile.findViewById(R.id.profile_all);
         profileAll.setVisibility(View.GONE);
 
-        background = (ImageView) profile.findViewById(R.id.profile_background);
+        background = profile.findViewById(R.id.profile_background);
         avatar = (CircleImageView) profile.findViewById(R.id.profile_avatar);
         name = (TextView) profile.findViewById(R.id.profile_name);
         screenName = (TextView) profile.findViewById(R.id.profile_screen_name);
@@ -138,10 +139,10 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
     }
 
     private void showProfile() {
-        if (user.getProfileBackgroundImageURL() != null) {
-            Glide.with(activity).load(user.getProfileBackgroundImageURL()).centerCrop().crossFade().into(background);
+        if (user.getProfileBackgroundColor() != null) {
+            background.setBackgroundColor(Color.parseColor("#" + user.getProfileBackgroundColor()));
         } else {
-            background.setVisibility(View.GONE);
+            background.setBackgroundColor(activity.getResources().getColor(R.color.white));
         }
 
         Glide.with(activity).load(user.getOriginalProfileImageURL()).crossFade().into(avatar);

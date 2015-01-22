@@ -31,14 +31,12 @@
                     android:background="@color/white"
                     android:visibility="gone">
 
-        <ImageView android:id="@+id/profile_background"
-                   android:contentDescription="@null"
-                   android:layout_width="match_parent"
-                   android:layout_height="170dp"
-                   android:layout_alignParentTop="true"
-                   android:adjustViewBounds="true"
-                   android:background="@color/white">
-        </ImageView>
+        <View android:id="@+id/profile_background"
+              android:layout_width="match_parent"
+              android:layout_height="170dp"
+              android:layout_alignParentTop="true"
+              android:background="@color/white">
+        </View>
 
         <LinearLayout android:id="@+id/profile_info"
                       android:orientation="vertical"
