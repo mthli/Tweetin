@@ -24,4 +24,12 @@
         oauth_verifier
     </string>
 
+    <string name="app_homepage">
+        https://github.com/mthli/Tweetin
+    </string>
+    <string name="app_author_email">
+        matthewlee0725@gmail.com
+    </string>
+    <string name="app_author_screen_name">mth_li</string>
+
 </resources>

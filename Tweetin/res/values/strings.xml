@@ -172,6 +172,9 @@
     <string name="post_toast_empty">
         You haven\'t written anything.
     </string>
+    <string name="post_toast_too_long">
+        A tweet must shorter than 140 chars.
+    </string>
     <string name="post_toast_check_in_failed">
         Check in failed, please open your Location setting.
     </string>
@@ -200,22 +203,16 @@
     <string name="setting_theme_purple">Purple</string>
     <string name="setting_theme_teal">Teal</string>
     <string name="setting_author">Author</string>
-    <string name="setting_author_content">
-        matthewlee0725@gmail.com
-    </string>
     <string name="setting_advice">Advice</string>
     <string name="setting_advice_content">
         Send advice to author.
     </string>
     <string name="setting_homepage">Homepage</string>
-    <string name="setting_homepage_content">
-        https://github.com/mthli/Tweetin
-    </string>
     <string name="setting_sign_out">
         Sign out
     </string>
     <string name="setting_sign_out_content">
-        Clear app data and sign out.
+        Clear all data and sign out.
     </string>
 
     <!-- Splash -->

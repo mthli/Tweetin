@@ -119,12 +119,12 @@ public class SettingActivity extends FragmentActivity {
 
         SettingItem homepage = new SettingItem();
         homepage.setTitle(getString(R.string.setting_homepage));
-        homepage.setContent(getString(R.string.setting_homepage_content));
+        homepage.setContent(getString(R.string.app_homepage));
         settingItemList.add(homepage);
 
         SettingItem author = new SettingItem();
         author.setTitle(getString(R.string.setting_author));
-        author.setContent(getString(R.string.setting_author_content));
+        author.setContent(getString(R.string.app_author_email));
         settingItemList.add(author);
 
         SettingItem advice = new SettingItem();
@@ -147,11 +147,11 @@ public class SettingActivity extends FragmentActivity {
                         showColorPicker();
                         break;
                     case 1:
-                        Intent toHomepage = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.setting_homepage_content)));
+                        Intent toHomepage = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.app_homepage)));
                         startActivity(toHomepage);
                         break;
                     case 2:
-                        Intent toEmail = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + getString(R.string.setting_author_content)));
+                        Intent toEmail = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + getString(R.string.app_author_email)));
                         startActivity(toEmail);
                         break;
                     case 3:

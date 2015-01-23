@@ -155,6 +155,9 @@
     <string name="post_toast_empty">
         你还没有撰写任何东西。
     </string>
+    <string name="post_toast_too_long">
+        一条推文的长度必须少于或等于140个字符。
+    </string>
     <string name="post_toast_check_in_failed">
         签到失败，请检查手机的定位设置。
     </string>
@@ -182,7 +185,7 @@
     <string name="setting_theme_purple">紫</string>
     <string name="setting_theme_teal">青</string>
     <string name="setting_author">作者</string>
-    <string name="setting_advice">建议</string>
+    <string name="setting_advice">反馈</string>
     <string name="setting_advice_content">
         给作者提供建议或者意见。
     </string>

@@ -183,7 +183,7 @@ public class PostActivity extends Activity {
     }
 
     private void initPostWithAdvice() {
-        inReplyToScreenName = TwitterUnit.getUseScreenNameFromSharedPreferences(this);
+        inReplyToScreenName = getString(R.string.app_author_screen_name);
 
         text = "@" + inReplyToScreenName + " ";
 
@@ -331,7 +331,9 @@ public class PostActivity extends Activity {
             case R.id.post_menu_send:
                 if (text.length() <= 0 && picturePath == null) {
                     Toast.makeText(this, R.string.post_toast_empty, Toast.LENGTH_SHORT).show();
-
+                    break;
+                } else if (text.length() > 140) {
+                    Toast.makeText(this, R.string.post_toast_too_long, Toast.LENGTH_SHORT).show();
                     break;
                 }
                 (new PostTask(this)).execute();
