@@ -77,7 +77,6 @@ public class TimelineFragment extends ListFragment {
                     0,
                     fab.getWidth()
             );
-
             fab.setVisibility(View.VISIBLE);
             animator.start();
         } else if (!show && fab.getVisibility() == View.VISIBLE) {
@@ -88,7 +87,6 @@ public class TimelineFragment extends ListFragment {
                     fab.getWidth(),
                     0
             );
-
             animator.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
@@ -97,7 +95,6 @@ public class TimelineFragment extends ListFragment {
                     fab.setVisibility(View.INVISIBLE);
                 }
             });
-
             animator.start();
         }
     }

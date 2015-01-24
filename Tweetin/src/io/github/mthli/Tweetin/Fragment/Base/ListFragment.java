@@ -55,7 +55,7 @@ public class ListFragment extends ProgressFragment {
         setContentView(R.layout.list_fragment);
 
         setContentEmpty(false);
-        setContentShown(true);
+        setContentShownNoAnimation(true);
 
         context = getActivity();
 

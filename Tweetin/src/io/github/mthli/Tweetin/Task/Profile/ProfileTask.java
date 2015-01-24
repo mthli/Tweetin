@@ -178,6 +178,12 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
             follow.setText(activity.getString(R.string.profile_follow_follow));
         }
 
+        if (sn.equals(usn)) {
+            follow.setVisibility(View.GONE);
+        } else {
+            follow.setVisibility(View.VISIBLE);
+        }
+
         follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,10 +195,6 @@ public class ProfileTask extends AsyncTask<Void, Void, Boolean> {
                 }
             }
         });
-
-        if (sn.equals(usn)) {
-            follow.setVisibility(View.GONE);
-        }
 
         profileAll.setVisibility(View.VISIBLE);
     }
