@@ -1,8 +1,11 @@
 package io.github.mthli.Tweetin.Activity;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -97,7 +100,13 @@ public class SettingActivity extends FragmentActivity {
         ViewUnit.setCustomTheme(this);
         setContentView(R.layout.setting);
 
-        // TODO: TaskDescription
+        setTaskDescription(
+                new ActivityManager.TaskDescription(
+                        getString(R.string.app_name),
+                        BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher),
+                        ViewUnit.getCustomThemeColorValue(this)
+                )
+        );
 
         toolbar = (Toolbar) findViewById(R.id.setting_toolbar);
         ViewCompat.setElevation(toolbar, ViewUnit.getElevation(this, 2));
