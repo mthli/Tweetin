@@ -44,4 +44,4 @@ Just import the `Tweetin` folder with your __IntelliJ IDEA__.
  - Some others :)
 
 ## License:
-_[Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0 "Apache License, Version 2.0")_
+_[Apache License, Version 2.0](https://github.com/mthli/Tweetin/blob/master/LICENSE "Apache License, Version 2.0")_
